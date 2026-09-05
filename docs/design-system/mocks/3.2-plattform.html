@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfNext Plattform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GOLFNEXT · UNTERSEITE PLATTFORM  ( /plattform )
+   Umsetzung des Änderungs- und Umsetzungsbriefings von Fred Hoffmann
+   (Plattform, Stand September 2026).
+   Farben Kapitel 2.3 · Schrift Kapitel 2.2 · Bausteine Kapitel 2.5
+   Hero unverändert. Danach verdichtet: ein Positionierungsblock,
+   statische Plattformbreite, Journey-Teaser, drei Vertrauenssignale.
+   Der persönliche Abschluss ist der obere Teil der dunklen Footer-Systemkarte.
+   ============================================================ */
+:root{
+  --navy:#01415B; --navy-deep:#012B3D; --blue:#0B6A90; --sky:#7FD3F0; --signal:#00E805;
+  --paper:#FFFCF5; --sand:#F5F1E6; --mist:#F3F6F4;
+  --ink:#16262C; --muted:#5C6F76; --line:#E6E1D6;
+  --ok:#2E6B38; --okbg:#EDF4EA; --err:#A3564A; --warn:#8A6D3B;
+  --fline:rgba(255,255,255,.14); --ftext:#B9D2DE;
+  --display:"Archivo",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter",system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);font-weight:700;line-height:1.14;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.pwrap{max-width:1140px;margin:0 auto;padding:0 40px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;font-weight:600;color:var(--blue);display:block;margin-bottom:14px}
+.psec{padding:86px 0}
+.psec.sand{background:var(--sand)}
+.psec.mist{background:var(--mist)}
+.psec h2{font-size:clamp(27px,3.2vw,40px);margin-bottom:16px;max-width:24ch;text-wrap:balance}
+.psec .lead{font-size:clamp(16px,1.3vw,19px);color:var(--muted);max-width:62ch}
+.btn-cta{display:inline-flex;flex-direction:column;gap:2px;background:var(--signal);color:var(--navy);font-weight:700;font-size:16px;border-radius:4px;padding:13px 26px;line-height:1.25}
+.btn-cta small{font-size:12.5px;font-weight:500;opacity:.82}
+.tlink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15.5px;color:var(--blue)}
+.tlink svg{width:15px;height:15px;transition:transform .15s}
+.tlink:hover svg{transform:translateX(3px)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+
+/* ---------- Header ---------- */
+.hdr{display:flex;align-items:center;gap:34px;height:80px;padding:0 40px;background:rgba(255,252,245,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;backdrop-filter:blur(8px)}
+.hdr .jslogo{color:var(--navy);display:inline-flex;flex:0 0 auto}
+.hdr .jslogo svg{height:19px;width:auto}
+.hnav{display:flex;gap:30px;flex:0 0 auto}
+.hnav a{font-size:14.5px;font-weight:500;color:var(--ink);padding:28px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+.hnav a:hover{color:var(--navy);border-color:var(--line)}
+.hnav a.active{color:var(--navy);border-color:var(--signal)}
+.hnav a .amp{color:var(--muted);font-weight:400;padding:0 4px}
+.hcta{margin-left:auto;flex:0 0 auto}
+.hbtn{display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-weight:700;font-size:14px;padding:9px 16px;border-radius:4px;background:var(--signal);color:var(--navy);line-height:1.2}
+.hbtn small{font-size:11px;font-weight:500;opacity:.82}
+@media(max-width:1340px){.hnav{gap:22px}.hnav a{font-size:14px}.hdr{gap:24px}}
+@media(max-width:1180px){.hnav{gap:17px}.hnav a{font-size:13.5px}}
+
+/* ---------- 1 · Hero mit Plattform-Nabe ---------- */
+.hero{background:linear-gradient(160deg,#012B3D 0%,#01415B 58%,#065877 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 420px at 86% -8%,rgba(127,211,240,.16),transparent 62%);pointer-events:none}
+.hero .in{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:74px 40px 82px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:52px;align-items:center}
+.hero .eyebrow{color:var(--signal)}
+.hero h1{color:#fff;font-size:clamp(31px,4.1vw,50px);font-weight:800;line-height:1.08;max-width:15ch;text-wrap:balance}
+.hero .hl{color:var(--ftext);font-size:clamp(16px,1.35vw,18.5px);margin-top:22px;max-width:52ch;line-height:1.62}
+.hero .acts{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-top:34px}
+.hero .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:16px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.hero .b2 svg{width:15px;height:15px}
+.vidbtn{display:inline-flex;align-items:center;gap:11px;margin-top:26px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:9px 15px 9px 11px;color:#fff;font-size:14.5px;font-weight:600;transition:background .18s,border-color .18s}
+.vidbtn:hover{background:rgba(255,255,255,.14);border-color:rgba(127,211,240,.6)}
+.vidbtn .pl{width:24px;height:24px;border-radius:50%;background:var(--signal);color:var(--navy);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.vidbtn .pl svg{width:11px;height:11px}
+.vidbtn small{display:block;font-size:11.5px;font-weight:500;color:var(--ftext);margin-top:1px}
+
+/* Nabe: Plattform in der Mitte, Oberflächen ringsum */
+.hub{position:relative;aspect-ratio:1/.94;min-height:420px}
+.hub .wires{position:absolute;inset:0;width:100%;height:100%}
+.hub .wires path{fill:none;stroke:rgba(127,211,240,.42);stroke-width:1.4;vector-effect:non-scaling-stroke;stroke-dasharray:60;stroke-dashoffset:-60;transition:stroke-dashoffset 1.15s cubic-bezier(.4,0,.2,1)}
+.hub.on .wires path{stroke-dashoffset:0}
+.hub .wires path:nth-child(1){transition-delay:.30s}
+.hub .wires path:nth-child(2){transition-delay:.40s}
+.hub .wires path:nth-child(3){transition-delay:.50s}
+.hub .wires path:nth-child(4){transition-delay:.60s}
+.hub .wires path:nth-child(5){transition-delay:.70s}
+.hub .wires path:nth-child(6){transition-delay:.80s}
+.hub .wires path:nth-child(7){transition-delay:.90s}
+.hub .flow{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease 1.5s}
+.hub.on .flow{opacity:1}
+.hub .flow path{fill:none;stroke:var(--signal);stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-dasharray:3 60;animation:dataflow 4.6s linear infinite}
+.hub .flow path:nth-child(2){animation-delay:.55s}
+.hub .flow path:nth-child(3){animation-delay:1.1s}
+.hub .flow path:nth-child(4){animation-delay:1.65s}
+.hub .flow path:nth-child(5){animation-delay:2.2s}
+.hub .flow path:nth-child(6){animation-delay:2.75s}
+.hub .flow path:nth-child(7){animation-delay:3.3s}
+@keyframes dataflow{from{stroke-dashoffset:63}to{stroke-dashoffset:0}}
+.core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:172px;background:rgba(1,43,61,.94);border:1px solid rgba(0,232,5,.45);border-radius:5px;padding:15px 16px 14px;text-align:center;box-shadow:0 22px 46px -20px rgba(0,0,0,.6);z-index:3}
+.core .jslogo{color:#fff;display:flex;justify-content:center}
+.core .jslogo svg{height:15px;width:auto}
+.core .cs{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-top:9px}
+.core .cd{font-size:12px;color:var(--ftext);margin-top:4px;line-height:1.4}
+.node{position:absolute;width:151px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.19);border-radius:5px;padding:9px 11px;backdrop-filter:blur(2px);z-index:2;opacity:0;transform:translate(-50%,-50%) scale(.94);transition:opacity .5s ease,transform .5s ease,border-color .3s}
+.hub.on .node{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.hub.on .node:nth-of-type(1){transition-delay:.02s}
+.hub.on .node:nth-of-type(2){transition-delay:.09s}
+.hub.on .node:nth-of-type(3){transition-delay:.16s}
+.hub.on .node:nth-of-type(4){transition-delay:.23s}
+.hub.on .node:nth-of-type(5){transition-delay:.30s}
+.hub.on .node:nth-of-type(6){transition-delay:.37s}
+.hub.on .node:nth-of-type(7){transition-delay:.44s}
+.node .nl{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sky);font-weight:700}
+.node .nt{font-size:13px;color:#fff;font-weight:600;margin-top:2px;letter-spacing:-.01em}
+.node .bars{display:flex;gap:4px;margin-top:7px}
+.node .bars i{height:4px;border-radius:2px;background:rgba(255,255,255,.3);display:block}
+.node .mini{margin-top:7px;font-size:11px;color:var(--ftext);display:flex;align-items:center;gap:6px}
+.node .mini i{width:6px;height:6px;border-radius:50%;background:var(--signal);display:block;flex:0 0 auto}
+.hub .fallback{display:none}
+@media(max-width:1080px){
+  .hub{aspect-ratio:auto;min-height:0}
+  .hub .wires,.hub .flow,.core,.node{display:none}
+  .hub .fallback{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .fb{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.19);border-radius:5px;padding:11px 13px;min-width:0}
+  .fb.core-fb{grid-column:1/-1;background:rgba(1,43,61,.9);border-color:rgba(0,232,5,.45)}
+  .fb .nl{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sky);font-weight:700}
+  .fb.core-fb .nl{color:var(--signal)}
+  .fb .nt{font-size:13.5px;color:#fff;font-weight:600;margin-top:2px}
+}
+
+/* ---------- 2 · Positionierung: Website und Marketing – GolfNext – Clubverwaltung ---------- */
+.pos{display:grid;grid-template-columns:minmax(0,1fr) 62px minmax(0,1.14fr) 62px minmax(0,1fr);align-items:stretch;margin-top:44px}
+.pcard2{border:1px solid var(--line);border-radius:4px;background:#fff;padding:26px 26px 24px;min-width:0;display:flex;flex-direction:column}
+.pcard2.quiet{background:var(--mist)}
+.pcard2.mid{background:linear-gradient(150deg,var(--navy-deep),var(--navy));border-color:var(--navy);color:#fff;box-shadow:0 34px 66px -40px rgba(1,65,91,.8);position:relative;z-index:2}
+.pcard2 .pl2{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.pcard2.mid .pl2{color:var(--signal)}
+.pcard2 h3{font-size:19px;margin:9px 0 10px;line-height:1.2}
+.pcard2.mid h3{color:#fff;font-size:22px}
+.pcard2 p{font-size:14.5px;color:var(--muted);margin:0;line-height:1.55}
+.pcard2.mid p{color:var(--ftext);font-size:15px}
+.pcard2 .jslogo{color:#fff;margin-bottom:12px}
+.pcard2 .jslogo svg{height:16px;width:auto}
+.link2{position:relative;display:flex;align-items:center;justify-content:center}
+.link2::before{content:"";position:absolute;left:-1px;right:-1px;top:50%;height:2px;background:var(--line)}
+.link2.dashed::before{background:none;border-top:2px dashed var(--line)}
+.link2 .flowdot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px var(--paper)}
+.posnote{margin-top:26px}
+.hint{font-size:13.5px;color:var(--muted);display:flex;align-items:flex-start;gap:9px;max-width:72ch}
+.hint svg{width:15px;height:15px;color:var(--blue);flex:0 0 auto;margin-top:4px}
+.statement2{font-family:var(--display);font-size:clamp(19px,2.2vw,26px);font-weight:700;color:var(--navy);letter-spacing:-.02em;margin-top:40px;padding-left:20px;border-left:3px solid var(--signal);line-height:1.3;max-width:32ch}
+@media(max-width:960px){
+  .pos{grid-template-columns:minmax(0,1fr);gap:0}
+  .link2{height:44px}
+  .link2::before{left:50%;right:auto;top:0;bottom:0;width:2px;height:auto;margin-left:-1px}
+  .link2.dashed::before{background:none;border-top:0;border-left:2px dashed var(--line)}
+}
+
+/* ---------- 3 · Plattformbreite: statisch, kompakt, ohne Beschreibungen ---------- */
+.breadth{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:44px}
+.mgroup{border:1px solid var(--line);border-radius:4px;background:#fff;padding:26px 26px 24px;min-width:0}
+.mgroup>b{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:18px}
+.mgroup.grow>b{color:var(--blue)}
+.mgroup.ops>b{color:var(--ok)}
+.chips2{display:flex;flex-wrap:wrap;gap:10px}
+.chip2{font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy);background:var(--mist);border:1px solid var(--line);border-radius:4px;padding:9px 15px;transition:border-color .18s,background .18s}
+a.chip2:hover,a.chip2:focus-visible{border-color:var(--navy);background:#fff}
+.mgroup.ops .chip2{background:var(--paper)}
+.breadthcta{margin-top:30px}
+@media(max-width:820px){.breadth{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- 4 · Journey-Teaser: eine Strecke, vier Begriffe ---------- */
+.teaser{margin-top:44px;position:relative}
+.tline{position:absolute;left:0;right:0;top:11px;height:2px;background:var(--line)}
+.tline i{display:block;height:2px;width:0;background:var(--signal);transition:width 3.2s cubic-bezier(.4,0,.2,1) .2s}
+.teaser.on .tline i{width:100%}
+.tdot{position:absolute;top:4px;left:0;width:16px;height:16px;border-radius:50%;background:var(--signal);border:3px solid var(--paper);box-shadow:0 0 0 2px rgba(0,232,5,.35);z-index:3;transition:left 1s cubic-bezier(.45,0,.25,1)}
+.tsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;position:relative}
+.ts{min-width:0;opacity:.5;transition:opacity .6s ease}
+.ts.reached{opacity:1}
+.ts .tk2{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--line);margin:5px 0 22px;position:relative;z-index:1;transition:border-color .4s,background .4s}
+.ts.reached .tk2{border-color:var(--signal)}
+.ts.here .tk2{background:var(--navy);border-color:var(--navy)}
+.ts .tt{font-family:var(--display);font-size:clamp(19px,2vw,23px);font-weight:700;color:var(--navy);letter-spacing:-.02em;line-height:1.15;transition:color .4s}
+.ts.here .tt{color:var(--blue)}
+.ts .td{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5;max-width:26ch}
+.teasercta{margin-top:36px}
+@media(max-width:820px){
+  .tsteps{grid-template-columns:minmax(0,1fr);gap:0;padding-left:30px}
+  .tline{left:6px;right:auto;top:8px;bottom:8px;width:2px;height:auto}
+  .tline i{width:2px;height:0;transition:height 3.2s cubic-bezier(.4,0,.2,1) .2s}
+  .teaser.on .tline i{width:2px;height:100%}
+  .tdot{display:none}
+  .ts{padding-bottom:26px;position:relative}
+  .ts:last-child{padding-bottom:0}
+  .ts .tk2{position:absolute;left:-30px;top:6px;margin:0}
+}
+
+/* ---------- 5 · Technologie und Vertrauen ---------- */
+.trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:44px}
+.tcard2{border:1px solid var(--line);border-radius:4px;background:#fff;padding:28px 26px 26px;min-width:0}
+.tcard2 svg{width:26px;height:26px;color:var(--navy);margin-bottom:18px}
+.tcard2 h3{font-size:19px;margin-bottom:9px;line-height:1.2}
+.tcard2 p{font-size:14.5px;color:var(--muted);margin:0;line-height:1.6}
+.trustcta{margin-top:32px}
+@media(max-width:820px){.trust{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- 6 · Persönlicher Abschluss – oberer Teil der Footer-Systemkarte ---------- */
+.f-close{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:56px 40px;position:relative;overflow:hidden;border-bottom:1px solid var(--fline)}
+.f-close::after{content:"";position:absolute;inset:0;background:radial-gradient(680px 300px at 88% 118%,rgba(127,211,240,.2),transparent 62%);pointer-events:none}
+.f-close .inner{position:relative;z-index:1;max-width:1060px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:44px;align-items:center}
+.f-portrait{aspect-ratio:4/5;border-radius:4px;background:linear-gradient(150deg,#2A4C5C,#1B3A48);border:1px solid rgba(255,255,255,.16);position:relative;overflow:hidden}
+.f-portrait svg{position:absolute;inset:0;margin:auto;width:58px;height:58px;color:rgba(127,211,240,.5)}
+.f-portrait .cap{position:absolute;left:12px;bottom:11px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);background:var(--signal);border-radius:2px;padding:3px 8px;font-weight:700}
+.f-close .ce{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;color:var(--signal);display:block;margin-bottom:12px}
+.f-close h2{color:#fff;font-size:clamp(25px,2.8vw,36px);max-width:20ch;font-weight:800}
+.f-close p{color:var(--ftext);margin:14px 0 0;max-width:56ch;font-size:15.5px}
+.f-close .acts{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:26px 0 22px}
+.f-close .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.f-close .b2 svg{width:15px;height:15px}
+.f-personline{border-left:3px solid var(--signal);padding:12px 0 12px 18px;font-size:14px;color:var(--ftext);max-width:62ch}
+.f-personline b{color:#fff;font-weight:600}
+@media(max-width:820px){
+  .f-close .inner{grid-template-columns:minmax(0,1fr);gap:28px}
+  .f-portrait{max-width:220px}
+}
+
+/* ---------- Footer ---------- */
+.pfoot{background:var(--navy-deep);color:#fff}
+.f-cta{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:52px 40px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--fline)}
+.f-cta::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 280px at 88% 120%,rgba(127,211,240,.2),transparent 60%);pointer-events:none}
+.f-cta>*{position:relative;z-index:1}
+.f-cta .ce{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;color:var(--signal);display:block;margin-bottom:12px}
+.f-cta h3{color:#fff;font-size:clamp(23px,2.4vw,32px);max-width:20ch;font-weight:800}
+.f-cta p{color:var(--ftext);margin:12px 0 0;max-width:46ch;font-size:15px}
+.f-cta .acts{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.f-cta .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.f-map{padding:42px 40px 38px;border-bottom:1px solid var(--fline)}
+.f-map .mh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.f-map .mh b{font-family:var(--display);font-size:18px;color:#fff;font-weight:700;letter-spacing:-.02em}
+.f-map .mh span{font-size:13px;color:var(--ftext)}
+.f-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.f-col>b{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-bottom:12px}
+.f-col.ops>b{color:var(--sky)}
+.f-mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.f-mod{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--fline);min-width:0}
+.f-mod .dot{flex:0 0 auto;width:7px;height:7px;border-radius:50%}
+.f-mod .dot.live{background:var(--signal)}
+.f-mod .dot.pilot{background:#E8C55A}
+.f-mod .dot.dev{background:rgba(255,255,255,.35)}
+.f-mod b{font-size:14.5px;color:#fff;font-weight:600}
+.f-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;font-size:12.5px;color:var(--ftext)}
+.f-legend .li{display:flex;align-items:center;gap:8px}
+.f-legend .dot{width:7px;height:7px;border-radius:50%}
+.f-contact{padding:34px 40px 32px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:30px;border-bottom:1px solid var(--fline)}
+.f-contact .cl{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ftext);font-weight:700;margin-bottom:12px;display:block}
+.f-contact .big{font-family:var(--display);font-size:clamp(20px,2vw,25px);color:#fff;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.f-contact p{font-size:15px;margin:0 0 7px;color:#fff}
+.f-contact p.sm{font-size:13.5px;color:var(--ftext)}
+.f-contact a{color:#fff}
+.soc{display:flex;gap:14px;margin-top:4px}
+.soc a{color:var(--ftext)}
+.soc svg{width:21px;height:21px}
+.f-bar{display:flex;gap:20px;flex-wrap:wrap;align-items:center;padding:22px 40px 26px;font-size:13px;color:var(--ftext)}
+.f-bar .jslogo{color:#fff;display:inline-flex}
+.f-bar .jslogo svg{height:17px;width:auto}
+.f-bar a{color:var(--ftext)}
+.f-bar .sp{margin-left:auto}
+
+@media(max-width:1080px){
+  .hero .in{grid-template-columns:minmax(0,1fr);gap:44px;padding-top:60px}
+}
+@media(max-width:1024px){
+  .hnav{display:none}
+  .hdr{gap:16px}
+}
+@media(max-width:960px){
+  .f-cols{grid-template-columns:minmax(0,1fr)}
+  .f-contact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pwrap,.hero .in{padding-left:26px;padding-right:26px}
+  .hdr,.f-close,.f-map,.f-bar,.f-contact{padding-left:26px;padding-right:26px}
+}
+@media(max-width:620px){
+  .psec{padding:58px 0}
+  .f-mods,.f-contact{grid-template-columns:minmax(0,1fr)}
+  .hdr{height:auto;padding:14px 20px;gap:12px;flex-wrap:wrap}
+  .hdr .jslogo svg{height:16px}
+  .hcta{margin-left:0;width:100%}
+  .hbtn{width:100%;text-align:center;font-size:13px;padding:10px 14px}
+  .pwrap,.hero .in{padding-left:20px;padding-right:20px}
+  .f-close{padding-left:22px;padding-right:22px}
+  .hub .fallback{grid-template-columns:minmax(0,1fr)}
+  .chip2{font-size:14px;padding:8px 13px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto}
+  .hub .wires path{stroke-dashoffset:0}
+  .hub .flow{opacity:1}
+  .hub .node{opacity:1;transform:translate(-50%,-50%)}
+  .tline i{width:100%}
+  .tdot{display:none}
+  .ts{opacity:1}
+}
+</style>
+<header class="hdr">
+  <span class="jslogo" aria-label="GolfNext"></span>
+  <nav class="hnav">
+    <a class="active">Plattform</a>
+    <a>Wachstum<span class="amp">&amp;</span>Vertrieb</a>
+    <a>Clubprozesse</a>
+    <a>Praxis</a>
+    <a>Pakete</a>
+    <a>Über GolfNext</a>
+  </nav>
+  <span class="hcta">
+    <a class="hbtn">Online-Erstgespräch vereinbaren<small>30 Minuten per Zoom oder Teams</small></a>
+  </span>
+</header>
+
+<!-- ============ 1 · HERO ============ -->
+<section class="hero">
+  <div class="in">
+    <div>
+      <span class="eyebrow">GolfNext Plattform</span>
+      <h1>Aus digitalen Einzelteilen wird eine aktive Clubzentrale.</h1>
+      <p class="hl">GolfNext verbindet Website, Marketing, Kontakte, Kommunikation und ausgewählte Clubprozesse in einer Plattform. Damit Ihr Club nicht nur digital informiert, sondern Menschen gezielt weiterführt und Abläufe einfacher organisiert.</p>
+      <div class="acts">
+        <a class="btn-cta">GolfNext selbst ansehen<small>Live-Demo ohne Anmeldung</small></a>
+        <a class="b2">Online-Erstgespräch vereinbaren
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <a class="vidbtn">
+        <span class="pl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span>GolfNext in 90 Sekunden<small>Kurzes Erklärvideo</small></span>
+      </a>
+    </div>
+
+    <div class="hub" id="hub">
+      <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M50 50 L20 11"/>
+        <path d="M50 50 L68 9"/>
+        <path d="M50 50 L84 40"/>
+        <path d="M50 50 L74 76"/>
+        <path d="M50 50 L38 93"/>
+        <path d="M50 50 L17 75"/>
+        <path d="M50 50 L16 42"/>
+      </svg>
+      <svg class="flow" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M50 50 L20 11"/>
+        <path d="M50 50 L68 9"/>
+        <path d="M50 50 L84 40"/>
+        <path d="M50 50 L74 76"/>
+        <path d="M50 50 L38 93"/>
+        <path d="M50 50 L17 75"/>
+        <path d="M50 50 L16 42"/>
+      </svg>
+
+      <div class="node" style="left:20%;top:11%">
+        <div class="nl">Kampagne</div>
+        <div class="nt">Schnuppergolf</div>
+        <div class="bars"><i style="width:46%"></i><i style="width:26%"></i></div>
+      </div>
+      <div class="node" style="left:68%;top:9%">
+        <div class="nl">Landingpage</div>
+        <div class="nt">Jetzt anmelden</div>
+        <div class="bars"><i style="width:62%"></i><i style="width:20%"></i></div>
+      </div>
+      <div class="node" style="left:84%;top:40%">
+        <div class="nl">Marketing-CRM</div>
+        <div class="nt">Neue Anfrage</div>
+        <div class="mini"><i></i>Sofort zugeordnet</div>
+      </div>
+      <div class="node" style="left:74%;top:76%">
+        <div class="nl">Lifecycle</div>
+        <div class="nt">Erinnerung</div>
+        <div class="mini"><i></i>Automatisch</div>
+      </div>
+      <div class="node" style="left:38%;top:93%">
+        <div class="nl">Concierge</div>
+        <div class="nt">Frage geklärt</div>
+        <div class="mini"><i></i>Rund um die Uhr</div>
+      </div>
+      <div class="node" style="left:17%;top:75%">
+        <div class="nl">Platzstatus</div>
+        <div class="nt">Platz bespielbar</div>
+        <div class="mini"><i></i>Heute 06:40 Uhr</div>
+      </div>
+      <div class="node" style="left:16%;top:42%">
+        <div class="nl">Turnier-News</div>
+        <div class="nt">Meldung online</div>
+        <div class="bars"><i style="width:38%"></i><i style="width:44%"></i></div>
+      </div>
+
+      <div class="core">
+        <span class="jslogo" aria-label="GolfNext"></span>
+        <div class="cs">Plattform</div>
+        <div class="cd">Ein System, in dem alles zusammenläuft</div>
+      </div>
+
+      <div class="fallback">
+        <div class="fb core-fb"><div class="nl">Plattform</div><div class="nt">GolfNext verbindet</div></div>
+        <div class="fb"><div class="nl">Kampagne</div><div class="nt">Schnuppergolf</div></div>
+        <div class="fb"><div class="nl">Landingpage</div><div class="nt">Jetzt anmelden</div></div>
+        <div class="fb"><div class="nl">Marketing-CRM</div><div class="nt">Neue Anfrage</div></div>
+        <div class="fb"><div class="nl">Lifecycle</div><div class="nt">Erinnerung</div></div>
+        <div class="fb"><div class="nl">Concierge</div><div class="nt">Frage geklärt</div></div>
+        <div class="fb"><div class="nl">Platzstatus</div><div class="nt">Platz bespielbar</div></div>
+        <div class="fb"><div class="nl">Turnier-News</div><div class="nt">Meldung online</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · PROBLEM UND POSITIONIERUNG ============ -->
+<section class="psec">
+  <div class="pwrap">
+    <span class="eyebrow">Warum GolfNext</span>
+    <h2>Golfclubs fehlen selten digitale Werkzeuge. Meist fehlt die Verbindung.</h2>
+    <p class="lead">Website, Kampagnen, E-Mail-Postfach, Newsletter und Clubverwaltung arbeiten häufig nebeneinander. Kontakte werden mehrfach erfasst, Anfragen bleiben liegen und nach dem ersten Klick endet die digitale Begleitung.</p>
+    <p class="lead" style="margin-top:14px">GolfNext ist weder Ersatz für Ihre Clubverwaltungssoftware noch einfach eine neue Website. Die Plattform schließt die Lücke zwischen digitalem Marketing, Interessentenführung, Kommunikation und ausgewählten Clubprozessen.</p>
+
+    <div class="pos">
+      <div class="pcard2 quiet">
+        <div class="pl2">Website und Marketing</div>
+        <h3>Was Ihr Club nach außen zeigt</h3>
+        <p>Sichtbarkeit schaffen und Angebote kommunizieren.</p>
+      </div>
+
+      <div class="link2"><span class="flowdot"></span></div>
+
+      <div class="pcard2 mid">
+        <span class="jslogo" aria-label="GolfNext"></span>
+        <div class="pl2">Die Verbindung</div>
+        <h3>GolfNext</h3>
+        <p>Kontakte gewinnen, gezielt weiterführen und Kommunikation verbinden.</p>
+      </div>
+
+      <div class="link2 dashed"><span class="flowdot"></span></div>
+
+      <div class="pcard2 quiet">
+        <div class="pl2">Clubverwaltung</div>
+        <h3>Was Ihr Club intern organisiert</h3>
+        <p>Mitglieder, Turniere, Startzeiten und Stammdaten organisieren.</p>
+      </div>
+    </div>
+
+    <p class="hint posnote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11 11h1v5h1"/></svg>
+      GolfNext ersetzt weder Website noch Clubverwaltung. Die durchgezogene Linie zeigt, wie Kontakte weitergeführt werden. Die gestrichelte Linie steht für eine Anbindung an bestehende Systeme – dort, wo sie technisch möglich und für den Club sinnvoll ist.
+    </p>
+
+    <p class="statement2">Weniger Insellösungen. Mehr Wirkung im Zusammenspiel.</p>
+  </div>
+</section>
+
+<!-- ============ 3 · DIE PLATTFORMBREITE ============ -->
+<section class="psec mist">
+  <div class="pwrap">
+    <span class="eyebrow">Eine Plattform. Zwei Wirkungsrichtungen.</span>
+    <h2>Wachstum nach außen. Entlastung nach innen.</h2>
+    <p class="lead">GolfNext verbindet die Gewinnung und Entwicklung neuer Kontakte mit digitalen Abläufen für den Cluballtag.</p>
+
+    <div class="breadth">
+      <div class="mgroup grow">
+        <b>Wachstum nach außen</b>
+        <div class="chips2">
+          <a class="chip2">Reach</a>
+          <a class="chip2">Search</a>
+          <a class="chip2">Landingpages</a>
+          <a class="chip2">Marketing-CRM</a>
+          <a class="chip2">Lifecycle</a>
+          <a class="chip2">Content</a>
+        </div>
+      </div>
+      <div class="mgroup ops">
+        <b>Entlastung nach innen</b>
+        <div class="chips2">
+          <a class="chip2">Concierge</a>
+          <a class="chip2">Platzstatus</a>
+          <a class="chip2">Gastfee</a>
+          <a class="chip2">Firmen-Events</a>
+          <a class="chip2">Turnier-News</a>
+          <a class="chip2">Captains App</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="breadthcta">
+      <a class="tlink">Alle Module im Überblick <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 · JOURNEY-TEASER ============ -->
+<section class="psec">
+  <div class="pwrap">
+    <span class="eyebrow">Wie Verbindung wirkt</span>
+    <h2>Ein Klick ist erst der Anfang.</h2>
+    <p class="lead">GolfNext begleitet Menschen vom ersten Kontakt bis zum nächsten relevanten Schritt.</p>
+
+    <div class="teaser" id="teaser">
+      <div class="tline"><i></i></div>
+      <span class="tdot" id="tdot" aria-hidden="true"></span>
+      <div class="tsteps">
+        <div class="ts" data-t="0">
+          <span class="tk2"></span>
+          <div class="tt">Aufmerksamkeit</div>
+          <div class="td">Der Club wird sichtbar.</div>
+        </div>
+        <div class="ts" data-t="1">
+          <span class="tk2"></span>
+          <div class="tt">Interesse</div>
+          <div class="td">Das passende Angebot schafft Orientierung.</div>
+        </div>
+        <div class="ts" data-t="2">
+          <span class="tk2"></span>
+          <div class="tt">Handlung</div>
+          <div class="td">Aus Interesse wird eine Anfrage oder Buchung.</div>
+        </div>
+        <div class="ts" data-t="3">
+          <span class="tk2"></span>
+          <div class="tt">Entwicklung</div>
+          <div class="td">Der Kontakt wird gezielt weitergeführt.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="teasercta">
+      <a class="tlink">So arbeitet GolfNext <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · TECHNOLOGIE UND VERTRAUEN ============ -->
+<section class="psec mist">
+  <div class="pwrap">
+    <span class="eyebrow">Technologie und Vertrauen</span>
+    <h2>Modern im Hintergrund. Einfach im Alltag.</h2>
+    <p class="lead">GolfNext basiert auf einer modernen, flexiblen Systemarchitektur. Die Plattform lässt sich weiterentwickeln und dort mit bestehenden Systemen verbinden, wo es sinnvoll und möglich ist.</p>
+
+    <div class="trust">
+      <div class="tcard2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>
+        <h3>Flexibel aufgebaut</h3>
+        <p>Inhalte, Funktionen und Oberflächen können unabhängig voneinander weiterentwickelt werden.</p>
+      </div>
+      <div class="tcard2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.7-7 9-4.1-1.3-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Datenschutz mitgedacht</h3>
+        <p>Zugriffsrechte und der verantwortungsvolle Umgang mit Daten werden von Beginn an berücksichtigt. Alles ist selbstverständlich DSGVO-konform.</p>
+      </div>
+      <div class="tcard2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7L11.5 6.8"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 18.7l1.4-1.4"/></svg>
+        <h3>Offen für Schnittstellen</h3>
+        <p>Bestehende Systeme können dort angebunden werden, wo es technisch möglich und für den Club sinnvoll ist.</p>
+      </div>
+    </div>
+
+    <div class="trustcta">
+      <a class="tlink">Technologie, Datenschutz und Schnittstellen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<footer class="pfoot">
+  <div class="f-close">
+    <div class="inner">
+      <div class="f-portrait">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/></svg>
+        <span class="cap">Foto Fred Hoffmann folgt</span>
+      </div>
+      <div>
+        <span class="ce">GolfNext persönlich kennenlernen</span>
+        <h2>Was könnte GolfNext in Ihrem Club verändern?</h2>
+        <p>In 30 Minuten schauen wir gemeinsam auf Ihre Ziele, Ihre größten Hebel und die Frage, ob GolfNext grundsätzlich zu Ihrem Club passt.</p>
+        <p>Sie erhalten eine ehrliche erste Einschätzung, welche Lösungen und welche Ausbaustufe für Sie sinnvoll sein könnten.</p>
+        <div class="acts">
+          <a class="btn-cta">Online-Erstgespräch vereinbaren<small>30 Minuten persönlich per Zoom oder Teams</small></a>
+          <a class="b2">Oder zuerst die Live-Demo ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <p class="f-personline">Ihr Ansprechpartner ist <b>Fred Hoffmann</b>, Gründer von GolfNext und seit mehr als 30 Jahren professionell im Golfmarkt tätig.</p>
+      </div>
+    </div>
+  </div>
+  <div class="f-map">
+    <div class="mh">
+      <b>Plattform auf einen Blick</b>
+      <span>Zwölf Module. Zwei Richtungen. Eine Plattform.</span>
+    </div>
+    <div class="f-cols">
+      <div class="f-col">
+        <b>Wachstum nach außen</b>
+        <div class="f-mods">
+          <a class="f-mod"><span class="dot live"></span><b>Reach</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Search</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Landingpages</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Marketing-CRM</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Lifecycle</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Content</b></a>
+        </div>
+      </div>
+      <div class="f-col ops">
+        <b>Entlastung nach innen</b>
+        <div class="f-mods">
+          <a class="f-mod"><span class="dot pilot"></span><b>Concierge</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Platzstatus</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Gastfee</b></a>
+          <a class="f-mod"><span class="dot dev"></span><b>Firmen-Events</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Turnier-News</b></a>
+          <a class="f-mod"><span class="dot dev"></span><b>Captains App</b></a>
+        </div>
+      </div>
+    </div>
+    <div class="f-legend">
+      <span class="li"><span class="dot" style="background:#00E805"></span>Im Einsatz</span>
+      <span class="li"><span class="dot" style="background:#E8C55A"></span>Pilot</span>
+      <span class="li"><span class="dot" style="background:rgba(255,255,255,.35)"></span>In Entwicklung</span>
+    </div>
+  </div>
+  <div class="f-contact">
+    <div>
+      <span class="cl">Persönlicher Kontakt</span>
+      <div class="big">Fragen beantwortet<br>ein Mensch.</div>
+    </div>
+    <div>
+      <span class="cl">Ansprechpartner</span>
+      <p style="font-weight:600">Fred Hoffmann</p>
+      <p class="sm">Gründer von GolfNext,<br>PGA Golfprofessional</p>
+    </div>
+    <div>
+      <span class="cl">Direkt erreichbar</span>
+      <p><a>0175 5951839</a></p>
+      <p><a>info@golfnext.de</a></p>
+      <p class="sm">Rückmeldung innerhalb eines Werktags</p>
+    </div>
+    <div>
+      <span class="cl">Folgen</span>
+      <div class="soc">
+        <a aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7.5 10v7M7.5 7.2v.01M11.5 17v-4a2.5 2.5 0 0 1 5 0v4"/></svg></a>
+        <a aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="f-bar">
+    <span class="jslogo" aria-label="GolfNext"></span>
+    <span>© 2026 GolfNext</span>
+    <a>Impressum</a>
+    <a>Datenschutz</a>
+    <a>Cookie-Einstellungen</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var LOGO='<svg viewBox="0 0 200.32 24.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GolfNext"><g fill="currentColor"><path d="m9.97,24.2c-6.64,0-9.97-2.21-9.97-6.67V6.98C0,2.76,3.27.65,9.8.65h4.66c1.16,0,1.74.48,1.74,1.4s-.58,1.4-1.74,1.4h-4.6c-4.12,0-6.2,1.23-6.2,3.61v10.38c0,2.66,2.11,3.98,6.47,3.98h7.35c4.29,0,6.47-1.33,6.47-3.98v-6.43c0-.95.61-1.43,1.84-1.43s1.84.48,1.84,1.43v6.54c0,4.46-3.37,6.67-9.97,6.67h-7.69Z"/><path d="m42.79,24.2c-5.89,0-8.82-1.8-8.82-5.38v-5.75c0-3.61,2.93-5.41,8.82-5.41h6.57c5.89,0,8.82,1.8,8.82,5.41v5.75c0,3.57-2.93,5.38-8.82,5.38h-6.57Zm11.74-11.17c0-1.74-1.7-2.59-5.07-2.59h-6.81c-3.34,0-5.04.85-5.04,2.59v5.82c0,1.7,1.7,2.59,5.04,2.59h6.81c3.37,0,5.07-.89,5.07-2.59v-5.82Z"/><path d="m64.55,1.43c0-.92.61-1.43,1.8-1.43s1.8.51,1.8,1.43v21.51c0,.95-.61,1.43-1.8,1.43s-1.8-.48-1.8-1.43V1.43Z"/><path d="m78.3,10.45v12.49c0,.95-.58,1.43-1.74,1.43-1.26,0-1.87-.48-1.87-1.43V5.17c0-3.4,2.72-5.11,8.31-5.11h2.89c1.12,0,1.7.48,1.7,1.33s-.58,1.36-1.7,1.36h-2.89c-3.13,0-4.7.78-4.7,2.38v2.66h7.59c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-7.59Z"/><path d="m96.62,1.23l20.53,18.11V1.87c0-.92.61-1.4,1.84-1.4s1.84.48,1.84,1.4v21.07c0,.95-.65,1.43-1.94,1.43-.75,0-1.23-.27-1.8-.78l-20.49-18.11v17.46c0,.95-.65,1.43-1.87,1.43s-1.8-.48-1.8-1.43V1.94c0-.99.65-1.46,1.91-1.46.72,0,1.23.24,1.8.75Z"/><path d="m130.9,17.06v2.08c0,1.6,1.57,2.42,4.73,2.42h5.04c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.04c-5.51,0-8.31-1.67-8.31-5.04v-6.67c0-3.2,2.49-4.83,7.42-4.83h9.84c4.83,0,7.25,1.46,7.25,4.36v3.81c0,.82-.54,1.23-1.57,1.23h-19.37Zm0-2.35h17.09c.2,0,.27-.1.27-.24v-1.77c0-1.57-1.29-2.35-3.95-2.35h-9.36c-2.72,0-4.05.78-4.05,2.35v2.01Z"/><path d="m169.13,17.74l-9.06,6.16c-.51.37-.92.51-1.43.48-1.16,0-1.77-.48-1.77-1.36,0-.34.17-.78.82-1.23l8.71-5.96-8.2-5.69c-.68-.44-.85-.92-.85-1.29,0-.92.61-1.36,1.84-1.36.65,0,.99.17,1.5.51l8.68,6.03,8.82-6.03c.51-.34.88-.51,1.43-.51,1.19,0,1.77.48,1.77,1.4-.03.31-.1.75-.82,1.23l-8.48,5.79,8.44,5.82c.65.48.85.92.85,1.29,0,.92-.61,1.36-1.84,1.36-.54,0-1.06-.1-1.53-.51l-8.88-6.13Z"/><path d="m192.76,10.45v12.49c0,.95-.61,1.43-1.77,1.43-1.23,0-1.84-.48-1.84-1.43v-12.49h-1.4c-1.09,0-1.67-.44-1.67-1.33s.58-1.33,1.67-1.33h1.4v-3.13c0-.92.58-1.43,1.77-1.43s1.84.51,1.84,1.43v3.13h5.86c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.86Z"/></g></svg>';
+  document.querySelectorAll('.jslogo').forEach(function(el){ el.innerHTML=LOGO; });
+})();
+</script>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Hero: Systemgrafik unverändert, einmaliger Aufbau ---- */
+  var hub = document.getElementById('hub');
+
+  /* ---- Journey-Teaser: ein Durchlauf, danach vollständiger Endzustand ---- */
+  var teaser = document.getElementById('teaser');
+  var steps = teaser ? teaser.querySelectorAll('.ts') : [];
+  var dot = document.getElementById('tdot');
+
+  function placeDot(i){
+    if(!dot || !steps[i] || !teaser) return;
+    var box = steps[i].getBoundingClientRect();
+    var ref = teaser.getBoundingClientRect();
+    dot.style.left = Math.round(box.left - ref.left) + 'px';
+  }
+
+  function tStep(i){
+    steps.forEach(function(s, n){
+      s.classList.toggle('reached', n <= i);
+      s.classList.toggle('here', n === i);
+    });
+    placeDot(i);
+  }
+
+  function runTeaser(){
+    var i = 0;
+    tStep(0);
+    var iv = setInterval(function(){
+      i++;
+      if(i >= steps.length){
+        clearInterval(iv);
+        steps.forEach(function(s){ s.classList.add('reached'); s.classList.remove('here'); });
+        return;
+      }
+      tStep(i);
+    }, 1500);
+  }
+
+  if(reduce){
+    if(hub) hub.classList.add('on');
+    if(teaser) teaser.classList.add('on');
+    steps.forEach(function(s){ s.classList.add('reached'); });
+  } else if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        e.target.classList.add('on');
+        if(e.target === teaser) runTeaser();
+        io.unobserve(e.target);
+      });
+    }, {threshold:.3});
+    if(hub) io.observe(hub);
+    if(teaser) io.observe(teaser);
+  } else {
+    if(hub) hub.classList.add('on');
+    if(teaser){ teaser.classList.add('on'); runTeaser(); }
+  }
+
+  window.addEventListener('resize', function(){
+    var here = teaser ? teaser.querySelector('.ts.here') : null;
+    if(!here) return;
+    placeDot(Array.prototype.indexOf.call(steps, here));
+  });
+})();
+</script>
+
+</body>
+</html>

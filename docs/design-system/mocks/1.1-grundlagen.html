@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfNext – Designkonzept · Akt 1: Grundlagen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GOLFNEXT – DESIGNKONZEPT · AKT 1: GRUNDLAGEN
+   Kapitel 1.1 Ausgangslage · 1.2 Designprinzipien · 1.3 Wettbewerb
+   Farbwerte extrahiert aus der Wettbewerbsanalyse 20.08.2026
+   ============================================================ */
+:root{
+  --navy:#01415B; --navy-deep:#012B3D; --blue:#0B6A90; --sky:#7FD3F0; --signal:#00E805;
+  --paper:#FFFCF5; --sand:#F5F1E6; --mist:#F3F6F4;
+  --ink:#16262C; --muted:#5C6F76; --line:#E6E1D6;
+  --ok:#2E6B38; --err:#A3564A;
+  --maxw:1200px;
+  --display:"Archivo",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter",system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;font-weight:600;color:var(--blue);margin:0 0 16px;display:block}
+.lead{font-size:clamp(17px,1.4vw,20px);color:var(--muted);max-width:64ch}
+.sec{padding:84px 0}
+.sec.sand{background:var(--sand)}
+.sec h2{font-size:clamp(26px,3vw,36px);margin-bottom:12px}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tscroll>table{min-width:640px}
+
+.doc-head{border-bottom:1px solid var(--line);padding:22px 0;background:var(--paper)}
+.doc-head .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.doc-head .jslogo{color:var(--navy);display:inline-flex}
+.doc-head .jslogo svg{height:20px;width:auto}
+.doc-head .sep{color:var(--line)}
+.doc-head .doc{font-size:14px;color:var(--muted);letter-spacing:.05em}
+.doc-head .tagright{margin-left:auto;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.chapter{padding:92px 0 66px}
+.chapter .num{font-family:var(--display);font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+.chapter h1{font-size:clamp(38px,5vw,60px);max-width:20ch;font-weight:800}
+.chapter .lead{margin-top:22px}
+.chnum{font-family:var(--display);font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;display:block}
+
+/* Ist-Zustand */
+.ist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff}
+.ist .col{padding:38px 40px;min-width:0}
+.ist .col.old{border-right:1px solid var(--line);background:repeating-linear-gradient(-45deg,#fff,#fff 14px,#faf8f3 14px,#faf8f3 15px)}
+.ist .clabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:18px;display:block}
+.ist .old .clabel{color:var(--err)}
+.ist .new .clabel{color:var(--blue)}
+.ist ul{margin:0;padding:0;list-style:none}
+.ist li{padding:10px 0 10px 30px;position:relative;font-size:15.5px;color:var(--muted);border-bottom:1px solid var(--line)}
+.ist li:last-child{border-bottom:0}
+.ist li b{color:var(--ink);font-weight:600}
+.ist li::before{content:"";position:absolute;left:2px;top:16px;width:14px;height:14px}
+.ist .old li::before{border-left:1.8px solid var(--err);border-bottom:1.8px solid var(--err);transform:rotate(-45deg) scale(.7);top:13px}
+.ist .new li::before{border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg) scale(.7);width:15px;height:8px;top:16px}
+
+/* Zielgruppen */
+.zg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.zgc{background:#fff;border:1px solid var(--line);border-radius:4px;padding:26px 28px 24px;position:relative;min-width:0}
+.zgc.primary::before{content:"";position:absolute;top:0;left:28px;width:44px;height:3px;background:var(--signal)}
+.zgc>svg{width:28px;height:28px;color:var(--navy);margin-bottom:14px}
+.zgc .rank{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);display:block;margin-bottom:8px}
+.zgc.primary .rank{color:var(--blue)}
+.zgc h3{font-size:19px;margin-bottom:6px}
+.zgc p{font-size:14.5px;color:var(--muted);margin:0 0 12px}
+.zgc .frage{font-size:14px;color:var(--ink);background:var(--sand);border-radius:3px;padding:11px 14px;margin:0}
+.zgc .frage b{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11px;color:var(--muted);display:block;margin-bottom:3px}
+
+/* Prinzipien */
+.prin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.pc{background:#fff;border:1px solid var(--line);border-radius:4px;padding:34px 36px 30px;position:relative;min-width:0}
+.pc::before{content:"";position:absolute;top:0;left:36px;width:44px;height:3px;background:var(--signal)}
+.pc .pn{font-family:var(--display);font-size:13px;font-weight:600;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.pc h3{font-size:clamp(21px,2.1vw,26px);margin-bottom:12px}
+.pc p{font-size:15.5px;color:var(--muted);margin:0 0 14px}
+.pc .konkret{font-size:14px;color:var(--ink);background:var(--sand);border-radius:3px;padding:12px 16px;margin:0}
+.pc .konkret b{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11.5px;color:var(--muted);display:block;margin-bottom:4px}
+
+/* Navy-Merksatz */
+.thesis{background:linear-gradient(135deg,var(--navy-deep),var(--navy));border-radius:4px;padding:34px 40px;color:#fff;position:relative;overflow:hidden}
+.thesis::after{content:"";position:absolute;inset:0;background:radial-gradient(620px 260px at 92% 110%,rgba(127,211,240,.18),transparent 60%);pointer-events:none}
+.thesis>*{position:relative;z-index:1}
+.thesis .te{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;color:var(--signal);display:block;margin-bottom:14px}
+.thesis p{font-family:var(--display);font-size:clamp(19px,2.1vw,25px);font-weight:600;line-height:1.35;color:#fff;margin:0;max-width:46ch;letter-spacing:-.01em}
+
+/* Wettbewerb */
+.wtb{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.wtb th,.wtb td{text-align:left;padding:15px 20px;border-bottom:1px solid var(--line);vertical-align:top}
+.wtb th{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--mist)}
+.wtb tr:last-child td{border-bottom:0}
+.wtb td:first-child{font-weight:600;color:var(--ink);width:230px}
+.wtb td small{display:block;color:var(--muted);font-weight:400;font-size:13px;margin-top:2px}
+.tagpill{display:inline-block;font-weight:700;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;padding:4px 9px;white-space:nowrap}
+.tagpill.uebernehmen{color:var(--ok);background:#EDF4EA}
+.tagpill.meiden{color:var(--err);background:#F8EFEC}
+.tagpill.eigen{color:var(--navy);background:#E4F7DE}
+.posit{border-left:3px solid var(--signal);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0 4px 4px 0;padding:36px 42px;margin-top:34px}
+.posit h3{font-size:clamp(22px,2.2vw,28px);margin-bottom:12px}
+.posit p{color:var(--muted);max-width:74ch;margin:0}
+
+/* Kategorie-Kette */
+.kette{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:8px}
+.kx{background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px 16px 16px;min-width:0}
+.kx.on{background:var(--navy);border-color:var(--navy)}
+.kx .kn{font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.kx.on .kn{color:var(--signal)}
+.kx .kt{font-family:var(--display);font-size:15.5px;font-weight:700;color:var(--navy);margin:10px 0 6px;letter-spacing:-.01em;line-height:1.2}
+.kx.on .kt{color:#fff}
+.kx .kd{font-size:12.5px;color:var(--muted);line-height:1.45}
+.kx.on .kd{color:#B9D2DE}
+
+.docfoot{border-top:1px solid var(--line);padding:30px 0 46px;font-size:13.5px;color:var(--muted)}
+.docfoot .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:baseline}
+.docfoot .sp{margin-left:auto}
+
+@media(max-width:1080px){ .kette{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media(max-width:960px){
+  .ist{grid-template-columns:minmax(0,1fr)}
+  .ist .col.old{border-right:0;border-bottom:1px solid var(--line)}
+  .zg{grid-template-columns:minmax(0,1fr)}
+  .prin{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:620px){
+  .sec{padding:58px 0}
+  .kette{grid-template-columns:minmax(0,1fr)}
+  .ist .col{padding:28px 24px}
+  .pc{padding:28px 24px 26px}
+  .thesis{padding:28px 24px}
+  .posit{padding:28px 24px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="wrap">
+    <span class="jslogo" aria-label="GolfNext"></span>
+    <span class="sep">·</span>
+    <span class="doc">Designkonzept – Marketing-Website</span>
+    <span class="tagright">Akt 1 · Grundlagen (Kapitel 1.1–1.3)</span>
+  </div>
+</div>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="num">Akt 1 · Grundlagen</div>
+    <h1>Diese Website hat sechs Monate Zeit.</h1>
+    <p class="lead">Bis zum 20. Februar 2027 soll GolfNext vom überzeugenden Produktkonzept zum belastbar implementierten System mit fünf Gründungspartnern werden. Der neue Auftritt ist dafür kein Schmuckstück, sondern Werkzeug: Er muss die Kategorie erklären, bevor ein Wettbewerber sie besetzt, und einen Vorstand vom ersten Blick bis ins Erstgespräch führen. Drei Kapitel klären, woran wir jede Gestaltungsentscheidung messen.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <span class="chnum">Kapitel 1.1</span>
+    <h2>Ausgangslage &amp; Ziel</h2>
+    <p class="lead" style="margin-bottom:36px">GolfNext besitzt in der Zielkategorie die vollständigste Produktarchitektur – Website, CRM, Lifecycle, Content und Clubprozesse in einem System. Was fehlt, ist die installierte Basis. Und ein Auftritt, der die Plattformgröße zeigt, statt sie zu verschweigen.</p>
+    <div class="ist">
+      <div class="col old">
+        <span class="clabel">Heute – golfnext.de</span>
+        <ul>
+          <li><b>Beratung statt Produkt:</b> „GolfNext Consulting macht Golfclubs fit für die Zukunft“ – der Auftritt verkauft Leistungen, nicht ein System.</li>
+          <li><b>Modulkatalog-Logik:</b> KI im Golfsport, Schulungen, Online-Marketing, Beratung, Shop und Blog stehen nebeneinander. Die Verbindung, die den Vorsprung ausmacht, wird nicht sichtbar.</li>
+          <li><b>Kein Beweis auf der Seite:</b> keine Live-Demo, keine Fallstudie mit Zahlen, keine Referenz, die ein Vorstand zitieren könnte.</li>
+          <li><b>Kein klarer nächster Schritt:</b> der Weg vom Interesse zum persönlichen Erstgespräch ist nicht als Strecke inszeniert.</li>
+        </ul>
+      </div>
+      <div class="col new">
+        <span class="clabel">Ziel – der neue Auftritt</span>
+        <ul>
+          <li><b>Die Kategorie definieren:</b> vom digitalen Schaufenster zur aktiven Clubzentrale – erklärt, bevor ein Wettbewerber sie besetzt.</li>
+          <li><b>Ein System, sichtbar verbunden:</b> Wachstum nach außen, Entlastung nach innen – eine Architektur, keine Modulliste.</li>
+          <li><b>Beweis direkt daneben:</b> Live-Demo, Studio-Demo und Messwerte aus realen Clubs als feste Bausteine jeder relevanten Seite.</li>
+          <li><b>Der Gründungspartner-Weg als Hauptstrecke:</b> ein sichtbares Angebot mit Frist, ein 30-minütiges Online-Erstgespräch als klarer Abschluss.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size:21px;margin:52px 0 8px">Die Kategorie, die wir besetzen</h3>
+    <p class="lead" style="margin-bottom:24px">Sechs Aufgaben beschreiben, was eine moderne Golfclub-Website leisten muss. Die vier hervorgehobenen Stufen sind der Bereich, in dem GolfNext gegenüber reinen Website- und reinen Verwaltungsanbietern führt – und genau diese Kette wird zur Gliederung der Startseite.</p>
+    <div class="kette">
+      <div class="kx">
+        <div class="kn">01</div>
+        <div class="kt">Gefunden werden</div>
+        <div class="kd">SEO, GEO, Google, Meta</div>
+      </div>
+      <div class="kx on">
+        <div class="kn">02</div>
+        <div class="kt">Führen</div>
+        <div class="kd">Zielgruppen, Landingpages, Journeys</div>
+      </div>
+      <div class="kx on">
+        <div class="kn">03</div>
+        <div class="kt">Konvertieren</div>
+        <div class="kd">Formular, Buchung, Payment</div>
+      </div>
+      <div class="kx on">
+        <div class="kn">04</div>
+        <div class="kt">Entwickeln</div>
+        <div class="kd">CRM, Lifecycle, Content</div>
+      </div>
+      <div class="kx on">
+        <div class="kn">05</div>
+        <div class="kt">Entlasten</div>
+        <div class="kd">Concierge, Platzstatus, Clubprozesse</div>
+      </div>
+      <div class="kx">
+        <div class="kn">06</div>
+        <div class="kt">Verbinden</div>
+        <div class="kd">PC CADDIE, APIs, Analytics</div>
+      </div>
+    </div>
+
+    <div class="thesis" style="margin-top:36px">
+      <span class="te">Die Leitthese des gesamten Konzepts</span>
+      <p>Die Website ist nicht das Produkt. Sie ist die sichtbare Oberfläche eines Systems, das Nachfrage erzeugt, Interessenten führt, Buchungen vorbereitet, Beziehungen entwickelt und den Clubbetrieb entlastet.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand">
+  <div class="wrap">
+    <span class="chnum">Kapitel 1.1 · Zielgruppen</span>
+    <h2>Wer entscheidet – und wer verhindern kann</h2>
+    <p class="lead" style="margin-bottom:36px">Ein Golfclub entscheidet selten allein. Zwei Rollen tragen die Kaufentscheidung, zwei weitere können sie verstärken oder blockieren. Jede Seite dieses Konzepts wird daran gemessen, ob sie die Frage der jeweiligen Rolle beantwortet.</p>
+    <div class="zg">
+      <div class="zgc primary">
+        <span class="rank">Primär · entscheidet</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20v-9M18 20v-9"/><path d="M3.5 11h17L12 4 3.5 11z"/><path d="M10 20v-5h4v5"/></svg>
+        <h3>Vorstand &amp; Präsidium</h3>
+        <p>Ehrenamtlich, oft nicht digital-affin, in der Verantwortung gegenüber der Mitgliederversammlung. Entscheidet in Sitzungen, nicht am Bildschirm – und braucht etwas, das man weiterreichen und beschließen kann.</p>
+        <p class="frage"><b>Die Frage dieser Rolle</b>Was, wenn das nicht funktioniert – und wie erkläre ich das der Versammlung?</p>
+      </div>
+      <div class="zgc primary">
+        <span class="rank">Primär · rechnet</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+        <h3>Geschäftsführung &amp; Clubmanager</h3>
+        <p>Trägt Mitgliederzahlen, Greenfee-Umsatz und Personalkosten. Kennt die Lücken im Betrieb genau und prüft jedes Angebot gegen die eigene Jahresplanung.</p>
+        <p class="frage"><b>Die Frage dieser Rolle</b>Was kostet es, was bringt es – und wann ist es zurückverdient?</p>
+      </div>
+      <div class="zgc">
+        <span class="rank">Sekundär · kann blockieren</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg>
+        <h3>Sekretariat &amp; Clubbüro</h3>
+        <p>Beantwortet täglich dieselben Fragen am Telefon. Wird durch falsche Kommunikation zum Gegner des Projekts – und durch richtige zum stärksten Fürsprecher.</p>
+        <p class="frage"><b>Die Frage dieser Rolle</b>Nimmt mir das Arbeit ab – oder bekomme ich ein weiteres System dazu?</p>
+      </div>
+      <div class="zgc">
+        <span class="rank">Sekundär · verstärkt</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+        <h3>Verbände &amp; Multiplikatoren</h3>
+        <p>DGV, Landesverbände, PGA und Fachmedien. Lesen den Auftritt als Autoritätssignal – und entscheiden, ob GolfNext als seriöser Partner wahrgenommen wird.</p>
+        <p class="frage"><b>Die Frage dieser Rolle</b>Ist das ein Produkt mit Substanz – oder eine weitere Agentur?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="chnum">Kapitel 1.2</span>
+    <h2>Vier Designprinzipien</h2>
+    <p class="lead" style="margin-bottom:36px">Diese vier Sätze sind der Maßstab für jede Gestaltungsentscheidung in diesem Konzept – und für jede künftige. Wenn wir später über ein Detail diskutieren, ist die Frage nie „Gefällt es?“, sondern: „Folgt es den Prinzipien?“</p>
+    <div class="prin">
+      <div class="pc">
+        <div class="pn">Prinzip 1</div>
+        <h3>Beweis statt Behauptung</h3>
+        <p>Kein „führend“, kein „innovativ“. Stattdessen: Zahlen mit Zeitraum, Cases mit Budget und Ergebnis, Demos, die man selbst anfasst. Jede starke Aussage steht neben ihrem Beleg – oder sie steht nicht.</p>
+        <p class="konkret"><b>Konkret heißt das</b>Jede Modul-Sektion endet mit einem Messwert oder einer Demo. Kennzahlen tragen Zeitraum und Quelle. Kein Superlativ ohne Nachweis.</p>
+      </div>
+      <div class="pc">
+        <div class="pn">Prinzip 2</div>
+        <h3>Ein System, keine Modulliste</h3>
+        <p>Der Vorsprung entsteht durch Verbindung, nicht durch die Zahl der Bausteine. Die Gestaltung zeigt deshalb immer die Strecke – von der Anzeige über den Kontakt bis zur Mitgliedschaft – bevor sie einzelne Module erklärt.</p>
+        <p class="konkret"><b>Konkret heißt das</b>Die Sechser-Kette aus Kapitel 1.1 ist das wiederkehrende Ordnungsbild. Module erscheinen nie als gleichrangiges Kachelraster ohne Kontext.</p>
+      </div>
+      <div class="pc">
+        <div class="pn">Prinzip 3</div>
+        <h3>Sitzungstauglich</h3>
+        <p>Der Auftritt muss im Vorstandszimmer funktionieren: ausgedruckt, weitergeleitet, an die Wand geworfen. Ruhige Flächen, große klare Typografie, wenig Farbe – Substanz, die auch ohne Erklärung trägt.</p>
+        <p class="konkret"><b>Konkret heißt das</b>Viel Papierfläche, ein Thema pro Sektion, druckbare Seiten, Kennzahlen und Aussagen, die man wörtlich zitieren kann.</p>
+      </div>
+      <div class="pc">
+        <div class="pn">Prinzip 4</div>
+        <h3>Software zeigen, nicht beschreiben</h3>
+        <p>Wir verkaufen ein Produkt, keine Agenturleistung. Also sieht man Produkt: echte Oberflächen, echte Daten, echte Interaktion – eingebettet in die Seite statt versteckt hinter einem Formular.</p>
+        <p class="konkret"><b>Konkret heißt das</b>Concierge live klickbar, Platzstatus-Widget mit Beispieldaten, Cockpit-Ausschnitte im Browser-Rahmen. Keine Stock-Illustrationen von „Digitalisierung“.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand">
+  <div class="wrap">
+    <span class="chnum">Kapitel 1.3</span>
+    <h2>Wettbewerbs-Einordnung</h2>
+    <p class="lead" style="margin-bottom:36px">Sechs Anbieter besetzen sechs Teilwelten: GKMB kommt von der Website, Faceforce vom Kampagnenvertrieb, PC CADDIE von der Verwaltung, LOKAGO von KI und Daten, das Deutsche Institut für Marketing von der Beratung, CON.GOLF vom Produktstudio. Entscheidend für die Gestaltung ist, was wir aus jeder Welt übernehmen, was wir bewusst meiden – und was nur uns gehört.</p>
+    <div class="tscroll">
+      <table class="wtb">
+        <tr><th>Element</th><th>Einordnung</th><th>Unsere Entscheidung</th></tr>
+        <tr>
+          <td>Dokumentierter Modulkatalog mit Support- und Releaselogik<small>GKMB · ClubWebMan</small></td>
+          <td><span class="tagpill uebernehmen">Übernehmen</span></td>
+          <td>Übernehmen wir als Prinzip: Jedes Modul bekommt eine eigene, gleich aufgebaute Seite mit Leistungsumfang, Voraussetzungen und Grenzen. Was ein Club bucht, ist vor der Unterschrift nachlesbar.</td>
+        </tr>
+        <tr>
+          <td>Klare Vertriebs- und Ergebnissprache, Kampagnen-Playbooks<small>Faceforce · The Golf Journey</small></td>
+          <td><span class="tagpill uebernehmen">Übernehmen</span></td>
+          <td>Übernehmen wir: Wir sprechen über Leads, Buchungen, Abschlussquote und Umsatz – nicht über „Sichtbarkeit“. Jede Journey hat ein benanntes Ziel und eine benannte Kennzahl.</td>
+        </tr>
+        <tr>
+          <td>Datenklarheit und Prozessstabilität als Fundament<small>PC CADDIE</small></td>
+          <td><span class="tagpill uebernehmen">Übernehmen</span></td>
+          <td>Übernehmen wir in der Haltung: PC CADDIE wird als Rückgrat des Clubbetriebs benannt und respektiert. Der Auftritt zeigt Anschluss statt Ablösung – das nimmt dem Sekretariat die Angst.</td>
+        </tr>
+        <tr>
+          <td>Expertenvermarktung über Artikel, Vorträge und Webinare<small>DIM · Prof. Bernecker</small></td>
+          <td><span class="tagpill uebernehmen">Übernehmen</span></td>
+          <td>Übernehmen wir gebündelt: Freds Golf- und PGA-Autorität bekommt einen festen Ort im Auftritt – als Wissensstrecke, die auf das Produkt zurückführt, nicht als loser Blog.</td>
+        </tr>
+        <tr>
+          <td>Schwere CMS-Anmutung und unübersichtliche Einzelmodul-Kommunikation<small>Kategorie-Altlast</small></td>
+          <td><span class="tagpill meiden">Meiden</span></td>
+          <td>Meiden wir. Achtzig Bausteine nebeneinander erzeugen Respekt vor der Liste, nicht Vertrauen in das System. Wir zeigen erst die Strecke, dann die Bausteine.</td>
+        </tr>
+        <tr>
+          <td>Externe, stark standardisierte Landingpage-Welt neben der Clubmarke<small>Kampagnen-Signatur</small></td>
+          <td><span class="tagpill meiden">Meiden</span></td>
+          <td>Meiden wir. Unsere Landingpages leben im Design und im Kontext des jeweiligen Clubs. Genau das wird im Auftritt gezeigt – als sichtbarer Unterschied, ohne einen Wettbewerber zu nennen.</td>
+        </tr>
+        <tr>
+          <td>Breites Leistungsversprechen ohne kaufbares Paket<small>Studio- und Agentur-Signatur</small></td>
+          <td><span class="tagpill meiden">Meiden</span></td>
+          <td>Meiden wir. Drei Pakete, feste Preise, fester Standardumfang, klar benannte Change-Request-Regel. Wer die Seite verlässt, weiß, was er bekommt und was es kostet.</td>
+        </tr>
+        <tr>
+          <td>Website, Marketing, CRM, Lifecycle, Content und Clubprozesse in einer Plattform</td>
+          <td><span class="tagpill eigen">Nur wir</span></td>
+          <td>Wird zur Signature-Sektion auf jeder relevanten Seite: die durchgehende Strecke vom Werbe-Impuls bis zum entlasteten Clubbüro – auf einer Oberfläche, in einem Vertrag.</td>
+        </tr>
+        <tr>
+          <td>30+ Jahre reale Clubkenntnis, verbunden mit eigener Umsetzungsgeschwindigkeit</td>
+          <td><span class="tagpill eigen">Nur wir</span></td>
+          <td>Wird zur Architektur der Über-uns- und Autoritätsseiten: golf-native Produktentscheidungen statt übertragener Standardmodelle – belegt an konkreten Clubsituationen.</td>
+        </tr>
+      </table>
+    </div>
+    <div class="posit">
+      <span class="eyebrow">Der Satz, der alles ordnet</span>
+      <h3>Andere verkaufen Websites, Kampagnen, Verwaltung, KI oder Beratung.</h3>
+      <p>GolfNext verbindet diese Welten dort, wo der Club täglich mit Interessenten, Gästen, Mitgliedern und Mitarbeitern arbeitet. Die Website darf Wettbewerber nicht namentlich angreifen – sie muss die Kategorie so definieren, dass die Unterschiede von selbst sichtbar werden.</p>
+    </div>
+  </div>
+</section>
+
+<div class="docfoot">
+  <div class="wrap">
+    <span>GolfNext – Designkonzept Marketing-Website, Akt 1: Grundlagen (Kapitel 1.1–1.3)</span>
+    <span class="sp">SK Online Marketing · August 2026</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var LOGO='<svg viewBox="0 0 200.32 24.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GolfNext"><g fill="currentColor"><path d="m9.97,24.2c-6.64,0-9.97-2.21-9.97-6.67V6.98C0,2.76,3.27.65,9.8.65h4.66c1.16,0,1.74.48,1.74,1.4s-.58,1.4-1.74,1.4h-4.6c-4.12,0-6.2,1.23-6.2,3.61v10.38c0,2.66,2.11,3.98,6.47,3.98h7.35c4.29,0,6.47-1.33,6.47-3.98v-6.43c0-.95.61-1.43,1.84-1.43s1.84.48,1.84,1.43v6.54c0,4.46-3.37,6.67-9.97,6.67h-7.69Z"/><path d="m42.79,24.2c-5.89,0-8.82-1.8-8.82-5.38v-5.75c0-3.61,2.93-5.41,8.82-5.41h6.57c5.89,0,8.82,1.8,8.82,5.41v5.75c0,3.57-2.93,5.38-8.82,5.38h-6.57Zm11.74-11.17c0-1.74-1.7-2.59-5.07-2.59h-6.81c-3.34,0-5.04.85-5.04,2.59v5.82c0,1.7,1.7,2.59,5.04,2.59h6.81c3.37,0,5.07-.89,5.07-2.59v-5.82Z"/><path d="m64.55,1.43c0-.92.61-1.43,1.8-1.43s1.8.51,1.8,1.43v21.51c0,.95-.61,1.43-1.8,1.43s-1.8-.48-1.8-1.43V1.43Z"/><path d="m78.3,10.45v12.49c0,.95-.58,1.43-1.74,1.43-1.26,0-1.87-.48-1.87-1.43V5.17c0-3.4,2.72-5.11,8.31-5.11h2.89c1.12,0,1.7.48,1.7,1.33s-.58,1.36-1.7,1.36h-2.89c-3.13,0-4.7.78-4.7,2.38v2.66h7.59c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-7.59Z"/><path d="m96.62,1.23l20.53,18.11V1.87c0-.92.61-1.4,1.84-1.4s1.84.48,1.84,1.4v21.07c0,.95-.65,1.43-1.94,1.43-.75,0-1.23-.27-1.8-.78l-20.49-18.11v17.46c0,.95-.65,1.43-1.87,1.43s-1.8-.48-1.8-1.43V1.94c0-.99.65-1.46,1.91-1.46.72,0,1.23.24,1.8.75Z"/><path d="m130.9,17.06v2.08c0,1.6,1.57,2.42,4.73,2.42h5.04c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.04c-5.51,0-8.31-1.67-8.31-5.04v-6.67c0-3.2,2.49-4.83,7.42-4.83h9.84c4.83,0,7.25,1.46,7.25,4.36v3.81c0,.82-.54,1.23-1.57,1.23h-19.37Zm0-2.35h17.09c.2,0,.27-.1.27-.24v-1.77c0-1.57-1.29-2.35-3.95-2.35h-9.36c-2.72,0-4.05.78-4.05,2.35v2.01Z"/><path d="m169.13,17.74l-9.06,6.16c-.51.37-.92.51-1.43.48-1.16,0-1.77-.48-1.77-1.36,0-.34.17-.78.82-1.23l8.71-5.96-8.2-5.69c-.68-.44-.85-.92-.85-1.29,0-.92.61-1.36,1.84-1.36.65,0,.99.17,1.5.51l8.68,6.03,8.82-6.03c.51-.34.88-.51,1.43-.51,1.19,0,1.77.48,1.77,1.4-.03.31-.1.75-.82,1.23l-8.48,5.79,8.44,5.82c.65.48.85.92.85,1.29,0,.92-.61,1.36-1.84,1.36-.54,0-1.06-.1-1.53-.51l-8.88-6.13Z"/><path d="m192.76,10.45v12.49c0,.95-.61,1.43-1.77,1.43-1.23,0-1.84-.48-1.84-1.43v-12.49h-1.4c-1.09,0-1.67-.44-1.67-1.33s.58-1.33,1.67-1.33h1.4v-3.13c0-.92.58-1.43,1.77-1.43s1.84.51,1.84,1.43v3.13h5.86c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.86Z"/></g></svg>';
+  document.querySelectorAll('.jslogo').forEach(function(el){ el.innerHTML=LOGO; });
+})();
+</script>
+</body>
+</html>

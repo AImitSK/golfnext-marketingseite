@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfNext – Designkonzept · Kapitel UI-Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GOLFNEXT – DESIGNKONZEPT · KAPITEL 2.5 UI-KIT
+   Schrift: Archivo + Inter (Kapitel 2.2) · Farben: Kapitel 2.3
+   Radius durchgehend 4 px – kompatibel zum Kunden-Template.
+   ============================================================ */
+:root{
+  --navy:#01415B; --navy-deep:#012B3D; --blue:#0B6A90; --sky:#7FD3F0; --signal:#00E805;
+  --paper:#FFFCF5; --sand:#F5F1E6; --mist:#F3F6F4;
+  --ink:#16262C; --muted:#5C6F76; --line:#E6E1D6;
+  --ok:#2E6B38; --okbg:#EDF4EA; --err:#A3564A; --errbg:#F8EFEC; --warn:#8A6D3B; --warnbg:#F7F1E3;
+  --maxw:1200px;
+  --display:"Archivo",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter",system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);font-weight:700;line-height:1.14;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;font-weight:600;color:var(--blue);margin:0 0 16px;display:block}
+.lead{font-size:clamp(17px,1.4vw,20px);color:var(--muted);max-width:64ch}
+.sec{padding:80px 0}
+.sec.sand{background:var(--sand)}
+.sec h2{font-size:clamp(26px,3vw,36px);margin-bottom:12px}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tscroll>table{min-width:620px}
+
+.doc-head{border-bottom:1px solid var(--line);padding:22px 0}
+.doc-head .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.doc-head .jslogo{color:var(--navy);display:inline-flex}
+.doc-head .jslogo svg{height:20px;width:auto}
+.doc-head .sep{color:var(--line)}
+.doc-head .doc{font-size:14px;color:var(--muted);letter-spacing:.05em}
+.doc-head .tagright{margin-left:auto;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.chapter{padding:92px 0 66px}
+.chapter .num{font-family:var(--display);font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+.chapter h1{font-size:clamp(40px,5.4vw,62px);max-width:20ch;font-weight:800}
+.chapter .lead{margin-top:22px}
+
+/* Kit-Gerüst */
+.spec{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:26px}
+.spec .sphead{display:flex;align-items:baseline;gap:14px;padding:17px 26px;border-bottom:1px solid var(--line);background:var(--mist);flex-wrap:wrap}
+.spec .sphead b{font-size:15px;font-weight:600;color:var(--ink)}
+.spec .sphead span{font-size:13px;color:var(--muted)}
+.spec .spbody{padding:28px 26px}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.row+.row{margin-top:20px}
+.lab{flex:0 0 150px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.note{font-size:13.5px;color:var(--muted);margin:18px 0 0;max-width:76ch}
+.note b{color:var(--ink);font-weight:600}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:"Inter";font-weight:700;font-size:15.5px;padding:13px 24px;border-radius:4px;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.btn svg{width:15px;height:15px}
+.btn.cta{background:var(--signal);border-color:var(--signal);color:var(--navy)}
+.btn.cta:hover{background:#00CE04}
+.btn.col{flex-direction:column;align-items:flex-start;gap:2px;line-height:1.25;padding:11px 22px}
+.btn.col small{font-size:12px;font-weight:500;opacity:.8}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:#095B7C}
+.btn.ghost{background:transparent;border-color:var(--navy);color:var(--navy)}
+.btn.ghost:hover{background:var(--navy);color:#fff}
+.btn.light{background:#fff;border-color:#fff;color:var(--navy)}
+.btn.sm{font-size:14px;padding:9px 16px}
+.btn.disabled{background:#EFECE3;border-color:#EFECE3;color:#A9A294;cursor:not-allowed}
+.btn.loading{position:relative;color:transparent!important;pointer-events:none}
+.btn.loading::after{content:"";position:absolute;inset:0;margin:auto;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tlink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15.5px;color:var(--blue)}
+.tlink svg{width:15px;height:15px;transition:transform .15s}
+.tlink:hover svg{transform:translateX(3px)}
+.navyband{background:linear-gradient(135deg,var(--navy-deep),var(--navy));border-radius:4px;padding:22px 26px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+
+/* Badges & Chips */
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-radius:3px;padding:5px 11px}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.badge.live{background:var(--okbg);color:var(--ok)}
+.badge.pilot{background:#FAF4E0;color:var(--warn)}
+.badge.dev{background:#EFECE3;color:var(--muted)}
+.badge.addon{background:#E7F1F6;color:var(--blue)}
+.badge.inklusive{background:#EFECE3;color:var(--muted)}
+.badge.onnavy{background:var(--signal);color:var(--navy)}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:30px;padding:8px 17px;background:#fff;cursor:pointer}
+.chip:hover{border-color:#CFC7B8;color:var(--navy)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip .x{font-weight:400;opacity:.7}
+
+/* Formfelder */
+.f{max-width:380px;min-width:0;flex:1 1 300px}
+.f label{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:7px}
+.f label .req{color:var(--err)}
+.inp{width:100%;font-family:inherit;font-size:15.5px;color:var(--ink);background:#fff;border:1px solid #D5CFC3;border-radius:4px;padding:12px 14px;outline:none;transition:border-color .15s,box-shadow .15s}
+.inp::placeholder{color:#A9A294}
+.inp:focus,.inp.focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,106,144,.16)}
+.inp.err{border-color:var(--err);box-shadow:0 0 0 3px rgba(163,86,74,.12)}
+.inp.ok{border-color:var(--ok)}
+.inp:disabled,.inp.dis{background:var(--sand);color:#A9A294;cursor:not-allowed}
+.fmsg{font-size:13.5px;margin-top:6px;display:flex;gap:6px;align-items:flex-start}
+.fmsg svg{width:14px;height:14px;flex:0 0 auto;margin-top:2px}
+.fmsg.e{color:var(--err)}
+.fmsg.s{color:var(--ok)}
+.fmsg.h{color:var(--muted)}
+select.inp{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%235C6F76' stroke-width='1.6' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+textarea.inp{min-height:96px;resize:vertical}
+.check{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--muted);max-width:52ch;cursor:pointer}
+.check .box{flex:0 0 auto;width:20px;height:20px;border:1px solid #D5CFC3;border-radius:4px;background:#fff;margin-top:1px;display:flex;align-items:center;justify-content:center}
+.check.on .box{background:var(--blue);border-color:var(--blue)}
+.check.on .box svg{width:12px;height:12px;color:#fff}
+.radio{display:inline-flex;gap:9px;align-items:center;font-size:15px;color:var(--ink);cursor:pointer;margin-right:22px}
+.radio .rb{width:19px;height:19px;border:1px solid #D5CFC3;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+.radio.on .rb{border-color:var(--blue)}
+.radio.on .rb::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue)}
+
+/* Karten */
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .18s,transform .18s;min-width:0}
+.card:hover{box-shadow:0 22px 44px -30px rgba(1,65,91,.45);transform:translateY(-2px)}
+.card .ph{aspect-ratio:16/10;background:linear-gradient(140deg,#DCE5DC,#C3D2C6);position:relative}
+.card .ph svg{position:absolute;inset:0;margin:auto;width:48px;height:48px;color:#6E8377;opacity:.6}
+.card .ph .badge{position:absolute;top:12px;left:12px;background:#fff}
+.card .bd{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.card .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:700}
+.card h3{font-size:19px;margin:8px 0 6px;line-height:1.3}
+.card .meta{font-size:14.5px;color:var(--muted)}
+.card .price{font-family:var(--display);font-size:21px;color:var(--navy);font-weight:700;margin-top:auto;padding-top:14px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.card .tlink{margin-top:auto;padding-top:14px;font-size:14.5px}
+.card.paket{border-color:var(--navy);position:relative}
+.card.paket::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--signal)}
+.card.paket .bd{padding-top:24px}
+.card.paket ul{margin:14px 0 0;padding:0;list-style:none}
+.card.paket li{font-size:14.5px;color:var(--muted);padding:6px 0 6px 24px;position:relative}
+.card.paket li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:6px;border-left:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(-45deg)}
+
+/* Beweis-Module */
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:4px;padding:24px 26px 22px;position:relative;min-width:0}
+.kpi::before{content:"";position:absolute;top:0;left:26px;width:40px;height:3px;background:var(--signal)}
+.kpi .kl{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:6px;display:block}
+.kpi .kn{font-family:var(--display);font-size:clamp(30px,3vw,40px);color:var(--navy);font-weight:700;line-height:1.05;margin-top:10px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi .kn small{font-size:.46em;color:var(--muted);font-family:"Inter";font-weight:500;letter-spacing:0}
+.kpi .ksub{font-size:14px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trend{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:600;border-radius:30px;padding:3px 11px;font-variant-numeric:tabular-nums}
+.trend svg{width:11px;height:11px}
+.trend.up{color:var(--ok);background:var(--okbg)}
+.trend.down{color:var(--err);background:var(--errbg)}
+.mkt{width:100%;border-collapse:collapse;font-size:15.5px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.mkt th,.mkt td{text-align:left;padding:14px 20px;border-bottom:1px solid var(--line)}
+.mkt th{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--mist)}
+.mkt th.num,.mkt td.num{text-align:right;font-variant-numeric:tabular-nums}
+.mkt td.num{font-family:var(--display);font-weight:700;color:var(--navy);letter-spacing:-.02em}
+.mkt tr.hl td{background:#EFF6F9}
+.mkt tr:last-child td{border-bottom:0}
+
+/* Akkordeon & Steps */
+.acc{border:1px solid var(--line);border-radius:4px;background:#fff;overflow:hidden}
+.acc .ai{border-bottom:1px solid var(--line)}
+.acc .ai:last-child{border-bottom:0}
+.acc .ah{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:19px 24px;cursor:pointer;font-family:var(--display);font-size:18px;color:var(--navy);font-weight:700;letter-spacing:-.02em}
+.acc .ah svg{width:16px;height:16px;color:var(--muted);flex:0 0 auto;transition:transform .2s}
+.acc .ai.open .ah svg{transform:rotate(45deg)}
+.acc .ab{display:none;padding:0 24px 20px;font-size:15.5px;color:var(--muted);max-width:76ch}
+.acc .ai.open .ab{display:block}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.step{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px 24px;position:relative;min-width:0}
+.step .sn{font-family:var(--display);font-size:13px;color:var(--blue);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+.step h4{font-size:17.5px;margin:8px 0 6px}
+.step p{font-size:14.5px;color:var(--muted);margin:0}
+.step::before{content:"";position:absolute;top:0;left:24px;width:40px;height:3px;background:var(--signal)}
+
+/* Feedback */
+.alert{display:flex;gap:12px;border-radius:4px;padding:15px 18px;font-size:15px;max-width:600px;border:1px solid}
+.alert svg{width:18px;height:18px;flex:0 0 auto;margin-top:2px}
+.alert.info{background:#EDF4F8;border-color:#C9DFEA;color:#22536E}
+.alert.ok{background:var(--okbg);border-color:#CFE3C9;color:var(--ok)}
+.alert.err{background:var(--errbg);border-color:#EAD2CC;color:var(--err)}
+.toast{display:inline-flex;align-items:center;gap:11px;background:var(--navy);color:#fff;border-radius:4px;padding:14px 20px;font-size:15px;box-shadow:0 18px 40px -18px rgba(1,43,61,.6)}
+.toast svg{width:17px;height:17px;color:var(--signal)}
+.empty{border:1px dashed #D5CFC3;border-radius:4px;background:#fff;padding:40px 26px;text-align:center;max-width:490px;flex:1 1 340px}
+.empty>svg{width:38px;height:38px;color:#B9B1A2;margin:0 auto 14px}
+.empty h4{font-size:19px;margin-bottom:6px}
+.empty p{font-size:15px;color:var(--muted);margin:0 auto 18px;max-width:42ch}
+.skel{max-width:490px;flex:1 1 340px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px}
+.skel .b{background:linear-gradient(90deg,var(--sand) 25%,#EBE6D9 37%,var(--sand) 63%);background-size:400% 100%;animation:shimmer 1.4s infinite;border-radius:4px}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.skel .b1{height:140px;margin-bottom:16px}
+.skel .b2{height:14px;width:38%;margin-bottom:10px}
+.skel .b3{height:20px;width:76%;margin-bottom:8px}
+.skel .b4{height:14px;width:55%}
+
+/* Live-Demo-Baustein */
+.demo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff}
+.demo .dl{padding:30px 32px;border-right:1px solid var(--line);min-width:0}
+.demo .dl h4{font-size:20px;margin-bottom:8px}
+.demo .dl p{font-size:15px;color:var(--muted);margin:0 0 18px;max-width:38ch}
+.demo .dr{background:var(--mist);padding:26px 30px;display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
+.statusrow{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:13px 16px;font-size:15px}
+.statusrow .sl{color:var(--ink);font-weight:500}
+.statusrow .sv{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);white-space:nowrap}
+.statusrow .sv.no{color:var(--err)}
+.statusrow .sv .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.stamp{font-size:13px;color:var(--muted);text-align:right}
+
+/* Icons */
+.icons{display:flex;gap:38px;flex-wrap:wrap}
+.icx{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted);font-size:13px}
+.icx svg{width:30px;height:30px;color:var(--navy)}
+
+.reco{border-left:3px solid var(--signal);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0 4px 4px 0;padding:36px 42px}
+.reco h3{font-size:clamp(22px,2.2vw,28px);margin-bottom:12px}
+.reco p{color:var(--muted);max-width:74ch}
+.reco p:last-child{margin:0}
+
+.docfoot{border-top:1px solid var(--line);padding:30px 0 46px;font-size:13.5px;color:var(--muted)}
+.docfoot .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:baseline}
+.docfoot .sp{margin-left:auto}
+
+@media(max-width:960px){
+  .kpis{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lab{flex:0 0 100%}
+  .demo{grid-template-columns:minmax(0,1fr)}
+  .demo .dl{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:620px){
+  .sec{padding:58px 0}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .spec .spbody{padding:22px 18px}
+  .reco{padding:28px 24px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="wrap">
+    <span class="jslogo" aria-label="GolfNext"></span>
+    <span class="sep">·</span>
+    <span class="doc">Designkonzept – Marketing-Website</span>
+    <span class="tagright">Kapitel 2.5 · UI-Kit</span>
+  </div>
+</div>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="num">Kapitel 2.5</div>
+    <h1>Acht Bausteingruppen. Keine Sonderlocken.</h1>
+    <p class="lead">Alle Bedien- und Inhaltselemente der neuen Website – mit ihren Varianten und Zuständen, gesetzt in Archivo und Inter auf den Flächen aus Kapitel 2.3. Was hier steht, ist verbindlich: Jede Seite wird aus genau diesen Bausteinen zusammengesetzt, nichts wird pro Seite neu erfunden. Der Radius bleibt durchgehend bei 4 Pixeln – identisch mit dem Kunden-Template.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow">1 · Buttons &amp; Links</span>
+    <h2>Ein grüner Button pro Seite</h2>
+    <p class="lead" style="margin-bottom:30px">Der grüne Conversion-Button führt zum Online-Erstgespräch – und nur dorthin. Blau begleitet, Sekundär ordnet ein, Hell arbeitet auf dunklen Flächen. Wo zwei grüne Buttons stehen, verliert der wichtigere seine Wirkung.</p>
+
+    <div class="spec">
+      <div class="sphead"><b>Varianten</b><span>Rollen und Einsatz</span></div>
+      <div class="spbody">
+        <div class="row">
+          <span class="lab">Conversion</span>
+          <a class="btn cta col">Online-Erstgespräch vereinbaren<small>30 Minuten per Zoom oder Teams</small></a>
+          <span class="note" style="margin:0">Die einzige grüne Fläche der Seite. Die Dauer steht als Unterzeile im Button – sie senkt die Hemmschwelle mehr als jedes Adjektiv daneben.</span>
+        </div>
+        <div class="row">
+          <span class="lab">Primär</span>
+          <a class="btn primary">Modul ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn primary sm">Klein</a>
+        </div>
+        <div class="row">
+          <span class="lab">Sekundär</span>
+          <a class="btn ghost">Fallstudie lesen</a>
+          <a class="btn ghost sm">Klein</a>
+        </div>
+        <div class="row">
+          <span class="lab">Auf Navy</span>
+          <span class="navyband">
+            <a class="btn cta col">Online-Erstgespräch vereinbaren<small>30 Minuten per Zoom oder Teams</small></a>
+            <a class="btn light">Live-Demo ansehen</a>
+            <a class="tlink" style="color:#CFE3F4">Oder anrufen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </span>
+        </div>
+        <div class="row">
+          <span class="lab">Zustände</span>
+          <a class="btn primary disabled">Deaktiviert</a>
+          <a class="btn primary loading">Senden</a>
+          <a class="tlink">Textlink mit Pfeil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <p class="note"><b>Regel:</b> Auf Navy-Flächen dürfen grüner und weißer Button nebeneinander stehen – dort ist Grün Signal, nicht Dekoration. Auf hellen Flächen steht der grüne Button allein.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand" style="padding-top:64px">
+  <div class="wrap">
+    <span class="eyebrow">2 · Badges &amp; Chips</span>
+    <h2>Reifegrad auf einen Blick</h2>
+    <p class="lead" style="margin-bottom:26px">Ehrlichkeit über den Entwicklungsstand ist ein Verkaufsargument, kein Risiko: Ein Vorstand, der weiß, was heute läuft und was in der Roadmap steht, fühlt sich ernst genommen. Deshalb trägt jedes der zwölf Module einen von drei Status – im Menü, in der Karte, auf der Modulseite und im Footer, überall mit derselben Farbe.</p>
+    <div class="spec">
+      <div class="sphead"><b>Status-Badges</b><span>drei Stufen, verbindlich für alle Module</span></div>
+      <div class="spbody">
+        <div class="row">
+          <span class="badge live"><span class="dot"></span>Im Einsatz</span>
+          <span class="badge pilot"><span class="dot"></span>Pilot</span>
+          <span class="badge dev"><span class="dot"></span>In Entwicklung</span>
+          <span class="badge inklusive"><span class="dot"></span>Im Paket enthalten</span>
+          <span class="navyband" style="padding:12px 16px"><span class="badge onnavy">Auf Navy</span></span>
+        </div>
+        <p class="note"><b>Die Abgrenzung:</b> „Im Einsatz“ trägt nur, was bei mindestens einem Club im täglichen Betrieb läuft. „Pilot“ heißt: fertig gebaut, bei einem Club in Erprobung, noch nicht allgemein buchbar. „In Entwicklung“ trägt eine Quartalsangabe auf der Modulseite. Ein Modul wechselt die Stufe erst, wenn die Bedingung erfüllt ist – nie, weil ein Termin näher rückt.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="sphead"><b>Filter-Chips</b><span>für Modulübersicht, Fallstudien und Wissensbereich</span></div>
+      <div class="spbody">
+        <div class="row">
+          <span class="chip on">Alle Module</span>
+          <span class="chip">Wachstum &amp; Vertrieb</span>
+          <span class="chip">Clubprozesse</span>
+          <span class="chip">Im Paket Start</span>
+          <span class="chip on">Im Einsatz <span class="x">×</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="eyebrow">3 · Formulare</span>
+    <h2>Die Anfrage zum Erstgespräch, mit allen Zuständen</h2>
+    <p class="lead" style="margin-bottom:30px">Das Formular ist der Conversion-Punkt der Website. Es fragt genau das ab, was für ein qualifiziertes 30-Minuten-Gespräch nötig ist – Anlage, Rolle, Anliegen, Wunschzeit – und keinen Buchstaben mehr. Jeder Zustand ist definiert, Fehler erklären sich selbst, die Einwilligung ist fester Bestandteil.</p>
+
+    <div class="spec">
+      <div class="sphead"><b>Eingabefelder</b><span>Default · Fokus · Fehler · Erfolg · Deaktiviert</span></div>
+      <div class="spbody">
+        <div class="row" style="align-items:flex-start">
+          <div class="f">
+            <label>Golfanlage <span class="req">*</span></label>
+            <input class="inp" placeholder="Golfclub Musterstadt e. V.">
+          </div>
+          <div class="f">
+            <label>Ihr Name <span class="req">*</span></label>
+            <input class="inp focus" value="Dr. Martin Berger">
+          </div>
+        </div>
+        <div class="row" style="align-items:flex-start">
+          <div class="f">
+            <label>E-Mail <span class="req">*</span></label>
+            <input class="inp err" value="m.berger@golfclub-">
+            <div class="fmsg e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>Bitte geben Sie eine vollständige E-Mail-Adresse ein.</div>
+          </div>
+          <div class="f">
+            <label>Telefon</label>
+            <input class="inp ok" value="0471 9450-0">
+            <div class="fmsg s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>Sieht gut aus.</div>
+          </div>
+        </div>
+        <div class="row" style="align-items:flex-start">
+          <div class="f">
+            <label>Ihre Rolle im Club</label>
+            <select class="inp"><option>Vorstand / Präsidium</option></select>
+          </div>
+          <div class="f">
+            <label>Wunschzeit für das Gespräch</label>
+            <select class="inp"><option>Vormittags, Mo–Fr</option></select>
+          </div>
+        </div>
+        <div class="row" style="align-items:flex-start">
+          <div class="f" style="max-width:600px;flex:1 1 100%">
+            <label>Was beschäftigt Sie aktuell am meisten?</label>
+            <textarea class="inp" placeholder="Zum Beispiel: Wir verlieren jedes Jahr Mitglieder und wissen nicht genau, an welcher Stelle …"></textarea>
+            <div class="fmsg h">Optional – hilft uns, den Termin auf Ihre Situation vorzubereiten.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="sphead"><b>Auswahl &amp; Einwilligung</b><span>Radio · Checkbox · DSGVO</span></div>
+      <div class="spbody">
+        <div class="row">
+          <span class="lab">Interesse</span>
+          <span class="radio on"><span class="rb"></span>Neue Mitglieder gewinnen</span>
+          <span class="radio"><span class="rb"></span>Clubbüro entlasten</span>
+          <span class="radio"><span class="rb"></span>Beides</span>
+        </div>
+        <div class="row" style="align-items:flex-start">
+          <span class="lab">DSGVO</span>
+          <span class="check on"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5 9-11"/></svg></span>Ich habe die Datenschutzerklärung gelesen und bin mit der Verarbeitung meiner Daten zur Bearbeitung meiner Anfrage einverstanden. <span class="req">*</span></span>
+        </div>
+        <div class="row">
+          <span class="lab"></span>
+          <a class="btn cta">Erstgespräch anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <span class="note" style="margin:0">Rückmeldung innerhalb eines Werktags · Zoom oder Teams · kein Newsletter, keine Weitergabe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand" style="padding-top:64px">
+  <div class="wrap">
+    <span class="eyebrow">4 · Karten</span>
+    <h2>Eine Kartenhülle, vier Inhalte</h2>
+    <p class="lead" style="margin-bottom:30px">Gleiche Grundform, gleicher Radius, gleiche Hover-Reaktion – unterschieden nur durch Inhalt: Modul, Fallstudie, Wissensbeitrag, Paket. Jede Karte trägt entweder eine Zahl oder einen Status; keine Karte endet ohne Substanz.</p>
+    <div class="cardgrid">
+      <div class="card">
+        <div class="ph">
+          <span class="badge live"><span class="dot"></span>Im Einsatz</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18"/><path d="M7 19V6l9 3.2L7 12.5"/><circle cx="17.5" cy="17" r="1.6"/></svg>
+        </div>
+        <div class="bd">
+          <span class="tag">Clubprozesse</span>
+          <h3>Platzstatus</h3>
+          <p class="meta" style="margin:0">Drei Buttons für den Greenkeeper · zwei Sekunden bis zur Website</p>
+          <a class="tlink">Modul ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+        </div>
+        <div class="bd">
+          <span class="tag">Fallstudie · Bremerhaven</span>
+          <h3>200 Anmeldungen für den Schnupperkurs</h3>
+          <p class="meta" style="margin:0">232 € Werbebudget · Frühjahrswelle · vollständig dokumentiert</p>
+          <a class="tlink">Zur Fallstudie <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h7M8 11h7"/></svg>
+        </div>
+        <div class="bd">
+          <span class="tag">Wissen · Mitgliederbindung</span>
+          <h3>Warum Clubs ihre Neumitglieder im zweiten Jahr verlieren</h3>
+          <p class="meta" style="margin:0">7 Min. Lesezeit · von Fred Hoffmann</p>
+          <a class="tlink">Weiterlesen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="card paket">
+        <div class="bd">
+          <span class="tag">Paket</span>
+          <h3 style="margin-top:6px">Wachstum</h3>
+          <p class="meta" style="margin:0">Für Clubs, die aktiv neue Mitglieder gewinnen wollen</p>
+          <ul>
+            <li>Website, Landingpages und Content</li>
+            <li>Reach, Search und Marketing-CRM</li>
+            <li>Concierge und Platzstatus</li>
+          </ul>
+          <div class="price">12.000 € <small style="font-size:.62em;color:#5C6F76;font-weight:500">Setup</small></div>
+          <p class="meta" style="margin:2px 0 0;font-variant-numeric:tabular-nums">400 € monatlich in der Einführung</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="eyebrow">5 · Beweis-Bausteine</span>
+    <h2>Kennzahl, Vergleich, Live-Widget</h2>
+    <p class="lead" style="margin-bottom:30px">Der wichtigste Baustein des gesamten Kits – Prinzip 1 lautet „Beweis statt Behauptung“. Jede Kennzahl trägt Bezug und Zeitraum; eine Zahl ohne Herkunft wird nicht veröffentlicht.</p>
+    <div class="kpis">
+      <div class="kpi">
+        <span class="kl">Kosten je Anmeldung</span>
+        <div class="kn">1,16 <small>€</small></div>
+        <div class="ksub"><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l8-8 8 8"/></svg>Referenz</span>200 Anmeldungen · 232 € Budget</div>
+      </div>
+      <div class="kpi">
+        <span class="kl">Standardanfragen automatisiert</span>
+        <div class="kn">80 <small>%</small></div>
+        <div class="ksub">Zielwert Concierge · Pilotbetrieb</div>
+      </div>
+      <div class="kpi">
+        <span class="kl">Anrufe im Sekretariat</span>
+        <div class="kn">−34 <small>%</small></div>
+        <div class="ksub"><span class="trend down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8 8 8-8"/></svg>Zielwert</span>Platzhalter bis zur ersten Messung</div>
+      </div>
+    </div>
+    <div style="margin-top:22px">
+      <div class="tscroll">
+        <table class="mkt">
+          <tr><th>Kennzahl im Pilotbetrieb</th><th class="num">Vorher</th><th class="num">Nachher</th></tr>
+          <tr class="hl"><td><b>Anfragen außerhalb der Öffnungszeiten beantwortet</b></td><td class="num">0</td><td class="num">64 %</td></tr>
+          <tr><td>Durchschnittliche Antwortzeit auf Gastanfragen</td><td class="num">1,5 Tage</td><td class="num">2 Min.</td></tr>
+          <tr><td>Manuelle Platzstatus-Meldungen pro Woche</td><td class="num">14</td><td class="num">0</td></tr>
+        </table>
+      </div>
+      <p class="note">Alle Werte dieser Tabelle sind bis zum Abschluss der ersten Pilotmessung als Platzhalter gekennzeichnet. Der Baustein zeigt die Form, nicht das Ergebnis – veröffentlicht wird er erst mit echten Zahlen aus einem Partnerclub.</p>
+    </div>
+
+    <div class="demo" style="margin-top:30px">
+      <div class="dl">
+        <span class="eyebrow">Live-Baustein</span>
+        <h4>Der Aha-Moment in 30 Sekunden</h4>
+        <p>Auf der Modulseite steht kein Screenshot, sondern das echte Widget mit Beispieldaten. Wer im Vorstandstermin sein Handy herausholt und tippt, sieht die Website sich ändern – das ist das stärkste Argument, das wir haben.</p>
+        <a class="btn primary sm">Status umschalten</a>
+      </div>
+      <div class="dr">
+        <div class="statusrow"><span class="sl">Grüns</span><span class="sv"><span class="dot"></span>Sommergrün</span></div>
+        <div class="statusrow"><span class="sl">Carts</span><span class="sv no"><span class="dot"></span>Gesperrt</span></div>
+        <div class="statusrow"><span class="sl">Driving Range</span><span class="sv"><span class="dot"></span>Geöffnet</span></div>
+        <div class="stamp">Aktualisiert vor 2 Minuten durch das Greenkeeping</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand" style="padding-top:64px">
+  <div class="wrap">
+    <span class="eyebrow">6 · Akkordeon &amp; Ablauf</span>
+    <h2>Einwände und Onboarding-Schritte</h2>
+    <p class="lead" style="margin-bottom:26px">Das FAQ ist kein Servicebereich, sondern die Einwandbehandlung aus dem Vertriebsgespräch – schriftlich, damit ein Vorstandsmitglied sie in der Sitzung vorlesen kann.</p>
+    <div class="acc" style="margin:26px 0 30px">
+      <div class="ai open">
+        <div class="ah">Ersetzt GolfNext unsere Clubverwaltung? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="ab">Nein. Ihre Clubverwaltung bleibt das Rückgrat für Mitglieder, Beiträge, Turniere und Startzeiten. GolfNext organisiert die Strecke davor – Nachfrage, Kontakte, Buchungsvorbereitung – und entlastet die Prozesse darum herum. Wir bauen keine Mitgliederverwaltung nach.</div>
+      </div>
+      <div class="ai">
+        <div class="ah">Was passiert, wenn wir kündigen? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="ab">Der Club besitzt seine Domain, seine Inhalte und seine Daten. Bei Vertragsende erfolgt ein vollständiger Export in offenen Formaten. Wir arbeiten mit fairen Kündigungsfristen – der Verbleib soll aus Qualität entstehen, nicht aus Vertragsklauseln.</div>
+      </div>
+      <div class="ai">
+        <div class="ah">Kommt zum Modulpreis noch Werbebudget dazu? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="ab">Ja, und das sagen wir vor der Unterschrift. Der Modulpreis deckt System, Betreuung und Kampagnensteuerung. Das Werbebudget fließt direkt an Google und Meta und bleibt Ihre Entscheidung – wir empfehlen einen saisonal getakteten Sockel statt zwölf gleicher Monatsbeträge.</div>
+      </div>
+      <div class="ai">
+        <div class="ah">Wie viel Arbeit entsteht für unser Sekretariat? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="ab">In der Einführung rund zwei halbe Tage für Inhalte und Abstimmung. Danach weniger als vorher: Die Module übernehmen genau die Routinen, die heute Telefonzeit kosten – Öffnungszeiten, Greenfees, Platzzustand, Gastanfragen.</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sn">Schritt 1</div><h4>Online-Erstgespräch</h4><p>30 Minuten per Zoom oder Teams. Wir sehen uns Ihre Situation gemeinsam an.</p></div>
+      <div class="step"><div class="sn">Schritt 2</div><h4>Scope &amp; Angebot</h4><p>Fester Leistungsumfang, feste Preise, klare Change-Request-Regel.</p></div>
+      <div class="step"><div class="sn">Schritt 3</div><h4>Onboarding</h4><p>Website, Module und Journeys gehen in vier bis sechs Wochen live.</p></div>
+      <div class="step"><div class="sn">Schritt 4</div><h4>Messen &amp; nachsteuern</h4><p>Gemeinsames Kennzahlen-Set ab Tag eins – Ihre Zahlen, nicht unsere.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="eyebrow">7 · Rückmeldungen</span>
+    <h2>Alerts, Toast, Leerzustand, Laden</h2>
+    <div class="spec" style="margin-top:26px">
+      <div class="sphead"><b>Inline-Alerts</b><span>im Inhalt, zum Beispiel über Formularen</span></div>
+      <div class="spbody">
+        <div class="row" style="flex-direction:column;align-items:flex-start">
+          <div class="alert info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg>Die Einführungskonditionen gelten für die ersten fünf Gründungspartner – aktuell sind noch drei Plätze offen.</div>
+          <div class="alert ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>Vielen Dank – Ihre Anfrage ist eingegangen. Fred Hoffmann meldet sich innerhalb eines Werktags persönlich.</div>
+          <div class="alert err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>Das Formular konnte nicht gesendet werden. Bitte prüfen Sie die markierten Felder – oder rufen Sie uns direkt an.</div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="sphead"><b>Toast &amp; Leerzustand &amp; Laden</b><span>flüchtige Bestätigung · leere Liste · Platzhalter</span></div>
+      <div class="spbody">
+        <div class="row" style="align-items:flex-start">
+          <span class="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>Platzstatus aktualisiert</span>
+        </div>
+        <div class="row" style="align-items:flex-start;margin-top:24px">
+          <div class="empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+            <h4>Für diesen Filter gibt es noch keine Fallstudie</h4>
+            <p>Wir veröffentlichen nur Fälle mit dokumentierten Zahlen. Die nächsten kommen aus dem laufenden Pilotbetrieb.</p>
+            <a class="btn primary sm">Alle Fallstudien ansehen</a>
+          </div>
+          <div class="skel">
+            <div class="b b1"></div>
+            <div class="b b2"></div>
+            <div class="b b3"></div>
+            <div class="b b4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand" style="padding-top:64px">
+  <div class="wrap">
+    <span class="eyebrow">8 · Ikonografie</span>
+    <h2>Ein Icon pro Modul, überall dasselbe</h2>
+    <p class="lead" style="margin-bottom:30px">Strichstärke 1,1–1,5 px, runde Abschlüsse, keine Füllungen, keine farbigen Kacheln – Icons stehen frei in Navy. Jedes der zwölf Module hat genau ein Icon, das in Navigation, Karte, Modulseite und Paketvergleich identisch verwendet wird.</p>
+    <span style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:18px">Wachstum nach außen</span>
+    <div class="icons" style="margin-bottom:38px">
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>Reach</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>Search</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18M7 12h7M7 15.5h5"/></svg>Landingpages</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3.2"/><path d="M2.5 19c1.2-2.9 3.6-4.2 6.5-4.2s5.3 1.3 6.5 4.2"/><path d="M17 6.5l2 2 3.5-3.5"/></svg>Marketing-CRM</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg>Lifecycle</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5M8.5 13h7M8.5 16.5h5"/></svg>Content</div>
+    </div>
+    <span style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:18px">Entlastung nach innen</span>
+    <div class="icons">
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v11H8l-4 4V6z"/><path d="M8 10h8M8 13h5"/></svg>Concierge</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18"/><path d="M7 19V6l9 3.2L7 12.5"/><circle cx="17.5" cy="17" r="1.6"/></svg>Platzstatus</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M2.5 10h19M6 14h4"/></svg>Gastfee</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Firmen-Events</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h7M8 11h7"/></svg>Turnier-News</div>
+      <div class="icx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 5.5h3"/><circle cx="12" cy="13" r="2.6"/></svg>Captains App</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:64px">
+  <div class="wrap">
+    <div class="reco">
+      <span class="eyebrow">Festlegung</span>
+      <h3>Was ab hier gilt</h3>
+      <p>Dieses Kit ist die Referenz für die Umsetzung: Jede Komponente wird in Next.js exakt einmal gebaut und über Sanity mit Inhalten gefüllt. Neue Seiten – Startseite, Modulseiten, Pakete, Fallstudien, Wissensbereich – entstehen ausschließlich aus diesen Bausteinen. Änderungen am Design passieren ab jetzt hier im Kit und wirken damit automatisch überall.</p>
+      <p>Gesetzt sind: Archivo für Überschriften, Kennzahlen und Preise, Inter für alles Weitere, die Flächenfamilie aus Kapitel 2.3, der grüne Conversion-Button mit Navy-Text und der Dauer als Unterzeile (höchstens einer pro Sektion), Radius 4 Pixel und die feine Strich-Ikonografie ohne Kacheln. Die drei Status-Stufen – Im Einsatz, Pilot, In Entwicklung – gelten überall in derselben Farbe: im Menü, in der Karte, auf der Modulseite und im Footer. Der Beweis-Baustein aus Abschnitt 5 ist Pflichtbestandteil jeder Modul- und Paketseite; eine Seite ohne Zahl oder Demo gilt als unfertig.</p>
+    </div>
+  </div>
+</section>
+
+<div class="docfoot">
+  <div class="wrap">
+    <span>GolfNext – Designkonzept Marketing-Website, Kapitel 2.5 UI-Kit</span>
+    <span class="sp">SK Online Marketing · August 2026</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var LOGO='<svg viewBox="0 0 200.32 24.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GolfNext"><g fill="currentColor"><path d="m9.97,24.2c-6.64,0-9.97-2.21-9.97-6.67V6.98C0,2.76,3.27.65,9.8.65h4.66c1.16,0,1.74.48,1.74,1.4s-.58,1.4-1.74,1.4h-4.6c-4.12,0-6.2,1.23-6.2,3.61v10.38c0,2.66,2.11,3.98,6.47,3.98h7.35c4.29,0,6.47-1.33,6.47-3.98v-6.43c0-.95.61-1.43,1.84-1.43s1.84.48,1.84,1.43v6.54c0,4.46-3.37,6.67-9.97,6.67h-7.69Z"/><path d="m42.79,24.2c-5.89,0-8.82-1.8-8.82-5.38v-5.75c0-3.61,2.93-5.41,8.82-5.41h6.57c5.89,0,8.82,1.8,8.82,5.41v5.75c0,3.57-2.93,5.38-8.82,5.38h-6.57Zm11.74-11.17c0-1.74-1.7-2.59-5.07-2.59h-6.81c-3.34,0-5.04.85-5.04,2.59v5.82c0,1.7,1.7,2.59,5.04,2.59h6.81c3.37,0,5.07-.89,5.07-2.59v-5.82Z"/><path d="m64.55,1.43c0-.92.61-1.43,1.8-1.43s1.8.51,1.8,1.43v21.51c0,.95-.61,1.43-1.8,1.43s-1.8-.48-1.8-1.43V1.43Z"/><path d="m78.3,10.45v12.49c0,.95-.58,1.43-1.74,1.43-1.26,0-1.87-.48-1.87-1.43V5.17c0-3.4,2.72-5.11,8.31-5.11h2.89c1.12,0,1.7.48,1.7,1.33s-.58,1.36-1.7,1.36h-2.89c-3.13,0-4.7.78-4.7,2.38v2.66h7.59c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-7.59Z"/><path d="m96.62,1.23l20.53,18.11V1.87c0-.92.61-1.4,1.84-1.4s1.84.48,1.84,1.4v21.07c0,.95-.65,1.43-1.94,1.43-.75,0-1.23-.27-1.8-.78l-20.49-18.11v17.46c0,.95-.65,1.43-1.87,1.43s-1.8-.48-1.8-1.43V1.94c0-.99.65-1.46,1.91-1.46.72,0,1.23.24,1.8.75Z"/><path d="m130.9,17.06v2.08c0,1.6,1.57,2.42,4.73,2.42h5.04c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.04c-5.51,0-8.31-1.67-8.31-5.04v-6.67c0-3.2,2.49-4.83,7.42-4.83h9.84c4.83,0,7.25,1.46,7.25,4.36v3.81c0,.82-.54,1.23-1.57,1.23h-19.37Zm0-2.35h17.09c.2,0,.27-.1.27-.24v-1.77c0-1.57-1.29-2.35-3.95-2.35h-9.36c-2.72,0-4.05.78-4.05,2.35v2.01Z"/><path d="m169.13,17.74l-9.06,6.16c-.51.37-.92.51-1.43.48-1.16,0-1.77-.48-1.77-1.36,0-.34.17-.78.82-1.23l8.71-5.96-8.2-5.69c-.68-.44-.85-.92-.85-1.29,0-.92.61-1.36,1.84-1.36.65,0,.99.17,1.5.51l8.68,6.03,8.82-6.03c.51-.34.88-.51,1.43-.51,1.19,0,1.77.48,1.77,1.4-.03.31-.1.75-.82,1.23l-8.48,5.79,8.44,5.82c.65.48.85.92.85,1.29,0,.92-.61,1.36-1.84,1.36-.54,0-1.06-.1-1.53-.51l-8.88-6.13Z"/><path d="m192.76,10.45v12.49c0,.95-.61,1.43-1.77,1.43-1.23,0-1.84-.48-1.84-1.43v-12.49h-1.4c-1.09,0-1.67-.44-1.67-1.33s.58-1.33,1.67-1.33h1.4v-3.13c0-.92.58-1.43,1.77-1.43s1.84.51,1.84,1.43v3.13h5.86c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.86Z"/></g></svg>';
+  document.querySelectorAll('.jslogo').forEach(function(el){ el.innerHTML=LOGO; });
+  document.querySelectorAll('.acc .ah').forEach(function(h){
+    h.addEventListener('click',function(){
+      var item=h.parentElement;
+      var wasOpen=item.classList.contains('open');
+      item.parentElement.querySelectorAll('.ai').forEach(function(i){i.classList.remove('open');});
+      if(!wasOpen){item.classList.add('open');}
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Einheitliche Zeilenenden im Repo (LF), unabhängig vom Betriebssystem.
+# Verhindert CRLF-Rauschen zwischen Windows-Arbeitsplatz und Linux-CI/Vercel.
+* text=auto eol=lf
+
+# Binärdateien nicht anfassen
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.pdf binary
+*.docx binary

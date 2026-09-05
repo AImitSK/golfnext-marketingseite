@@ -1,0 +1,70 @@
+/* GolfNext Design Tokens · Quelle: Designkonzept Kapitel 2.2 (Typografie), 2.3 (Farben), 2.5 (UI-Kit)
+   Diese Datei ist die verbindliche Referenz. Im Next.js-Projekt landen die Werte in app/globals.css
+   als Tailwind-v4-@theme (siehe tailwind-theme.css). Werte nicht "verbessern" – sie sind abgestimmt. */
+:root{
+  /* Markenfarben */
+  --gn-navy:#01415B;          /* Primärfarbe, Headlines, Buttons-Text auf Grün */
+  --gn-navy-deep:#012B3D;     /* dunkle Flächen, Footer, Hero-Verlauf Start */
+  --gn-blue:#0B6A90;          /* Links, Eyebrows, sekundäre Akzente */
+  --gn-sky:#7FD3F0;           /* helle Akzente auf dunklem Grund */
+  --gn-signal:#00E805;        /* Signalgrün: Fläche, Punkt, Linie – oder Text NUR auf Navy */
+
+  /* Flächen */
+  --gn-paper:#FFFCF5;         /* Seitenhintergrund */
+  --gn-sand:#F5F1E6;          /* warme Sektionsfläche */
+  --gn-mist:#F3F6F4;          /* kühle Sektionsfläche */
+
+  /* Text und Linien */
+  --gn-ink:#16262C;           /* Fließtext */
+  --gn-muted:#5C6F76;         /* Nebentext */
+  --gn-line:#E6E1D6;          /* Rahmen, Trenner */
+
+  /* Status */
+  --gn-ok:#2E6B38;      --gn-ok-bg:#EDF4EA;
+  --gn-err:#A3564A;
+  --gn-warn:#8A6D3B;    --gn-gold:#E8C55A;   /* Gold nur für "Pilot"-Status und Kampagnenbudget-Kennzeichnung */
+  --gn-human:#8A5B2B;   --gn-human-bg:#F6EEE3;
+
+  /* Dunkle Flächen (Footer-Systemkarte, Hero) */
+  --gn-on-dark-line:rgba(255,255,255,.14);
+  --gn-on-dark-text:#B9D2DE;
+  --gn-on-dark-link:#DCEBF6;
+
+  /* Stufenfarben Pakete (gleichwertig, nur unterscheidbar) */
+  --gn-stage-1:#01415B;
+  --gn-stage-2:#0B6A90;
+  --gn-stage-3:#2E6B38;
+
+  /* Schrift */
+  --gn-font-display:"Archivo",system-ui,Arial,sans-serif;   /* Headlines, Zahlen, Buttons */
+  --gn-font-text:"Inter",system-ui,Arial,sans-serif;        /* Fließtext, UI */
+  --gn-text-base:17px;
+  --gn-leading-base:1.65;
+  --gn-tracking-display:-0.02em;   /* H1 bis -0.035em */
+  --gn-tracking-eyebrow:0.18em;
+
+  /* Typografische Skala (clamp = mobil, fluid, desktop) */
+  --gn-h1:clamp(32px,4.3vw,54px);
+  --gn-h1-statement:clamp(36px,5.6vw,76px);   /* Über GolfNext: rein typografischer Einstieg */
+  --gn-h2:clamp(27px,3.2vw,40px);
+  --gn-h3:20px;
+  --gn-lead:clamp(16px,1.3vw,19px);
+  --gn-statement:clamp(20px,2.3vw,28px);
+  --gn-eyebrow:12.5px;
+  --gn-small:13.5px;
+  --gn-micro:11px;
+
+  /* Radien – durchgängig 4 px, Pills 20 px */
+  --gn-radius:4px;
+  --gn-radius-pill:20px;
+
+  /* Layout */
+  --gn-wrap:1140px;
+  --gn-gutter:40px;           /* 26px ≤ 960px, 20px ≤ 620px */
+  --gn-section-y:86px;        /* 58px ≤ 620px */
+  --gn-header-h:80px;
+
+  /* Bewegung */
+  --gn-ease:cubic-bezier(.2,.8,.3,1);
+  --gn-dur:.55s;
+}

@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "sanity": {
+      "command": "npx",
+      "args": ["-y", "@sanity/mcp-server@latest"],
+      "env": {
+        "SANITY_PROJECT_ID": "wsj8a3ho",
+        "SANITY_DATASET": "production",
+        "SANITY_API_TOKEN": "${SANITY_API_TOKEN}",
+        "MCP_USER_ROLE": "developer"
+      }
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--headless"]
+    }
+  }
+}

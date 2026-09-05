@@ -1,0 +1,39 @@
+/* Tailwind v4 · in app/globals.css einfügen (nach @import "tailwindcss";)
+   Ergibt Utilities wie bg-navy, text-muted, border-line, bg-signal, font-display, rounded (4px) usw. */
+@theme {
+  --color-navy: #01415B;
+  --color-navy-deep: #012B3D;
+  --color-blue: #0B6A90;
+  --color-sky: #7FD3F0;
+  --color-signal: #00E805;
+  --color-paper: #FFFCF5;
+  --color-sand: #F5F1E6;
+  --color-mist: #F3F6F4;
+  --color-ink: #16262C;
+  --color-muted: #5C6F76;
+  --color-line: #E6E1D6;
+  --color-ok: #2E6B38;
+  --color-ok-bg: #EDF4EA;
+  --color-err: #A3564A;
+  --color-warn: #8A6D3B;
+  --color-gold: #E8C55A;
+  --color-human: #8A5B2B;
+  --color-human-bg: #F6EEE3;
+  --color-on-dark-text: #B9D2DE;
+  --color-on-dark-link: #DCEBF6;
+  --color-stage-1: #01415B;
+  --color-stage-2: #0B6A90;
+  --color-stage-3: #2E6B38;
+
+  --font-display: var(--font-archivo), system-ui, Arial, sans-serif;  /* next/font Variable */
+  --font-sans: var(--font-inter), system-ui, Arial, sans-serif;
+
+  --radius: 4px;
+  --radius-pill: 20px;
+
+  --text-eyebrow: 12.5px;
+  --text-small: 13.5px;
+  --text-micro: 11px;
+
+  --container-wrap: 1140px;
+}

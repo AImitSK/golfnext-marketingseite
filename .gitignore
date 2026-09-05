@@ -1,0 +1,40 @@
+# Abhängigkeiten
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Umgebungsvariablen – Secrets bleiben lokal und in Vercel
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# Sanity
+.sanity/
+dist/
+
+# Tests
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Editor / OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+*.log
+
+# Claude Code (lokale, persönliche Einstellungen)
+.claude/settings.local.json
+
+# Ausgangszustand des Projektgerüsts (Neustart von null) – nicht committen
+Template/

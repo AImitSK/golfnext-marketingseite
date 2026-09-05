@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfNext – Designkonzept · Kapitel Farben &amp; Flächen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GOLFNEXT – DESIGNKONZEPT · KAPITEL 2.3 FARBEN & FLÄCHEN
+   Markenfarben extrahiert aus der Wettbewerbsanalyse 20.08.2026.
+   ============================================================ */
+:root{
+  --navy:#01415B; --navy-deep:#012B3D; --blue:#0B6A90; --sky:#7FD3F0; --signal:#00E805;
+  --paper:#FFFCF5; --sand:#F5F1E6; --mist:#F3F6F4;
+  --ink:#16262C; --muted:#5C6F76; --line:#E6E1D6;
+  --ok:#2E6B38; --err:#A3564A;
+  --maxw:1200px;
+  --display:"Archivo",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter",system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;font-weight:600;color:var(--blue);margin:0 0 16px;display:block}
+.lead{font-size:clamp(17px,1.4vw,20px);color:var(--muted);max-width:64ch}
+.sec{padding:88px 0}
+.sec.sand{background:var(--sand)}
+.sec h2{font-size:clamp(26px,3vw,36px);margin-bottom:12px}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tscroll>table{min-width:660px}
+
+.doc-head{border-bottom:1px solid var(--line);padding:22px 0}
+.doc-head .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.doc-head .jslogo{color:var(--navy);display:inline-flex}
+.doc-head .jslogo svg{height:20px;width:auto}
+.doc-head .sep{color:var(--line)}
+.doc-head .doc{font-size:14px;color:var(--muted);letter-spacing:.05em}
+.doc-head .tagright{margin-left:auto;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.chapter{padding:96px 0 72px}
+.chapter .num{font-family:var(--display);font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+.chapter h1{font-size:clamp(40px,5.4vw,64px);max-width:18ch;font-weight:800}
+.chapter .lead{margin-top:22px}
+
+/* Briefing */
+.brief{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.brief .b{padding:34px 32px;border-right:1px solid var(--line);min-width:0}
+.brief .b:last-child{border-right:0}
+.brief .q{font-family:var(--display);font-size:20px;line-height:1.35;color:var(--navy);margin-bottom:14px;font-weight:700;letter-spacing:-.02em}
+.brief .q::before{content:"„"}
+.brief .q::after{content:"“"}
+.brief .a{font-size:15px;color:var(--muted);margin:0}
+.brief .a b{color:var(--ink);font-weight:600}
+
+/* Herkunft */
+.origin{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:36px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:4px;padding:34px 38px}
+.origin h3{font-size:22px;margin-bottom:10px}
+.origin p{font-size:15.5px;color:var(--muted);margin:0 0 10px;max-width:52ch}
+.origin p:last-child{margin:0}
+.originchips{display:flex;flex-direction:column;gap:10px}
+.oc{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted);background:var(--mist);border-radius:3px;padding:10px 14px}
+.oc .sq{width:30px;height:30px;border-radius:3px;flex:0 0 auto;border:1px solid rgba(0,0,0,.08)}
+.oc b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Vorher / Nachher */
+.evo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff}
+.ba{position:relative;display:flex;flex-direction:column;border-right:1px solid var(--line);min-width:0}
+.ba:last-child{border-right:0}
+.ba .bahead{padding:28px 34px 0}
+.ba .balabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;display:block}
+.ba.old .balabel{color:var(--err)}
+.ba.new .balabel{color:var(--blue)}
+.ba .basrc{font-size:12.5px;color:var(--muted);margin:0 0 20px}
+.ba .why{font-size:14.5px;color:var(--muted);margin:0;padding:20px 34px 28px;max-width:48ch}
+.ba .mock{flex:1;padding:30px 34px}
+.ba.old .mock{background:#EAF3E7}
+.ba.new .mock{background:var(--sand)}
+.mock .mh{font-family:var(--display);font-size:21px;color:var(--navy);margin-bottom:16px;font-weight:700;letter-spacing:-.02em}
+.ba.old .mock .mh{color:#2F6B33}
+.mock .mtiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mock .mt{background:#fff;border-radius:4px;padding:16px 16px 14px;font-size:13.5px;min-width:0}
+.ba.old .mock .mt{border:1px solid #CFE0CB}
+.ba.new .mock .mt{border:1px solid var(--line)}
+.mock .mt b{display:block;font-family:var(--display);font-weight:700;color:var(--navy);font-size:15px;margin-bottom:3px;letter-spacing:-.01em}
+.ba.old .mock .mt b{color:#2F6B33}
+.mock .mt span{color:var(--muted)}
+.mock .mt .mic{width:34px;height:34px;display:flex;align-items:center;justify-content:flex-start;color:var(--navy);margin-bottom:10px}
+.ba.old .mock .mt .mic{border-radius:6px;background:#DCEBD8;justify-content:center;color:#2F6B33}
+.mock .mt .mic svg{width:20px;height:20px}
+
+/* Paletten */
+.pal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.pal.p6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.swx{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;min-width:0}
+.swx .chip{height:106px;position:relative}
+.swx .chip.br{border-bottom:1px solid var(--line)}
+.swx .bd{padding:15px 17px 17px}
+.swx .nm{font-weight:600;font-size:15.5px;color:var(--ink)}
+.swx .hx{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin:2px 0 8px}
+.swx .rl{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0}
+.swx .badge{position:absolute;top:12px;left:12px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;background:rgba(255,255,255,.92);border-radius:20px;padding:4px 10px;color:var(--ink)}
+.swx .badge.dark{background:rgba(0,0,0,.3);color:#fff}
+
+/* Mengenverhältnis */
+.ratio{border:1px solid var(--line);border-radius:4px;background:#fff;padding:30px 34px 26px}
+.ratio .bar{display:flex;height:54px;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.ratio .legend{display:flex;flex-wrap:wrap;gap:22px;margin-top:18px;font-size:14px;color:var(--muted)}
+.ratio .legend .li{display:flex;align-items:center;gap:9px}
+.ratio .legend .dot{width:12px;height:12px;border-radius:3px;border:1px solid rgba(0,0,0,.08)}
+.ratio .legend b{color:var(--ink);font-weight:600}
+
+/* Flächentakt */
+.rhythm{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;box-shadow:0 30px 70px -46px rgba(1,65,91,.5)}
+.rhythm .rrow{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 34px}
+.rhythm .rrow .rt{font-family:var(--display);font-size:18px;color:var(--navy);font-weight:700;letter-spacing:-.02em}
+.rhythm .rrow .rd{font-size:13.5px;color:var(--muted);text-align:right}
+.rhythm .rrow.navy{background:linear-gradient(135deg,var(--navy-deep),var(--navy))}
+.rhythm .rrow.navy .rt{color:#fff}
+.rhythm .rrow.navy .rd{color:#B9D2DE}
+.rhythm .rrow.sand{background:var(--sand)}
+.rhythm .rrow.mist{background:var(--mist)}
+.rhythm .rrow.paper{background:var(--paper)}
+.rhythm .rrow+.rrow{border-top:1px solid var(--line)}
+.rhythm .rrow.navy+.rrow,.rhythm .rrow+.rrow.navy{border-top:0}
+
+/* Grün-Regeln */
+.greengrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+.gcard{border:1px solid var(--line);border-radius:4px;background:#fff;padding:28px 30px;min-width:0}
+.gcard .gt{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:18px;display:inline-flex;align-items:center;gap:8px}
+.gcard.do .gt{color:var(--ok)}
+.gcard.dont .gt{color:var(--err)}
+.gdemo{display:flex;flex-direction:column;gap:16px}
+.gd{display:flex;align-items:center;gap:14px;font-size:14.5px;color:var(--muted);flex-wrap:wrap}
+.gd .ex{flex:0 0 auto;max-width:100%}
+.eyeb{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:600;color:var(--blue);display:inline-flex;align-items:center;gap:8px}
+.eyeb::before{content:"";width:7px;height:7px;background:var(--signal);border-radius:50%;display:inline-block}
+.accline{width:54px;height:3px;background:var(--signal)}
+.navychip{background:var(--navy);border-radius:3px;padding:10px 14px;display:inline-flex;flex-direction:column;gap:4px}
+.navychip .ge{color:var(--signal);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.navychip .gx{color:#fff;font-size:13.5px;font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:15px;padding:11px 20px;border-radius:4px;background:var(--blue);color:#fff;border:1px solid var(--blue)}
+.btn.green{background:var(--signal);border-color:var(--signal);color:var(--navy)}
+.btn.badwhite{background:var(--signal);border-color:var(--signal);color:#fff}
+.badtext{color:var(--signal);font-weight:700}
+.badsurface{background:var(--signal);border-radius:4px;color:var(--navy);padding:14px 18px;font-size:14px}
+
+/* Kontrast-Tabelle */
+.ctab{width:100%;border-collapse:collapse;font-size:15.5px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.ctab th,.ctab td{text-align:left;padding:14px 20px;border-bottom:1px solid var(--line);vertical-align:middle}
+.ctab th{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--mist)}
+.ctab tr:last-child td{border-bottom:0}
+.ctab td.num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.ctab .pass{color:var(--ok);font-weight:700}
+.ctab .fail{color:var(--err);font-weight:700}
+.pv{display:inline-flex;align-items:center;justify-content:center;min-width:158px;border-radius:4px;padding:9px 14px;font-weight:600;font-size:14.5px;border:1px solid var(--line)}
+
+.reco{border-left:3px solid var(--signal);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0 4px 4px 0;padding:36px 42px}
+.reco h3{font-size:clamp(22px,2.2vw,28px);margin-bottom:12px}
+.reco p{color:var(--muted);max-width:74ch}
+.reco p:last-child{margin:0}
+
+.docfoot{border-top:1px solid var(--line);padding:30px 0 46px;font-size:13.5px;color:var(--muted)}
+.docfoot .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:baseline}
+.docfoot .sp{margin-left:auto}
+
+@media(max-width:1080px){ .pal,.pal.p6{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media(max-width:960px){
+  .brief{grid-template-columns:minmax(0,1fr)}
+  .brief .b{border-right:0;border-bottom:1px solid var(--line)}
+  .brief .b:last-child{border-bottom:0}
+  .origin{grid-template-columns:minmax(0,1fr);gap:24px}
+  .evo{grid-template-columns:minmax(0,1fr)}
+  .ba{border-right:0;border-bottom:1px solid var(--line)}
+  .ba:last-child{border-bottom:0}
+  .greengrid{grid-template-columns:minmax(0,1fr)}
+  .rhythm .rrow{flex-direction:column;align-items:flex-start;gap:6px}
+  .rhythm .rrow .rd{text-align:left}
+}
+@media(max-width:620px){
+  .pal,.pal.p6{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mock .mtiles{grid-template-columns:minmax(0,1fr)}
+  .sec{padding:62px 0}
+  .origin{padding:26px 22px}
+  .reco{padding:28px 24px}
+  .ratio{padding:24px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="wrap">
+    <span class="jslogo" aria-label="GolfNext"></span>
+    <span class="sep">·</span>
+    <span class="doc">Designkonzept – Marketing-Website</span>
+    <span class="tagright">Kapitel 2.3 · Farben &amp; Flächen</span>
+  </div>
+</div>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="num">Kapitel 2.3</div>
+    <h1>Navy trägt. Grün signalisiert.</h1>
+    <p class="lead">Die Farbwelt entscheidet, in welcher Kategorie GolfNext gelesen wird. Grünflächen machen aus jeder Seite eine Golfseite – tiefes Navy mit einem einzigen Signalgrün macht daraus eine Plattform. Dieses Kapitel legt die Rollen fest, die Mengen und die Grenzen.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow">Ausgangspunkt</span>
+    <h2 style="max-width:26ch;margin-bottom:38px">Was die Farbwelt leisten muss</h2>
+    <div class="brief">
+      <div class="b">
+        <p class="q">Es soll nach Software aussehen, nicht nach Golfplatz.</p>
+        <p class="a">Grün verschwindet als Flächenfarbe. Sektionen laufen auf <b>warmem Papier, Sand und tiefem Navy</b> – das Grün bleibt der einzige laute Ton im Raum.</p>
+      </div>
+      <div class="b">
+        <p class="q">Wir brauchen ein Signal, das man wiedererkennt.</p>
+        <p class="a">Ein einziges, sehr helles Grün markiert genau drei Dinge: <b>Eyebrows auf Navy, Akzentlinien und den Conversion-Button</b>. Seltenheit erzeugt Wiedererkennung.</p>
+      </div>
+      <div class="b">
+        <p class="q">Es muss im Ausdruck bestehen.</p>
+        <p class="a">Die Hierarchie funktioniert <b>auch in Schwarzweiß</b>: Sie entsteht über Helligkeit und Fläche, nicht über Farbton. Vorstandsunterlagen werden ausgedruckt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand">
+  <div class="wrap">
+    <span class="eyebrow">Herkunft</span>
+    <h2 style="margin-bottom:24px">Die Farbwerte sind nicht neu erfunden</h2>
+    <div class="origin">
+      <div>
+        <h3>Aus der Wettbewerbsanalyse abgeleitet</h3>
+        <p>Die drei tragenden Werte stammen unverändert aus dem strategischen Orientierungsrahmen vom 20. August 2026 – dem Dokument, mit dem Fred und Stefan intern arbeiten. Sie sind damit bereits erprobt: in Fließtext, in Tabellen, in Diagrammen und im Ausdruck.</p>
+        <p>Neu und verbindlich sind lediglich die ergänzenden Rollenfarben: ein helleres Blau als Handlungsfarbe, ein Himmelblau für Lichtakzente auf Navy und die klar getrennte Flächenfamilie. Damit ist die Marke von der internen Analyse bis zur öffentlichen Website aus einem Guss.</p>
+      </div>
+      <div class="originchips">
+        <div class="oc"><span class="sq" style="background:#01415B"></span><span>Navy aus Überschriften und Kästen · <b>#01415B</b></span></div>
+        <div class="oc"><span class="sq" style="background:#00E805"></span><span>Signalgrün aus Marker und Hervorhebung · <b>#00E805</b></span></div>
+        <div class="oc"><span class="sq" style="background:#FFFCF5"></span><span>Papier aus der Seitenfläche · <b>#FFFCF5</b></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="eyebrow">Vorher / Nachher</span>
+    <h2 style="margin-bottom:14px">Dieselbe Sektion, zwei Kategorien</h2>
+    <p class="lead" style="margin-bottom:38px">Zweimal exakt derselbe Inhalt. Links in der Golfgrün-Welt, wie sie im Markt üblich ist, rechts in der neuen Navy-Welt – mit freigestellten, feinen Icons statt farbiger Kacheln und mit Platz für die Zahl.</p>
+    <div class="evo">
+      <div class="ba old">
+        <div class="bahead">
+          <span class="balabel">Übliche Golfmarkt-Anmutung</span>
+          <p class="basrc">Grüne Flächen, Icon-Kacheln</p>
+        </div>
+        <div class="mock">
+          <div class="mh">Unsere Module für Ihren Club</div>
+          <div class="mtiles">
+            <div class="mt">
+              <span class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+              <b>Reach</b>
+              <span>Neue Mitglieder gewinnen.</span>
+            </div>
+            <div class="mt">
+              <span class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v11H8l-4 4V6z"/><path d="M8 10h8M8 13h5"/></svg></span>
+              <b>Concierge</b>
+              <span>Fragen rund um die Uhr beantwortet.</span>
+            </div>
+          </div>
+        </div>
+        <p class="why">Grün als Raumfarbe sortiert den Anbieter sofort zu allen anderen Golfdienstleistern. Und weil fast jede Fläche getönt ist, verliert Grün jede Signalwirkung.</p>
+      </div>
+      <div class="ba new">
+        <div class="bahead">
+          <span class="balabel">Neu</span>
+          <p class="basrc">Warmes Papier und Sand, Navy als Anker</p>
+        </div>
+        <div class="mock">
+          <div class="mh">Unsere Module für Ihren Club</div>
+          <div class="mtiles">
+            <div class="mt">
+              <span class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+              <b>Reach</b>
+              <span>200 Anmeldungen bei 232 € Budget.</span>
+            </div>
+            <div class="mt">
+              <span class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v11H8l-4 4V6z"/><path d="M8 10h8M8 13h5"/></svg></span>
+              <b>Concierge</b>
+              <span>80 % der Standardanfragen automatisch.</span>
+            </div>
+          </div>
+        </div>
+        <p class="why">Warme Fläche, weiße Karten, feine Navy-Icons – und Platz für den Beweis. Dieselbe Information wirkt ruhiger, wertiger und deutlich mehr nach Produkt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand">
+  <div class="wrap">
+    <span class="eyebrow">Die Palette</span>
+    <h2 style="margin-bottom:14px">Fünf Markenfarben, sechs Flächenfarben</h2>
+    <p class="lead" style="margin-bottom:38px">Die Markenfarben führen, markieren und setzen Tiefe. Die Flächenfarben stellen den Raum, in dem sie wirken. Jede Farbe hat genau eine Rolle – wer eine Farbe für zwei Aufgaben benutzt, nimmt ihr die Wirkung.</p>
+
+    <h3 style="font-size:19px;margin-bottom:18px">Markenfarben – führen und markieren</h3>
+    <div class="pal" style="margin-bottom:44px">
+      <div class="swx">
+        <div class="chip" style="background:#01415B"><span class="badge dark">Tiefe</span></div>
+        <div class="bd"><div class="nm">Navy</div><div class="hx">#01415B</div><p class="rl">Überschriften, dunkle Sektionen, Hero, CTA-Band, Footer. Die Farbe der Substanz.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip" style="background:#012B3D"><span class="badge dark">Anker</span></div>
+        <div class="bd"><div class="nm">Navy, tief</div><div class="hx">#012B3D</div><p class="rl">Nur als Verlaufsstart in Hero und CTA-Band – erzeugt Räumlichkeit ohne zweite Farbe.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip" style="background:#0B6A90"><span class="badge dark">Primär</span></div>
+        <div class="bd"><div class="nm">Blau</div><div class="hx">#0B6A90</div><p class="rl">Links, Eyebrows auf hellen Flächen, sekundäre Buttons, aktive Zustände. Die Farbe der Handlung.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip" style="background:#7FD3F0"><span class="badge">Licht</span></div>
+        <div class="bd"><div class="nm">Himmelblau</div><div class="hx">#7FD3F0</div><p class="rl">Sparsame Lichtakzente auf Navy: Verläufe, Fokusringe, Diagramm-Highlights.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip" style="background:#00E805"><span class="badge">Signal</span></div>
+        <div class="bd"><div class="nm">Signalgrün</div><div class="hx">#00E805</div><p class="rl">Das seltenste Element: Eyebrows auf Navy, Akzentlinien, der eine Conversion-Button. Nie Fläche, nie Text auf Hell.</p></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:19px;margin-bottom:18px">Flächenfarben – tragen und ordnen</h3>
+    <div class="pal p6">
+      <div class="swx">
+        <div class="chip br" style="background:#FFFCF5"></div>
+        <div class="bd"><div class="nm">Papier</div><div class="hx">#FFFCF5</div><p class="rl">Grundfläche der Website – warmes Off-White.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip br" style="background:#F5F1E6"></div>
+        <div class="bd"><div class="nm">Sand</div><div class="hx">#F5F1E6</div><p class="rl">Wechselnde Sektionen, ruhige Hervorhebung.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip br" style="background:#F3F6F4"></div>
+        <div class="bd"><div class="nm">Nebel</div><div class="hx">#F3F6F4</div><p class="rl">Datenflächen: Tabellenköpfe, Browser-Rahmen, Cockpit-Module.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip br" style="background:#ffffff"></div>
+        <div class="bd"><div class="nm">Weiß</div><div class="hx">#FFFFFF</div><p class="rl">Karten und Formulare – hebt sich von Papier und Sand ab.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip" style="background:#16262C"><span class="badge dark">Text</span></div>
+        <div class="bd"><div class="nm">Anthrazit</div><div class="hx">#16262C</div><p class="rl">Fließtext – kühles Dunkelgrau statt hartem Schwarz.</p></div>
+      </div>
+      <div class="swx">
+        <div class="chip" style="background:#5C6F76"><span class="badge dark">Text</span></div>
+        <div class="bd"><div class="nm">Grau</div><div class="hx">#5C6F76</div><p class="rl">Sekundärtext, Bildunterschriften, Meta-Angaben.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="eyebrow">Mengenverhältnis</span>
+    <h2 style="margin-bottom:14px">Wie viel Farbe eine Seite verträgt</h2>
+    <p class="lead" style="margin-bottom:34px">So verteilt sich die Farbe auf einer typischen Seite. Der Großteil bleibt hell und warm, Navy setzt zwei kräftige Anker – und das Signalgrün bleibt bei etwa einem Prozent der Fläche. Genau deshalb führt es das Auge.</p>
+    <div class="ratio">
+      <div class="bar">
+        <div style="flex:0 0 55%;background:#FFFCF5;border-right:1px solid #E6E1D6"></div>
+        <div style="flex:0 0 22%;background:#F5F1E6;border-right:1px solid #E6E1D6"></div>
+        <div style="flex:0 0 8%;background:#F3F6F4;border-right:1px solid #E6E1D6"></div>
+        <div style="flex:0 0 11%;background:#01415B"></div>
+        <div style="flex:0 0 3%;background:#0B6A90"></div>
+        <div style="flex:0 0 1%;background:#00E805"></div>
+      </div>
+      <div class="legend">
+        <span class="li"><span class="dot" style="background:#FFFCF5"></span><b>Papier</b>&nbsp;~55&nbsp;%</span>
+        <span class="li"><span class="dot" style="background:#F5F1E6"></span><b>Sand</b>&nbsp;~22&nbsp;%</span>
+        <span class="li"><span class="dot" style="background:#F3F6F4"></span><b>Nebel</b>&nbsp;~8&nbsp;%</span>
+        <span class="li"><span class="dot" style="background:#01415B"></span><b>Navy</b>&nbsp;~11&nbsp;%</span>
+        <span class="li"><span class="dot" style="background:#0B6A90"></span><b>Blau</b>&nbsp;~3&nbsp;%</span>
+        <span class="li"><span class="dot" style="background:#00E805"></span><b>Signalgrün</b>&nbsp;~1&nbsp;%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand">
+  <div class="wrap">
+    <span class="eyebrow">Anwendung 1</span>
+    <h2 style="margin-bottom:14px">Der Flächentakt einer Seite</h2>
+    <p class="lead" style="margin-bottom:38px">Flächen wechseln in einem festen Takt: Papier und Sand gliedern den Inhalt, Nebel trägt die Datenmodule, Navy setzt die beiden dunklen Anker – Einstieg und Handlungsaufruf. So entsteht Tiefe ohne eine einzige zusätzliche Farbe.</p>
+    <div class="rhythm">
+      <div class="rrow navy"><span class="rt">Hero</span><span class="rd">Navy-Verlauf · weiße Headline · grünes Eyebrow · ein Thema</span></div>
+      <div class="rrow paper"><span class="rt">Die Kategorie erklären</span><span class="rd">Papier · die Sechser-Kette als Ordnungsbild</span></div>
+      <div class="rrow sand"><span class="rt">Module &amp; Strecke</span><span class="rd">Sand · weiße Karten mit feinen Linien</span></div>
+      <div class="rrow mist"><span class="rt">Beweis: Zahlen &amp; Demo</span><span class="rd">Nebel · Kennzahlen, Tabellen, Live-Widget</span></div>
+      <div class="rrow paper"><span class="rt">Pakete &amp; Fragen</span><span class="rd">Papier · zurück zur Grundfläche</span></div>
+      <div class="rrow navy"><span class="rt">CTA-Band + Footer</span><span class="rd">Navy · der zweite dunkle Anker schließt die Seite</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="eyebrow">Anwendung 2</span>
+    <h2 style="margin-bottom:14px">Zwei Regeln für das Signalgrün</h2>
+    <p class="lead" style="margin-bottom:38px">Das Signalgrün ist unser auffälligstes Element – und funktioniert nur bei strenger Dosierung. Es hat eine Besonderheit: Auf Navy ist es lesbar genug für Text (6,6 : 1), auf hellen Flächen ist es das nicht. Daraus folgen zwei einfache Regeln.</p>
+    <div class="greengrid">
+      <div class="gcard do">
+        <span class="gt">So setzen wir es ein</span>
+        <div class="gdemo">
+          <div class="gd"><span class="ex navychip"><span class="ge">Clubprozesse</span><span class="gx">Platzstatus</span></span><span>Eyebrow in Grün – aber nur auf Navy</span></div>
+          <div class="gd"><span class="ex accline"></span><span>Akzentlinie über Kennzahlen und Modulkarten</span></div>
+          <div class="gd"><span class="ex eyeb">Die Plattform für Golfanlagen</span><span>Akzentpunkt vor Eyebrows auf hellen Flächen</span></div>
+          <div class="gd"><span class="ex btn green">Erstgespräch vereinbaren</span><span>der eine Conversion-Button – immer mit Navy-Text</span></div>
+        </div>
+      </div>
+      <div class="gcard dont">
+        <span class="gt">So nicht</span>
+        <div class="gdemo">
+          <div class="gd"><span class="ex btn badwhite">Erstgespräch vereinbaren</span><span>weißer Text auf Grün – 1,7 : 1, unlesbar</span></div>
+          <div class="gd"><span class="ex badtext">Jetzt Platz sichern</span><span>Grün als Textfarbe auf Hell – zu wenig Kontrast</span></div>
+          <div class="gd"><span class="ex badsurface">Ganze Sektion in Grün</span><span>Grün als Raumfarbe – erdrückt alles und sortiert uns zurück in den Golfmarkt</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sand">
+  <div class="wrap">
+    <span class="eyebrow">Nachweis</span>
+    <h2 style="margin-bottom:14px">Alle Kombinationen durchgerechnet</h2>
+    <p class="lead" style="margin-bottom:34px">Sämtliche Text-Kombinationen der Palette gegen WCAG&nbsp;2.1 (Stufe AA, normaler Text: mindestens 4,5 : 1). Das Ergebnis bestätigt die Rollenverteilung – und begründet die Grün-Regel mit Zahlen statt mit Geschmack.</p>
+    <div class="tscroll">
+      <table class="ctab">
+        <tr><th>Kombination</th><th>Beispiel</th><th>Kontrast</th><th>WCAG AA</th></tr>
+        <tr>
+          <td>Navy auf Papier</td>
+          <td><span class="pv" style="background:#FFFCF5;color:#01415B">Überschrift</span></td>
+          <td class="num">10,7 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Anthrazit auf Papier</td>
+          <td><span class="pv" style="background:#FFFCF5;color:#16262C">Fließtext</span></td>
+          <td class="num">15,2 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Grau auf Papier</td>
+          <td><span class="pv" style="background:#FFFCF5;color:#5C6F76">Sekundärtext</span></td>
+          <td class="num">5,1 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Blau auf Papier</td>
+          <td><span class="pv" style="background:#FFFCF5;color:#0B6A90">Link / Eyebrow</span></td>
+          <td class="num">5,9 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Weiß auf Navy</td>
+          <td><span class="pv" style="background:#01415B;color:#fff;border-color:#01415B">Hero / Footer</span></td>
+          <td class="num">11,0 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Signalgrün auf Navy</td>
+          <td><span class="pv" style="background:#01415B;color:#00E805;border-color:#01415B">Eyebrow auf Navy</span></td>
+          <td class="num">6,6 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Himmelblau auf Navy</td>
+          <td><span class="pv" style="background:#01415B;color:#7FD3F0;border-color:#01415B">Lichtakzent</span></td>
+          <td class="num">6,5 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Navy auf Signalgrün</td>
+          <td><span class="pv" style="background:#00E805;color:#01415B;border-color:#00E805">Conversion-Button</span></td>
+          <td class="num">6,6 : 1</td><td class="pass">Bestanden</td>
+        </tr>
+        <tr>
+          <td>Weiß auf Signalgrün</td>
+          <td><span class="pv" style="background:#00E805;color:#fff;border-color:#00E805">Button-Fehlgriff</span></td>
+          <td class="num">1,7 : 1</td><td class="fail">Nicht bestanden</td>
+        </tr>
+        <tr>
+          <td>Signalgrün auf Papier</td>
+          <td><span class="pv" style="background:#FFFCF5;color:#00E805">Textfarbe</span></td>
+          <td class="num">1,6 : 1</td><td class="fail">Nicht bestanden</td>
+        </tr>
+      </table>
+    </div>
+    <p class="lead" style="font-size:14px;margin-top:14px">Berechnet nach WCAG 2.1 Relative Luminance über alle Paare der verbindlichen Palette. Die beiden nicht bestandenen Kombinationen sind keine Warnung, sondern die Begründung der Grün-Regel aus Anwendung 2.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:64px">
+  <div class="wrap">
+    <div class="reco">
+      <span class="eyebrow">Festlegung</span>
+      <h3>Elf Farbwerte, klar getrennte Rollen, als Token-Set übernehmbar</h3>
+      <p>Verbindlich sind die Markenfarben Navy (#01415B), Navy tief (#012B3D), Blau (#0B6A90), Himmelblau (#7FD3F0) und Signalgrün (#00E805) mit klar getrennten Rollen: Navy trägt, Blau führt, Himmelblau beleuchtet, Grün signalisiert. Dazu die Flächenfamilie Papier (#FFFCF5), Sand (#F5F1E6), Nebel (#F3F6F4) und Weiß sowie Anthrazit (#16262C) und Grau (#5C6F76) für Text.</p>
+      <p>Für Grün gilt die Zwei-Regeln-Dosierung: als Eyebrow und Text ausschließlich auf Navy, als Fläche nur für den einen Conversion-Button pro Sektion – dort immer mit Navy-Text. Nie als Textfarbe auf hellem Grund, nie als Sektionsfläche. Alle Kombinationen sind rechnerisch geprüft; das Set ist damit direkt als Token-Ebene in Next.js übernehmbar und mit der Farblogik des Kunden-Templates kompatibel.</p>
+    </div>
+  </div>
+</section>
+
+<div class="docfoot">
+  <div class="wrap">
+    <span>GolfNext – Designkonzept Marketing-Website, Kapitel 2.3 Farben &amp; Flächen</span>
+    <span class="sp">SK Online Marketing · August 2026</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var LOGO='<svg viewBox="0 0 200.32 24.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GolfNext"><g fill="currentColor"><path d="m9.97,24.2c-6.64,0-9.97-2.21-9.97-6.67V6.98C0,2.76,3.27.65,9.8.65h4.66c1.16,0,1.74.48,1.74,1.4s-.58,1.4-1.74,1.4h-4.6c-4.12,0-6.2,1.23-6.2,3.61v10.38c0,2.66,2.11,3.98,6.47,3.98h7.35c4.29,0,6.47-1.33,6.47-3.98v-6.43c0-.95.61-1.43,1.84-1.43s1.84.48,1.84,1.43v6.54c0,4.46-3.37,6.67-9.97,6.67h-7.69Z"/><path d="m42.79,24.2c-5.89,0-8.82-1.8-8.82-5.38v-5.75c0-3.61,2.93-5.41,8.82-5.41h6.57c5.89,0,8.82,1.8,8.82,5.41v5.75c0,3.57-2.93,5.38-8.82,5.38h-6.57Zm11.74-11.17c0-1.74-1.7-2.59-5.07-2.59h-6.81c-3.34,0-5.04.85-5.04,2.59v5.82c0,1.7,1.7,2.59,5.04,2.59h6.81c3.37,0,5.07-.89,5.07-2.59v-5.82Z"/><path d="m64.55,1.43c0-.92.61-1.43,1.8-1.43s1.8.51,1.8,1.43v21.51c0,.95-.61,1.43-1.8,1.43s-1.8-.48-1.8-1.43V1.43Z"/><path d="m78.3,10.45v12.49c0,.95-.58,1.43-1.74,1.43-1.26,0-1.87-.48-1.87-1.43V5.17c0-3.4,2.72-5.11,8.31-5.11h2.89c1.12,0,1.7.48,1.7,1.33s-.58,1.36-1.7,1.36h-2.89c-3.13,0-4.7.78-4.7,2.38v2.66h7.59c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-7.59Z"/><path d="m96.62,1.23l20.53,18.11V1.87c0-.92.61-1.4,1.84-1.4s1.84.48,1.84,1.4v21.07c0,.95-.65,1.43-1.94,1.43-.75,0-1.23-.27-1.8-.78l-20.49-18.11v17.46c0,.95-.65,1.43-1.87,1.43s-1.8-.48-1.8-1.43V1.94c0-.99.65-1.46,1.91-1.46.72,0,1.23.24,1.8.75Z"/><path d="m130.9,17.06v2.08c0,1.6,1.57,2.42,4.73,2.42h5.04c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.04c-5.51,0-8.31-1.67-8.31-5.04v-6.67c0-3.2,2.49-4.83,7.42-4.83h9.84c4.83,0,7.25,1.46,7.25,4.36v3.81c0,.82-.54,1.23-1.57,1.23h-19.37Zm0-2.35h17.09c.2,0,.27-.1.27-.24v-1.77c0-1.57-1.29-2.35-3.95-2.35h-9.36c-2.72,0-4.05.78-4.05,2.35v2.01Z"/><path d="m169.13,17.74l-9.06,6.16c-.51.37-.92.51-1.43.48-1.16,0-1.77-.48-1.77-1.36,0-.34.17-.78.82-1.23l8.71-5.96-8.2-5.69c-.68-.44-.85-.92-.85-1.29,0-.92.61-1.36,1.84-1.36.65,0,.99.17,1.5.51l8.68,6.03,8.82-6.03c.51-.34.88-.51,1.43-.51,1.19,0,1.77.48,1.77,1.4-.03.31-.1.75-.82,1.23l-8.48,5.79,8.44,5.82c.65.48.85.92.85,1.29,0,.92-.61,1.36-1.84,1.36-.54,0-1.06-.1-1.53-.51l-8.88-6.13Z"/><path d="m192.76,10.45v12.49c0,.95-.61,1.43-1.77,1.43-1.23,0-1.84-.48-1.84-1.43v-12.49h-1.4c-1.09,0-1.67-.44-1.67-1.33s.58-1.33,1.67-1.33h1.4v-3.13c0-.92.58-1.43,1.77-1.43s1.84.51,1.84,1.43v3.13h5.86c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.86Z"/></g></svg>';
+  document.querySelectorAll('.jslogo').forEach(function(el){ el.innerHTML=LOGO; });
+})();
+</script>
+</body>
+</html>

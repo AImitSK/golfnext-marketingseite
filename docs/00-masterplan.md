@@ -57,6 +57,7 @@ Quelle: `docs/design-system/mocks/2.4-navigation-footer.html`, `2.5-ui-kit.html`
 
 Je Seite: Skill `golfnext-page-from-mock` → Fred-Briefing lesen → `content/<seite>.ts` anlegen → Sektions-CSS aus dem Mock als CSS-Module portieren → bauen → Subagents (`text-fidelity`, `design-system-guard`, `qa-runner`, `seo-auditor`) → `docs/03-seiten-und-routen.md` aktualisieren. Reihenfolge nach Verkaufsrelevanz.
 
+- [x] **2.0 Layout-Shell.** Header (Baustein 0004) site-weit ins neue `app/(site)/layout.tsx` eingehängt; `app/page.tsx` → `app/(site)/page.tsx` verschoben (Route bleibt `/`, Platzhalter, genau eine `<h1>`). Footer bewusst pro Seite, nicht im Layout. (Briefing 0011)
 - [ ] **2.1 Pakete** `/pakete` aus `3.7-pakete.html` (Fassung 2). Hero-Stapel mit Rückgrat-Animation, Sockelblock, Zeitschiene Einrichtung → Go-live → Betrieb, drei Karten mit aufklappbaren Leistungen, Werbebudget-Box, Vergleichstabelle, FAQ (FAQ zunächst statisch, in 3.6 auf Sanity umstellen). **Preise nie addieren.**
 - [ ] **2.2 Startseite** `/` aus `3.1-startseite.html`; **Abschnitt 6 (Pakete) nach `3.1a-startseite-paketblock-fassung2.html`** bauen (Sockelband, drei Pluszeichen, drei kompakte Modulkarten, keine Summen, Link „Pakete und Leistungen vergleichen"). Alle anderen Abschnitte unverändert aus 3.1.
 - [ ] **2.3 Plattform** `/plattform` aus `3.2-plattform.html`.

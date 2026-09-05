@@ -47,10 +47,17 @@ describe("getNavModel", () => {
     expect(crm?.status).toBe("pilot");
   });
 
-  it("verlinkt nicht-live Routen als Platzhalter (#) – aktuell alle Punkte", () => {
+  it("verlinkt live-Routen echt (Pakete) und nicht-live Punkte als Platzhalter (#)", () => {
     for (const item of model) {
-      expect(item.href).toBe("#");
-      expect(item.isLive).toBe(false);
+      if (item.path === "/pakete") {
+        // Seit Schritt 2.1 ist /pakete live und wird echt verlinkt.
+        expect(item.href).toBe("/pakete");
+        expect(item.isLive).toBe(true);
+      } else {
+        expect(item.href).toBe("#");
+        expect(item.isLive).toBe(false);
+      }
+      // Dropdown-Kinder (Module/Unterseiten) sind weiterhin nicht live.
       for (const child of item.children) {
         expect(child.href).toBe("#");
       }

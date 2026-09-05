@@ -25,15 +25,16 @@ test.describe("Header · Struktur und Daten", () => {
     const headerH1 = page.locator("header h1");
     await expect(headerH1).toHaveCount(0);
 
-    // Aktuell ist keine Route live → alle Navigations-Links (Desktop + Mobil, auch
-    // ausgeblendete) zeigen auf den Platzhalter „#". CSS-Locator, damit display:none
-    // Navigationen mitzählen.
+    // Seit Schritt 2.1 ist /pakete live → der Pakete-Link zeigt echt auf „/pakete",
+    // alle übrigen (noch nicht live) Navigations-Links bleiben Platzhalter „#".
+    // CSS-Locator, damit display:none Navigationen mitzählen.
     const hrefs = await page
       .locator("header nav a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
     expect(hrefs.length).toBeGreaterThan(0);
+    expect(hrefs, "Pakete ist live und wird verlinkt").toContain("/pakete");
     for (const href of hrefs) {
-      expect(href, "nicht-live Link ist Platzhalter").toBe("#");
+      expect(href === "#" || href === "/pakete", "nur /pakete ist live, sonst #").toBe(true);
     }
   });
 });

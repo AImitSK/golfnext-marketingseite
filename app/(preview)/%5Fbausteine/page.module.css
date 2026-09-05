@@ -47,11 +47,45 @@
   flex-wrap: wrap;
 }
 
+/* Platzhalter-Demo (Schritt 1.5): Raster für Shots und Porträts, umbruchsicher */
+.shotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.navyBlock .shotGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0;
+  width: 100%;
+}
+.portraitGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 460px;
+}
+.avatarRow {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .shotGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 @media (max-width: 620px) {
   .dark {
     padding: 58px 0;
   }
   .label {
     flex: 0 0 100%;
+  }
+  .shotGrid,
+  .navyBlock .shotGrid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

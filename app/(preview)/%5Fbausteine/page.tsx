@@ -7,7 +7,9 @@ import { Chip } from "@/components/ui/Chip";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Hint } from "@/components/ui/Hint";
 import { Lead } from "@/components/ui/Lead";
+import { Portrait } from "@/components/ui/Portrait";
 import { Section } from "@/components/ui/Section";
+import { Shot } from "@/components/ui/Shot";
 import { Statement } from "@/components/ui/Statement";
 import { TextLink } from "@/components/ui/TextLink";
 import { Wrap } from "@/components/ui/Wrap";
@@ -183,6 +185,77 @@ export default function BausteinePage() {
 
           <div className={styles.navyBlock}>
             <Badge status="onnavy">Auf Navy</Badge>
+          </div>
+        </Wrap>
+      </Section>
+
+      {/* Platzhalter – Schritt 1.5. Shot (hell/dark, mehrere Ratios) und Portrait
+          (large + small). Alle Beschriftungen sind Demo-Inhalte, keine Fred-Texte,
+          keine erfundenen Bildinhalte. Kein echtes Bild – nur Platzhalter. */}
+      <Section variant="mist">
+        <Wrap>
+          <div className={styles.stack}>
+            <Eyebrow>Bild-Platzhalter</Eyebrow>
+            <h2>Platzhalter</h2>
+            <Lead>
+              Fehlende Screenshots und Porträts werden als beschriftete Platzhalter gebaut – nie
+              als Stock- oder KI-Bild. Das Seitenverhältnis reserviert die Höhe vorab, damit beim
+              Laden nichts springt.
+            </Lead>
+          </div>
+
+          <div className={styles.shotGrid}>
+            <Shot
+              ratio="16/10"
+              tagline="Ansicht 16 / 10"
+              title="Beispiel-Screenshot"
+              text="Ein Platzhalter im Querformat – hier stünde später die echte Oberfläche."
+            />
+            <Shot
+              ratio="4/3"
+              tagline="Ansicht 4 / 3"
+              title="Beispiel-Screenshot"
+              text="Dasselbe Muster in einem kompakteren Seitenverhältnis."
+            />
+            <Shot
+              ratio="16/9"
+              tagline="Ansicht 16 / 9"
+              title="Beispiel-Screenshot"
+              text="Ein breites Format – Tagline oben, Beschreibung unten."
+            />
+          </div>
+
+          <div className={styles.navyBlock}>
+            <div className={styles.shotGrid}>
+              <Shot
+                dark
+                ratio="16/10"
+                tagline="Auf Navy"
+                title="Platzhalter dunkel"
+                text="Auf dunklem Grund kommen Sky-Kontur und heller Text zum Einsatz."
+              />
+              <Shot
+                dark
+                ratio="4/3"
+                tagline="Auf Navy"
+                title="Platzhalter dunkel"
+                text="Dieselbe Optik, an die dunkle Fläche angepasst."
+              />
+            </div>
+          </div>
+
+          <div className={styles.stack}>
+            <Eyebrow>Porträt · groß und klein</Eyebrow>
+            <div className={styles.portraitGrid}>
+              <Portrait size="large" tag="Team" name="Vorname Nachname" role="Rolle im Team" />
+              <Portrait size="large" name="Vorname Nachname" role="Rolle im Team" />
+            </div>
+            <div className={styles.avatarRow}>
+              <Portrait size="small" />
+              <Portrait size="small" />
+              <Portrait size="small" />
+              <span className={styles.label}>46 px rund</span>
+            </div>
           </div>
         </Wrap>
       </Section>

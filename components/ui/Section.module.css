@@ -1,0 +1,27 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.1-startseite.html
+   (.psec Z.35–37, .psec h2 Z.38, Media-Query .psec Z.400).
+   Mock-Kurznamen (var(--sand)/var(--mist)) auf --gn-* umgestellt, Werte unverändert. */
+.section {
+  padding: var(--gn-section-y) 0;
+}
+
+.sand {
+  background: var(--gn-sand);
+}
+
+.mist {
+  background: var(--gn-mist);
+}
+
+/* .psec h2 – Descendant-Styles wie im Mock */
+.section :global(h2) {
+  font-size: var(--gn-h2);
+  margin-bottom: 16px;
+  max-width: 22ch;
+}
+
+@media (max-width: 620px) {
+  .section {
+    padding: 58px 0;
+  }
+}

@@ -1,0 +1,17 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.1-startseite.html (.eyebrow Z.34);
+   Dark-Variante aus 3.5-clubprozesse.html (.dark-sec .eyebrow Z.397).
+   Werte unverändert, Farben/Tracking über --gn-*. */
+.eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: var(--gn-tracking-eyebrow);
+  font-size: var(--gn-eyebrow);
+  font-weight: 600;
+  color: var(--gn-blue);
+  margin-bottom: 14px;
+}
+
+/* Eyebrow auf Navy – Signalgrün als Text auf dunklem Grund (Grün-Regel ok) */
+.onDark {
+  color: var(--gn-signal);
+}

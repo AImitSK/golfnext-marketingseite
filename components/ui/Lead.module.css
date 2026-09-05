@@ -1,0 +1,12 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.1-startseite.html (.psec .lead Z.39);
+   Dark-Variante aus 3.5-clubprozesse.html (.dark-sec .lead Z.399).
+   Werte unverändert, Farben/Größe über --gn-*. */
+.lead {
+  font-size: var(--gn-lead);
+  color: var(--gn-muted);
+  max-width: 62ch;
+}
+
+.onDark {
+  color: var(--gn-on-dark-text);
+}

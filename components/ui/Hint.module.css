@@ -1,0 +1,27 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.7-pakete.html (.hint / .hint svg Z.67–68);
+   Dark-Variante aus 3.5-clubprozesse.html (.dark-sec .hint / .hint svg Z.401–402).
+   Werte unverändert, Farben/Größe über --gn-*. Icon fix 15 px, nicht skalierend. */
+.hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: var(--gn-small);
+  color: var(--gn-muted);
+  max-width: 72ch;
+}
+
+.icon {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  margin-top: 4px;
+  color: var(--gn-blue);
+}
+
+.onDark {
+  color: var(--gn-on-dark-text);
+}
+
+.onDark .icon {
+  color: var(--gn-sky);
+}

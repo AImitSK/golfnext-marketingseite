@@ -1,0 +1,18 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.7-pakete.html (.statement3 Z.85);
+   Dark-Variante aus 3.5-clubprozesse.html (.dark-sec .statement3 Z.90).
+   Werte unverändert, Schrift/Farben/Größe über --gn-*. Grüner Balken = Linie. */
+.statement {
+  font-family: var(--gn-font-display);
+  font-size: var(--gn-statement);
+  font-weight: 700;
+  color: var(--gn-navy);
+  letter-spacing: var(--gn-tracking-display);
+  padding-left: 20px;
+  border-left: 3px solid var(--gn-signal);
+  line-height: 1.34;
+  max-width: 36ch;
+}
+
+.onDark {
+  color: #fff;
+}

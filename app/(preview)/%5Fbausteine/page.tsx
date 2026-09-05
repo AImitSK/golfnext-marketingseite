@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Header } from "@/components/site/Header";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
@@ -24,7 +25,11 @@ export const metadata: Metadata = {
 
 export default function BausteinePage() {
   return (
-    <main>
+    <>
+      {/* Header (Baustein 0004) – hier zur Vorschau eingesetzt, NICHT im Root-Layout
+          (app-weite Einbindung folgt nach 1.4). Dropdowns und Mobil-Menü sind hier prüfbar. */}
+      <Header />
+      <main>
       <Section>
         <Wrap>
           <Eyebrow>Design-System · interne Vorschau</Eyebrow>
@@ -200,6 +205,7 @@ export default function BausteinePage() {
           </div>
         </Wrap>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

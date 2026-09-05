@@ -1,0 +1,187 @@
+/* Desktop-Navigation + Dropdown-Panels portiert aus
+   docs/design-system/mocks/2.4-navigation-footer.html:
+   .hnav / .hnav a / .amp / aktive+hover Unterlinie / .haschild::after (Z.105–110, 114–115),
+   .mega / .in / .mlead / .mgrid / .mitem (Z.117–135).
+   Tokens auf --gn-*. Literale Mock-Tints ohne Token sind als „Mock-Wert" kommentiert.
+   Bewusste Abweichungen zum Mock (Briefing 1.3, „Dropdown reduziert"):
+   - Panel ist eine positionierte Karte pro Hauptpunkt (nicht der full-bleed Balken).
+   - mgrid ohne Modul-Icons/-Beschreibungen; Eintrag = Modulname-Link + Status-Badge.
+   - Caret liegt auf einem eigenen <button> (Disclosure) statt als ::after am Link,
+     damit aria-expanded/aria-controls sauber sitzen; ohne JS öffnet :focus-within. */
+
+.nav {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+/* Unter dem Breakpoint übernimmt die MobileNav; Desktop-Nav wird ausgeblendet. */
+@media (max-width: 1023px) {
+  .nav {
+    display: none;
+  }
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 28px; /* 2.4 Z.105 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 2.4 .hnav a (Z.106): 14.5px/500, volle Kopfhöhe als Klickfläche, 2px-Unterlinie. */
+.link {
+  font-family: var(--gn-font-text);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--gn-ink);
+  padding: 28px 0;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+.link:hover,
+.item:hover > .link,
+.link.active {
+  color: var(--gn-navy);
+  border-color: var(--gn-signal); /* aktive/hover: grüne Unterlinie (Grün als Linie) */
+}
+
+/* 2.4 .amp (Z.107): gedämpftes „&" in „Wachstum & Vertrieb". */
+.amp {
+  color: var(--gn-muted);
+  font-weight: 400;
+  padding: 0 4px;
+}
+
+/* Caret als Disclosure-Button. Optik aus 2.4 .haschild::after (Z.110): rotiertes
+   Kästchen aus zwei Rändern. Der Button selbst ist flächenlos. */
+.caret {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 0 2px 0 7px;
+  margin: 0;
+  color: var(--gn-ink);
+  cursor: pointer;
+  align-self: stretch;
+}
+.caretIcon {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.4px solid currentColor;
+  border-bottom: 1.4px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  opacity: 0.55;
+  transition: transform 0.15s;
+}
+.item[data-open="true"] .caretIcon {
+  transform: rotate(225deg) translateY(-2px);
+}
+
+/* Dropdown-Panel (2.4 .mega Z.118). Als schmale Karte positioniert statt full-bleed.
+   Abweichung zum Mock: einspaltige Liste (Lead-Link oben, darunter Modulname + Badge
+   je Zeile) statt des 2-/3-spaltigen Rasters mit Icons/Beschreibungen – die reduzierte
+   Darstellung (Briefing 1.3) bleibt schmal genug, dass die absolut positionierten Panels
+   bei 1024 px keinen horizontalen Overflow erzeugen. */
+.mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 40;
+  background: #fff; /* Mock-Wert (2.4 Z.118) */
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  box-shadow: 0 30px 50px -34px rgba(1, 65, 91, 0.35); /* Mock-Wert (2.4 Z.118) */
+  min-width: 300px;
+  max-width: calc(100vw - 2 * var(--gn-gutter));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  /* Nur opacity/transform animieren; visibility schaltet sofort (sonst bleibt das
+     Panel in Headless-Chromium während der Transition „hidden" – Playwright misst
+     dann nicht sichtbar). Sichtbarkeit ist damit ohne JS/mit JS zuverlässig. */
+  transition: opacity 0.15s var(--gn-ease), transform 0.15s var(--gn-ease);
+}
+/* Ohne JS: Fokus/Hover öffnet. Mit JS zusätzlich data-open (Klick-Öffnung). */
+.item:hover > .mega,
+.item:focus-within > .mega,
+.item[data-open="true"] > .mega {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/* 2.4 .mega .in (Z.119): Lead-Link oben, Modul-Liste darunter (vertikaler Stapel). */
+.megaIn {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 22px 14px;
+}
+
+/* 2.4 .mlead a (Z.122): blauer Link zur Sektionsseite, oben abgesetzt. */
+.mlead {
+  padding-bottom: 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--gn-line);
+}
+
+/* 2.4 .mgrid (Z.124), reduziert: einspaltige Liste. */
+.mgrid {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 2.4 .mitem (Z.125): Zeile aus Modulname (links) und Status-Badge (rechts). */
+.mitem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 0;
+  min-width: 0;
+}
+.mlink {
+  font-size: 14.5px; /* 2.4 .mitem b (Z.129) */
+  font-weight: 600;
+  color: var(--gn-ink);
+  min-width: 0;
+  transition: color 0.15s;
+}
+.mlink:hover {
+  color: var(--gn-blue);
+}
+.mbadge {
+  flex: 0 0 auto;
+}
+
+/* Responsive Verdichtung der Leiste (2.4 Z.114–115, an Breakpoint 1024 angepasst),
+   damit sechs Punkte + langer CTA auch bei 1024 px ohne Overflow passen. */
+@media (max-width: 1180px) {
+  .list {
+    gap: 16px;
+  }
+  .link {
+    font-size: 13.5px;
+  }
+}
+@media (max-width: 1100px) {
+  .list {
+    gap: 9px;
+  }
+  .link {
+    font-size: 12.5px;
+  }
+}

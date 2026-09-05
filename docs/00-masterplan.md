@@ -39,7 +39,7 @@ Legende: **[S]** Stefan muss etwas liefern/entscheiden · **[F]** Fred muss etwa
 
 Quelle: `docs/design-system/mocks/2.4-navigation-footer.html`, `2.5-ui-kit.html` sowie der gemeinsame Kopf- und Footer-Block aller Seitenmocks. Skill `golfnext-design-system` laden.
 
-- [ ] **1.1 Layout-Bausteine.** `Section` (Varianten paper/sand/mist, Padding 86/58), `Wrap` (1140 px, Gutter 40/26/20), `Eyebrow`, `Lead`, `Statement`, `Hint` (Icon 15 px fix).
+- [x] **1.1 Layout-Bausteine.** `Section` (Varianten paper/sand/mist, Padding 86/58), `Wrap` (1140 px, Gutter 40/26/20), `Eyebrow`, `Lead`, `Statement`, `Hint` (Icon 15 px fix).
 - [ ] **1.2 Buttons und Links.** `Button` (primär grün mit optionaler zweiter Zeile, sekundär auf dunkel mit Unterlinie), `TextLink` mit Pfeil, `Pill`/`Chip`, Status-`Badge` (Im Einsatz grün · Pilot gold · In Entwicklung hell).
 - [ ] **1.3 Header.** Sticky 80 px, Wortmarke 19 px, Hauptnavigation nach 2.4 mit zwei Modul-Dropdowns (Plattform, Clubprozesse), aktive Seite mit grüner Unterlinie, CTA rechts. Unter 1024 px Burger + Vollbild-Menü nach 2.4 (mobil). Tastaturbedienbar, `aria-current="page"`.
 - [ ] **1.4 Footer-Systemkarte.** `Footer` mit `FooterClose` (Props: eyebrow, headline, text, cta, ctaHint, secondary?), Modulkarte (zwölf Module in zwei Spalten mit Status-Punkten, Links auf `/module/<slug>` – vorerst `#`), Kontaktzeile (Fred Hoffmann, 0175 5951839, info@golfnext.de, Rückmeldung innerhalb eines Werktags), Leiste mit Wortmarke, © 2026, Impressum, Datenschutz, Cookie-Einstellungen (öffnet Consent-Dialog).

@@ -1,0 +1,22 @@
+/* Nur für die interne Vorschau /_bausteine – kein Website-Baustein.
+   Dunkle Demo-Fläche, um die onDark-Varianten der Primitives auf Navy zu zeigen. */
+.dark {
+  padding: var(--gn-section-y) 0;
+  background: var(--gn-navy-deep);
+  color: #fff;
+}
+
+.dark h2 {
+  color: #fff;
+}
+
+/* Abstand zwischen den Demo-Bausteinen innerhalb einer Sektion */
+.stack > * + * {
+  margin-top: 20px;
+}
+
+@media (max-width: 620px) {
+  .dark {
+    padding: 58px 0;
+  }
+}

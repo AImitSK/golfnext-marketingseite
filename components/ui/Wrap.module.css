@@ -1,0 +1,21 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.1-startseite.html
+   (.pwrap Z.33, Media-Queries Z.395/407). Werte unverändert, --gn-* für Wrap/Gutter. */
+.wrap {
+  max-width: var(--gn-wrap);
+  margin: 0 auto;
+  padding: 0 var(--gn-gutter);
+}
+
+@media (max-width: 960px) {
+  .wrap {
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+}
+
+@media (max-width: 620px) {
+  .wrap {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

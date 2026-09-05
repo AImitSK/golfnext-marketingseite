@@ -1,0 +1,35 @@
+/* Chip portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.chip Z.96–99).
+   Präsentational; Auswahl-/Entfernen-Logik reicht die Seite über Props hinein.
+   `.chip.on` bleibt als Verbund-Selektor erhalten, damit der aktive Zustand die
+   höhere Spezifität behält und `:hover` nicht Navy-Text auf Navy erzeugt.
+   Der Pill-Radius 30 px ist der Mock-Wert (nicht --gn-radius-pill = 20 px). */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--gn-font-text);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--gn-muted);
+  border: 1px solid var(--gn-line);
+  border-radius: 30px; /* Mock-Wert, kein Token (2.5 Z.96) */
+  padding: 8px 17px;
+  background: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.96 */
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: #cfc7b8; /* Mock-Wert, kein Token (2.5 Z.97) */
+  color: var(--gn-navy);
+}
+
+.chip.on {
+  background: var(--gn-navy);
+  border-color: var(--gn-navy);
+  color: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.98 */
+}
+
+.x {
+  font-weight: 400;
+  opacity: 0.7;
+}

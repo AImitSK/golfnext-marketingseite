@@ -22,7 +22,7 @@ Signalgrün nur als Fläche (Button, Badge), Punkt, Linie – oder als **Text au
 - Display: Archivo 700/800, Tracking −0.02 em (H1 bis −0.035 em), `text-wrap: balance` bei Headlines.
 - Text: Inter 17 px / 1.65. Nebentext `muted` 13.5–15.5 px.
 - Eyebrow: 12.5 px, Versalien, Tracking .18 em, `blue` (auf dunkel `signal`).
-- Genau eine H1. H2 `clamp(27px,3.2vw,40px)`, max 24ch. Lead `clamp(16px,1.3vw,19px)`, `muted`, max 62ch.
+- Genau eine H1. H2 `clamp(27px,3.2vw,40px)`, max 22ch. Lead `clamp(16px,1.3vw,19px)`, `muted`, max 62ch.
 - Fonts über `next/font/google` mit `display: 'swap'` und CSS-Variablen `--font-archivo`, `--font-inter` – self-hosted durch Next, kein externer Request.
 
 ## Wiederkehrende Bausteine (aus 2.4 / 2.5 und den Seitenmocks ableiten)

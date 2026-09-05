@@ -1,0 +1,26 @@
+/* TextLink portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.tlink Z.82–84).
+   Blau, 15.5 px, 600; Pfeil fix 15 px; beim Hover rückt der Pfeil 3 px nach rechts.
+   onDark-Variante auf --gn-on-dark-link für dunkle Flächen. Werte unverändert. */
+.tlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--gn-font-text);
+  font-weight: 600;
+  font-size: 15.5px;
+  color: var(--gn-blue);
+}
+
+.tlink svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.15s;
+}
+
+.tlink:hover svg {
+  transform: translateX(3px);
+}
+
+.onDark {
+  color: var(--gn-on-dark-link);
+}

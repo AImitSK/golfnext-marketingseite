@@ -1,0 +1,54 @@
+/* Badges portiert aus docs/design-system/mocks/2.5-ui-kit.html (.badge Z.88–95).
+   Dot 7 px in currentColor. Der Radius 3 px ist der Mock-Wert (nicht --gn-radius = 4 px).
+   Literale Mock-Tints ohne Token sind als „Mock-Wert" kommentiert.
+   `onnavy` ist grüne Fläche mit Navy-Text (Grün als Fläche, Grün-Regel erfüllt).
+   AA-Korrektur (Entscheidung Stefan, docs/entscheidungen.md): pilot/dev/inklusive
+   verfehlten den AA-Kontrast (4,4–4,45:1) knapp; minimal nachjustiert auf ≥ 4,5:1. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--gn-font-text);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 3px; /* Mock-Wert, kein Token (2.5 Z.88) */
+  padding: 5px 11px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.live {
+  background: var(--gn-ok-bg);
+  color: var(--gn-ok);
+}
+.pilot {
+  background: #faf4e0; /* Mock-Wert, kein Token (2.5 Z.91) */
+  /* AA-Korrektur: --gn-warn (#8a6d3b) auf #faf4e0 = 4,4:1. #856835 hebt auf 4,74:1. */
+  color: #856835;
+}
+.dev {
+  /* AA-Korrektur: --gn-muted auf Mock-#efece3 = 4,45:1; bg leicht aufgehellt auf
+     #f4f2ec → 4,70:1 (Token-Text --gn-muted bleibt unverändert). */
+  background: #f4f2ec;
+  color: var(--gn-muted);
+}
+.addon {
+  background: #e7f1f6; /* Mock-Wert, kein Token (2.5 Z.93) */
+  color: var(--gn-blue);
+}
+.inklusive {
+  /* AA-Korrektur wie .dev: bg #efece3 → #f4f2ec (4,70:1), Text --gn-muted unverändert. */
+  background: #f4f2ec;
+  color: var(--gn-muted);
+}
+.onnavy {
+  background: var(--gn-signal);
+  color: var(--gn-navy);
+}

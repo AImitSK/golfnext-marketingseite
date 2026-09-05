@@ -1,0 +1,219 @@
+/* Formularfelder · portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html
+   (.f/.inp/.fmsg Z.102–125). Ein co-lokiertes Modul für alle Feld-Bausteine
+   (Field, FieldMessage, Input, Select, Textarea, Checkbox, Radio) – wie bei Faq/FaqItem.
+   Tokens auf --gn-*; Rahmen-, Platzhalter- und Ring-Werte ohne Token sind als
+   „Mock-Wert" kommentiert.
+
+   Fokus (docs/08 §5): Der Mock ersetzt den Fokusrahmen durch Rahmenfarbe + Ring
+   (box-shadow). Damit die Tastaturbedienung den vorgeschriebenen Fokusring (blau,
+   2 px, Offset 3 px) behält, ergänzen wir ihn zusätzlich über :focus-visible
+   (bewusste, dokumentierte Ergänzung zum Mock, siehe docs/entscheidungen.md). */
+
+/* Feld-Hülle (.f) */
+.field {
+  max-width: 380px;
+  min-width: 0;
+  flex: 1 1 300px;
+}
+.field.wide {
+  max-width: 600px;
+  flex: 1 1 100%;
+}
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gn-ink);
+  margin-bottom: 7px;
+}
+.req {
+  color: var(--gn-err);
+}
+
+/* Textfelder / Select / Textarea (.inp) */
+.control {
+  width: 100%;
+  font-family: inherit;
+  font-size: 15.5px;
+  color: var(--gn-ink);
+  background: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.105 */
+  border: 1px solid #d5cfc3; /* Mock-Wert, kein Token (2.5 Z.105) */
+  border-radius: var(--gn-radius);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.control::placeholder {
+  color: #a9a294; /* Mock-Wert, kein Token (2.5 Z.106) */
+}
+/* .focus spiegelt :focus, damit der Fokuszustand in der Bausteine-Vorschau auch
+   statisch gezeigt werden kann (wie .inp.focus im Mock, 2.5 Z.107). */
+.control:focus,
+.focus {
+  border-color: var(--gn-blue);
+  box-shadow: 0 0 0 3px rgba(11, 106, 144, 0.16); /* Mock-Wert (blue @16%), 2.5 Z.107 */
+}
+/* Fehler-/Erfolgszustand: über Klassen, damit sie auch server-seitig stehen. */
+.err {
+  border-color: var(--gn-err);
+  box-shadow: 0 0 0 3px rgba(163, 86, 74, 0.12); /* Mock-Wert (err @12%), 2.5 Z.108 */
+}
+.ok {
+  border-color: var(--gn-ok);
+}
+.control:disabled {
+  background: var(--gn-sand);
+  color: #a9a294; /* Mock-Wert, kein Token (2.5 Z.110) */
+  cursor: not-allowed;
+}
+/* Tastatur-Fokusring zusätzlich zum Mock-Ring (docs/08 §5). */
+.control:focus-visible {
+  outline: 2px solid var(--gn-blue);
+  outline-offset: 3px;
+}
+
+/* Select: eigener Pfeil, kein System-Chevron (2.5 Z.116) */
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%235C6F76' stroke-width='1.6' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
+
+/* Textarea (2.5 Z.117) */
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+/* Feldmeldung (.fmsg) – e Fehler, s Erfolg, h Hinweis. Icon 14 px, fix (2.5 Z.111–115) */
+.fmsg {
+  font-size: 13.5px;
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.fmsg svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+.fmsgE {
+  color: var(--gn-err);
+}
+.fmsgS {
+  color: var(--gn-ok);
+}
+.fmsgH {
+  color: var(--gn-muted);
+}
+
+/* Checkbox (.check) – native <input>, visuell ersetzt durch .box (2.5 Z.118–121) */
+.check {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  font-size: 14px;
+  color: var(--gn-muted);
+  max-width: 52ch;
+  cursor: pointer;
+}
+.box {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #d5cfc3; /* Mock-Wert, kein Token (2.5 Z.119) */
+  border-radius: var(--gn-radius);
+  background: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.119 */
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box svg {
+  width: 12px;
+  height: 12px;
+  color: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.121 */
+  opacity: 0;
+}
+
+/* Radio (.radio) – native <input>, visuell ersetzt durch .rb (2.5 Z.122–125) */
+.radio {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 15px;
+  color: var(--gn-ink);
+  cursor: pointer;
+  margin-right: 22px;
+}
+.rb {
+  flex: 0 0 auto;
+  width: 19px;
+  height: 19px;
+  border: 1px solid #d5cfc3; /* Mock-Wert, kein Token (2.5 Z.123) */
+  border-radius: 50%;
+  background: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.123 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rb::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gn-blue);
+  opacity: 0;
+}
+
+/* Natives Bedienelement für Checkbox/Radio: sichtbar ersetzt, aber fokussierbar
+   (kein display:none) – der Klick kommt über das umgebende <label>. */
+.nativeInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Ausgewählt */
+.nativeInput:checked + .box {
+  background: var(--gn-blue);
+  border-color: var(--gn-blue);
+}
+.nativeInput:checked + .box svg {
+  opacity: 1;
+}
+.nativeInput:checked + .rb {
+  border-color: var(--gn-blue);
+}
+.nativeInput:checked + .rb::after {
+  opacity: 1;
+}
+
+/* Tastatur-Fokus: Ring auf dem sichtbaren Ersatz (docs/08 §5) */
+.nativeInput:focus-visible + .box,
+.nativeInput:focus-visible + .rb {
+  outline: 2px solid var(--gn-blue);
+  outline-offset: 3px;
+}
+
+/* Deaktiviert: gedämpft, nicht anklickbar */
+.nativeInput:disabled + .box,
+.nativeInput:disabled + .rb {
+  background: var(--gn-sand);
+  border-color: #d5cfc3; /* Mock-Wert, kein Token */
+}
+.check:has(.nativeInput:disabled),
+.radio:has(.nativeInput:disabled) {
+  color: #a9a294; /* Mock-Wert, kein Token */
+  cursor: not-allowed;
+}

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Cta } from "@/content/types";
 import { resolveCta } from "@/lib/links";
+import { uiMessages } from "@/lib/ui/messages";
 import styles from "./Button.module.css";
 
 /** Rechtsgerichteter Pfeil, fix 15 × 15 px (Grün-Regel/Icon-Regel: nie ohne Größe). */
@@ -44,8 +45,14 @@ const VARIANT_CLASS: Record<"cta" | "primary" | "ghost" | "light", string> = {
  *   `small` mit `display:block`), nie Inline-Zusatz auf Grün (Grün-Regel).
  * - `size="sm"`: kompakte Variante. `arrow`: 15-px-Pfeil rechts.
  *
- * Zustände (disabled-Optik, .loading/Spinner) folgen in Schritt 1.8. Ein
- * `disabled`-Attribut wird an `<button>` durchgereicht, ohne eigene Optik.
+ * Zustände (Schritt 1.8, Briefing 0009):
+ * - `disabled`: deaktivierte Optik (`.disabled`); bei `<button>` zusätzlich das
+ *   `disabled`-Attribut.
+ * - `loading`: Ladeoptik (`.loading`, drehender Ring), `aria-busy="true"`, die Breite
+ *   bleibt (kein Springen), Klicks sind aus. Eine `sr-only`-Ansage (`loadingLabel`,
+ *   Default `uiMessages.sending`) sagt Screenreadern, dass gesendet wird.
+ *   Die Mindestanzeige 400 ms / der 10-s-Timeout sind Formularlogik (Phase 4) –
+ *   hier nur der visuelle Zustand samt `loading`-Prop.
  */
 export function Button({
   variant = "cta",
@@ -56,6 +63,8 @@ export function Button({
   cta,
   type = "button",
   disabled,
+  loading = false,
+  loadingLabel = uiMessages.sending,
   className,
   children,
 }: {
@@ -67,6 +76,8 @@ export function Button({
   cta?: Cta;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  loading?: boolean;
+  loadingLabel?: string;
   className?: string;
   children: ReactNode;
 }) {
@@ -89,6 +100,8 @@ export function Button({
     // .hbtn ist bereits column, .secondaryOnDark ist einzeilig.
     secondLine && isButtonShape ? styles.col : undefined,
     size === "sm" ? styles.sm : undefined,
+    disabled && !loading ? styles.disabled : undefined,
+    loading ? styles.loading : undefined,
     className,
   ]
     .filter(Boolean)
@@ -99,9 +112,13 @@ export function Button({
       {children}
       {secondLine ? <span className={styles.small}>{secondLine}</span> : null}
       {arrow ? <ArrowIcon /> : null}
+      {/* Ladeansage nur für Screenreader; die Breite bleibt (position:absolute). */}
+      {loading ? <span className={styles.srOnly}>{loadingLabel}</span> : null}
     </>
   );
 
+  // Ein Link kann nicht „deaktiviert" oder „ladend" sein – diese Zustände gehören
+  // Aktionen (<button>). Bei href/cta rendern wir daher immer den Link ohne Zustand.
   const resolvedHref = cta ? resolveCta(cta) : href;
   if (resolvedHref !== undefined) {
     return (
@@ -112,7 +129,15 @@ export function Button({
   }
 
   return (
-    <button type={type} disabled={disabled} className={classes}>
+    <button
+      type={type}
+      // Im Ladezustand NICHT `disabled`: ein deaktivierter Button meldet `aria-busy`
+      // nicht mehr. Klicks blockt `pointer-events:none` (.loading); den erneuten
+      // Absende-Versuch fängt die Formularlogik ab (Phase 4).
+      disabled={disabled}
+      aria-busy={loading || undefined}
+      className={classes}
+    >
       {content}
     </button>
   );

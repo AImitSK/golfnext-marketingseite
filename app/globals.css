@@ -18,7 +18,9 @@
   --color-ok: #2e6b38;
   --color-ok-bg: #edf4ea;
   --color-err: #a3564a;
+  --color-err-bg: #f8efec; /* Gegenstück zu --color-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
   --color-warn: #8a6d3b;
+  --color-warn-bg: #f7f1e3; /* Gegenstück zu --color-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
   --color-gold: #e8c55a;
   --color-human: #8a5b2b;
   --color-human-bg: #f6eee3;
@@ -67,7 +69,9 @@
   --gn-ok: #2e6b38;
   --gn-ok-bg: #edf4ea;
   --gn-err: #a3564a;
+  --gn-err-bg: #f8efec; /* Gegenstück zu --gn-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
   --gn-warn: #8a6d3b;
+  --gn-warn-bg: #f7f1e3; /* Gegenstück zu --gn-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
   --gn-gold: #e8c55a; /* Gold nur für "Pilot"-Status und Kampagnenbudget-Kennzeichnung */
   --gn-human: #8a5b2b;
   --gn-human-bg: #f6eee3;

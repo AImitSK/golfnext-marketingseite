@@ -21,8 +21,9 @@
 
   /* Status */
   --gn-ok:#2E6B38;      --gn-ok-bg:#EDF4EA;
-  --gn-err:#A3564A;
-  --gn-warn:#8A6D3B;    --gn-gold:#E8C55A;   /* Gold nur für "Pilot"-Status und Kampagnenbudget-Kennzeichnung */
+  --gn-err:#A3564A;     --gn-err-bg:#F8EFEC;   /* Gegenstück zu --gn-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
+  --gn-warn:#8A6D3B;    --gn-warn-bg:#F7F1E3;  /* Gegenstück zu --gn-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
+  --gn-gold:#E8C55A;   /* Gold nur für "Pilot"-Status und Kampagnenbudget-Kennzeichnung */
   --gn-human:#8A5B2B;   --gn-human-bg:#F6EEE3;
 
   /* Dunkle Flächen (Footer-Systemkarte, Hero) */

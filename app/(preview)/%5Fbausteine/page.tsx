@@ -1,4 +1,14 @@
 import type { Metadata } from "next";
+import { Alert } from "@/components/feedback/Alert";
+import { Empty } from "@/components/feedback/Empty";
+import { Skeleton } from "@/components/feedback/Skeleton";
+import { Checkbox } from "@/components/forms/Checkbox";
+import { Field } from "@/components/forms/Field";
+import { FieldMessage } from "@/components/forms/FieldMessage";
+import { Input } from "@/components/forms/Input";
+import { Radio } from "@/components/forms/Radio";
+import { Select } from "@/components/forms/Select";
+import { Textarea } from "@/components/forms/Textarea";
 import { Draw } from "@/components/motion/Draw";
 import { Reveal } from "@/components/motion/Reveal";
 import { Rise, RiseItem } from "@/components/motion/Rise";
@@ -18,7 +28,10 @@ import { Statement } from "@/components/ui/Statement";
 import { TextLink } from "@/components/ui/TextLink";
 import { Wrap } from "@/components/ui/Wrap";
 import { ueberGolfnext } from "@/content/ueber-golfnext";
+import { formMessages } from "@/lib/forms/messages";
+import { uiMessages } from "@/lib/ui/messages";
 import styles from "./page.module.css";
+import { ToastDemo } from "./ToastDemo";
 
 /**
  * Interne Vorschau der Layout-Primitives (Briefing 0002). Nicht in Navigation
@@ -347,6 +360,173 @@ export default function BausteinePage() {
               <p>Eine Linie wird einmalig von links nach rechts gezogen:</p>
               <Draw />
             </div>
+          </div>
+        </Wrap>
+      </Section>
+
+      {/* Zustände & Rückmeldungen – Schritt 1.8 (Briefing 0009). Alert/Toast/Empty/
+          Skeleton, Button-Ladezustand und alle Formularfelder in ihren Zuständen.
+          Jeder Fehler trägt Icon UND Text; alle Meldungstexte kommen aus den
+          Katalogen (lib/ui/messages.ts, lib/forms/messages.ts), nie aus der Komponente. */}
+      <Section variant="mist">
+        <Wrap>
+          <div className={styles.stack}>
+            <Eyebrow>Zustände &amp; Rückmeldungen</Eyebrow>
+            <h2>Alerts, Toast, Leerzustand, Laden &amp; Formularzustände</h2>
+            <Lead>
+              Die Feedback- und Formular-Bausteine in allen Zuständen. Fehler sind nie nur an der
+              Farbe erkennbar – immer über Icon und Text. Sämtliche Meldungstexte stammen aus den
+              Katalogen, die Komponenten enthalten keine eigenen.
+            </Lead>
+          </div>
+
+          {/* Inline-Alerts: info/ok = role=status, err = role=alert (docs/08 §5) */}
+          <div className={styles.stack}>
+            <h3>Inline-Alerts</h3>
+          </div>
+          <div className={styles.alertStack}>
+            <Alert variant="info">{uiMessages.moduleInDevelopment}</Alert>
+            <Alert variant="ok">{formMessages.form.success}</Alert>
+            <Alert variant="err">{formMessages.form.network}</Alert>
+          </div>
+
+          {/* Toast: einziger Toast der Website (Cookie-Einstellungen). Demo-Trigger
+              blendet ihn unten rechts ein und nach ~3 s wieder aus. */}
+          <div className={styles.stack}>
+            <h3>Toast</h3>
+            <Lead>
+              Der einzige Toast der Website bestätigt gespeicherte Cookie-Einstellungen. Hier als
+              Demo – er erscheint unten rechts und verschwindet nach etwa drei Sekunden.
+            </Lead>
+          </div>
+          <div className={styles.row}>
+            <ToastDemo />
+          </div>
+
+          {/* Leerzustand + Skeleton nebeneinander */}
+          <div className={styles.stack}>
+            <h3>Leerzustand &amp; Laden</h3>
+          </div>
+          <div className={styles.feedbackRow}>
+            <Empty
+              title={uiMessages.empty.title}
+              body={uiMessages.empty.body}
+              actionLabel={uiMessages.empty.action}
+              actionHref="#"
+            />
+            <Skeleton />
+          </div>
+
+          {/* Button-Zustände: Ladezustand (feste Breite, aria-busy, sr-only) und disabled */}
+          <div className={styles.stack}>
+            <h3>Button-Zustände</h3>
+          </div>
+          <div className={styles.row}>
+            <span className={styles.label}>Ladezustand</span>
+            <Button variant="primary" loading>
+              Modul ansehen
+            </Button>
+            <Button variant="cta" loading>
+              Erstgespräch anfragen
+            </Button>
+          </div>
+          <div className={styles.row}>
+            <span className={styles.label}>Deaktiviert</span>
+            <Button variant="primary" disabled>
+              Deaktiviert
+            </Button>
+            <Button variant="cta" disabled>
+              Deaktiviert
+            </Button>
+          </div>
+
+          {/* Formularfelder: fünf Zustände (default/focus/err/ok/disabled), native
+              Elemente (ohne JS bedienbar), Field verdrahtet id/aria/required. */}
+          <div className={styles.stack}>
+            <h3>Formularfelder</h3>
+          </div>
+          <div className={`${styles.row} ${styles.fieldRow}`}>
+            <Field id="demo-anlage" label="Golfanlage" required>
+              <Input placeholder="Golfclub Musterstadt e. V." />
+            </Field>
+            <Field id="demo-name" label="Ihr Name" state="focus">
+              <Input defaultValue="Dr. Martin Berger" />
+            </Field>
+          </div>
+          <div className={`${styles.row} ${styles.fieldRow}`}>
+            <Field
+              id="demo-mail"
+              label="E-Mail"
+              required
+              state="err"
+              message={formMessages.field.email}
+              messageVariant="e"
+            >
+              <Input type="email" defaultValue="m.berger@golfclub-" />
+            </Field>
+            <Field
+              id="demo-mail-ok"
+              label="E-Mail (bestätigt)"
+              state="ok"
+              message={formMessages.field.emailOk}
+              messageVariant="s"
+            >
+              <Input type="email" defaultValue="m.berger@golfclub-musterstadt.de" />
+            </Field>
+          </div>
+          <div className={`${styles.row} ${styles.fieldRow}`}>
+            <Field id="demo-rolle" label="Ihre Rolle im Club">
+              <Select defaultValue="vorstand">
+                <option value="vorstand">Vorstand / Präsidium</option>
+                <option value="geschaeftsfuehrung">Geschäftsführung</option>
+                <option value="sekretariat">Sekretariat</option>
+              </Select>
+            </Field>
+            <Field id="demo-disabled" label="Deaktiviertes Feld">
+              <Input defaultValue="Nicht bearbeitbar" disabled />
+            </Field>
+          </div>
+          <div className={`${styles.row} ${styles.fieldRow}`}>
+            <Field
+              id="demo-anliegen"
+              label="Was beschäftigt Sie aktuell?"
+              wide
+              message={formMessages.field.optional}
+              messageVariant="h"
+            >
+              <Textarea placeholder="Zum Beispiel: Wir verlieren jedes Jahr Mitglieder …" />
+            </Field>
+          </div>
+
+          {/* Auswahl: Radio-Gruppe und Checkbox – native Elemente, CSS-Zustände */}
+          <div className={`${styles.row} ${styles.fieldRow}`}>
+            <span className={styles.label}>Interesse</span>
+            <Radio name="demo-interesse" defaultChecked>
+              Neue Mitglieder gewinnen
+            </Radio>
+            <Radio name="demo-interesse">Clubbüro entlasten</Radio>
+            <Radio name="demo-interesse">Beides</Radio>
+            <Radio name="demo-interesse" disabled>
+              Nicht wählbar
+            </Radio>
+          </div>
+          <div className={`${styles.row} ${styles.fieldRow}`}>
+            <span className={styles.label}>Einwilligung</span>
+            <Checkbox name="demo-check" defaultChecked>
+              Angeklickte Checkbox (Demo-Auswahl)
+            </Checkbox>
+            <Checkbox name="demo-check-2">Leere Checkbox (Demo-Auswahl)</Checkbox>
+            <Checkbox name="demo-check-3" disabled>
+              Deaktivierte Checkbox
+            </Checkbox>
+          </div>
+
+          {/* Feldmeldungen einzeln: e Fehler, s bestätigt, h Hinweis (Icon 14 px) */}
+          <div className={styles.stack}>
+            <h3>Feldmeldungen</h3>
+            <FieldMessage variant="e">{formMessages.field.required}</FieldMessage>
+            <FieldMessage variant="s">{formMessages.field.emailOk}</FieldMessage>
+            <FieldMessage variant="h">{formMessages.field.optional}</FieldMessage>
           </div>
         </Wrap>
       </Section>

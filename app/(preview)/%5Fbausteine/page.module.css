@@ -72,9 +72,51 @@
   flex-wrap: wrap;
 }
 
+/* Bewegungs-Demo (Schritt 1.7): eine Karte je Variante, umbruchsicher.
+   Nur Vorschau – kein Website-Baustein. Feste Kartenhöhe zeigt, dass die
+   Animation kein Layout verschiebt (nur opacity/transform). */
+.motionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.motionCard {
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  background: var(--gn-paper);
+  padding: 22px 24px;
+}
+.motionCard h3 {
+  margin-bottom: 6px;
+}
+.motionCard p {
+  color: var(--gn-muted);
+  font-size: 15.5px;
+}
+/* Gestaffelte Liste für die rise-Demo */
+.riseList {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.riseList li {
+  padding: 10px 14px;
+  background: var(--gn-sand);
+  border-radius: var(--gn-radius);
+  font-size: 15.5px;
+  color: var(--gn-ink);
+}
+
 @media (max-width: 900px) {
   .shotGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .motionGrid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (max-width: 620px) {

@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { Draw } from "@/components/motion/Draw";
+import { Reveal } from "@/components/motion/Reveal";
+import { Rise, RiseItem } from "@/components/motion/Rise";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Badge } from "@/components/ui/Badge";
@@ -301,6 +304,50 @@ export default function BausteinePage() {
               },
             ]}
           />
+        </Wrap>
+      </Section>
+
+      {/* Bewegung – Schritt 1.7. Je ein Beispiel für reveal, rise (gestaffelt)
+          und draw (Linie). Wrapper aus components/motion/: Endzustand im
+          Server-HTML, initial erst nach Mount, einmalig (viewport.once),
+          Reduced-Motion → sofort Endzustand. Inhalte bleiben ohne JS sichtbar. */}
+      <Section variant="sand">
+        <Wrap>
+          <div className={styles.stack}>
+            <Eyebrow>Bewegung</Eyebrow>
+            <h2>Reveal, Rise &amp; Draw</h2>
+            <Lead>
+              Drei zurückhaltende Varianten aus <code>lib/motion/variants.ts</code>. Jede läuft einmal
+              beim Sichtbarwerden, bewegt nur Deckkraft und Position und bleibt danach stehen. Ohne
+              JavaScript und bei reduzierter Bewegung steht der Inhalt sofort im Endzustand.
+            </Lead>
+          </div>
+
+          <div className={styles.motionGrid}>
+            <Reveal className={styles.motionCard}>
+              <h3>Reveal</h3>
+              <p>
+                Blendet einmalig auf und schiebt sich 14 Pixel von unten in seine Position – die
+                Grundbewegung für Überschriften, Absätze und einzelne Karten.
+              </p>
+            </Reveal>
+
+            <div className={styles.motionCard}>
+              <h3>Rise</h3>
+              <p>Ein Container staffelt seine Kinder dezent nacheinander ein:</p>
+              <Rise as="ul" className={styles.riseList}>
+                <RiseItem as="li">Erster Punkt</RiseItem>
+                <RiseItem as="li">Zweiter Punkt</RiseItem>
+                <RiseItem as="li">Dritter Punkt</RiseItem>
+              </Rise>
+            </div>
+
+            <div className={styles.motionCard}>
+              <h3>Draw</h3>
+              <p>Eine Linie wird einmalig von links nach rechts gezogen:</p>
+              <Draw />
+            </div>
+          </div>
         </Wrap>
       </Section>
 

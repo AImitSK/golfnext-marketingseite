@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* Design-Tokens · übernommen aus docs/design-system/tokens/tailwind-theme.css.
+   Werte nicht ändern oder ergänzen (Briefing 0001). Ergibt Utilities wie
+   bg-navy, text-muted, border-line, bg-signal, font-display, rounded (4px). */
+@theme {
+  --color-navy: #01415b;
+  --color-navy-deep: #012b3d;
+  --color-blue: #0b6a90;
+  --color-sky: #7fd3f0;
+  --color-signal: #00e805;
+  --color-paper: #fffcf5;
+  --color-sand: #f5f1e6;
+  --color-mist: #f3f6f4;
+  --color-ink: #16262c;
+  --color-muted: #5c6f76;
+  --color-line: #e6e1d6;
+  --color-ok: #2e6b38;
+  --color-ok-bg: #edf4ea;
+  --color-err: #a3564a;
+  --color-warn: #8a6d3b;
+  --color-gold: #e8c55a;
+  --color-human: #8a5b2b;
+  --color-human-bg: #f6eee3;
+  --color-on-dark-text: #b9d2de;
+  --color-on-dark-link: #dcebf6;
+  --color-stage-1: #01415b;
+  --color-stage-2: #0b6a90;
+  --color-stage-3: #2e6b38;
+
+  --font-display: var(--font-archivo), system-ui, Arial, sans-serif; /* next/font Variable */
+  --font-sans: var(--font-inter), system-ui, Arial, sans-serif;
+
+  --radius: 4px;
+  --radius-pill: 20px;
+
+  --text-eyebrow: 12.5px;
+  --text-small: 13.5px;
+  --text-micro: 11px;
+
+  --container-wrap: 1140px;
+}
+
+/* Basis-Styles nach Briefing 0001 / docs/design-system */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Sichtbarer Fokus für Tastaturbedienung */
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 3px;
+  }
+}
+
+/* Reduced Motion: sofort Endzustand, keine Übergänge */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -9,6 +9,7 @@ Du schreibst Sanity-Schemas für die GolfNext-Website. Halte dich an `docs/04-sa
 `.claude/skills/sanity-content-model/SKILL.md` und `CLAUDE.md`.
 
 Regeln:
+
 - Schema lebt **code-first** unter `sanity/schemaTypes/` (eine Datei je Typ), registriert in `sanity/schemaTypes/index.ts`.
   Deploy ist ein definierter Schritt (`pnpm sanity:deploy`), nicht ad hoc. Inhalte oder Struktur **nicht** per MCP anlegen – der Sanity-MCP
   dient nur zum Nachsehen (Schema, Dokumente, GROQ-Tests).

@@ -27,18 +27,18 @@ Signalgrün nur als Fläche (Button, Badge), Punkt, Linie – oder als **Text au
 
 ## Wiederkehrende Bausteine (aus 2.4 / 2.5 und den Seitenmocks ableiten)
 
-| Baustein | Mock-Klasse | Hinweise |
-|---|---|---|
-| Header | `.hdr` | sticky, 80 px, Wortmarke 19 px, aktive Seite mit grüner Unterlinie, CTA-Button rechts mit zweizeiligem Text |
-| Section | `.psec` (+ `.sand`/`.mist`) | 86 px vertikal, Wrap 1140 px, Gutter 40/26/20 |
-| Eyebrow + H2 + Lead | `.eyebrow`, `h2`, `.lead` | immer in dieser Reihenfolge |
-| Primär-Button | `.btn-cta` / `.b1` | grün, optional zweizeilig mit `<small>` |
-| Text-Link mit Pfeil | `.tlink` | blau, Pfeil rückt beim Hover 3 px |
-| Hinweis | `.hint` | Info-Icon **15 px fix** + muted Text, max 72ch |
-| Statement | `.statement3` | Archivo 700, linker grüner Balken 3 px |
-| Platzhalter für Bilder | `.shot` | Sand-Fläche, gestrichelte Innenlinie, Tagline oben links, Beschreibung unten, festes Seitenverhältnis |
-| Footer-Systemkarte | `.pfoot` mit `.f-close`, `.f-map`, `.f-contact`, `.f-bar` | dunkel, Abschluss-CTA oben, Modulkarte mit Status-Punkten (grün Im Einsatz, gold Pilot, weiß In Entwicklung) |
-| FAQ | `.faqitem/.faqq/.faqa` | Plus/Minus aus zwei Strichen, `aria-expanded` |
+| Baustein               | Mock-Klasse                                               | Hinweise                                                                                                     |
+| ---------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Header                 | `.hdr`                                                    | sticky, 80 px, Wortmarke 19 px, aktive Seite mit grüner Unterlinie, CTA-Button rechts mit zweizeiligem Text  |
+| Section                | `.psec` (+ `.sand`/`.mist`)                               | 86 px vertikal, Wrap 1140 px, Gutter 40/26/20                                                                |
+| Eyebrow + H2 + Lead    | `.eyebrow`, `h2`, `.lead`                                 | immer in dieser Reihenfolge                                                                                  |
+| Primär-Button          | `.btn-cta` / `.b1`                                        | grün, optional zweizeilig mit `<small>`                                                                      |
+| Text-Link mit Pfeil    | `.tlink`                                                  | blau, Pfeil rückt beim Hover 3 px                                                                            |
+| Hinweis                | `.hint`                                                   | Info-Icon **15 px fix** + muted Text, max 72ch                                                               |
+| Statement              | `.statement3`                                             | Archivo 700, linker grüner Balken 3 px                                                                       |
+| Platzhalter für Bilder | `.shot`                                                   | Sand-Fläche, gestrichelte Innenlinie, Tagline oben links, Beschreibung unten, festes Seitenverhältnis        |
+| Footer-Systemkarte     | `.pfoot` mit `.f-close`, `.f-map`, `.f-contact`, `.f-bar` | dunkel, Abschluss-CTA oben, Modulkarte mit Status-Punkten (grün Im Einsatz, gold Pilot, weiß In Entwicklung) |
+| FAQ                    | `.faqitem/.faqq/.faqa`                                    | Plus/Minus aus zwei Strichen, `aria-expanded`                                                                |
 
 Empfohlene Komponenten: `Header`, `Footer`, `Section`, `Eyebrow`, `Button`, `TextLink`, `Hint`, `Statement`, `Shot`, `Faq`, `Wortmarke`. Seiten-spezifische Grafiken (Hero-Stapel, Zeitschiene, Vergleichstabelle) sind eigene Komponenten unter `components/pages/<seite>/`.
 

@@ -9,13 +9,13 @@ Project `wsj8a3ho`, Dataset `production`, API-Version `2025-01-01`. Studio einge
 
 ## Dokumenttypen
 
-| Typ | Zweck | Pflichtfelder |
-|---|---|---|
-| `post` | Blog-/Ratgeberartikel | `title`, `slug`, `excerpt` (≤ 160 Zeichen), `category` (ref), `author` (ref), `publishedAt`, `body` (Portable Text), `mainImage` mit `alt`, `seo{title,description,noindex}` |
-| `category` | Rubrik | `title`, `slug`, `description`, `audience` (Einsteiger · Mitgliedschaft · Gäste · Unternehmen · Clubbetrieb) |
-| `author` | Autor | `name`, `slug`, `role`, `image` mit `alt`, `bio` (kurz) |
-| `faq` | Frage/Antwort | `question`, `answer` (Portable Text, einfach), `topic` (pakete · plattform · clubprozesse · allgemein), `order` |
-| `siteSettings` (Singleton) | Kontakt, Social, Default-SEO | `phone`, `email`, `bookingUrl`, `liveDemoUrl`, `defaultOgImage` |
+| Typ                        | Zweck                        | Pflichtfelder                                                                                                                                                                |
+| -------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `post`                     | Blog-/Ratgeberartikel        | `title`, `slug`, `excerpt` (≤ 160 Zeichen), `category` (ref), `author` (ref), `publishedAt`, `body` (Portable Text), `mainImage` mit `alt`, `seo{title,description,noindex}` |
+| `category`                 | Rubrik                       | `title`, `slug`, `description`, `audience` (Einsteiger · Mitgliedschaft · Gäste · Unternehmen · Clubbetrieb)                                                                 |
+| `author`                   | Autor                        | `name`, `slug`, `role`, `image` mit `alt`, `bio` (kurz)                                                                                                                      |
+| `faq`                      | Frage/Antwort                | `question`, `answer` (Portable Text, einfach), `topic` (pakete · plattform · clubprozesse · allgemein), `order`                                                              |
+| `siteSettings` (Singleton) | Kontakt, Social, Default-SEO | `phone`, `email`, `bookingUrl`, `liveDemoUrl`, `defaultOgImage`                                                                                                              |
 
 Regeln: `slug` aus `title` generieren, deutsch, ohne Umlaute (`ae/oe/ue/ss`). Keine Marketingzahlen in Vorlagen. Bilder immer mit Pflicht-`alt`. Portable Text nur mit den Blöcken, die die Website rendert: `h2`, `h3`, `normal`, `blockquote`, Listen, Links, `image`, `callout` (Hinweiskasten), `cta` (Button mit Label + Zieltyp).
 
@@ -33,6 +33,7 @@ Regeln: `slug` aus `title` generieren, deutsch, ohne Umlaute (`ae/oe/ue/ss`). Ke
 - Bilder über `@sanity/image-url` mit `next/image`-Loader; Hotspot/Crop respektieren.
 
 Beispiel:
+
 ```groq
 *[_type == "post" && defined(slug.current)] | order(publishedAt desc) [0...12]{
   title, "slug": slug.current, excerpt, publishedAt,

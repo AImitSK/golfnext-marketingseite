@@ -11,25 +11,25 @@ Legende: **[S]** Stefan muss etwas liefern/entscheiden · **[F]** Fred muss etwa
 
 ## Phase 0 · Repository und Grundgerüst
 
-- [ ] **0.1 Git.** `git init`, Remote `https://github.com/AImitSK/golfnext-marketingseite.git`, Zweig `main`.
+- [x] **0.1 Git.** `git init`, Remote `https://github.com/AImitSK/golfnext-marketingseite.git`, Zweig `main`.
       Vor dem ersten Commit prüfen, dass `.gitignore` greift: `git status` darf `.env.local` **nicht** zeigen.
-- [ ] **0.2 Next.js anlegen.** Das Verzeichnis ist nicht leer, `create-next-app` verweigert dann. Deshalb:
+- [x] **0.2 Next.js anlegen.** Das Verzeichnis ist nicht leer, `create-next-app` verweigert dann. Deshalb:
       ```bash
       pnpm dlx create-next-app@latest ../gn-tmp --ts --tailwind --eslint --app --src-dir=false --import-alias "@/*" --use-pnpm --turbopack
       # alles außer README.md und .gitignore von ../gn-tmp hierher verschieben, ../gn-tmp löschen
       ```
       Danach `pnpm dev` starten – Standardseite muss laufen.
-- [ ] **0.3 Tooling.** Prettier (mit `prettier-plugin-tailwindcss`), ESLint-Regeln von Next, `pnpm typecheck`-Skript (`tsc --noEmit`), `engines.node >= 20`. `.nvmrc`/`.node-version` mit `22`.
-- [ ] **0.4 Tokens.** `docs/design-system/tokens/tailwind-theme.css` in `app/globals.css` übernehmen. Basis-Styles: `body` paper/ink, 17 px, 1.65; Headlines Archivo; `a` ohne Unterstrich; Fokus-Ring `2px solid blue, offset 3px`.
-- [ ] **0.5 Fonts.** `next/font/google` für Archivo (400–800) und Inter (400–700), `variable: '--font-archivo'` / `'--font-inter'`, `display: 'swap'`, Subset `latin`. Prüfen, dass **kein** Request an `fonts.googleapis.com` geht.
-- [ ] **0.6 Marke.** Aus `brand/` kopieren: `app/favicon.ico`, `app/icon.svg`, `app/apple-icon.png`, `public/icon-192.png`, `public/icon-512.png`, `public/icon-512-maskable.png`; `app/manifest.ts` aus `site.webmanifest`. Komponente `components/site/Wortmarke.tsx` (inline SVG, `currentColor`, `data-large-svg`).
+- [x] **0.3 Tooling.** Prettier (mit `prettier-plugin-tailwindcss`), ESLint-Regeln von Next, `pnpm typecheck`-Skript (`tsc --noEmit`), `engines.node >= 20`. `.nvmrc`/`.node-version` mit `22`.
+- [x] **0.4 Tokens.** `docs/design-system/tokens/tailwind-theme.css` in `app/globals.css` übernehmen. Basis-Styles: `body` paper/ink, 17 px, 1.65; Headlines Archivo; `a` ohne Unterstrich; Fokus-Ring `2px solid blue, offset 3px`.
+- [x] **0.5 Fonts.** `next/font/google` für Archivo (400–800) und Inter (400–700), `variable: '--font-archivo'` / `'--font-inter'`, `display: 'swap'`, Subset `latin`. Prüfen, dass **kein** Request an `fonts.googleapis.com` geht.
+- [x] **0.6 Marke.** Aus `brand/` kopieren: `app/favicon.ico`, `app/icon.svg`, `app/apple-icon.png`, `public/icon-192.png`, `public/icon-512.png`, `public/icon-512-maskable.png`; `app/manifest.ts` aus `site.webmanifest`. Komponente `components/site/Wortmarke.tsx` (inline SVG, `currentColor`, `data-large-svg`).
 - [ ] **0.7 Vercel.** `vercel link` auf ein Projekt im Team von Stefan **[S]**, Framework Next.js, Region `fra1`. Umgebungsvariablen aus `.env.example` anlegen (Production + Preview), Werte aus `.env.local` **[S]**. Erster Deploy von `main`.
-- [ ] **0.8 Playwright.** `@playwright/test` installieren, `playwright.config.ts` mit `webServer: pnpm start` und Projekten für 390/768/1024/1180/1440. Erste Spec: Startseite lädt, kein Overflow, kein Konsolenfehler. Skript `pnpm test:e2e`.
-- [ ] **0.9 Sicherheits-Header.** In `next.config.ts`: `Content-Security-Policy` (Report-Only zunächst), `X-Frame-Options`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`. Sanity-CDN und Studio in der CSP berücksichtigen.
+- [x] **0.8 Playwright.** `@playwright/test` installieren, `playwright.config.ts` mit `webServer: pnpm start` und Projekten für 390/768/1024/1180/1440. Erste Spec: Startseite lädt, kein Overflow, kein Konsolenfehler. Skript `pnpm test:e2e`.
+- [x] **0.9 Sicherheits-Header.** In `next.config.ts`: `Content-Security-Policy` (Report-Only zunächst), `X-Frame-Options`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`. Sanity-CDN und Studio in der CSP berücksichtigen.
 - [ ] **0.10 Motion und AI Kit.** `pnpm add motion`. Danach `npx motion-ai` im Projektordner ausführen (Auswahl: *Projekt*, Agent *Claude Code*); der Installer ergänzt `.mcp.json` um die gehosteten Motion-MCP-Server und legt den `/motion`-Skill an. Claude Code neu starten, MCP ggf. in den Agent-Optionen aktivieren. Prüfen: `/motion` ist als Skill sichtbar. Nur der kostenlose Teil – **kein Motion+ kaufen** (Entscheidung 05.09.2026).
 
 - [ ] **0.11 CI und PR-Prozess.** `.github/workflows/ci.yml` und `.github/pull_request_template.md` liegen vor; Skripte passend benennen (`typecheck`, `lint`, `test`, `build`, `test:e2e`, `test:a11y` mit `@axe-core/playwright`, `test:visual`). GitHub-Secret `SANITY_API_TOKEN` anlegen **[S]**. Branch-Schutz auf `main`: PR + grüne CI Pflicht **[S]**.
-- [ ] **0.12 Struktur und Inhalte als Daten.** `config/site-structure.ts` einbinden (Routen, Navigation, Status, Metadaten, `flags` für den Launch-Umfang), `lib/links.ts` (CTA-Ziele aus `.env` mit Fallback), `content/types.ts` + `content/ueber-golfnext.ts` als Muster übernehmen. Header, Footer, Sitemap und Platzhalter-Routen lesen ab jetzt nur noch aus `site-structure.ts`.
+- [x] **0.12 Struktur und Inhalte als Daten.** `config/site-structure.ts` einbinden (Routen, Navigation, Status, Metadaten, `flags` für den Launch-Umfang), `lib/links.ts` (CTA-Ziele aus `.env` mit Fallback), `content/types.ts` + `content/ueber-golfnext.ts` als Muster übernehmen. Header, Footer, Sitemap und Platzhalter-Routen lesen ab jetzt nur noch aus `site-structure.ts`.
 
 **Phase 0 fertig, wenn:** Deploy auf Vercel läuft, Fonts self-hosted, Favicon sichtbar, CI grün, `pnpm build` + `pnpm test:e2e` grün. Arbeitsbriefing: `docs/briefings/0001-phase-0-grundgeruest.md`.
 

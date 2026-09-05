@@ -23,4 +23,3 @@ Briefing: `docs/briefings/NNNN-….md` · Masterplan-Schritt: …
 -
 
 ## Zusammenfassung für den Orga-Chat (drei Sätze)
-

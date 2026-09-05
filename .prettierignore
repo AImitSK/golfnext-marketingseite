@@ -1,0 +1,16 @@
+# Generiert / nicht formatieren
+.next/
+node_modules/
+pnpm-lock.yaml
+playwright-report/
+test-results/
+next-env.d.ts
+
+# Doku, Mocks und Marken-Quellen unangetastet lassen
+docs/
+brand/
+Template/
+
+# Verbatim-Inhalte (wortgleich aus Briefings) und Projektinstruktionen nicht umformatieren
+content/
+CLAUDE.md

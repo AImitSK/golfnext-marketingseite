@@ -20,16 +20,16 @@ description: Vorgehen, um eine Seite aus dem HTML-Mock in docs/design-system/moc
 
 ## Übersetzungstabelle Mock → Next.js
 
-| Mock | Next.js |
-|---|---|
-| `<header class="hdr">` | `components/site/Header.tsx`, aktive Seite via `usePathname` (Client) oder Prop |
-| `<footer class="pfoot">` mit `.f-close` | `components/site/Footer.tsx` + `FooterClose` mit Props `eyebrow/headline/text/cta/secondary` |
-| `.jslogo` + `_logo.js` | `<Wortmarke className="h-[19px] text-navy" />` inline-SVG |
-| `<a class="btn-cta">` ohne href | `<Button href={process.env.NEXT_PUBLIC_BOOKING_URL}>` – CTA-Ziele aus `.env`, nie hart kodieren |
-| Inline-`<style>`-Sektionen | 1:1 als `*.module.css` portiert (Tokens `--gn-…`); Tailwind nur für Primitives |
-| IntersectionObserver-Skript | `motion/react` `whileInView` + `viewport={{ once: true }}`, Varianten aus `lib/motion/variants.ts` |
-| `@media(prefers-reduced-motion)` | `useReducedMotion()` aus `motion/react` + `motion-reduce:`-Varianten |
-| Texte im Markup | `content/<seite>.ts`, importiert in die Sektionskomponente |
+| Mock                                    | Next.js                                                                                            |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `<header class="hdr">`                  | `components/site/Header.tsx`, aktive Seite via `usePathname` (Client) oder Prop                    |
+| `<footer class="pfoot">` mit `.f-close` | `components/site/Footer.tsx` + `FooterClose` mit Props `eyebrow/headline/text/cta/secondary`       |
+| `.jslogo` + `_logo.js`                  | `<Wortmarke className="h-[19px] text-navy" />` inline-SVG                                          |
+| `<a class="btn-cta">` ohne href         | `<Button href={process.env.NEXT_PUBLIC_BOOKING_URL}>` – CTA-Ziele aus `.env`, nie hart kodieren    |
+| Inline-`<style>`-Sektionen              | 1:1 als `*.module.css` portiert (Tokens `--gn-…`); Tailwind nur für Primitives                     |
+| IntersectionObserver-Skript             | `motion/react` `whileInView` + `viewport={{ once: true }}`, Varianten aus `lib/motion/variants.ts` |
+| `@media(prefers-reduced-motion)`        | `useReducedMotion()` aus `motion/react` + `motion-reduce:`-Varianten                               |
+| Texte im Markup                         | `content/<seite>.ts`, importiert in die Sektionskomponente                                         |
 
 ## Was nicht in die Seite gehört
 

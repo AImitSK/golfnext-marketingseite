@@ -11,7 +11,7 @@ import { expect, test } from "@playwright/test";
 // Katalogtexte (Auszüge) – bewusst hier gespiegelt, um den Alias-Import zu sparen.
 const infoAlert = "Dieses Modul ist noch in Entwicklung";
 const okAlert = "Ihre Anfrage ist eingegangen";
-const errAlert = "Die Anfrage ließ sich gerade nicht senden";
+const errAlert = "Die Verbindung wurde unterbrochen";
 const loadingLabel = "Wird gesendet";
 const loadingText = "Inhalte werden geladen";
 

@@ -386,7 +386,9 @@ export default function BausteinePage() {
           </div>
           <div className={styles.alertStack}>
             <Alert variant="info">{uiMessages.moduleInDevelopment}</Alert>
-            <Alert variant="ok">{formMessages.form.success}</Alert>
+            <Alert variant="ok">
+              {`${formMessages.form.success.title} ${formMessages.form.success.text}`}
+            </Alert>
             <Alert variant="err">{formMessages.form.network}</Alert>
           </div>
 

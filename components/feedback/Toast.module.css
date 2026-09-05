@@ -1,0 +1,23 @@
+/* Toast · portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.toast Z.189–190).
+   Navy-Fläche, Signalgrün nur als Icon (Grün-Regel: Fläche/Punkt). Tokens auf --gn-*;
+   der Schatten ist ein Mock-Literal ohne Token. Der einzige Toast der Website ist die
+   gespeicherte Cookie-Einstellung (docs/08 §3); hier nur der Baustein. */
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--gn-navy);
+  color: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.189 */
+  border-radius: var(--gn-radius);
+  padding: 14px 20px;
+  font-size: 15px;
+  box-shadow: 0 18px 40px -18px rgba(1, 43, 61, 0.6); /* Mock-Wert, kein Token (2.5 Z.189) */
+}
+
+.toast svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  color: var(--gn-signal); /* Signalgrün auf Navy erlaubt (Grün-Regel) */
+}

@@ -15,7 +15,9 @@
   --color-ok: #2E6B38;
   --color-ok-bg: #EDF4EA;
   --color-err: #A3564A;
+  --color-err-bg: #F8EFEC;   /* Gegenstück zu --color-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
   --color-warn: #8A6D3B;
+  --color-warn-bg: #F7F1E3;  /* Gegenstück zu --color-ok-bg, wertgleich Mock 2.5 (Briefing 0009) */
   --color-gold: #E8C55A;
   --color-human: #8A5B2B;
   --color-human-bg: #F6EEE3;

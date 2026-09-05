@@ -1,0 +1,42 @@
+/* Inline-Alert · portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.alert Z.184–188).
+   Tokens auf --gn-*. Rahmen- und Info-Flächen haben kein Token und stehen als
+   kommentierte Mock-Literale (Briefing 0009: keine weiteren Tokens erfinden).
+   Fehler nie nur über Farbe – das Icon (18 px, fix) kommt aus der Komponente. */
+
+.alert {
+  display: flex;
+  gap: 12px;
+  border-radius: var(--gn-radius);
+  padding: 15px 18px;
+  font-size: 15px;
+  max-width: 600px;
+  border: 1px solid;
+}
+
+.alert svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+/* info – Blau; Fläche/Rahmen/Text sind Mock-Literale ohne Token (2.5 Z.186) */
+.info {
+  background: #edf4f8; /* Mock-Wert, kein Token (2.5 Z.186, .alert.info bg) */
+  border-color: #c9dfea; /* Mock-Wert, kein Token (2.5 Z.186, .alert.info border) */
+  color: #22536e; /* Mock-Wert, kein Token (2.5 Z.186, .alert.info text) */
+}
+
+/* ok – Erfolg auf ok-bg; Rahmen ist Mock-Literal ohne Token (2.5 Z.187) */
+.ok {
+  background: var(--gn-ok-bg);
+  border-color: #cfe3c9; /* Mock-Wert, kein Token (2.5 Z.187, .alert.ok border) */
+  color: var(--gn-ok);
+}
+
+/* err – Fehler auf err-bg; Rahmen ist Mock-Literal ohne Token (2.5 Z.188) */
+.err {
+  background: var(--gn-err-bg);
+  border-color: #ead2cc; /* Mock-Wert, kein Token (2.5 Z.188, .alert.err border) */
+  color: var(--gn-err);
+}

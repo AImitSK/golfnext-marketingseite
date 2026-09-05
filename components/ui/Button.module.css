@@ -1,8 +1,8 @@
-/* Buttons portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.btn Z.66–77),
+/* Buttons portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.btn Z.66–80),
    Header-CTA .hbtn aus 2.4-navigation-footer.html (Z.112–113) und der Sekundär-auf-
    dunkel-Aktion .f-cta .b2 (2.4, Z.182). Werte unverändert, Tokens auf --gn-*.
    Literale Mock-Tints ohne Token sind als „Mock-Wert" kommentiert.
-   Zustände (.disabled/.loading, Spinner) gehören zu Schritt 1.8 – hier bewusst nicht. */
+   Zustände .disabled/.loading (Spinner) portiert in Schritt 1.8 (Briefing 0009). */
 
 .btn {
   display: inline-flex;
@@ -81,6 +81,62 @@
 .sm {
   font-size: 14px;
   padding: 9px 16px;
+}
+
+/* disabled – deaktivierte Aktion (2.5 Z.78). Alle Farben sind Mock-Literale ohne
+   Token; überschreibt die Variantenfläche. */
+.disabled {
+  background: #efece3; /* Mock-Wert, kein Token (2.5 Z.78) */
+  border-color: #efece3; /* Mock-Wert, kein Token (2.5 Z.78) */
+  color: #a9a294; /* Mock-Wert, kein Token (2.5 Z.78) */
+  cursor: not-allowed;
+}
+
+/* loading – Ladezustand (2.5 Z.79–81): Label wird transparent (bleibt aber im Fluss,
+   daher springt die Breite nicht), ein 16-px-Ring dreht mittig, Klicks sind aus.
+   Der drehende Ring ist die einzige Ausnahme von „Animation läuft einmal": ein
+   Ladeindikator muss laufen, solange die Aktion dauert (docs/08 §2). */
+.loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Mock-Wert, kein Token (2.5 Z.80) */
+  border-top-color: #fff; /* Mock-Wert, kein Token (2.5 Z.80) */
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Reduzierte Bewegung: der Ring dreht nicht, bleibt aber als Indikator sichtbar
+   (statische Scheibe); die sr-only-Ansage trägt die Bedeutung ohnehin. */
+@media (prefers-reduced-motion: reduce) {
+  .loading::after {
+    animation: none;
+  }
+}
+
+/* Die sr-only-Ansage im Ladezustand darf die Breite nicht verändern (kein Springen). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Kompakte Header-CTA – 2.4 .hbtn (Z.112–113). Eigenständige Klasse (nicht .btn),

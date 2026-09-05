@@ -1,0 +1,59 @@
+/* Ladeplatzhalter · portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html
+   (.skel Z.195–201). Form einer Inhaltskarte (Bild 16/10-artig, Rubrikzeile, zwei
+   Titelzeilen), damit beim Nachladen nichts springt. Tokens auf --gn-*; der helle
+   Shimmer-Ton ist ein Mock-Literal ohne Token. */
+
+.skel {
+  max-width: 490px;
+  background: var(--gn-paper);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  padding: 22px;
+}
+
+.b {
+  background: linear-gradient(90deg, var(--gn-sand) 25%, #ebe6d9 37%, var(--gn-sand) 63%); /* #ebe6d9 = Mock-Wert (2.5 Z.196) */
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--gn-radius);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.b1 {
+  height: 140px;
+  margin-bottom: 16px;
+}
+.b2 {
+  height: 14px;
+  width: 38%;
+  margin-bottom: 10px;
+}
+.b3 {
+  height: 20px;
+  width: 76%;
+  margin-bottom: 8px;
+}
+.b4 {
+  height: 14px;
+  width: 55%;
+}
+
+/* Reduzierte Bewegung: der Shimmer steht still – ruhige, einfarbige Sand-Fläche
+   (docs/08 §5 / Briefing 0009). Explizit, damit kein Rest-Verlauf sichtbar bleibt. */
+@media (prefers-reduced-motion: reduce) {
+  .b {
+    /* !important, damit die globale Reduced-Motion-Regel in globals.css
+       (animation-duration/-iteration-count !important) den Shimmer nicht anders
+       einfriert – hier bewusst einfarbige Sand-Fläche. */
+    animation: none !important;
+    background: var(--gn-sand);
+  }
+}

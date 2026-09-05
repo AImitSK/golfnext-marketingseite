@@ -3,11 +3,11 @@
 .dark {
   padding: var(--gn-section-y) 0;
   background: var(--gn-navy-deep);
-  color: #fff;
+  color: #fff; /* Weiß = Mock-Wert (kein Token), Text auf Navy */
 }
 
 .dark h2 {
-  color: #fff;
+  color: #fff; /* Weiß = Mock-Wert (kein Token), Text auf Navy */
 }
 
 /* Abstand zwischen den Demo-Bausteinen innerhalb einer Sektion */
@@ -109,6 +109,39 @@
   border-radius: var(--gn-radius);
   font-size: 15.5px;
   color: var(--gn-ink);
+}
+
+/* Zustände-Demo (Schritt 1.8): Alerts gestapelt, Leerzustand + Skeleton nebeneinander,
+   Formularfelder in umbruchsicheren Reihen. Nur Vorschau – kein Website-Baustein. */
+.alertStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+.feedbackRow {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+.feedbackRow > * {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+/* Reihe mit Bedienelementen oben ausgerichtet (Felder + Meldungen unterschiedlich hoch) */
+.fieldRow {
+  align-items: flex-start;
+}
+
+/* Andockpunkt für den Demo-Toast: unten rechts, wie die echte Cookie-Bestätigung. */
+.toastDock {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
 }
 
 @media (max-width: 900px) {

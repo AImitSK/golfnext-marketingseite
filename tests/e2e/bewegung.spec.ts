@@ -9,7 +9,7 @@ import { expect, test } from "@playwright/test";
 
 const revealText = "Blendet einmalig auf und schiebt sich 14 Pixel";
 const riseItem = "Zweiter Punkt";
-const heading = "Reveal, Rise & Draw";
+const heading = "Bewegung";
 
 test.describe("/_bausteine · Bewegung", () => {
   test("ohne JavaScript ist der Bewegungs-Abschnitt vollständig sichtbar (opacity 1, kein Versatz)", async ({

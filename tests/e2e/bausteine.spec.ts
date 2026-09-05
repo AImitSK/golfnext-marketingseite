@@ -1,11 +1,11 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Interne Vorschau /_bausteine (Baustein 0002, Layout-Primitives).
+ * Interne Vorschau /_bausteine (Bausteine 0002/0003 Primitives + 0004 Header).
  * Läuft über alle Breakpoint-Projekte der playwright.config.ts (390–1440).
  */
-test.describe("/_bausteine · Layout-Primitives", () => {
-  test("rendert ohne Overflow, mit genau einer H1, fixem Hint-Icon, noindex, ohne Konsolenfehler", async ({
+test.describe("/_bausteine · Bausteine-Vorschau", () => {
+  test("rendert ohne Overflow, mit genau einer H1, ohne zu große Icons, noindex, ohne Konsolenfehler", async ({
     page,
   }) => {
     const consoleErrors: string[] = [];
@@ -15,26 +15,31 @@ test.describe("/_bausteine · Layout-Primitives", () => {
 
     await page.goto("/_bausteine");
 
-    // Genau eine H1
+    // Genau eine H1 (der Header enthält keine H1)
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
 
-    // Kein horizontaler Overflow
+    // Kein horizontaler Overflow (inkl. sticky Header und Dropdown-Layout)
     const hasOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth + 1,
     );
     expect(hasOverflow, "horizontaler Overflow").toBe(false);
 
-    // Hint-Icon exakt 15 x 15 px (nicht skalierend); kein SVG > 90 px
+    // Icon-Guard: kein sichtbares SVG > 90 px, ausgenommen [data-large-svg] (Wortmarke).
     const svgSizes = await page.evaluate(() =>
       [...document.querySelectorAll("svg")].map((s) => {
         const r = s.getBoundingClientRect();
-        return { w: Math.round(r.width), h: Math.round(r.height) };
+        return {
+          w: Math.round(r.width),
+          h: Math.round(r.height),
+          exempt: s.hasAttribute("data-large-svg"),
+        };
       }),
     );
     expect(svgSizes.length).toBeGreaterThan(0);
-    for (const { w, h } of svgSizes) {
-      expect(w, "Icon-Breite").toBe(15);
-      expect(h, "Icon-Höhe").toBe(15);
+    for (const { w, h, exempt } of svgSizes) {
+      if (exempt) continue;
+      expect(w, "Icon-Breite ≤ 90 px").toBeLessThanOrEqual(90);
+      expect(h, "Icon-Höhe ≤ 90 px").toBeLessThanOrEqual(90);
     }
 
     // noindex für die interne Vorschau

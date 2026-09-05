@@ -1,0 +1,128 @@
+/* Buttons portiert 1:1 aus docs/design-system/mocks/2.5-ui-kit.html (.btn Z.66–77),
+   Header-CTA .hbtn aus 2.4-navigation-footer.html (Z.112–113) und der Sekundär-auf-
+   dunkel-Aktion .f-cta .b2 (2.4, Z.182). Werte unverändert, Tokens auf --gn-*.
+   Literale Mock-Tints ohne Token sind als „Mock-Wert" kommentiert.
+   Zustände (.disabled/.loading, Spinner) gehören zu Schritt 1.8 – hier bewusst nicht. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--gn-font-text);
+  font-weight: 700;
+  font-size: 15.5px;
+  padding: 13px 24px;
+  border-radius: var(--gn-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* cta – die einzige grüne Fläche der Seite: grün + Navy-Text, 700 (Grün-Regel) */
+.cta {
+  background: var(--gn-signal);
+  border-color: var(--gn-signal);
+  color: var(--gn-navy);
+}
+.cta:hover {
+  background: #00ce04; /* Mock-Wert, kein Token (2.5 Z.69, cta:hover) */
+}
+
+/* col – zweizeilig: die Zusatzzeile steht als eigene Zeile unter dem Label,
+   nie als Inline-Zusatz auf der grünen Fläche (Grün-Regel). */
+.col {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1.25;
+  padding: 11px 22px;
+}
+.col .small {
+  font-size: 12px;
+  font-weight: 500;
+  /* AA-Korrektur: Mock (2.5 Z.71) hat opacity .8; Navy-Text @.8 auf Signalgrün
+     ergibt 4,38:1 (< 4,5). .9 hebt auf 5,4:1. Bewusste Abweichung vom Mock,
+     siehe docs/entscheidungen.md. */
+  opacity: 0.9;
+  display: block; /* <span>-Stapel: eigene Zeile erzwingen (typischer Mock-Fehler) */
+}
+
+.primary {
+  background: var(--gn-blue);
+  border-color: var(--gn-blue);
+  color: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.72 */
+}
+.primary:hover {
+  background: #095b7c; /* Mock-Wert, kein Token (2.5 Z.73, primary:hover) */
+}
+
+.ghost {
+  background: transparent;
+  border-color: var(--gn-navy);
+  color: var(--gn-navy);
+}
+.ghost:hover {
+  background: var(--gn-navy);
+  color: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.75 */
+}
+
+.light {
+  background: #fff; /* Weiß = Mock-Wert (kein Token), 2.5 Z.76 */
+  border-color: #fff;
+  color: var(--gn-navy);
+}
+
+.sm {
+  font-size: 14px;
+  padding: 9px 16px;
+}
+
+/* Kompakte Header-CTA – 2.4 .hbtn (Z.112–113). Eigenständige Klasse (nicht .btn),
+   immer zweizeilig-fähig (column), grüne Fläche + Navy-Text nach Grün-Regel.
+   Vom Header (Schritt 1.3) genutzt. */
+.hbtn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--gn-font-text);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 9px 16px;
+  border-radius: var(--gn-radius);
+  background: var(--gn-signal);
+  color: var(--gn-navy);
+  white-space: nowrap;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.hbtn .small {
+  font-size: 11px;
+  font-weight: 500;
+  /* AA-Korrektur wie bei .col .small: opacity .8 → .9 (Mock 2.4 Z.113 hatte .8). */
+  opacity: 0.9;
+  display: block; /* eigene Zeile unter dem Label */
+}
+
+/* Sekundär auf dunkel – 2.4 .f-cta .b2 (Z.182): leise, unterstrichene Textaktion
+   neben dem grünen Button auf Navy („Alternativ: Live-Demo ansehen"). Keine .btn-
+   Basis (kein Rahmen, kein Flächen-Padding), unterstrichen über border-bottom.
+   Endgültige Optik wird im Footer-Kontext (Schritt 1.4) verifiziert. */
+.secondaryOnDark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--gn-font-text);
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 15.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35); /* Mock-Wert, kein Token (2.4 Z.182) */
+  padding-bottom: 3px;
+  cursor: pointer;
+}

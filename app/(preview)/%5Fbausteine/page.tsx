@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Chip } from "@/components/ui/Chip";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Hint } from "@/components/ui/Hint";
 import { Lead } from "@/components/ui/Lead";
 import { Section } from "@/components/ui/Section";
 import { Statement } from "@/components/ui/Statement";
+import { TextLink } from "@/components/ui/TextLink";
 import { Wrap } from "@/components/ui/Wrap";
 import styles from "./page.module.css";
 
@@ -77,6 +81,101 @@ export default function BausteinePage() {
             <Lead>Ohne Variante rendert die Sektion auf dem hellen Seitenhintergrund.</Lead>
             <Statement>Paper ist die ruhige Grundfläche der Seite.</Statement>
             <Hint>Ein Hinweis auf hellem Grund verwendet die blaue Icon-Farbe.</Hint>
+          </div>
+        </Wrap>
+      </Section>
+
+      {/* Buttons & Links – Schritt 1.2. Alle Varianten in Demo-Texten (keine Fred-Inhalte). */}
+      <Section variant="sand">
+        <Wrap>
+          <div className={styles.stack}>
+            <Eyebrow>Interaktive Primitives</Eyebrow>
+            <h2>Buttons &amp; Links</h2>
+            <Lead>
+              Button, Text-Link, Chip und Status-Badge in ihren Varianten. Der grüne Button ist die
+              einzige grüne Fläche – die Zusatzzeile steht als eigene Zeile darunter, nie als Text auf
+              Grün.
+            </Lead>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Conversion</span>
+            <Button variant="cta" secondLine="Zweite Zeile als eigene Zeile">
+              Grüner Button
+            </Button>
+            <Button variant="cta">Ohne Zusatzzeile</Button>
+            <Button variant="cta" size="sm">
+              Klein
+            </Button>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Primär</span>
+            <Button variant="primary" arrow>
+              Modul ansehen
+            </Button>
+            <Button variant="primary" size="sm">
+              Klein
+            </Button>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Sekundär</span>
+            <Button variant="ghost">Fallstudie lesen</Button>
+            <Button variant="ghost" size="sm">
+              Klein
+            </Button>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Header-CTA</span>
+            <Button variant="header" secondLine="Kompakt, zweizeilig">
+              Header-Variante
+            </Button>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Text-Link</span>
+            <TextLink href="#">Text-Link mit Pfeil</TextLink>
+            <TextLink href="#" arrow={false}>
+              Text-Link ohne Pfeil
+            </TextLink>
+          </div>
+
+          <div className={styles.navyBlock}>
+            <Button variant="cta" secondLine="30 Minuten per Zoom oder Teams">
+              Auf Navy: grüner Button
+            </Button>
+            <Button variant="light">Heller Button</Button>
+            <Button variant="secondaryOnDark" href="#">
+              Alternativ: Live-Demo ansehen
+            </Button>
+            <TextLink href="#" onDark>
+              Text-Link auf dunkel
+            </TextLink>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Chips</span>
+            <Chip pressed>Alle Module</Chip>
+            <Chip>Wachstum &amp; Vertrieb</Chip>
+            <Chip>Clubprozesse</Chip>
+            <Chip pressed removable>
+              Im Einsatz
+            </Chip>
+          </div>
+
+          <div className={styles.row}>
+            <span className={styles.label}>Badges</span>
+            <Badge status="im-einsatz">Im Einsatz</Badge>
+            <Badge status="pilot">Pilot</Badge>
+            <Badge status="in-entwicklung">In Entwicklung</Badge>
+            <Badge status="addon">Add-on</Badge>
+            <Badge status="inklusive">Im Paket enthalten</Badge>
+          </div>
+
+          <div className={styles.navyBlock}>
+            <Badge status="onnavy">Auf Navy</Badge>
           </div>
         </Wrap>
       </Section>

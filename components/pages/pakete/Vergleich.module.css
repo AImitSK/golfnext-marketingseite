@@ -1,0 +1,189 @@
+/* Portiert aus docs/design-system/mocks/3.7-pakete.html (Abschnitt 4 „Vergleich",
+   .cmp/.cmpscroll/.crow/.chead/.cgroup/.dot/.no/.cnote, Z.256–282). Werte/Optik
+   unverändert, Kurznamen auf --gn-* umgestellt.
+   Abweichung (Briefing-Vorgabe): Das Mock-Grid aus <div>s ist hier eine SEMANTISCHE
+   <table> mit <thead>, <th scope="col|row|colgroup">. Die Spaltenbreiten (Mock:
+   grid 1.6fr + 4×1fr) kommen über <colgroup>; horizontaler Scroll liegt INNERHALB
+   von .cmpscroll (kein Seiten-Overflow). Enthalten/Nicht enthalten steht zusätzlich
+   als sr-only-Text (zugängliche Bedeutung, nicht nur Punkt/Farbe). */
+
+.cmp {
+  margin-top: 44px;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  background: #fff;
+  overflow: hidden;
+}
+.cmpscroll {
+  overflow-x: auto;
+  /* Containing Block für die absolut positionierten .srOnly-Spans in den Zellen –
+     sonst entkommen sie dem Scroll-Container und verbreitern das Dokument (Seiten-
+     Overflow @390). Kein Layout-Versatz (kein top/left gesetzt). */
+  position: relative;
+}
+.table {
+  width: 100%;
+  min-width: 720px; /* 1:1 aus Mock .cmpgrid – erzwingt den contained Scroll */
+  border-collapse: collapse;
+}
+.leadCol {
+  width: 28%;
+}
+.pkgCol {
+  width: 18%;
+}
+
+/* Zellen-Grundraster wie im Mock: linke Trennlinie je Zelle, Zeilentrenner unten. */
+.table th,
+.table td {
+  padding: 13px 18px;
+  font-size: 14.5px;
+  color: var(--gn-ink);
+  border-left: 1px solid var(--gn-line);
+  border-bottom: 1px solid var(--gn-line);
+  vertical-align: middle;
+  min-width: 0;
+}
+.table tr > *:first-child {
+  border-left: 0;
+}
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Zeilen-Kopf (Leistungsname) links, wie die erste Grid-Spalte des Mocks. */
+.rowhead {
+  text-align: left;
+  font-weight: 400;
+}
+
+/* Datenzellen zentriert. */
+.c {
+  text-align: center;
+}
+
+/* Kopfzeile: Paketnamen zentriert, Archivo 800 navy; farbige Oberkante je Stufe. */
+.chead th {
+  font-family: var(--gn-font-display);
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: var(--gn-tracking-display);
+  text-align: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.leadHead {
+  font-family: var(--gn-font-text) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700 !important;
+  color: var(--gn-muted) !important;
+  text-align: left !important;
+}
+.h0 {
+  border-top: 3px solid var(--gn-navy);
+}
+.h1 {
+  border-top: 3px solid var(--gn-stage-2);
+}
+.h2 {
+  border-top: 3px solid var(--gn-stage-3);
+}
+.h3 {
+  border-top: 3px solid var(--gn-navy-deep);
+}
+
+/* Gruppen-Zwischenzeile (colgroup-Kopf über die volle Breite). */
+.cgroup {
+  background: var(--gn-mist);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  padding: 11px 18px;
+  text-align: left;
+}
+
+/* Enthalten = Punkt (Farbe je Stufe); leer = kurzer Strich. Beide dekorativ. */
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  display: inline-block;
+  vertical-align: middle;
+}
+.dotB {
+  background: var(--gn-stage-2);
+}
+.dotC {
+  background: var(--gn-stage-3);
+}
+.dotD {
+  background: var(--gn-navy-deep);
+}
+.no {
+  width: 12px;
+  height: 2px;
+  background: var(--gn-line);
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.txt {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gn-navy);
+}
+
+/* Investitionszeilen: Sockel klein + Modulwert groß, gestapelt – nie addiert. */
+.moneyCell {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.money th,
+.money td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.moneySock {
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.moneyMod {
+  font-family: var(--gn-font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cnote {
+  padding: 15px 18px;
+  font-size: 13px;
+  color: var(--gn-muted);
+  background: var(--gn-mist);
+  border-top: 1px solid var(--gn-line);
+}
+
+/* Nur für Screenreader: Bedeutung der Punkt-/Strich-Zellen. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,82 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.8-ueber-golfnext.html (.shot Z.72–82).
+   Beschrifteter Platzhalter für fehlende Produktoberflächen – niemals ein echtes
+   Bild, kein <img>/next/image/Stock/KI. Werte über --gn-*; literale rgba-Werte
+   sind unten kommentiert. Höhe kommt aus dem ratio-Prop (inline aspect-ratio),
+   damit die Fläche vorab Platz reserviert (kein CLS). */
+.shot {
+  position: relative;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  background: var(--gn-sand);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* gestrichelte Innenlinie */
+.shot::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px dashed rgba(1, 65, 91, 0.22); /* navy #01415B @ .22 */
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* Tagline oben links */
+.tagline {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-paper);
+  border: 1px solid var(--gn-line);
+  border-radius: 2px;
+  padding: 3px 8px;
+}
+
+/* Beschreibung unten */
+.desc {
+  position: relative;
+  padding: 16px 18px;
+}
+.desc b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 14.5px;
+  color: var(--gn-navy);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.desc span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin-top: 5px;
+  line-height: 1.45;
+}
+
+/* Dunkle Variante (sky/weiß auf dunkel – Grün-Regel erlaubt) */
+.dark {
+  background: rgba(255, 255, 255, 0.06); /* weiß @ .06 auf Navy-Fläche */
+  border-color: rgba(255, 255, 255, 0.2); /* weiß @ .2 */
+}
+.dark.shot::before {
+  border-color: rgba(127, 211, 240, 0.3); /* sky #7FD3F0 @ .3 */
+}
+.dark .tagline {
+  color: var(--gn-navy);
+  background: var(--gn-sky);
+  border-color: var(--gn-sky);
+}
+.dark .desc b {
+  color: #fff;
+}
+.dark .desc span {
+  color: var(--gn-on-dark-text);
+}

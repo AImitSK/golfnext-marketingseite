@@ -1,0 +1,97 @@
+/* Porträt-Platzhalter. Große Variante 1:1 portiert aus
+   docs/design-system/mocks/3.8-ueber-golfnext.html (.portrait/.pf Z.165–172).
+   Beschrifteter Platzhalter statt echtem Foto – kein <img>/next/image/Stock/KI.
+   Werte über --gn-*; literale rgba-Werte sind kommentiert.
+
+   Die kleine 46-px-Rundvariante ist im Mock NICHT abgebildet und konsistent aus
+   der großen abgeleitet: dieselbe Bildsprache (Personen-Icon, Sand→Mist-Verlauf,
+   feine gestrichelte Kontur), nur rund (border-radius:50%) und kompakt. */
+
+/* ---------- Große Variante (4/5) ---------- */
+.portrait {
+  min-width: 0;
+}
+.pf {
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  background: linear-gradient(155deg, var(--gn-sand), var(--gn-mist));
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pf::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px dashed rgba(1, 65, 91, 0.2); /* navy #01415B @ .2 */
+  border-radius: 3px;
+}
+.pf .icon {
+  width: 44px;
+  height: 44px;
+  color: rgba(1, 65, 91, 0.3); /* navy #01415B @ .3 */
+  position: relative;
+}
+.tag {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  font-size: 9.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-paper);
+  border: 1px solid var(--gn-line);
+  border-radius: 2px;
+  padding: 3px 8px;
+}
+.pn {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  margin-top: 14px;
+}
+.pr {
+  display: block;
+  font-size: 13px;
+  color: var(--gn-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ---------- Kleine Variante (46 px rund, abgeleitet) ---------- */
+.small {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--gn-line);
+  background: linear-gradient(155deg, var(--gn-sand), var(--gn-mist));
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+/* feine gestrichelte Kontur, rund – kleinerer Inset passend zu 46 px */
+.small::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(1, 65, 91, 0.2); /* navy #01415B @ .2 */
+  border-radius: 50%;
+}
+/* Personen-Icon proportional zur großen Variante verkleinert (44 → 22 px) */
+.small .icon {
+  width: 22px;
+  height: 22px;
+  color: rgba(1, 65, 91, 0.3); /* navy #01415B @ .3 */
+  position: relative;
+}

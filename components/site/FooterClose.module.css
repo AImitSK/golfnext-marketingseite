@@ -1,0 +1,75 @@
+/* FooterClose portiert 1:1 aus docs/design-system/mocks/2.4-navigation-footer.html
+   (.f-cta Z.173–182). Token-Mapping: var(--fline)→var(--gn-on-dark-line),
+   var(--ftext)→var(--gn-on-dark-text). Literale Mock-Tints (Gradient-Stops,
+   Sky-Radial) ohne Token sind als „Mock-Wert" kommentiert.
+   Abweichung wie im Header (1.3): Fläche full-bleed, Inhalt auf var(--gn-wrap)
+   zentriert, damit der Fuß mit den Sektionen fluchtet. */
+
+.close {
+  position: relative;
+  overflow: hidden;
+  /* Gradient-Stops = Mock-Werte über Token (2.4 Z.173) */
+  background: linear-gradient(135deg, var(--gn-navy-deep), var(--gn-navy));
+  border-bottom: 1px solid var(--gn-on-dark-line);
+}
+
+/* Sky-Schimmer unten rechts (2.4 Z.174). rgba(127,211,240,.2) = --gn-sky @ .2, Mock-Wert. */
+.close::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px 280px at 88% 120%, rgba(127, 211, 240, 0.2), transparent 60%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap);
+  margin: 0 auto;
+  padding: 52px var(--gn-gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 36px;
+  align-items: center;
+}
+
+/* Eyebrow .ce (2.4 Z.176): Signalgrün auf Navy – nach Grün-Regel erlaubt. */
+.eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gn-signal);
+  margin-bottom: 12px;
+}
+
+/* Headline (.f-cta h3 Z.177) – hier als <h2>, Werte unverändert. */
+.headline {
+  color: #fff; /* Weiß = Mock-Wert (2.4 Z.177) */
+  font-size: clamp(24px, 2.6vw, 34px);
+  max-width: 20ch;
+  font-weight: 800;
+}
+
+.text {
+  color: var(--gn-on-dark-text);
+  margin: 12px 0 0;
+  max-width: 46ch;
+  font-size: 15.5px;
+}
+
+.acts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+@media (max-width: 960px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 38px 26px;
+  }
+}

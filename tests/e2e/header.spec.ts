@@ -16,8 +16,9 @@ test.describe("Header · Struktur und Daten", () => {
   }) => {
     await page.goto("/_bausteine");
 
-    // Wortmarke als Startseiten-Link
-    const home = page.getByRole("link", { name: "GolfNext, zur Startseite" });
+    // Wortmarke als Startseiten-Link. Auf die Kopfzeile begrenzt, da der Footer
+    // (Baustein 0005) dieselbe Wortmarke ebenfalls als Home-Link führt.
+    const home = page.locator("header").getByRole("link", { name: "GolfNext, zur Startseite" });
     await expect(home).toHaveAttribute("href", "/");
 
     // Header enthält keine H1 (die einzige H1 gehört der Seite)

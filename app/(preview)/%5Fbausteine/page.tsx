@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { Faq } from "@/components/ui/Faq";
 import { Hint } from "@/components/ui/Hint";
 import { Lead } from "@/components/ui/Lead";
 import { Portrait } from "@/components/ui/Portrait";
@@ -257,6 +258,49 @@ export default function BausteinePage() {
               <span className={styles.label}>46 px rund</span>
             </div>
           </div>
+        </Wrap>
+      </Section>
+
+      {/* FAQ-Akkordeon – Schritt 1.6. Basis <details>/<summary>: ohne JS auf-/zuklappbar,
+          erstes Item server-seitig offen, Plus→Minus per CSS über [open]. Demo-Texte sind
+          neutral (keine Pakete-FAQ-Texte von Fred – die kommen auf /pakete bzw. aus Sanity). */}
+      <Section>
+        <Wrap>
+          <div className={styles.stack}>
+            <Eyebrow>Frage &amp; Antwort</Eyebrow>
+            <h2>FAQ-Akkordeon</h2>
+            <Lead>
+              Das Akkordeon steht auf nativen <code>&lt;details&gt;</code>-Elementen: ohne JavaScript
+              auf- und zuklappbar, das erste Item ist offen, der Marker wechselt von Plus zu Minus.
+              Mehrere Einträge dürfen gleichzeitig offen sein.
+            </Lead>
+          </div>
+
+          <Faq
+            items={[
+              {
+                question: "Funktioniert das Akkordeon auch ohne JavaScript?",
+                answer:
+                  "Ja. Die Einträge sind native Details-Elemente – sie lassen sich per Klick oder Tastatur öffnen und schließen, ganz ohne Skript. Alle Antworten stehen im Dokument.",
+                defaultOpen: true,
+              },
+              {
+                question: "Kann mehr als ein Eintrag gleichzeitig offen sein?",
+                answer:
+                  "Ja. Jeder Eintrag klappt unabhängig auf und zu. Es gibt kein erzwungenes Single-Open – Sie können mehrere Antworten nebeneinander lesen.",
+              },
+              {
+                question: "Woran erkenne ich, ob ein Eintrag offen ist?",
+                answer:
+                  "Am Marker rechts: geschlossen zeigt er ein Plus, offen ein Minus. Der Wechsel läuft rein über CSS und respektiert reduzierte Bewegung.",
+              },
+              {
+                question: "Sind diese Fragen echte Website-Inhalte?",
+                answer:
+                  "Nein. Es sind neutrale Demo-Texte für die Bausteine-Vorschau. Die echten Fragen und Antworten kommen später auf den jeweiligen Seiten.",
+              },
+            ]}
+          />
         </Wrap>
       </Section>
 

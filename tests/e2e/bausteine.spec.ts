@@ -49,3 +49,64 @@ test.describe("/_bausteine · Bausteine-Vorschau", () => {
     expect(consoleErrors, "Konsolenfehler").toEqual([]);
   });
 });
+
+/**
+ * FAQ-Akkordeon (Baustein 0007, Schritt 1.6): native <details>/<summary>-Basis –
+ * ohne JavaScript auf- und zuklappbar, erstes Item server-seitig offen, alle Antworten
+ * im DOM, kein erzwungenes Single-Open, Marker wechselt per CSS über [open].
+ */
+test.describe("/_bausteine · FAQ-Akkordeon", () => {
+  const q1 = "Funktioniert das Akkordeon auch ohne JavaScript?";
+  const q2 = "Kann mehr als ein Eintrag gleichzeitig offen sein?";
+  const a4 = "Es sind neutrale Demo-Texte für die Bausteine-Vorschau.";
+
+  test("ist ohne JavaScript bedienbar: erstes Item offen, alle Antworten im DOM, kein Single-Open", async ({
+    browser,
+  }) => {
+    // Kontext ohne JS – beweist die native <details>-Bedienbarkeit.
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    await page.goto("/_bausteine");
+
+    const item1 = page.locator("details", { hasText: q1 });
+    const item2 = page.locator("details", { hasText: q2 });
+
+    // Erstes Item server-seitig offen, zweites geschlossen.
+    expect(await item1.evaluate((el) => (el as HTMLDetailsElement).open)).toBe(true);
+    expect(await item2.evaluate((el) => (el as HTMLDetailsElement).open)).toBe(false);
+
+    // Alle Antworten stehen im DOM (auch die der geschlossenen Items) – No-JS/SEO.
+    await expect(page.getByText(a4)).toBeAttached();
+
+    // Nativer Klick auf die zweite Frage öffnet sie – ohne JS.
+    await item2.locator("summary").click();
+    expect(await item2.evaluate((el) => (el as HTMLDetailsElement).open)).toBe(true);
+    // Kein erzwungenes Single-Open: das erste Item bleibt offen.
+    expect(await item1.evaluate((el) => (el as HTMLDetailsElement).open)).toBe(true);
+
+    await context.close();
+  });
+
+  test("Marker wechselt per CSS über [open] von Plus zu Minus; nativer Marker entfernt", async ({
+    page,
+  }) => {
+    await page.goto("/_bausteine");
+
+    const item1 = page.locator("details", { hasText: q1 });
+    const item2 = page.locator("details", { hasText: q2 });
+
+    // Nativer summary-Marker ist entfernt.
+    const listStyle = await item1
+      .locator("summary")
+      .evaluate((el) => getComputedStyle(el).listStyleType);
+    expect(listStyle).toBe("none");
+
+    // Der senkrechte Strich (::after) ist offen eingeklappt (scaleY(0)) und
+    // geschlossen sichtbar – rein per CSS über [open], ohne JS-Zutun.
+    const afterTransform = (el: Element) =>
+      getComputedStyle(el.querySelector("span")!, "::after").transform;
+    const openAfter = await item1.locator("summary").evaluate(afterTransform);
+    const closedAfter = await item2.locator("summary").evaluate(afterTransform);
+    expect(openAfter).not.toBe(closedAfter);
+  });
+});

@@ -1,0 +1,99 @@
+/* Portiert 1:1 aus docs/design-system/mocks/3.7-pakete.html (.faq/.faqitem/.faqq/.pm/.faqa Z.285–295).
+   Werte unverändert, Farben/Schrift/Größen über --gn-*. Statt Button+JS ist die semantische Basis
+   <details>/<summary>: der offene Zustand kommt vom nativen [open]-Attribut (kein JS nötig),
+   deshalb ist aus dem Mock-Selektor `.faqitem.open` hier `details[open]` geworden. */
+
+/* Container: oberer Trenner wie im Mock (margin-top:38px, border-top:1px). */
+.faq {
+  margin-top: 38px; /* 1:1 aus Mock */
+  border-top: 1px solid var(--gn-line);
+}
+
+/* Ein Frage-Antwort-Paar = ein <details>. */
+.item {
+  border-bottom: 1px solid var(--gn-line);
+}
+
+/* Frage = <summary>. Nativer Marker (Dreieck) entfernt, Rest 1:1 aus .faqq. */
+.question {
+  width: 100%;
+  text-align: left;
+  font-family: var(--gn-font-display);
+  font-size: 17.5px; /* 1:1 aus Mock */
+  font-weight: 700;
+  color: var(--gn-navy);
+  letter-spacing: var(--gn-tracking-display); /* -.02em wie Mock */
+  background: transparent;
+  border: 0;
+  padding: 21px 44px 21px 0; /* 1:1 aus Mock */
+  cursor: pointer;
+  position: relative;
+  line-height: 1.35;
+  list-style: none; /* Firefox: kein Standard-Marker */
+}
+/* WebKit/Blink: das native Aufklapp-Dreieck ausblenden. */
+.question::-webkit-details-marker {
+  display: none;
+}
+/* Sichtbarer Fokusring für Tastaturbedienung (kein reines outline:none). */
+.question:focus-visible {
+  outline: 2px solid var(--gn-blue);
+  outline-offset: 3px;
+  border-radius: var(--gn-radius);
+}
+
+/* Plus/Minus-Marker aus zwei Strichen (::before waagerecht, ::after senkrecht). */
+.pm {
+  position: absolute;
+  right: 6px; /* 1:1 aus Mock */
+  top: 26px;
+  width: 16px;
+  height: 16px;
+}
+.pm::before,
+.pm::after {
+  content: "";
+  position: absolute;
+  background: var(--gn-navy);
+  transition: transform 0.25s;
+}
+.pm::before {
+  left: 0;
+  right: 0;
+  top: 7px;
+  height: 2px;
+}
+.pm::after {
+  top: 0;
+  bottom: 0;
+  left: 7px;
+  width: 2px;
+}
+/* Offen: senkrechten Strich einklappen → Plus wird Minus (per CSS über [open], kein JS). */
+.item[open] .pm::after {
+  transform: scaleY(0);
+}
+
+/* Antwort. Das native <details> blendet den Body geschlossen selbst aus –
+   kein `display:none`-Selektor nötig, alle Antworten stehen im DOM (No-JS/SEO). */
+.answer {
+  font-size: 15px; /* 1:1 aus Mock */
+  color: var(--gn-muted);
+  line-height: 1.65;
+  padding: 0 60px 22px 0; /* 1:1 aus Mock */
+  max-width: 78ch;
+}
+
+@media (max-width: 620px) {
+  .answer {
+    padding-right: 0; /* 1:1 aus Mock (@media max-width:620px) */
+  }
+}
+
+/* Reduced Motion: Marker-Übergang sofort in den Endzustand. */
+@media (prefers-reduced-motion: reduce) {
+  .pm::before,
+  .pm::after {
+    transition: none;
+  }
+}

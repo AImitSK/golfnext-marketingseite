@@ -38,7 +38,9 @@ jobs:
           SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
       - name: Secret-Scan im Repo
         run: |
-          if git grep -nE "SG\.[A-Za-z0-9_-]{20,}|sk[A-Za-z0-9]{60,}" -- ':!*.md' ; then
+          # Echte API-Keys: SendGrid "SG.…", OpenAI/Anthropic "sk-…". Der Lockfile ist
+          # ausgeschlossen (base64-Integrity-Hashes lösen sonst Fehlalarme aus).
+          if git grep -nE "SG\.[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9_-]{40,}" -- ':!*.md' ':!pnpm-lock.yaml' ; then
             echo "Möglicher Schlüssel im Repository gefunden"; exit 1; fi
       - uses: actions/upload-artifact@v4
         if: always()

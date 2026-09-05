@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +11,7 @@ import { Section } from "@/components/ui/Section";
 import { Statement } from "@/components/ui/Statement";
 import { TextLink } from "@/components/ui/TextLink";
 import { Wrap } from "@/components/ui/Wrap";
+import { ueberGolfnext } from "@/content/ueber-golfnext";
 import styles from "./page.module.css";
 
 /**
@@ -206,6 +208,11 @@ export default function BausteinePage() {
         </Wrap>
       </section>
       </main>
+
+      {/* Footer (Baustein 0005) – hier zur Vorschau am Seitenende, NICHT im Root-Layout
+          (app-weite Einbindung folgt in Phase 2). FooterClose ist prop-getrieben; die
+          Demo nutzt die echten FooterClose-Daten aus content/ueber-golfnext.ts. */}
+      <Footer footerClose={ueberGolfnext.footerClose} />
     </>
   );
 }

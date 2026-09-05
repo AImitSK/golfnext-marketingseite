@@ -179,9 +179,9 @@
 }
 @media (max-width: 1100px) {
   .list {
-    gap: 11px;
+    gap: 9px;
   }
   .link {
-    font-size: 13px;
+    font-size: 12.5px;
   }
 }

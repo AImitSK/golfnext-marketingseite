@@ -46,12 +46,19 @@
 }
 
 /* Zwischen 1024 und 1180 px die Kopfzeile verdichten (schmalere Gutter/Abstände),
-   damit sechs Nav-Punkte + langer CTA ohne Overflow passen. */
+   damit sechs Nav-Punkte + langer CTA ohne Overflow passen – mit Reserve für die
+   breiteren Fallback-Fonts im CI (Linux). */
 @media (max-width: 1180px) {
   .inner {
-    gap: 20px;
-    padding-left: 24px;
-    padding-right: 24px;
+    gap: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  /* CTA-Zusatzzeile hier ausblenden (einzeiliger Button wie der Kompakt-Header im
+     Mock, 2.4 Z.493). Das kürzt den breitesten CTA-Bestandteil. Das einzige <span>
+     im hbtn ist die Zusatzzeile (Button.module.css .small). */
+  .cta a span {
+    display: none;
   }
 }
 

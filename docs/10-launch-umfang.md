@@ -1,5 +1,13 @@
 # Launch-Umfang v1 – zu entscheiden vor Phase 2
 
+> **Entschieden am 05.09.2026 (Stefan): Weg A mit Platzhaltern.**
+> Alle Seiten, die Briefing **und** Mock haben, werden vollständig gebaut. **Fehlende Bilder werden als
+> beschriftete `Shot`-/`Portrait`-Platzhalter gezeigt** (nicht ausgeblendet, nicht auf Fred gewartet).
+> Sektionen werden also **nicht** per Flag versteckt (Weg B entfällt). Seiten **ohne** Briefing
+> (Praxis, Team, Kontakt, Modulseiten) bleiben noindex-Platzhalter, bis Fred sie liefert – sie werden
+> **nicht** erfunden. Kanonische Domain: **www.golfnext.de** (die neue Seite ersetzt die alte dort).
+> **Keine** Alt-URL-Weiterleitungen nötig. Details siehe `docs/entscheidungen.md`.
+
 Die Website kann nicht mit gestrichelten Platzhaltern und Navigationspunkten ohne Seiten live gehen. Deshalb muss vor dem Bau der Seiten
 feststehen, was v1 umfasst. Zwei Wege, beide sauber:
 
@@ -36,9 +44,9 @@ Alles Ausgeblendete ist gebaut und über Flags zuschaltbar, sobald Inhalte vorli
 
 ## Entscheidung
 
-- [ ] Weg A oder Weg B **[S][F]** – bis: ________
-- [ ] Bei Weg B: Liste der ausgeblendeten Sektionen je Seite in `config/site-structure.ts` als `flags` hinterlegen (Masterplan 0.12).
-- [ ] Domainfrage: `www.golfnext.de` kanonisch, apex leitet weiter (Vorschlag) **[S]**.
-- [ ] Alte URLs der bestehenden Website erhoben und in `03-seiten-und-routen.md` eingetragen **[S]**.
+- [x] Weg A oder Weg B **[S][F]** – **Weg A mit Platzhaltern** (05.09.2026, Stefan).
+- [x] Bei Weg B: entfällt (kein Ausblenden von Sektionen; fehlende Bilder als `Shot`/`Portrait`-Platzhalter).
+- [x] Domainfrage: **`www.golfnext.de` kanonisch** (05.09.2026, Stefan).
+- [x] Alte URLs: **keine Weiterleitungen nötig** (05.09.2026, Stefan).
 
-Ohne diese Entscheidung startet Phase 2 nicht.
+Entscheidung getroffen – Phase 2 kann starten.

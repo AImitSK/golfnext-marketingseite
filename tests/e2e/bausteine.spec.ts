@@ -1,9 +1,53 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Interne Vorschau /_bausteine (Bausteine 0002/0003 Primitives + 0004 Header).
+ * Interne Bausteine-Referenz /_bausteine (Abschluss Phase 1, Briefing 0010).
  * Läuft über alle Breakpoint-Projekte der playwright.config.ts (390–1440).
  */
+
+/**
+ * Abschnitts-Vollständigkeit (Briefing 0010 · Akzeptanzkriterium): jeder
+ * Phase-1-Baustein ist als beschrifteter <h2>-Abschnitt vertreten, in der
+ * Reihenfolge nach dem UI-Kit 2.5 (Kit-Gruppen) plus den GolfNext-eigenen
+ * Bausteinen (Header, Layout, Platzhalter, Bewegung, Footer, onDark). Fällt ein
+ * Abschnitt weg oder verrutscht die Reihenfolge, schlägt dieser Test an.
+ */
+const SECTIONS = [
+  "Header",
+  "Layout-Primitives",
+  "Buttons & Links",
+  "Badges & Chips",
+  "Formularfelder",
+  "FAQ-Akkordeon",
+  "Rückmeldungen",
+  "Platzhalter",
+  "Bewegung",
+  "Footer",
+  "Bausteine auf Navy",
+];
+
+test.describe("/_bausteine · Abschnitts-Vollständigkeit", () => {
+  test("alle Phase-1-Abschnitte sind als <h2> vorhanden und in 2.5-Reihenfolge", async ({
+    page,
+  }) => {
+    await page.goto("/_bausteine");
+
+    // Jeder erwartete Abschnitt existiert genau einmal als <h2>.
+    for (const name of SECTIONS) {
+      await expect(page.getByRole("heading", { level: 2, name, exact: true })).toHaveCount(1);
+    }
+
+    // Reihenfolge der Referenz-Abschnitte entspricht der 2.5-Ordnung.
+    const allH2 = await page.getByRole("heading", { level: 2 }).allInnerTexts();
+    const ordered = allH2.map((t) => t.trim()).filter((t) => SECTIONS.includes(t));
+    expect(ordered).toEqual(SECTIONS);
+
+    // Die Seitenrahmen-Bausteine sind als echte Landmarks gerendert.
+    await expect(page.getByRole("banner")).toBeVisible();
+    await expect(page.getByRole("contentinfo")).toBeVisible();
+  });
+});
+
 test.describe("/_bausteine · Bausteine-Vorschau", () => {
   test("rendert ohne Overflow, mit genau einer H1, ohne zu große Icons, noindex, ohne Konsolenfehler", async ({
     page,

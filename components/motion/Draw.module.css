@@ -1,0 +1,9 @@
+/* Dekorative Draw-Linie (Baustein 0008). Höhe fix reserviert → kein Layout-Shift.
+   Breite füllt den Container; die Linie skaliert über preserveAspectRatio="none". */
+.svg {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: 8px;
+  overflow: visible;
+}

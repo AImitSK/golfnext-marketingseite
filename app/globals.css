@@ -41,6 +41,81 @@
   --container-wrap: 1140px;
 }
 
+/* --gn-*-Tokenebene für portiertes Modul-CSS · übernommen wertgleich aus
+   docs/design-system/tokens/tokens.css (Briefing 0002). Steht bewusst neben der
+   @theme --color-*-Ebene (die für Tailwind-Utilities zuständig ist) – Werte nicht
+   ändern oder ergänzen. Die Modul-CSS der Primitives referenziert diese Namen. */
+:root {
+  /* Markenfarben */
+  --gn-navy: #01415b; /* Primärfarbe, Headlines, Buttons-Text auf Grün */
+  --gn-navy-deep: #012b3d; /* dunkle Flächen, Footer, Hero-Verlauf Start */
+  --gn-blue: #0b6a90; /* Links, Eyebrows, sekundäre Akzente */
+  --gn-sky: #7fd3f0; /* helle Akzente auf dunklem Grund */
+  --gn-signal: #00e805; /* Signalgrün: Fläche, Punkt, Linie – oder Text NUR auf Navy */
+
+  /* Flächen */
+  --gn-paper: #fffcf5; /* Seitenhintergrund */
+  --gn-sand: #f5f1e6; /* warme Sektionsfläche */
+  --gn-mist: #f3f6f4; /* kühle Sektionsfläche */
+
+  /* Text und Linien */
+  --gn-ink: #16262c; /* Fließtext */
+  --gn-muted: #5c6f76; /* Nebentext */
+  --gn-line: #e6e1d6; /* Rahmen, Trenner */
+
+  /* Status */
+  --gn-ok: #2e6b38;
+  --gn-ok-bg: #edf4ea;
+  --gn-err: #a3564a;
+  --gn-warn: #8a6d3b;
+  --gn-gold: #e8c55a; /* Gold nur für "Pilot"-Status und Kampagnenbudget-Kennzeichnung */
+  --gn-human: #8a5b2b;
+  --gn-human-bg: #f6eee3;
+
+  /* Dunkle Flächen (Footer-Systemkarte, Hero) */
+  --gn-on-dark-line: rgba(255, 255, 255, 0.14);
+  --gn-on-dark-text: #b9d2de;
+  --gn-on-dark-link: #dcebf6;
+
+  /* Stufenfarben Pakete (gleichwertig, nur unterscheidbar) */
+  --gn-stage-1: #01415b;
+  --gn-stage-2: #0b6a90;
+  --gn-stage-3: #2e6b38;
+
+  /* Schrift */
+  --gn-font-display: "Archivo", system-ui, Arial, sans-serif; /* Headlines, Zahlen, Buttons */
+  --gn-font-text: "Inter", system-ui, Arial, sans-serif; /* Fließtext, UI */
+  --gn-text-base: 17px;
+  --gn-leading-base: 1.65;
+  --gn-tracking-display: -0.02em; /* H1 bis -0.035em */
+  --gn-tracking-eyebrow: 0.18em;
+
+  /* Typografische Skala (clamp = mobil, fluid, desktop) */
+  --gn-h1: clamp(32px, 4.3vw, 54px);
+  --gn-h1-statement: clamp(36px, 5.6vw, 76px); /* Über GolfNext: rein typografischer Einstieg */
+  --gn-h2: clamp(27px, 3.2vw, 40px);
+  --gn-h3: 20px;
+  --gn-lead: clamp(16px, 1.3vw, 19px);
+  --gn-statement: clamp(20px, 2.3vw, 28px);
+  --gn-eyebrow: 12.5px;
+  --gn-small: 13.5px;
+  --gn-micro: 11px;
+
+  /* Radien – durchgängig 4 px, Pills 20 px */
+  --gn-radius: 4px;
+  --gn-radius-pill: 20px;
+
+  /* Layout */
+  --gn-wrap: 1140px;
+  --gn-gutter: 40px; /* 26px ≤ 960px, 20px ≤ 620px */
+  --gn-section-y: 86px; /* 58px ≤ 620px */
+  --gn-header-h: 80px;
+
+  /* Bewegung */
+  --gn-ease: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --gn-dur: 0.55s;
+}
+
 /* Basis-Styles nach Briefing 0001 / docs/design-system */
 @layer base {
   html {
@@ -67,6 +142,25 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
+  }
+
+  /* Headline-Größen auf --gn-*-Skala (additiv zu den Basis-Styles, Briefing 0002) */
+  h1 {
+    font-size: var(--gn-h1);
+  }
+
+  h2 {
+    font-size: var(--gn-h2);
+  }
+
+  h3 {
+    font-size: var(--gn-h3);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
   }
 
   a {

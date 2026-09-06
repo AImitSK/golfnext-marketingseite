@@ -8,6 +8,12 @@
   gap: 20px;
   margin-top: 38px;
 }
+/* Grid-Kind ist das RiseItem (motion.div); die eigentliche Karte `.vc` liegt darin
+   als statisches Element und stretcht über display:grid auf volle Breite/Höhe. */
+.vcWrap {
+  display: grid;
+  min-width: 0;
+}
 .vc {
   background: #fff;
   border: 1px solid var(--gn-line);

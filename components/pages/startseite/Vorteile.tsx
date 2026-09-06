@@ -188,11 +188,16 @@ export function Vorteile({
         <h2>{headline}</h2>
         <Rise className={styles.vg}>
           {data.cards.map((card) => (
-            <RiseItem key={card.title} className={`${styles.vc} gn-card-lift`}>
-              <CardIcon viz={card.viz} />
-              <h3>{card.title}</h3>
-              <p>{card.text}</p>
-              <Viz viz={card.viz} />
+            // Hover-Lift auf dem statischen inneren `.vc` – nicht auf dem RiseItem
+            // (motion.div), da Motion dort nach dem Reveal einen Inline-`transform`
+            // setzt, der den `:hover`-Transform überschreiben würde.
+            <RiseItem key={card.title} className={styles.vcWrap}>
+              <div className={`${styles.vc} gn-card-lift`}>
+                <CardIcon viz={card.viz} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+                <Viz viz={card.viz} />
+              </div>
             </RiseItem>
           ))}
         </Rise>

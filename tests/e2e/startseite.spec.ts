@@ -41,6 +41,18 @@ test.describe("/ · Struktur und Overflow", () => {
     await expect(page.getByText("Rund 1.600", { exact: true })).toBeVisible();
     await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
   });
+
+  test("Karten-Hover-Lift ist spürbar (translateY)", async ({ page }) => {
+    await page.goto("/");
+    // Erste .gn-card-lift auf der Startseite ist eine Vorteils-Karte (statisches
+    // inneres Element, nicht das motion-RiseItem) – der Hover hebt sie an.
+    const card = page.locator(".gn-card-lift").first();
+    await card.scrollIntoViewIfNeeded();
+    await card.hover();
+    await expect
+      .poll(async () => card.evaluate((el) => getComputedStyle(el).transform))
+      .not.toBe("none");
+  });
 });
 
 test.describe("/ ohne JavaScript", () => {

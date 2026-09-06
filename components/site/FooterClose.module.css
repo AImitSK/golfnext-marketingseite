@@ -26,7 +26,11 @@
 .inner {
   position: relative;
   z-index: 1;
-  /* Volle Breite (Briefing 0014): kein max-width/margin:auto mehr, nur Gutter am Rand. */
+  /* Satzspiegel-Breite (Entscheidung Stefan, 06.09.2026): Der Abschluss-Text bleibt auf
+     lesbarer Breite (var(--gn-wrap)) zentriert – NICHT 100 % wie die übrigen Footer-Zonen.
+     Die Fläche/.close bleibt full-bleed; nur der Inhalt wird begrenzt. */
+  max-width: var(--gn-wrap);
+  margin: 0 auto;
   padding: 52px var(--gn-gutter);
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);

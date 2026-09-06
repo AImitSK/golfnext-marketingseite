@@ -26,11 +26,11 @@ test.describe("Header · Struktur und Daten", () => {
     await expect(headerH1).toHaveCount(0);
 
     // Live-Routen werden echt verlinkt: /pakete (Schritt 2.1), /plattform
-    // (Schritt 2.3, Briefing 0016), /wachstum-vertrieb (Schritt 2.5, Briefing 0017)
-    // und /clubprozesse (Schritt 2.6, Briefing 0018).
+    // (Schritt 2.3, Briefing 0016), /wachstum-vertrieb (Schritt 2.5, Briefing 0017),
+    // /clubprozesse (Schritt 2.6, Briefing 0018) und /ueber-golfnext (Schritt 2.7, Briefing 0019).
     // Alle übrigen (noch nicht live) Navigations-Links bleiben Platzhalter „#".
     // CSS-Locator, damit display:none Navigationen mitzählen.
-    const live = ["/pakete", "/plattform", "/wachstum-vertrieb", "/clubprozesse"];
+    const live = ["/pakete", "/plattform", "/wachstum-vertrieb", "/clubprozesse", "/ueber-golfnext"];
     const hrefs = await page
       .locator("header nav a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
@@ -39,6 +39,7 @@ test.describe("Header · Struktur und Daten", () => {
     expect(hrefs, "Plattform ist live und wird verlinkt").toContain("/plattform");
     expect(hrefs, "Wachstum & Vertrieb ist live und wird verlinkt").toContain("/wachstum-vertrieb");
     expect(hrefs, "Clubprozesse ist live und wird verlinkt").toContain("/clubprozesse");
+    expect(hrefs, "Über GolfNext ist live und wird verlinkt").toContain("/ueber-golfnext");
     for (const href of hrefs) {
       expect(
         href === "#" || (href !== null && live.includes(href)),

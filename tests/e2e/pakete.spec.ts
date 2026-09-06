@@ -39,6 +39,33 @@ test.describe("/pakete · Struktur und Overflow", () => {
     await expect(table.getByRole("columnheader", { name: "Komplett" })).toBeVisible();
     await expect(table.getByRole("rowheader", { name: "Gastfee" })).toBeVisible();
   });
+
+  test("Vergleich enthält alle Zeilen und sichtbare „Enthalten\"-Punkte (Regressionsschutz)", async ({
+    page,
+  }) => {
+    await page.goto("/pakete");
+    const table = page.getByRole("table");
+
+    // 24 Leistungszeilen (6 + 10 + 5 + 3) mit je einem Zeilenkopf – schützt davor,
+    // dass die Tabelle wieder auf „nur Kopf/Rahmen" zusammenfällt.
+    await expect(table.locator('tbody th[scope="row"]')).toHaveCount(24);
+    // Vier Gruppen-Zwischenüberschriften.
+    await expect(table.locator("tbody th[colspan]")).toHaveCount(4);
+
+    // „Enthalten"-Punkte müssen in ALLEN vier Spalten sichtbar sein (nicht 0 × 0 px).
+    // Erste Datenzeile „Individuelle Clubwebsite" ist in allen vier Stufen enthalten.
+    const ersteZeile = table.locator("tbody tr").filter({ hasText: "Individuelle Clubwebsite" });
+    const punkte = ersteZeile.locator("td span[aria-hidden='true']");
+    await expect(punkte).toHaveCount(4);
+    for (let i = 0; i < 4; i++) {
+      const box = await punkte.nth(i).boundingBox();
+      expect(box, `Punkt Spalte ${i} hat eine Größe`).not.toBeNull();
+      expect(box!.width, `Punkt Spalte ${i} sichtbar`).toBeGreaterThan(0);
+      expect(box!.height, `Punkt Spalte ${i} sichtbar`).toBeGreaterThan(0);
+    }
+    // Zugängliche Bedeutung bleibt vorhanden (sr-only „Enthalten").
+    await expect(ersteZeile.getByText("Enthalten", { exact: true })).toHaveCount(4);
+  });
 });
 
 test.describe("/pakete ohne JavaScript", () => {

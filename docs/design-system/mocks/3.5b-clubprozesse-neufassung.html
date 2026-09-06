@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfNext Clubprozesse · Neufassung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* GOLFNEXT · /clubprozesse · Neufassung v01 (06.09.2026). Ersetzt Aufbau und Inhalt aus dem Seitenbriefing 3.5. */
+:root{
+  --navy:#01415B; --navy-deep:#012B3D; --blue:#0B6A90; --sky:#7FD3F0; --signal:#00E805;
+  --paper:#FFFCF5; --sand:#F5F1E6; --mist:#F3F6F4;
+  --ink:#16262C; --muted:#5C6F76; --line:#E6E1D6;
+  --ok:#2E6B38; --okbg:#EDF4EA; --err:#A3564A; --warn:#8A6D3B;
+  --fline:rgba(255,255,255,.14); --ftext:#B9D2DE;
+  --display:"Archivo",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter",system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);font-weight:700;line-height:1.14;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.pwrap{max-width:1140px;margin:0 auto;padding:0 40px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;font-weight:600;color:var(--blue);display:block;margin-bottom:14px}
+.psec{padding:86px 0}
+.psec.sand{background:var(--sand)}
+.psec.mist{background:var(--mist)}
+.psec h2{font-size:clamp(27px,3.2vw,40px);margin-bottom:16px;max-width:24ch;text-wrap:balance}
+.psec .lead{font-size:clamp(16px,1.3vw,19px);color:var(--muted);max-width:62ch}
+.btn-cta{display:inline-flex;flex-direction:column;gap:2px;background:var(--signal);color:var(--navy);font-weight:700;font-size:16px;border-radius:4px;padding:13px 26px;line-height:1.25}
+.btn-cta small{font-size:12.5px;font-weight:500;opacity:.82}
+.tlink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15.5px;color:var(--blue)}
+.tlink svg{width:15px;height:15px;transition:transform .15s}
+.tlink:hover svg{transform:translateX(3px)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+
+/* ---------- Header ---------- */
+.hdr{display:flex;align-items:center;gap:34px;height:80px;padding:0 40px;background:rgba(255,252,245,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;backdrop-filter:blur(8px)}
+.hdr .jslogo{color:var(--navy);display:inline-flex;flex:0 0 auto}
+.hdr .jslogo svg{height:19px;width:auto}
+.hnav{display:flex;gap:30px;flex:0 0 auto}
+.hnav a{font-size:14.5px;font-weight:500;color:var(--ink);padding:28px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+.hnav a:hover{color:var(--navy);border-color:var(--line)}
+.hnav a.active{color:var(--navy);border-color:var(--signal)}
+.hnav a .amp{color:var(--muted);font-weight:400;padding:0 4px}
+.hcta{margin-left:auto;flex:0 0 auto}
+.hbtn{display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-weight:700;font-size:14px;padding:9px 16px;border-radius:4px;background:var(--signal);color:var(--navy);line-height:1.2}
+.hbtn small{font-size:11px;font-weight:500;opacity:.82}
+@media(max-width:1340px){.hnav{gap:22px}.hnav a{font-size:14px}.hdr{gap:24px}}
+@media(max-width:1180px){.hnav{gap:17px}.hnav a{font-size:13.5px}}
+
+.hint{font-size:13.5px;color:var(--muted);display:flex;align-items:flex-start;gap:9px;max-width:72ch}
+.hint svg{width:15px;height:15px;color:var(--blue);flex:0 0 auto;margin-top:4px}
+
+/* ---------- Platzhalter für echte Produktoberflächen ---------- */
+.shot{position:relative;border:1px solid var(--line);border-radius:4px;background:var(--sand);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.shot::before{content:"";position:absolute;inset:10px;border:1px dashed rgba(1,65,91,.22);border-radius:3px;pointer-events:none}
+.shot .tagline{position:absolute;top:12px;left:12px;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--navy);background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:3px 8px}
+.shot .desc{position:relative;padding:16px 18px}
+.shot .desc b{display:block;font-family:var(--display);font-size:14.5px;color:var(--navy);letter-spacing:-.01em;line-height:1.25}
+.shot .desc span{display:block;font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+.shot.dark{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
+.shot.dark::before{border-color:rgba(127,211,240,.3)}
+.shot.dark .tagline{color:var(--navy);background:var(--sky);border-color:var(--sky)}
+.shot.dark .desc b{color:#fff}
+.shot.dark .desc span{color:var(--ftext)}
+
+/* Stufenfarben – gleichwertig, nur unterscheidbar */
+:root{ --st1:#01415B; --st2:#0B6A90; --st3:#2E6B38; }
+.statement3{font-family:var(--display);font-size:clamp(20px,2.3vw,28px);font-weight:700;color:var(--navy);letter-spacing:-.02em;padding-left:20px;border-left:3px solid var(--signal);line-height:1.34;max-width:36ch}
+
+
+
+/* ============================================================
+   /wachstum-vertrieb · Neufassung v01 (06.09.2026)
+   Layoutsystem wie Plattform-Neufassung v02: Radius 4 px (Bedienelemente) · 12 px (große Flächen),
+   Sektionsabstand 120 px, Wrap 1180 px, Hero 1.75 / 1 textdominant, Visual läuft rechts aus dem Raster,
+   Slider mit Scroll-Snap, Bento mit Mikrobewegung, Scroll-Geschichte mit klebendem Geräterahmen.
+   ============================================================ */
+:root{ --r:12px; --wrap:1180px; }
+.pwrap{max-width:var(--wrap)}
+.psec{padding:120px 0}
+@media(max-width:620px){.psec{padding:72px 0}}
+.psec h2{font-size:clamp(30px,3.6vw,48px);letter-spacing:-.03em;line-height:1.08;margin-bottom:18px;max-width:22ch}
+.psec .lead{font-size:clamp(17px,1.4vw,20px);max-width:58ch}
+.eyebrow{margin-bottom:18px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
+.reveal.on{opacity:1;transform:none}
+.reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+.arrow{width:15px;height:15px}
+
+/* ---------- 1 · Hero ---------- */
+.hero{background:linear-gradient(160deg,#012B3D 0%,#01415B 58%,#065877 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(1000px 500px at 88% -10%,rgba(127,211,240,.18),transparent 62%);pointer-events:none}
+.hero .in{position:relative;z-index:1;max-width:var(--wrap);margin:0 auto;padding:96px 40px 110px;display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:48px;align-items:center}
+.hero .eyebrow{color:var(--signal)}
+.hero .txt{padding-right:100px;min-width:0}
+.hero h1{color:#fff;font-size:clamp(34px,4.6vw,60px);font-weight:800;line-height:1.04;letter-spacing:-.035em;max-width:19ch;text-wrap:balance}
+.hero .hl{color:var(--ftext);font-size:clamp(17px,1.4vw,19.5px);margin-top:26px;max-width:50ch;line-height:1.62}
+.hero .acts{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:38px}
+.hero .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15.5px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.hero .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-size:13px;color:var(--ftext)}
+.hero .trust span{display:inline-flex;align-items:center;gap:8px}
+.hero .trust i{width:7px;height:7px;border-radius:50%;background:var(--signal);display:block}
+
+.demo{position:relative;min-width:0;width:150%}
+.browser{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:0 60px 120px -50px rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.25)}
+.browser .bar{height:40px;background:var(--mist);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 14px}
+.browser .bar i{width:10px;height:10px;border-radius:50%;background:#D5CFC3;display:block}
+.browser .bar span{margin-left:12px;font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:4px;padding:4px 12px;width:280px}
+.phone{position:absolute;left:-120px;bottom:-46px;width:206px;background:#0B1F29;border-radius:30px;padding:11px;box-shadow:0 40px 80px -30px rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.22)}
+.phone .scr{background:#fff;border-radius:22px;padding:14px 13px 16px;color:var(--ink)}
+.ig .ih{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink);font-weight:600}
+.ig .ih i{width:22px;height:22px;border-radius:50%;background:var(--navy);display:block;flex:0 0 auto}
+.ig .ih span{display:block;font-size:9.5px;color:var(--muted);font-weight:500}
+.ig .im{height:118px;border-radius:8px;background:linear-gradient(140deg,#DCE5DC,#C3D2C6);margin:11px 0 10px;position:relative}
+.ig .im span{position:absolute;left:11px;bottom:10px;font-family:var(--display);font-size:15px;font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.1}
+.ig .cta{display:block;text-align:center;font-size:12px;font-weight:700;color:var(--navy);background:var(--signal);border-radius:4px;padding:8px;transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.ig .cta.hit{transform:scale(.94)}
+.ig .cap{font-size:10.5px;color:var(--muted);margin-top:9px;line-height:1.4}
+
+/* ---------- 2 · Drei Momente (Bento) ---------- */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:56px}
+.bx{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 34px 0;min-width:0;display:flex;flex-direction:column;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.3,1),box-shadow .35s ease,border-color .35s}
+.bx:hover{transform:translateY(-6px);box-shadow:0 40px 70px -40px rgba(1,65,91,.45);border-color:rgba(1,65,91,.35)}
+.bx .no{font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--blue)}
+.bx h3{font-size:clamp(21px,2vw,26px);letter-spacing:-.025em;line-height:1.15;margin:12px 0 12px}
+.bx p{font-size:15px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+.bx .mod{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
+.bx .mod b{color:var(--navy)}
+.bx .viz{margin-top:auto;flex:1;background:var(--mist);border-top:1px solid var(--line);margin-left:-34px;margin-right:-34px;padding:24px 28px 28px;min-height:240px}
+
+/* ============================================================
+   /clubprozesse · Neufassung v01 (06.09.2026)
+   Seitenspezifische Muster: Website + Vorgangsliste im Hero, Bento mit drei Mikroabläufen,
+   Bericht-Strecke (Ergebnisliste → Angaben → drei Kanäle, Ausgabe läuft rechts aus dem Raster),
+   Captains-Split (App → Website), klare Aufteilung (läuft von allein / bleibt beim Clubteam).
+   ============================================================ */
+.hero .txt{padding-right:130px;min-width:0}
+.phone{left:-170px}
+@media(max-width:1180px){.phone{left:-140px}.hero .txt{padding-right:110px}}
+@media(max-width:1080px){
+  .hero .in{grid-template-columns:minmax(0,1fr);gap:56px;padding:70px 26px 96px}
+  .hero .txt{padding-right:0}
+  .demo{width:118%}
+  .phone{left:auto;right:-6px;bottom:-40px}
+}
+@media(max-width:620px){
+  .demo{width:112%}
+  .phone{width:156px;right:-4px;bottom:-34px}
+  .phone .scr{padding:10px 10px 12px}
+  .hero .in{padding-bottom:116px}
+}
+.stat{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:3px 8px;background:#fff}
+.stat i{width:6px;height:6px;border-radius:50%;background:var(--signal);display:block}
+.stat.pilot i{background:#E8C55A}.stat.dev i{background:#B9B3A6}
+
+/* Hero: Clubwebsite (öffentlich) + Vorgangsliste auf dem Handy (intern) */
+.site{padding:22px 26px 26px;color:var(--ink)}
+.site .snav{display:flex;align-items:center;gap:18px;font-size:12px;color:var(--muted);margin-bottom:18px}
+.site .snav b{font-family:var(--display);font-size:16px;color:var(--navy);letter-spacing:-.02em;margin-right:auto}
+.site .sgrid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;align-items:start}
+.pstat{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fff;transition:border-color .5s ease,background .5s ease}
+.pstat .pl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.pstat .pv{display:flex;align-items:center;gap:9px;margin-top:8px;font-family:var(--display);font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.pstat .pv i{width:12px;height:12px;border-radius:50%;background:#C9A14A;display:block;transition:background .5s ease}
+.pstat .pt{font-size:12px;color:var(--muted);margin-top:6px}
+.pstat.open{border-color:#CFE0D2;background:var(--okbg)}
+.pstat.open .pv i{background:var(--signal)}
+.news{display:flex;flex-direction:column;gap:10px}
+.nitem{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:center;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+.nitem .pic{height:48px;border-radius:6px;background:linear-gradient(140deg,#DCE5DC,#C3D2C6)}
+.nitem b{display:block;font-family:var(--display);font-size:13.5px;color:var(--navy);letter-spacing:-.01em;line-height:1.25}
+.nitem span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.news.on .nitem{opacity:1;transform:none}
+.news.on .nitem:nth-child(2){transition-delay:.5s}.news.on .nitem:nth-child(3){transition-delay:1s}
+.site .sl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:8px}
+.phone .scr{padding:16px 14px 18px}
+.log .lh{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.log .lt{display:block;font-family:var(--display);font-size:14px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-top:4px;line-height:1.2}
+.log .ev2{display:grid;grid-template-columns:36px minmax(0,1fr);gap:6px;padding:6px 0;border-top:1px solid var(--line);font-size:10.5px;color:var(--ink);line-height:1.35;opacity:0;transform:translateX(8px);transition:opacity .4s ease,transform .4s ease}
+.log .ev2:first-of-type{margin-top:12px}
+.log .ev2 b{font-family:var(--display);font-weight:700;color:var(--blue);font-size:10.5px}
+.log .ev2 span{display:block;color:var(--muted);font-size:9.5px}
+.log.on .ev2{opacity:1;transform:none}
+.log.on .ev2:nth-of-type(2){transition-delay:.5s}.log.on .ev2:nth-of-type(3){transition-delay:1s}.log.on .ev2:nth-of-type(4){transition-delay:1.5s}.log.on .ev2:nth-of-type(5){transition-delay:2s}
+.log .sum{margin-top:10px;font-size:10.5px;font-weight:700;color:var(--ok);background:var(--okbg);border-radius:20px;padding:5px 9px;text-align:center;opacity:0;transition:opacity .4s ease 2.5s}
+.log.on .sum{opacity:1}
+@media(max-width:620px){.site{padding:16px}.site .sgrid{grid-template-columns:minmax(0,1fr)}.log .ev2:nth-of-type(n+4){display:none}}
+
+/* ---------- 2 · Bento: drei Dinge, die das Büro nicht mehr macht ---------- */
+.bx .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.bx .mod{margin-bottom:26px}
+/* Concierge */
+.chat{display:flex;flex-direction:column;gap:10px}
+.chat .t{font-size:11px;color:var(--muted);text-align:center}
+.bub{max-width:88%;font-size:12.5px;line-height:1.45;padding:10px 13px;border-radius:12px;opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
+.bub.q{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px}
+.bub.a{align-self:flex-start;background:#fff;border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:4px}
+.bx.on .bub{opacity:1;transform:none}
+.bx.on .bub.q{transition-delay:.2s}.bx.on .bub.a{transition-delay:.9s}
+.chat .t2{font-size:11px;color:var(--ok);text-align:center;opacity:0;transition:opacity .4s ease 1.4s}
+.bx.on .chat .t2{opacity:1}
+/* Platzstatus */
+.ps2{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.ps2 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.ps2 .row div{font-size:12.5px;font-weight:600;color:var(--ink)}
+.ps2 .row div span{display:block;font-size:10.5px;color:var(--muted);font-weight:500;margin-top:2px}
+.tgl{width:44px;height:24px;border-radius:12px;background:#C9C3B6;position:relative;flex:0 0 auto;transition:background .35s ease}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.bx.on .tgl{background:var(--signal);transition-delay:.4s}
+.bx.on .tgl::after{transform:translateX(20px);transition-delay:.4s}
+.ps2 .arr{text-align:center;color:var(--muted);font-size:11px}
+.ps2 .pstat{transition-delay:1s}
+.bx.on .pstat{border-color:#CFE0D2;background:var(--okbg)}
+.bx.on .pstat .pv i{background:var(--signal);transition-delay:1s}
+.ps2 .web{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:6px}
+/* Gastfee */
+.pay{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.pay .pl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.pay .row{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--ink);padding:9px 0;border-bottom:1px solid var(--line)}
+.pay .row b{font-weight:600}
+.pay .pb{margin-top:12px;display:block;text-align:center;font-size:13px;font-weight:700;color:var(--navy);background:var(--signal);border-radius:4px;padding:10px;transition:transform .3s cubic-bezier(.3,1.4,.5,1),opacity .3s ease}
+.bx.on .pay .pb{transform:scale(.96);opacity:.35;transition-delay:.6s}
+.pay .ok{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ok);font-weight:600;opacity:0;transition:opacity .4s ease 1.2s}
+.pay .ok i{width:18px;height:18px;border-radius:50%;background:var(--okbg);display:flex;align-items:center;justify-content:center}
+.pay .ok i svg{width:11px;height:11px}
+.bx.on .pay .ok{opacity:1}
+.pay .sub{font-size:11px;color:var(--muted);margin-top:6px;opacity:0;transition:opacity .4s ease 1.5s}
+.bx.on .pay .sub{opacity:1}
+
+/* ---------- 3 · Turnier-News: die Bericht-Strecke ---------- */
+.track{margin-top:64px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1.2fr);gap:0;align-items:center;position:relative}
+.tstep{position:relative;padding:0 26px 0 0}
+.tstep .tl{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.08em;color:var(--blue);margin-bottom:12px}
+.tstep .tl span{color:var(--muted);font-weight:600;letter-spacing:0;text-transform:none;margin-left:8px}
+.tframe{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 40px 80px -45px rgba(1,65,91,.5);overflow:hidden}
+.tframe .dh{height:38px;border-bottom:1px solid var(--line);background:var(--mist);display:flex;align-items:center;gap:9px;padding:0 14px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.tframe .dh i{width:8px;height:8px;border-radius:50%;background:#D5CFC3;display:block}
+.tframe .db{padding:18px 20px}
+.pdf{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;border:1px dashed rgba(1,65,91,.3);border-radius:8px;padding:12px}
+.pdf .ic{width:40px;height:48px;border-radius:4px;background:var(--navy);color:#fff;font-family:var(--display);font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;letter-spacing:.06em}
+.pdf b{display:block;font-size:13px;color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf>div{min-width:0}
+.pdf span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.rows{margin-top:12px}
+.rows div{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink);padding:7px 0;border-bottom:1px solid var(--line)}
+.rows div span{color:var(--muted);margin-left:auto;text-align:right}
+.rows div em{font-style:normal;font-size:10px;font-weight:700;color:var(--ok);background:var(--okbg);border-radius:20px;padding:2px 7px}
+.fld2{display:flex;flex-direction:column;gap:8px}
+.fld2 div{border:1px solid var(--line);border-radius:6px;padding:9px 12px;font-size:12.5px;color:var(--ink);display:flex;justify-content:space-between;gap:10px}
+.fld2 div span{color:var(--muted)}
+.tone{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tone span{font-size:11px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:4px 10px}
+.tone span.sel{color:var(--navy);border-color:var(--navy);background:#fff}
+.tstep .gen{display:inline-block;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--navy);background:var(--signal);border-radius:4px;padding:9px 14px}
+.link{position:absolute;top:50%;right:0;width:26px;height:2px;background:var(--line);overflow:hidden}
+.link i{display:block;height:100%;width:0;background:var(--navy);transition:width .5s ease}
+.track.on .tstep:nth-child(1) .link i{width:100%;transition-delay:.3s}
+.track.on .tstep:nth-child(2) .link i{width:100%;transition-delay:1s}
+.outs{position:relative;height:500px;min-width:0}
+.out{position:absolute;width:min(300px,72%);background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 40px 80px -45px rgba(1,65,91,.55);overflow:hidden;opacity:0;transform:translateX(-40px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.3,1)}
+.out .oh{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.out .oh em{font-style:normal;font-size:10px;color:var(--ok);background:var(--okbg);border-radius:20px;padding:2px 8px;letter-spacing:0;text-transform:none}
+.out .ob{padding:14px 16px}
+.out .ob .pic{height:72px;border-radius:6px;background:linear-gradient(140deg,#DCE5DC,#C3D2C6);margin-bottom:10px}
+.out .ob b{display:block;font-family:var(--display);font-size:14.5px;color:var(--navy);letter-spacing:-.015em;line-height:1.25}
+.out .ob p{font-size:12px;color:var(--muted);margin:6px 0 0;line-height:1.5}
+.out.o1{left:0;top:0;z-index:1}
+.out.o2{left:22%;top:150px;z-index:2}
+.out.o3{left:44%;top:290px;z-index:3}
+.track.on .out{opacity:1;transform:none}
+.track.on .o1{transition-delay:1.5s}.track.on .o2{transition-delay:1.75s}.track.on .o3{transition-delay:2s}
+.trackline{margin-top:36px;font-size:14px;color:var(--muted);max-width:70ch}
+@media(max-width:1000px){
+  .track{grid-template-columns:minmax(0,1fr);gap:28px}
+  .tstep{padding-right:0}
+  .link{display:none}
+  .outs{height:auto;display:flex;flex-direction:column;gap:12px}
+  .out{position:static;width:100%;transform:translateY(20px)}
+}
+
+/* ---------- 4 · Captains App: vom Spieltag auf die Website ---------- */
+.cap2{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:center;margin-top:64px}
+.cphone{width:250px;margin:0 auto;background:#0B1F29;border-radius:32px;padding:12px;box-shadow:0 50px 90px -40px rgba(0,0,0,.6);border:1px solid rgba(1,65,91,.25)}
+.cphone .scr{background:var(--paper);border-radius:22px;padding:18px 16px 20px;color:var(--ink)}
+.cphone .ah{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.cphone .at{font-family:var(--display);font-size:16px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-top:4px}
+.cphone .f{border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:11.5px;color:var(--ink);margin-top:8px;display:flex;justify-content:space-between;gap:8px;background:#fff}
+.cphone .f span{color:var(--muted)}
+.cphone .f.img{height:64px;background:linear-gradient(140deg,#DCE5DC,#C3D2C6);border:0}
+.cphone .pub{display:block;text-align:center;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--navy);background:var(--signal);border-radius:4px;padding:10px;transition:transform .3s cubic-bezier(.3,1.4,.5,1),opacity .3s}
+.cap2.on .pub{transform:scale(.96);opacity:.4;transition-delay:.5s}
+.cphone .done{margin-top:10px;text-align:center;font-size:11px;color:var(--ok);font-weight:600;opacity:0;transition:opacity .4s ease 1s}
+.cap2.on .done{opacity:1}
+.team{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 50px 100px -50px rgba(1,65,91,.5);overflow:hidden}
+.team .dh{height:40px;border-bottom:1px solid var(--line);background:var(--mist);display:flex;align-items:center;gap:9px;padding:0 16px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.team .dh{text-transform:none;letter-spacing:0;font-weight:600;font-size:12px}
+.team .dh i{width:8px;height:8px;border-radius:50%;background:#D5CFC3;display:block}
+.team .db{padding:22px 26px 26px}
+.team .th{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.team .th b{font-family:var(--display);font-size:20px;color:var(--navy);letter-spacing:-.025em}
+.team .th span{font-size:12px;color:var(--muted)}
+.post{border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;align-items:start;opacity:0;transform:translateY(14px);transition:opacity .5s ease 1.2s,transform .5s ease 1.2s}
+.cap2.on .post{opacity:1;transform:none}
+.post .pic{height:84px;border-radius:6px;background:linear-gradient(140deg,#DCE5DC,#C3D2C6)}
+.post b{display:block;font-family:var(--display);font-size:15px;color:var(--navy);letter-spacing:-.015em;line-height:1.25}
+.post .sc{font-family:var(--display);font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.03em;margin:4px 0}
+.post p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5}
+.post .by{font-size:11px;color:var(--muted);margin-top:8px}
+.tlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px;margin-top:16px}
+.tlist div{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--line)}
+.tlist div b{color:var(--ink);font-weight:600}
+.tlist div.new b{color:var(--navy)}
+.tlist div em{font-style:normal;font-size:10px;font-weight:700;color:var(--ok);background:var(--okbg);border-radius:20px;padding:2px 7px;opacity:0;transition:opacity .4s ease 1.6s}
+.cap2.on .tlist div em{opacity:1}
+.capnote{margin-top:22px;font-size:14px;color:var(--muted);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.cap2{grid-template-columns:minmax(0,1fr);gap:40px}.tlist{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- 5 · Was bleibt ---------- */
+.split2{margin-top:56px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:22px;align-items:stretch}
+.sbox{border:1px solid var(--line);border-radius:var(--r);padding:32px 32px 28px;background:#fff;min-width:0}
+.sbox.gn{background:var(--navy);border-color:var(--navy);color:#fff}
+.sbox .bl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:18px}
+.sbox.gn .bl{color:var(--signal)}
+.sbox ul{margin:0;padding:0;list-style:none}
+.sbox li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;font-size:15px;padding:11px 0;border-top:1px solid var(--line);line-height:1.45}
+.sbox.gn li{border-color:rgba(255,255,255,.14)}
+.sbox li:first-child{border-top:0;padding-top:0}
+.sbox li .m{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.sbox.gn li .m{color:var(--sky)}
+.sbox li .m.dev{color:#B9B3A6}
+.sbox.gn li .m.dev{color:rgba(255,255,255,.55)}
+.sbox.gn li::before{display:none}
+.sbox .foot{margin-top:22px;font-size:13.5px;color:var(--muted)}
+.sbox.gn .foot{color:var(--ftext)}
+@media(max-width:900px){.split2{grid-template-columns:minmax(0,1fr)}.sbox{padding:26px 24px 22px}.sbox li{grid-template-columns:minmax(0,1fr);gap:4px}}
+@media(max-width:1000px){.bento{grid-template-columns:minmax(0,1fr);gap:18px}.bx{padding:28px 28px 0}.bx .viz{margin-left:-28px;margin-right:-28px}}
+
+/* ---------- Persönlicher Abschluss – oberer Teil der Footer-Systemkarte ---------- */
+.f-close{background:linear-gradient(150deg,var(--navy-deep) 0%,var(--navy) 70%,#065877 100%);padding:76px 40px 68px;position:relative;overflow:hidden;border-bottom:1px solid var(--fline)}
+.f-close::after{content:"";position:absolute;inset:0;background:radial-gradient(760px 340px at 50% 128%,rgba(127,211,240,.18),transparent 64%);pointer-events:none}
+.f-close .inner{position:relative;z-index:1;max-width:680px;margin:0 auto;text-align:center}
+.f-close .ce{text-transform:uppercase;letter-spacing:.18em;font-size:11.5px;font-weight:700;color:var(--signal);display:block;margin-bottom:16px}
+.f-close h2{color:#fff;font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1.1;text-wrap:balance}
+.f-close p{color:var(--ftext);margin:18px auto 0;max-width:52ch;font-size:16px;line-height:1.62}
+.f-close .acts{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:32px}
+.f-close .cbtn{display:inline-flex;background:var(--signal);color:var(--navy);font-weight:700;font-size:16.5px;border-radius:4px;padding:15px 32px;line-height:1.2}
+.f-close .cwhen{font-size:13.5px;color:var(--ftext)}
+.f-close .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15px;margin-top:12px;border-bottom:1px solid rgba(255,255,255,.32);padding-bottom:3px}
+.f-close .b2 svg{width:15px;height:15px}
+.f-person{margin-top:44px;padding-top:28px;border-top:1px solid var(--fline);display:flex;align-items:center;justify-content:center;gap:15px;text-align:left}
+.f-person .ph{width:46px;height:46px;border-radius:50%;background:linear-gradient(150deg,#2A4C5C,#1B3A48);border:1px solid rgba(255,255,255,.18);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.f-person .ph svg{width:22px;height:22px;color:rgba(127,211,240,.55)}
+.f-person .pt{font-size:14px;color:var(--ftext);line-height:1.45}
+.f-person .pt b{display:block;color:#fff;font-weight:600;font-size:15px}
+@media(max-width:620px){
+  .f-close{padding:56px 22px 48px}
+  .f-close .cbtn{width:100%;justify-content:center;text-align:center}
+  .f-person{flex-direction:column;text-align:center;gap:12px}
+}
+
+/* ---------- Footer ---------- */
+.pfoot{background:var(--navy-deep);color:#fff}
+.f-cta{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:52px 40px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--fline)}
+.f-cta::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 280px at 88% 120%,rgba(127,211,240,.2),transparent 60%);pointer-events:none}
+.f-cta>*{position:relative;z-index:1}
+.f-cta .ce{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;color:var(--signal);display:block;margin-bottom:12px}
+.f-cta h3{color:#fff;font-size:clamp(23px,2.4vw,32px);max-width:20ch;font-weight:800}
+.f-cta p{color:var(--ftext);margin:12px 0 0;max-width:46ch;font-size:15px}
+.f-cta .acts{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.f-cta .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.f-map{padding:42px 40px 38px;border-bottom:1px solid var(--fline)}
+.f-map .mh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.f-map .mh b{font-family:var(--display);font-size:18px;color:#fff;font-weight:700;letter-spacing:-.02em}
+.f-map .mh span{font-size:13px;color:var(--ftext)}
+.f-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.f-col>b{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-bottom:12px}
+.f-col.ops>b{color:var(--sky)}
+.f-mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.f-mod{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--fline);min-width:0}
+.f-mod .dot{flex:0 0 auto;width:7px;height:7px;border-radius:50%}
+.f-mod .dot.live{background:var(--signal)}
+.f-mod .dot.pilot{background:#E8C55A}
+.f-mod .dot.dev{background:rgba(255,255,255,.35)}
+.f-mod b{font-size:14.5px;color:#fff;font-weight:600}
+.f-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;font-size:12.5px;color:var(--ftext)}
+.f-legend .li{display:flex;align-items:center;gap:8px}
+.f-legend .dot{width:7px;height:7px;border-radius:50%}
+.f-contact{padding:34px 40px 32px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:30px;border-bottom:1px solid var(--fline)}
+.f-contact .cl{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ftext);font-weight:700;margin-bottom:12px;display:block}
+.f-contact .big{font-family:var(--display);font-size:clamp(20px,2vw,25px);color:#fff;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.f-contact p{font-size:15px;margin:0 0 7px;color:#fff}
+.f-contact p.sm{font-size:13.5px;color:var(--ftext)}
+.f-contact a{color:#fff}
+.soc{display:flex;gap:14px;margin-top:4px}
+.soc a{color:var(--ftext)}
+.soc svg{width:21px;height:21px}
+.f-bar{display:flex;gap:20px;flex-wrap:wrap;align-items:center;padding:22px 40px 26px;font-size:13px;color:var(--ftext)}
+.f-bar .jslogo{color:#fff;display:inline-flex}
+.f-bar .jslogo svg{height:17px;width:auto}
+.f-bar a{color:var(--ftext)}
+.f-bar .sp{margin-left:auto}
+
+@media(max-width:1024px){
+  .hnav{display:none}
+  .hdr{gap:16px}
+}
+@media(max-width:960px){
+  .f-cols{grid-template-columns:minmax(0,1fr)}
+  .f-contact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pwrap,.hero .in{padding-left:26px;padding-right:26px}
+  .hdr,.f-close,.f-map,.f-bar,.f-contact{padding-left:26px;padding-right:26px}
+}
+@media(max-width:620px){
+  .psec{padding:58px 0}
+  .f-mods,.f-contact{grid-template-columns:minmax(0,1fr)}
+  .hdr{height:auto;padding:14px 20px;gap:12px;flex-wrap:wrap}
+  .hdr .jslogo svg{height:16px}
+  .hcta{margin-left:0;width:100%}
+  .hbtn{width:100%;text-align:center;font-size:13px;padding:10px 14px}
+  .pwrap,.hero .in{padding-left:20px;padding-right:20px}
+  .f-close{padding-left:22px;padding-right:22px}
+  .faqa{padding-right:0}
+}
+
+
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+  .nitem{opacity:1;transform:none}.log .ev2{opacity:1;transform:none}.log .sum{opacity:1}
+  .bub{opacity:1;transform:none}.chat .t2{opacity:1}
+  .tgl{background:var(--signal)}.tgl::after{transform:translateX(20px)}.pstat{border-color:#CFE0D2;background:var(--okbg)}.pstat .pv i{background:var(--signal)}
+  .pay .pb{opacity:.35}.pay .ok,.pay .sub{opacity:1}
+  .link i{width:100%}.out{opacity:1;transform:none}
+  .cphone .pub{opacity:.4}.cphone .done{opacity:1}.post{opacity:1;transform:none}.tlist div em{opacity:1}
+}
+
+</style>
+</head>
+<body>
+<header class="hdr">
+  <span class="jslogo" aria-label="GolfNext"></span>
+  <nav class="hnav">
+    <a>Plattform</a>
+    <a>Wachstum<span class="amp">&amp;</span>Vertrieb</a>
+    <a class="active">Clubprozesse</a>
+    <a>Praxis</a>
+    <a>Pakete</a>
+    <a>Über GolfNext</a>
+  </nav>
+  <span class="hcta">
+    <a class="hbtn">Online-Erstgespräch vereinbaren<small>30 Minuten per Zoom oder Teams</small></a>
+  </span>
+</header>
+
+
+
+<!-- ============ 1 · HERO ============ -->
+<section class="hero">
+  <div class="in">
+    <div class="txt">
+      <span class="eyebrow">Clubprozesse</span>
+      <h1>Mehr Clubleben. Weniger Arbeit im Clubbüro.</h1>
+      <p class="hl">Die Frage nach dem Greenfee. Der Platzstatus vom Greenkeeper. Die Gastfee. Der Turnierbericht nach der Siegerehrung. Das Ergebnis der Mannschaft. Fünf Dinge, die heute jemanden im Büro binden – mit GolfNext laufen sie dort, wo sie entstehen, und landen von allein auf der Website.</p>
+      <div class="acts">
+        <a class="btn-cta">Live-Demo ansehen<small>ohne Anmeldung</small></a>
+        <a class="b2">Online-Erstgespräch vereinbaren <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="trust">
+        <span><i></i>Das Clubteam behält die Kontrolle</span>
+        <span><i></i>Persönliches bleibt persönlich</span>
+        <span><i></i>Nichts ersetzt Ihre Clubverwaltung</span>
+      </div>
+    </div>
+
+    <div class="demo" id="demo">
+      <div class="browser">
+        <div class="bar"><i></i><i></i><i></i><span>golfclub-musterhausen.de/aktuell</span></div>
+        <div class="site">
+          <div class="snav"><b>GC Musterhausen</b><span>Club</span><span>Platz</span><span>Aktuell</span><span>Greenfee</span><span>Mannschaften</span></div>
+          <div class="sgrid">
+            <div>
+              <div class="sl">Platz</div>
+              <div class="pstat" id="pstat">
+                <div class="pl">Platzstatus</div>
+                <div class="pv"><i></i><span id="pstatv">Wintergrüns</span></div>
+                <div class="pt" id="pstatt">Stand: gestern 16:20 Uhr</div>
+              </div>
+            </div>
+            <div>
+              <div class="sl">Aktuell im Club</div>
+              <div class="news" id="news">
+                <div class="nitem"><div class="pic"></div><div><b>Monatsbecher September: Sieg für Petra Lange</b><span>Turnier-News · Samstag, 17:50 Uhr</span></div></div>
+                <div class="nitem"><div class="pic"></div><div><b>Herren AK 50 gewinnen 5:3 in Sittensen</b><span>Mannschaften · Samstag, 18:30 Uhr</span></div></div>
+                <div class="nitem"><div class="pic"></div><div><b>Greenfee-Sonntag: Platz für Gäste geöffnet</b><span>Club · Sonntag, 06:40 Uhr</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="scr log" id="log">
+          <span class="lh">Clubbüro · Sonntag</span>
+          <span class="lt">Heute ohne das Büro erledigt</span>
+          <div class="ev2"><b>06:40</b><div>Platz auf „bespielbar"<span>Greenkeeper · Platzstatus</span></div></div>
+          <div class="ev2"><b>08:15</b><div>Gastfee bezahlt und bestätigt<span>T. Schulz · Gastfee</span></div></div>
+          <div class="ev2"><b>09:02</b><div>„Kann ich heute als Gast spielen?"<span>Concierge · beantwortet</span></div></div>
+          <div class="ev2"><b>17:50</b><div>Turnierbericht veröffentlicht<span>Turnier-News · 3 Kanäle</span></div></div>
+          <div class="ev2"><b>18:30</b><div>Spieltag Herren AK 50 online<span>Captain · Captains App</span></div></div>
+          <div class="sum">5 Vorgänge · 0 Anrufe im Büro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · DREI DINGE ============ -->
+<section class="psec">
+  <div class="pwrap">
+    <span class="eyebrow">Jeden Tag, jede Saison</span>
+    <h2>Drei Dinge, die das Clubbüro ab morgen nicht mehr macht.</h2>
+    <p class="lead">Nicht die einzelne Aufgabe kostet die Zeit. Es ist die Wiederholung: dieselbe Frage, derselbe Anruf, dieselbe Überweisung – jeden Tag, die ganze Saison. Genau da setzt GolfNext an.</p>
+
+    <div class="bento">
+      <div class="bx reveal" data-anim>
+        <div class="top"><div class="no">/ 01</div><span class="stat pilot"><i></i>Pilot</span></div>
+        <h3>Fragen beantwortet der Concierge.</h3>
+        <p>Öffnungszeiten, Greenfee, Platzreife, Gastspiel, Mitgliedschaft: Die häufigsten Fragen bekommen sofort eine Antwort und den passenden nächsten Schritt – auch sonntags um 21 Uhr. Was persönlich ist, geht ans Clubteam.</p>
+        <div class="mod">Modul <b>Concierge</b></div>
+        <div class="viz">
+          <div class="chat">
+            <div class="t">Sonntag, 21:14 Uhr</div>
+            <div class="bub q">Kann ich morgen als Gast spielen, und was kostet das?</div>
+            <div class="bub a">Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Die Gastfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?</div>
+            <div class="t2">Beantwortet, ohne dass jemand im Büro war.</div>
+            <div class="t" style="margin-top:6px">Im Pilot des Golfclubs Rehburg-Loccum kamen 68 % der Fragen außerhalb der Bürozeiten.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bx reveal d1" data-anim>
+        <div class="top"><div class="no">/ 02</div><span class="stat"><i></i>Im Einsatz</span></div>
+        <h3>Der Platzstatus kommt vom Platz.</h3>
+        <p>Der Greenkeeper stellt morgens um halb sieben den Platz vom Handy auf bespielbar, Wintergrüns oder gesperrt. Die Website ist in derselben Sekunde aktuell. Kein Anruf, keine Rückfrage, kein Zettel im Büro.</p>
+        <div class="mod">Modul <b>Platzstatus</b></div>
+        <div class="viz">
+          <div class="ps2">
+            <div class="row"><div>Platz bespielbar<span>Greenkeeper · Handy · 06:40 Uhr</span></div><span class="tgl"></span></div>
+            <div class="arr">↓ derselbe Augenblick</div>
+            <div><div class="web">Clubwebsite</div><div class="pstat"><div class="pl">Platzstatus</div><div class="pv"><i></i><span>Platz bespielbar</span></div><div class="pt">Stand: heute 06:40 Uhr · Sommergrüns, Trolleys erlaubt</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bx reveal d2" data-anim>
+        <div class="top"><div class="no">/ 03</div><span class="stat pilot"><i></i>Pilot</span></div>
+        <h3>Die Gastfee bezahlt der Gast selbst.</h3>
+        <p>Gäste sehen, ob und wann sie spielen können, bezahlen online und bekommen sofort die Bestätigung – unabhängig davon, ob das Büro besetzt ist. Im Büro bleibt nichts liegen, was abgetippt werden müsste.</p>
+        <div class="mod">Modul <b>Gastfee</b></div>
+        <div class="viz">
+          <div class="pay">
+            <div class="pl">Gastfee · Golfclub Musterhausen</div>
+            <div class="row"><span>Montag, 09:30 Uhr · 18 Loch</span><b>65 €</b></div>
+            <div class="row"><span>Tom Schulz · HCP 18,4</span><b>DGV-Ausweis geprüft</b></div>
+            <span class="pb">Jetzt bezahlen</span>
+            <div class="ok"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg></i>Bezahlt · Bestätigung per E-Mail unterwegs</div>
+            <div class="sub">Für das Clubbüro: ein Eintrag in der Liste, nichts zu tun.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · TURNIER-NEWS ============ -->
+<section class="psec mist" style="overflow:hidden">
+  <div class="pwrap">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px"><span class="eyebrow" style="margin:0">Turnier-News</span><span class="stat pilot"><i></i>Pilot</span></div>
+    <h2>Der letzte Putt fällt. Noch am selben Abend ist der Bericht online.</h2>
+    <p class="lead">Drei Turniere in der Woche, und nach jeder Siegerehrung dieselbe Arbeit: Ergebnisse abtippen, Text schreiben, Bilder verkleinern, Website, Facebook, Instagram. Mit GolfNext wird daraus ein Vorgang, den jeder im Club in ein paar Minuten erledigt.</p>
+
+    <div class="track reveal" id="track">
+      <div class="tstep">
+        <div class="tl">01 <span>Ergebnisliste hochladen</span></div>
+        <div class="tframe"><div class="dh"><i></i>Eingang</div><div class="db">
+          <div class="pdf"><div class="ic">PDF</div><div><b>Monatsbecher_September.pdf</b><span>aus der Turniersoftware</span></div></div>
+          <div class="rows"><div>Netto Klasse A<span>P. Lange · 38 Pkt.</span><em>erkannt</em></div><div>Netto Klasse B<span>J. Kraft · 36 Pkt.</span><em>erkannt</em></div><div>Brutto<span>M. Weber · 31 Pkt.</span><em>erkannt</em></div></div>
+        </div></div>
+        <span class="link"><i></i></span>
+      </div>
+      <div class="tstep">
+        <div class="tl">02 <span>Drei Angaben ergänzen</span></div>
+        <div class="tframe"><div class="dh"><i></i>Angaben</div><div class="db">
+          <div class="fld2"><div>Wetter<span>sonnig, 24 °C</span></div><div>Platz<span>schnelle Grüns</span></div><div>Sponsor<span>Autohaus Meier</span></div></div>
+          <div class="tone"><span>sachlich</span><span class="sel">lebendig</span><span>persönlich</span></div>
+          <span class="gen">Bericht erstellen</span>
+        </div></div>
+        <span class="link"><i></i></span>
+      </div>
+      <div class="outs">
+        <div class="out o1"><div class="oh">Website<em>veröffentlicht</em></div><div class="ob"><div class="pic"></div><b>Monatsbecher September: Petra Lange gewinnt</b><p>Vollständiger Bericht mit allen Klassen und Bildergalerie.</p></div></div>
+        <div class="out o2"><div class="oh">Facebook<em>veröffentlicht</em></div><div class="ob"><b>Was für ein Samstag auf dem Platz! Petra Lange holt sich den Monatsbecher …</b><p>Eigene Fassung mit Hauptbild und den Siegern.</p></div></div>
+        <div class="out o3"><div class="oh">Instagram<em>veröffentlicht</em></div><div class="ob"><div class="pic" style="height:70px"></div><b>Monatsbecher ⛳ Glückwunsch Petra!</b><p>Kurz, bildgeführt, quadratisch.</p></div></div>
+      </div>
+    </div>
+    <p class="trackline">Vor der Veröffentlichung sieht der Club jeden Text in der Vorschau und kann ihn ändern. Was nicht eindeutig erkannt wurde, ist markiert. Nichts geht ohne Freigabe raus.</p>
+  </div>
+</section>
+
+<!-- ============ 4 · CAPTAINS APP ============ -->
+<section class="psec">
+  <div class="pwrap">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px"><span class="eyebrow" style="margin:0">Captains App</span><span class="stat dev"><i></i>In Entwicklung</span></div>
+    <h2>Jede Mannschaft sichtbar. Ohne Umweg über das Clubbüro.</h2>
+    <p class="lead">Zehn Mannschaften, fünf Spieltage – und im Büro fehlt die Zeit, jeden zu dokumentieren. Also erscheint fast nichts. Mit der Captains App trägt der Captain Aufstellung, Ergebnis, Bild und zwei Sätze direkt vom Spieltag ein. Die Mannschaftsseite auf der Website ist aktuell, bevor der Bus zurück ist.</p>
+
+    <div class="cap2" id="cap2">
+      <div class="cphone">
+        <div class="scr">
+          <div class="ah">Captain · Herren AK 50</div>
+          <div class="at">Spieltag 3 · Auswärts</div>
+          <div class="f">Gegner<span>GC Sittensen</span></div>
+          <div class="f">Ergebnis<span>5 : 3 Sieg</span></div>
+          <div class="f img"></div>
+          <div class="f">„Starker Tag von Michael Weber …"<span>Bericht</span></div>
+          <span class="pub">Veröffentlichen</span>
+          <div class="done">Auf der Website · 18:30 Uhr</div>
+        </div>
+      </div>
+      <div class="team">
+        <div class="dh"><i></i>golfclub-musterhausen.de/mannschaften/herren-ak-50</div>
+        <div class="db">
+          <div class="th"><b>Herren AK 50</b><span>Saison 2026 · 3 von 5 Spieltagen</span></div>
+          <div class="post"><div class="pic"></div><div><b>Spieltag 3 · Auswärts beim GC Sittensen</b><div class="sc">5 : 3</div><p>Starker Tag von Michael Weber, der sein Einzel auf der 17 entschied. Damit bleibt die Mannschaft ungeschlagen.</p><div class="by">Captain Thomas Brandt · Samstag, 18:30 Uhr</div></div></div>
+          <div class="tlist">
+            <div class="new"><b>Spieltag 3 · Sittensen</b><em>neu</em></div>
+            <div><b>Spieltag 2 · Heim</b><span>4 : 4</span></div>
+            <div><b>Spieltag 1 · Bremerhaven</b><span>6 : 2</span></div>
+            <div><b>Spieltag 4 · Heim</b><span>12. Oktober</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="capnote"><span>Das Clubbüro schreibt nichts, fordert nichts an, überträgt nichts. Es sieht nur, dass die Seite aktuell ist.</span></p>
+  </div>
+</section>
+
+<!-- ============ 5 · WAS BLEIBT ============ -->
+<section class="psec sand">
+  <div class="pwrap">
+    <span class="eyebrow">Das Prinzip</span>
+    <h2>Digital, wo es entlastet. Persönlich, wo es zählt.</h2>
+    <p class="lead">GolfNext nimmt dem Clubbüro die Routine ab, nicht die Verantwortung. Alles, was rausgeht, kann der Club vorher sehen. Und alles, was ein Gespräch braucht, bekommt eins.</p>
+    <div class="split2">
+      <div class="sbox gn reveal">
+        <div class="bl">Läuft von allein</div>
+        <ul>
+          <li>Häufige Fragen, rund um die Uhr beantwortet<span class="m">Concierge</span></li>
+          <li>Platzinformationen, dort erfasst, wo sie entstehen<span class="m">Platzstatus</span></li>
+          <li>Gastfee: Information, Zahlung, Bestätigung<span class="m">Gastfee</span></li>
+          <li>Turnierergebnisse, aus der Liste zum Bericht auf drei Kanälen<span class="m">Turnier-News</span></li>
+          <li>Mannschaftsberichte, direkt vom Spieltag<span class="m dev">Captains App</span></li>
+          <li>Eventanfragen von Firmen, strukturiert statt als lose E-Mail<span class="m dev">Firmen-Events</span></li>
+        </ul>
+        <p class="foot">Stand je Modul wie im Footer: Im Einsatz · Pilot · In Entwicklung.</p>
+      </div>
+      <div class="sbox reveal d1">
+        <div class="bl">Bleibt beim Clubteam</div>
+        <ul>
+          <li>Das persönliche Gespräch mit Interessenten und Mitgliedern</li>
+          <li>Die Entscheidung, was veröffentlicht wird</li>
+          <li>Besondere Anliegen, die keine Standardantwort haben</li>
+          <li>Mitglieder, Startzeiten, Turniere, Beiträge – in Ihrer Clubverwaltung, wie bisher</li>
+        </ul>
+        <p class="foot">Weniger Zeit für Wiederholung. Mehr Zeit für Mitglieder, Gäste und den Club.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="pfoot">
+  <div class="f-close">
+    <div class="inner">
+      <span class="ce">Entlastung für Ihr Clubbüro</span>
+      <h2>Wo verliert Ihr Clubbüro heute die meiste Zeit?</h2>
+      <p>In 30 Minuten gehen wir Ihren Cluballtag durch – Telefon, Platz, Gäste, Turniere, Mannschaften – und schauen, welche Vorgänge GolfNext Ihnen zuerst abnehmen kann. Ehrlich, auch wenn die Antwort „noch nicht" heißt.</p>
+      <div class="acts">
+        <a class="cbtn">Online-Erstgespräch vereinbaren</a>
+        <span class="cwhen">30 Minuten persönlich per Zoom oder Teams</span>
+        <a class="b2">Oder zuerst die Live-Demo ansehen <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="f-person">
+        <span class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.4"/><path d="M4.8 20c1.5-3.4 4.2-5.1 7.2-5.1s5.7 1.7 7.2 5.1"/></svg></span>
+        <span class="pt"><b>Fred Hoffmann</b>Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-map">
+    <div class="mh">
+      <b>Plattform auf einen Blick</b>
+      <span>Zwölf Module. Zwei Richtungen. Eine Plattform.</span>
+    </div>
+    <div class="f-cols">
+      <div class="f-col">
+        <b>Wachstum nach außen</b>
+        <div class="f-mods">
+          <a class="f-mod"><span class="dot live"></span><b>Reach</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Search</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Landingpages</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Marketing-CRM</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Lifecycle</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Content</b></a>
+        </div>
+      </div>
+      <div class="f-col ops">
+        <b>Entlastung nach innen</b>
+        <div class="f-mods">
+          <a class="f-mod"><span class="dot pilot"></span><b>Concierge</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Platzstatus</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Gastfee</b></a>
+          <a class="f-mod"><span class="dot dev"></span><b>Firmen-Events</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Turnier-News</b></a>
+          <a class="f-mod"><span class="dot dev"></span><b>Captains App</b></a>
+        </div>
+      </div>
+    </div>
+    <div class="f-legend">
+      <span class="li"><span class="dot" style="background:#00E805"></span>Im Einsatz</span>
+      <span class="li"><span class="dot" style="background:#E8C55A"></span>Pilot</span>
+      <span class="li"><span class="dot" style="background:rgba(255,255,255,.35)"></span>In Entwicklung</span>
+    </div>
+  </div>
+  <div class="f-contact">
+    <div>
+      <span class="cl">Persönlicher Kontakt</span>
+      <div class="big">Fragen beantwortet<br>ein Mensch.</div>
+    </div>
+    <div>
+      <span class="cl">Ansprechpartner</span>
+      <p style="font-weight:600">Fred Hoffmann</p>
+      <p class="sm">Gründer von GolfNext,<br>PGA Golfprofessional</p>
+    </div>
+    <div>
+      <span class="cl">Direkt erreichbar</span>
+      <p><a>0175 5951839</a></p>
+      <p><a>info@golfnext.de</a></p>
+      <p class="sm">Rückmeldung innerhalb eines Werktags</p>
+    </div>
+    <div>
+      <span class="cl">Folgen</span>
+      <div class="soc">
+        <a aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7.5 10v7M7.5 7.2v.01M11.5 17v-4a2.5 2.5 0 0 1 5 0v4"/></svg></a>
+        <a aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="f-bar">
+    <span class="jslogo" aria-label="GolfNext"></span>
+    <span>© 2026 GolfNext</span>
+    <a>Impressum</a>
+    <a>Datenschutz</a>
+    <a>Cookie-Einstellungen</a>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  var LOGO='<svg viewBox="0 0 200.32 24.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GolfNext"><g fill="currentColor"><path d="m9.97,24.2c-6.64,0-9.97-2.21-9.97-6.67V6.98C0,2.76,3.27.65,9.8.65h4.66c1.16,0,1.74.48,1.74,1.4s-.58,1.4-1.74,1.4h-4.6c-4.12,0-6.2,1.23-6.2,3.61v10.38c0,2.66,2.11,3.98,6.47,3.98h7.35c4.29,0,6.47-1.33,6.47-3.98v-6.43c0-.95.61-1.43,1.84-1.43s1.84.48,1.84,1.43v6.54c0,4.46-3.37,6.67-9.97,6.67h-7.69Z"/><path d="m42.79,24.2c-5.89,0-8.82-1.8-8.82-5.38v-5.75c0-3.61,2.93-5.41,8.82-5.41h6.57c5.89,0,8.82,1.8,8.82,5.41v5.75c0,3.57-2.93,5.38-8.82,5.38h-6.57Zm11.74-11.17c0-1.74-1.7-2.59-5.07-2.59h-6.81c-3.34,0-5.04.85-5.04,2.59v5.82c0,1.7,1.7,2.59,5.04,2.59h6.81c3.37,0,5.07-.89,5.07-2.59v-5.82Z"/><path d="m64.55,1.43c0-.92.61-1.43,1.8-1.43s1.8.51,1.8,1.43v21.51c0,.95-.61,1.43-1.8,1.43s-1.8-.48-1.8-1.43V1.43Z"/><path d="m78.3,10.45v12.49c0,.95-.58,1.43-1.74,1.43-1.26,0-1.87-.48-1.87-1.43V5.17c0-3.4,2.72-5.11,8.31-5.11h2.89c1.12,0,1.7.48,1.7,1.33s-.58,1.36-1.7,1.36h-2.89c-3.13,0-4.7.78-4.7,2.38v2.66h7.59c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-7.59Z"/><path d="m96.62,1.23l20.53,18.11V1.87c0-.92.61-1.4,1.84-1.4s1.84.48,1.84,1.4v21.07c0,.95-.65,1.43-1.94,1.43-.75,0-1.23-.27-1.8-.78l-20.49-18.11v17.46c0,.95-.65,1.43-1.87,1.43s-1.8-.48-1.8-1.43V1.94c0-.99.65-1.46,1.91-1.46.72,0,1.23.24,1.8.75Z"/><path d="m130.9,17.06v2.08c0,1.6,1.57,2.42,4.73,2.42h5.04c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.04c-5.51,0-8.31-1.67-8.31-5.04v-6.67c0-3.2,2.49-4.83,7.42-4.83h9.84c4.83,0,7.25,1.46,7.25,4.36v3.81c0,.82-.54,1.23-1.57,1.23h-19.37Zm0-2.35h17.09c.2,0,.27-.1.27-.24v-1.77c0-1.57-1.29-2.35-3.95-2.35h-9.36c-2.72,0-4.05.78-4.05,2.35v2.01Z"/><path d="m169.13,17.74l-9.06,6.16c-.51.37-.92.51-1.43.48-1.16,0-1.77-.48-1.77-1.36,0-.34.17-.78.82-1.23l8.71-5.96-8.2-5.69c-.68-.44-.85-.92-.85-1.29,0-.92.61-1.36,1.84-1.36.65,0,.99.17,1.5.51l8.68,6.03,8.82-6.03c.51-.34.88-.51,1.43-.51,1.19,0,1.77.48,1.77,1.4-.03.31-.1.75-.82,1.23l-8.48,5.79,8.44,5.82c.65.48.85.92.85,1.29,0,.92-.61,1.36-1.84,1.36-.54,0-1.06-.1-1.53-.51l-8.88-6.13Z"/><path d="m192.76,10.45v12.49c0,.95-.61,1.43-1.77,1.43-1.23,0-1.84-.48-1.84-1.43v-12.49h-1.4c-1.09,0-1.67-.44-1.67-1.33s.58-1.33,1.67-1.33h1.4v-3.13c0-.92.58-1.43,1.77-1.43s1.84.51,1.84,1.43v3.13h5.86c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.86Z"/></g></svg>';
+  document.querySelectorAll('.jslogo').forEach(function(el){ el.innerHTML=LOGO; });
+})();
+
+</script>
+<script>
+(function(){
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function each(n,f){ Array.prototype.forEach.call(n,f); }
+  function watch(els, cb, th){
+    if(RM || !('IntersectionObserver' in window)){ each(els, cb); return; }
+    var io=new IntersectionObserver(function(es){ each(es,function(e){ if(e.isIntersecting){ io.unobserve(e.target); cb(e.target); } }); },{threshold:th||.25});
+    each(els,function(el){ io.observe(el); });
+  }
+
+  /* Hero: der Sonntag läuft ab – Vorgänge auf dem Handy, Ergebnis auf der Website */
+  var log=document.getElementById('log'), news=document.getElementById('news'), ps=document.getElementById('pstat');
+  function heroGo(){
+    log.classList.add('on');
+    setTimeout(function(){ ps.classList.add('open'); document.getElementById('pstatv').textContent='Platz bespielbar'; document.getElementById('pstatt').textContent='Stand: heute 06:40 Uhr'; }, RM?0:500);
+    setTimeout(function(){ news.classList.add('on'); }, RM?0:900);
+  }
+  if(log){ if(RM) heroGo(); else setTimeout(heroGo,900); }
+
+  /* Einblenden + Mikroabläufe (je einmal) */
+  watch(document.querySelectorAll('.reveal'), function(el){ el.classList.add('on'); }, .18);
+  watch(document.querySelectorAll('[data-anim]'), function(el){ setTimeout(function(){ el.classList.add('on'); }, RM?0:250); }, .35);
+  watch(document.querySelectorAll('#track'), function(el){ setTimeout(function(){ el.classList.add('on'); }, RM?0:300); }, .3);
+  watch(document.querySelectorAll('#cap2'), function(el){ setTimeout(function(){ el.classList.add('on'); }, RM?0:600); }, .35);
+})();
+</script>
+
+</body>
+</html>

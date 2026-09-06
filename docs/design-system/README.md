@@ -27,8 +27,10 @@ Mocks öffnen: einfach im Browser. Sie laden Archivo und Inter von Google Fonts 
 | 3.2 | Plattform, Fassung 1 | – | `3.2-plattform.html` | `3.2-plattform-umsetzungsbriefing.md` | **Archiv, nicht bauen** (ersetzt durch 3.2c) |
 | 3.2c | Plattform, Neufassung v02 | `/plattform` | `3.2c-plattform-neufassung.html` | `../briefings/0016-plattform.md` | **gültig**, von Stefan freigegeben (06.09.2026). Modernes Layout: Wrap 1180, Radius 12 (große Flächen), Sektionen 120 px, H2 bis 48 px |
 | 3.3 | So arbeitet GolfNext | `/plattform/so-arbeitet-golfnext` | `3.3-so-arbeitet-golfnext.html` | `3.3-so-arbeitet-golfnext-briefing.md` | freigegeben |
-| 3.4 | Wachstum & Vertrieb | `/wachstum-vertrieb` | `3.4-wachstum-vertrieb.html` | `3.4-wachstum-vertrieb-briefing.md` | freigegeben; doppelte Headline in Abschnitt 4/Footer – Fred entscheidet |
-| 3.5 | Clubprozesse | `/clubprozesse` | `3.5-clubprozesse.html` | `3.5-clubprozesse-briefing.md` | freigegeben |
+| 3.4 | Wachstum & Vertrieb, Fassung 1 | – | `3.4-wachstum-vertrieb.html` | `3.4-wachstum-vertrieb-briefing.md` | **Archiv, nicht bauen** (ersetzt durch 3.4b) |
+| 3.4b | Wachstum & Vertrieb, Neufassung v01 | `/wachstum-vertrieb` | `3.4b-wachstum-vertrieb-neufassung.html` | `../briefings/0017-wachstum-vertrieb.md` | **gültig**, von Stefan freigegeben (06.09.2026). Layout wie 3.2c (Wrap 1180, Radius 12, Sektion 120, H2 48) |
+| 3.5 | Clubprozesse, Fassung 1 | – | `3.5-clubprozesse.html` | `3.5-clubprozesse-briefing.md` | **Archiv, nicht bauen** (ersetzt durch 3.5b) |
+| 3.5b | Clubprozesse, Neufassung v01 | `/clubprozesse` | `3.5b-clubprozesse-neufassung.html` | `../briefings/0018-clubprozesse.md` | **gültig**, von Stefan freigegeben (06.09.2026). Layout wie 3.2c |
 | 3.6 | Pakete, Fassung 1 | – | `3.6-pakete-fassung1-archiv.html` | `3.6-pakete-briefing.md` | **Archiv, nicht bauen** |
 | 3.7 | Pakete, Fassung 2 | `/pakete` | `3.7-pakete.html` | `3.6-pakete-briefing.md` + `../02-preislogik.md` | **gültig**, von Stefan freigegeben |
 | 3.8 | Über GolfNext | `/ueber-golfnext` | `3.8-ueber-golfnext.html` | `3.8-ueber-golfnext-briefing.md` | freigegeben |

@@ -10,10 +10,11 @@ Status pflegen, wenn eine Seite gebaut ist. Spalte „Bilder offen" listet die `
 | `/wachstum-vertrieb` | 3.4b (Neufassung v01) | **live** (2.5) | keine – die Oberflächen (Kampagnen-Cockpit, Instagram-Anzeige, Such-/Feed-/Zeitleisten-Visuals, Geräterahmen der Kampagnen-Geschichte, Landingpage-Fächer) sind bewusst **schematische Illustrationen** (kein `Shot`, kein echter Screenshot, kein Foto nötig) |
 | `/clubprozesse` | 3.5b (Neufassung v01) | offen | Produkt-Screenshots als `Shot`-Platzhalter (aus Neufassung ableiten) |
 | `/pakete` | 3.7 | **live** (2.1) | – (Fassung 2 hat keine Screenshots) |
-| `/ueber-golfnext` | 3.8 | offen | Porträts Fred und Stefan, Partnerlogos mit Freigabe |
+| `/ueber-golfnext` | 3.8b (Neufassung v01) | offen | Porträts Fred und Stefan, Partnerlogos mit Freigabe; **Modulstatus-Inhalte nicht übernehmen** |
 | `/ratgeber`, `/ratgeber/[slug]`, `/ratgeber/rubrik/[slug]` | Sanity | offen | Artikelbilder aus Sanity |
 | `/impressum`, `/datenschutz` | docs/legal | offen | – |
-| `/praxis`, `/team`, `/kontakt`, `/module/[slug]` | kein Briefing | Platzhalter (noindex) | – |
+| `/praxis`, `/praxis/[slug]` | 3.9a (Übersicht) + 3.9b (Artikel), Neufassung v01 | offen | Artikelbilder/Porträts als Platzhalter; **kein Modulstatus** |
+| `/team`, `/kontakt`, `/module/[slug]` | kein Briefing | Platzhalter (noindex) | – |
 | `/studio` | Sanity Studio | offen | – |
 
 ## Weiterleitungen (bestehende golfnext.de)

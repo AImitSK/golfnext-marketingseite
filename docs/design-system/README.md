@@ -33,8 +33,10 @@ Mocks öffnen: einfach im Browser. Sie laden Archivo und Inter von Google Fonts 
 | 3.5b | Clubprozesse, Neufassung v01 | `/clubprozesse` | `3.5b-clubprozesse-neufassung.html` | `../briefings/0018-clubprozesse.md` | **gültig**, von Stefan freigegeben (06.09.2026). Layout wie 3.2c |
 | 3.6 | Pakete, Fassung 1 | – | `3.6-pakete-fassung1-archiv.html` | `3.6-pakete-briefing.md` | **Archiv, nicht bauen** |
 | 3.7 | Pakete, Fassung 2 | `/pakete` | `3.7-pakete.html` | `3.6-pakete-briefing.md` + `../02-preislogik.md` | **gültig**, von Stefan freigegeben |
-| 3.8 | Über GolfNext | `/ueber-golfnext` | `3.8-ueber-golfnext.html` | `3.8-ueber-golfnext-briefing.md` | freigegeben |
-| – | Praxis | `/praxis` | – | fehlt | wartet auf Briefing |
+| 3.8 | Über GolfNext, Fassung 1 | – | `3.8-ueber-golfnext.html` | `3.8-ueber-golfnext-briefing.md` | **Archiv, nicht bauen** (ersetzt durch 3.8b) |
+| 3.8b | Über GolfNext, Neufassung v01 | `/ueber-golfnext` | `3.8b-ueber-golfnext-neufassung.html` | `../briefings/0019-ueber-golfnext.md` | **gültig**, Stefan (06.09.2026). Layout wie 3.2c. **Modulstatus-Inhalte (Abschnitt 3/„Grundsätze" mit Im Einsatz/Pilot/In Entwicklung) NICHT übernehmen** (Entscheidung Stefan) |
+| 3.9a | Praxis, Übersicht | `/praxis` | `3.9a-praxis-uebersicht.html` | `../briefings/0020-praxis.md` | **gültig**, Stefan (06.09.2026). Layout wie 3.2c. **Kein Modulstatus** |
+| 3.9b | Praxis, Artikel | `/praxis/[slug]` | `3.9b-praxis-artikel.html` | `../briefings/0020-praxis.md` | **gültig**, Stefan (06.09.2026). Artikel-Layout. **Kein Modulstatus** |
 | – | Team | `/team` | – | fehlt | wartet auf Briefing (CTA „Unser Team kennenlernen" zeigt hierhin) |
 | – | Kontakt | `/kontakt` | – | fehlt | wartet auf Briefing |
 | – | Modulseiten | `/module/<slug>` | – | fehlt | wartet auf Briefing; Footer-Systemkarte verlinkt dorthin |

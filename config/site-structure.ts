@@ -117,11 +117,12 @@ export const ROUTES: Route[] = [
   {
     path: "/praxis",
     label: "Praxis",
-    status: "wartet-auf-briefing",
+    status: "geplant",
     nav: "haupt",
+    mock: "mocks/3.9a-praxis-uebersicht.html",
+    briefing: "briefings/0020-praxis.md",
     title: null,
     description: null,
-    noindex: true,
   },
   {
     path: "/pakete",
@@ -140,8 +141,8 @@ export const ROUTES: Route[] = [
     label: "Über GolfNext",
     status: "geplant",
     nav: "haupt",
-    mock: "mocks/3.8-ueber-golfnext.html",
-    briefing: "briefings/3.8-ueber-golfnext-briefing.md",
+    mock: "mocks/3.8b-ueber-golfnext-neufassung.html",
+    briefing: "briefings/0019-ueber-golfnext.md",
     title: "Über GolfNext | Wir hängen am Golf. Nicht am Gestern.",
     description:
       "Von imageGolf zur GolfNext-Plattform: unsere Geschichte, die Menschen dahinter und unser Antrieb für mehr Mitglieder und mehr Zeit fürs Clubleben.",

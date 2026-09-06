@@ -113,10 +113,10 @@ export const ROUTES: Route[] = [
   {
     path: "/pakete",
     label: "Pakete",
-    status: "geplant",
+    status: "live",
     nav: "haupt",
     mock: "mocks/3.7-pakete.html",
-    briefing: "briefings/3.6-pakete-briefing.md",
+    briefing: "briefings/0012-pakete.md",
     title: "GolfNext Pakete und Preise für Golfclubs",
     // Briefing-Text bezieht sich auf Fassung 1; an Fassung 2 anpassen [S]
     description:

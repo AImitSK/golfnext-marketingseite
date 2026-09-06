@@ -1,0 +1,326 @@
+/* Portiert aus 3.5b-clubprozesse-neufassung.html (.track/.tstep/.tframe/.pdf/.rows/
+   .fld2/.tone/.link/.outs/.out/.trackline). Farben auf --gn-* umgestellt, literale
+   Tints kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4/6/8 px.
+   Bewegung: Der ENDZUSTAND (Verbindungslinien voll, alle drei Ausgaben sichtbar) steht
+   im Server-HTML → ohne JS und bei prefers-reduced-motion sofort vollständig lesbar.
+   Nur mit JS/ohne Reduced-Motion setzt der Track kurz `.start` und löst es beim
+   Sichtbarwerden einmalig auf (Linien wachsen, Ausgaben laufen ein). Nur opacity/
+   transform/width (kein CLS – die Höhe der Ausgaben-Bühne ist vorab reserviert). */
+
+.track {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 0;
+  align-items: center;
+  position: relative;
+}
+.tstep {
+  position: relative;
+  padding: 0 26px 0 0;
+}
+.tl {
+  font-family: var(--gn-font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--gn-blue);
+  margin-bottom: 12px;
+}
+.tl span {
+  color: var(--gn-muted);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-left: 8px;
+}
+.tframe {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  box-shadow: 0 40px 80px -45px rgba(1, 65, 91, 0.5);
+  overflow: hidden;
+}
+.dh {
+  height: 38px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.dh i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkt, Mock-Wert */
+  display: block;
+}
+.db {
+  padding: 18px 20px;
+}
+.pdf {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border: 1px dashed rgba(1, 65, 91, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+.pdf .ic {
+  width: 40px;
+  height: 48px;
+  border-radius: 4px;
+  background: var(--gn-navy);
+  color: #fff;
+  font-family: var(--gn-font-display);
+  font-size: 9px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.06em;
+}
+.pdf b {
+  display: block;
+  font-size: 13px;
+  color: var(--gn-ink);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pdf > div {
+  min-width: 0;
+}
+.pdf span {
+  display: block;
+  font-size: 11px;
+  color: var(--gn-muted);
+  margin-top: 2px;
+}
+.rows {
+  margin-top: 12px;
+}
+.rows div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--gn-ink);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--gn-line);
+}
+.rows div span {
+  color: var(--gn-muted);
+  margin-left: auto;
+  text-align: right;
+}
+.rows div em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gn-ok); /* dunkles Grün auf hellem Grün-Tint (kein Signalgrün) */
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 2px 7px;
+}
+.fld2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fld2 div {
+  border: 1px solid var(--gn-line);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  color: var(--gn-ink);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.fld2 div span {
+  color: var(--gn-muted);
+}
+.tone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.tone span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gn-muted);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-pill);
+  padding: 4px 10px;
+}
+.tone span.sel {
+  color: var(--gn-navy);
+  border-color: var(--gn-navy);
+  background: #fff;
+}
+.gen {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche mit Navy-Text (Grün-Regel: Fläche erlaubt) */
+  border-radius: 4px;
+  padding: 9px 14px;
+}
+.link {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 26px;
+  height: 2px;
+  background: var(--gn-line);
+  overflow: hidden;
+}
+.link i {
+  display: block;
+  height: 100%;
+  width: 100%; /* Endzustand: Linie voll gezogen */
+  background: var(--gn-navy);
+  transition: width 0.5s ease;
+}
+.tstep:nth-child(1) .link i {
+  transition-delay: 0.3s;
+}
+.tstep:nth-child(2) .link i {
+  transition-delay: 1s;
+}
+.start .link i {
+  width: 0;
+}
+
+.outs {
+  position: relative;
+  height: 500px;
+  min-width: 0;
+}
+.out {
+  position: absolute;
+  width: min(300px, 72%);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  box-shadow: 0 40px 80px -45px rgba(1, 65, 91, 0.55);
+  overflow: hidden;
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s var(--gn-ease);
+}
+.oh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--gn-line);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.oh em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 2px 8px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.ob {
+  padding: 14px 16px;
+}
+.ob .pic {
+  height: 72px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  margin-bottom: 10px;
+}
+.ob .picSm {
+  height: 70px;
+}
+.ob b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 14.5px;
+  color: var(--gn-navy);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.ob p {
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+.o1 {
+  left: 0;
+  top: 0;
+  z-index: 1;
+  transition-delay: 1.5s;
+}
+.o2 {
+  left: 22%;
+  top: 150px;
+  z-index: 2;
+  transition-delay: 1.75s;
+}
+.o3 {
+  left: 44%;
+  top: 290px;
+  z-index: 3;
+  transition-delay: 2s;
+}
+.start .out {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.trackline {
+  margin-top: 36px;
+  font-size: 14px;
+  color: var(--gn-muted);
+  max-width: 70ch;
+}
+
+@media (max-width: 1000px) {
+  .track {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .tstep {
+    padding-right: 0;
+  }
+  .link {
+    display: none;
+  }
+  .outs {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .out {
+    position: static;
+    width: 100%;
+  }
+  .start .out {
+    transform: translateY(20px);
+  }
+}

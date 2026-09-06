@@ -1,0 +1,391 @@
+/* Portiert aus 3.4b-wachstum-vertrieb-neufassung.html (Abschnitt 2 · .bento/.bx/.viz
+   + Mikroanimationen). Farben auf --gn-* umgestellt, literale Tints kommentiert.
+   Radius der Boxen: --gn-radius-lg (12).
+
+   Bewegungs-Umkehr ggü. dem Mock: Der ENDZUSTAND ist der CSS-Default (Suchanfrage
+   fertig + Ergebnis sichtbar, Feed bei der Anzeige, Zeitleiste gefüllt) → ohne JS /
+   reduzierte Bewegung sofort lesbar. Nur mit JS setzt die Komponente kurz `.start`
+   (Ausgangszustand) und `.typing` (blinkender Cursor beim Tippen). Der Layout-Effekt
+   setzt `.start` vor dem ersten Paint → kein Rückwärts-Flackern. Nur
+   opacity/transform/height, Höhen vorab reserviert (kein CLS). */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 56px;
+}
+.bx {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 34px 34px 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform 0.45s var(--gn-ease),
+    box-shadow 0.35s ease,
+    border-color 0.35s;
+}
+.bx:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
+  border-color: rgba(1, 65, 91, 0.35);
+}
+/* Ausgangszustand der Box: nur Transform (Hereinschieben von unten), ohne Opacity,
+   damit der reale Box-Text jederzeit vollen Kontrast hat (axe). */
+.start.bx {
+  transform: translateY(18px);
+}
+.no {
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gn-blue);
+}
+.h3 {
+  font-size: clamp(21px, 2vw, 26px);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 12px 0 12px;
+  color: var(--gn-navy);
+}
+.p {
+  font-size: 15px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+.mod {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gn-muted);
+  margin-bottom: 26px;
+}
+.mod b {
+  color: var(--gn-navy);
+}
+.viz {
+  margin-top: auto;
+  flex: 1;
+  background: var(--gn-mist);
+  border-top: 1px solid var(--gn-line);
+  margin-left: -34px;
+  margin-right: -34px;
+  padding: 24px 28px 28px;
+  min-height: 240px; /* Höhe vorab reserviert → kein CLS */
+}
+
+/* ---- 01 · Suche (Tippanimation) ---- */
+.srch {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 24px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--gn-ink);
+  min-height: 44px;
+}
+.srch svg {
+  width: 16px;
+  height: 16px;
+  color: var(--gn-muted);
+  flex: 0 0 auto;
+}
+.cur {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background: var(--gn-navy);
+  margin-left: 1px;
+  opacity: 0; /* Endzustand: Cursor weg */
+}
+.typing .cur {
+  opacity: 1;
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+.res {
+  margin-top: 14px;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 13px 15px;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+/* Ergebnis erscheint erst, wenn getippt ist (bzw. sofort ohne JS). */
+.start .res,
+.typing .res {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.rl {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.rl b {
+  color: var(--gn-ink);
+  border: 1px solid var(--gn-line);
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-right: 6px;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+}
+.rt {
+  font-family: var(--gn-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gn-blue);
+  letter-spacing: -0.01em;
+  margin-top: 5px;
+}
+.rd {
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-top: 3px;
+  line-height: 1.45;
+}
+
+/* ---- 02 · Feed (scrollt zur Anzeige) ---- */
+.feed {
+  height: 212px;
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+}
+.feed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  background: linear-gradient(transparent, var(--gn-mist));
+  pointer-events: none;
+}
+.fcol {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateY(-298px); /* Endzustand: Anzeige sichtbar */
+  transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.start .fcol {
+  transform: translateY(0); /* Ausgangszustand: oben im Feed */
+}
+.fc {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+.fc i {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #d8d2c5; /* Skelett-Avatar, Mock-Wert */
+  display: block;
+}
+.fc span {
+  display: block;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--gn-sand);
+}
+.fc span + span {
+  margin-top: 6px;
+  width: 60%;
+}
+.fc .pic {
+  height: 58px;
+  border-radius: 6px;
+  background: #e8e3d8; /* Skelett-Bild, Mock-Wert */
+  grid-column: 1 / -1;
+}
+.fad {
+  background: #fff;
+  border: 1px solid var(--gn-navy);
+  border-radius: 8px;
+  padding: 12px 13px;
+  box-shadow: 0 20px 40px -24px rgba(1, 65, 91, 0.5);
+}
+.fh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gn-ink);
+}
+.fh i {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  display: block;
+}
+.fh span {
+  color: var(--gn-muted);
+  font-weight: 500;
+  margin-left: auto;
+  font-size: 10px;
+}
+.fim {
+  height: 84px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  margin: 9px 0;
+  position: relative;
+}
+.fim b {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-family: var(--gn-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+}
+.fb {
+  display: block;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  border-radius: 4px;
+  padding: 7px;
+}
+
+/* ---- 03 · Danach (Zeitleiste füllt sich) ---- */
+.after {
+  position: relative;
+  padding-left: 26px;
+}
+.after::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--gn-line);
+}
+.fill {
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  width: 2px;
+  height: calc(100% - 16px); /* Endzustand: Linie voll */
+  background: var(--gn-navy);
+  transition: height 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+.start .fill {
+  height: 0;
+}
+.ev {
+  position: relative;
+  padding: 7px 0;
+  font-size: 12.5px;
+  color: var(--gn-ink); /* Endzustand */
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  transition: color 0.4s;
+}
+.ev::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gn-navy); /* Endzustand */
+  border: 2px solid var(--gn-navy);
+  transition:
+    background 0.4s,
+    border-color 0.4s;
+}
+.ev b {
+  font-family: var(--gn-font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gn-blue);
+  letter-spacing: 0.04em;
+  flex: 0 0 58px;
+}
+.ev .tag {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 3px 8px;
+  white-space: nowrap;
+  opacity: 1; /* Endzustand */
+  transition: opacity 0.4s 2s;
+}
+/* Ausgangszustand + gestaffeltes Aufleuchten beim Auflösen von .start. */
+.start .ev {
+  color: var(--gn-muted);
+}
+.start .ev::before {
+  background: var(--gn-mist);
+  border-color: var(--gn-line);
+}
+.start .ev .tag {
+  opacity: 0;
+}
+.ev:nth-child(3),
+.ev:nth-child(3)::before {
+  transition-delay: 0.3s;
+}
+.ev:nth-child(4),
+.ev:nth-child(4)::before {
+  transition-delay: 0.8s;
+}
+.ev:nth-child(5),
+.ev:nth-child(5)::before {
+  transition-delay: 1.3s;
+}
+.ev:nth-child(6),
+.ev:nth-child(6)::before {
+  transition-delay: 1.8s;
+}
+
+@media (max-width: 1000px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .bx {
+    padding: 28px 28px 0;
+  }
+  .viz {
+    margin-left: -28px;
+    margin-right: -28px;
+  }
+}

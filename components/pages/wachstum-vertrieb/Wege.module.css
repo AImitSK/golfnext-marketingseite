@@ -1,0 +1,286 @@
+/* Portiert aus 3.4b-wachstum-vertrieb-neufassung.html (Abschnitt 3 · .ways/.rail/
+   .wcard/.wv/.mini/.wb/.rnav/.waynote). Farben auf --gn-* umgestellt, literale Tints
+   kommentiert. Karten-Radius --gn-radius-lg (12). Bleed nach rechts über
+   calc(50% - 50vw); der Abschnitt kappt mit overflow:hidden (PlattformSection
+   overflowHidden). */
+
+.ways {
+  position: relative;
+  margin-top: 56px;
+}
+.rail {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  margin-right: calc(50% - 50vw); /* Bleed: Rail läuft bis zum rechten Viewport-Rand */
+  padding-right: calc(50vw - 50%); /* Platz, damit die letzte Karte einrasten kann */
+  scrollbar-width: none;
+  cursor: grab;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail.drag {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+.wcard {
+  flex: 0 0 440px;
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s ease,
+    border-color 0.35s;
+}
+.wcard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
+  border-color: rgba(1, 65, 91, 0.35);
+}
+
+/* ---- Mini-Website-Visual (illustrativ) ---- */
+.wv {
+  background: var(--gn-sand);
+  border-bottom: 1px solid var(--gn-line);
+  padding: 26px 26px 0;
+  height: 210px;
+  overflow: hidden;
+  position: relative;
+}
+.mini {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  height: 100%;
+  box-shadow: 0 30px 50px -30px rgba(1, 65, 91, 0.4);
+  transform: translateY(0);
+  transition: transform 0.5s var(--gn-ease);
+}
+.wcard:hover .mini {
+  transform: translateY(-10px);
+}
+.mb {
+  height: 26px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+}
+.mb i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkte, Mock-Wert */
+  display: block;
+}
+.mb span {
+  margin-left: 8px;
+  font-size: 9.5px;
+  color: var(--gn-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mh {
+  padding: 16px 18px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+.mh b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+.mh i {
+  display: block;
+  height: 7px;
+  background: var(--gn-sand);
+  border-radius: 3px;
+  margin-top: 8px;
+}
+.miniBtn {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  border-radius: 3px;
+  padding: 6px 10px;
+}
+.mh .pic {
+  height: 120px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+}
+
+/* ---- Karteninhalt ---- */
+.wb {
+  padding: 26px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.wt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.wt i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-blue); /* Richtungs-/Zielgruppen-Punkt, kein Status */
+  display: block;
+}
+.wh {
+  font-size: 23px;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 14px 0 10px;
+  color: var(--gn-navy);
+}
+.wp {
+  font-size: 14.5px;
+  color: var(--gn-ink);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+.goal {
+  font-size: 13.5px;
+  color: var(--gn-muted);
+  border-left: 2px solid var(--gn-signal); /* Signalgrün-Linie (Grün-Regel: Linie erlaubt) */
+  padding: 4px 0 4px 12px;
+  margin-bottom: 18px;
+}
+.goal b {
+  color: var(--gn-navy);
+  font-weight: 600;
+}
+.mods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--gn-line);
+  align-items: center;
+}
+.mods span {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gn-muted);
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+.tlink {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gn-blue);
+}
+.tlink svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  transition: transform 0.15s;
+}
+.tlink:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---- Pfeil-Navigation ---- */
+.rnav {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  right: 0;
+  top: -72px;
+}
+.rnav button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--gn-line);
+  background: #fff;
+  color: var(--gn-navy);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.rnav button:hover:not(:disabled) {
+  background: var(--gn-navy);
+  color: #fff;
+  border-color: var(--gn-navy);
+}
+.rnav button svg {
+  width: 18px;
+  height: 18px;
+}
+.rnav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.waynote {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--gn-muted);
+  max-width: 70ch;
+}
+
+@media (max-width: 620px) {
+  .wcard {
+    flex-basis: 300px;
+  }
+  .wv {
+    height: 170px;
+    padding: 20px 20px 0;
+  }
+  .wb {
+    padding: 22px 22px 22px;
+  }
+  .wh {
+    font-size: 20px;
+  }
+  .rnav {
+    display: none;
+  }
+  .tlink {
+    margin-left: 0;
+    width: 100%;
+  }
+}

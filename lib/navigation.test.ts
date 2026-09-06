@@ -46,9 +46,10 @@ describe("getNavModel", () => {
     expect(reach && "status" in reach).toBe(false);
   });
 
-  it("verlinkt live-Routen echt (Plattform, Pakete) und nicht-live Punkte als Platzhalter (#)", () => {
-    // Live-Hauptpunkte: /pakete (Schritt 2.1) und /plattform (Schritt 2.3, Briefing 0016).
-    const liveHaupt = new Set(["/pakete", "/plattform"]);
+  it("verlinkt live-Routen echt (Plattform, Wachstum & Vertrieb, Pakete) und nicht-live Punkte als Platzhalter (#)", () => {
+    // Live-Hauptpunkte: /pakete (Schritt 2.1), /plattform (Schritt 2.3, Briefing 0016)
+    // und /wachstum-vertrieb (Schritt 2.5, Briefing 0017).
+    const liveHaupt = new Set(["/pakete", "/plattform", "/wachstum-vertrieb"]);
     for (const item of model) {
       if (liveHaupt.has(item.path)) {
         expect(item.href).toBe(item.path);

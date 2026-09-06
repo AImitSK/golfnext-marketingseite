@@ -95,10 +95,12 @@ export const ROUTES: Route[] = [
   {
     path: "/wachstum-vertrieb",
     label: "Wachstum & Vertrieb",
-    status: "geplant",
+    status: "live",
     nav: "haupt",
     mock: "mocks/3.4b-wachstum-vertrieb-neufassung.html",
     briefing: "briefings/0017-wachstum-vertrieb.md",
+    // Briefing 0017 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
+    // nur Canonical wird gesetzt (wie Plattform/Startseite). Nicht erfinden (Feinschliff Phase 6).
     title: null,
     description: null,
   },

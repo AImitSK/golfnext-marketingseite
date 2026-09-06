@@ -1,0 +1,402 @@
+/* Portiert aus docs/design-system/mocks/3.4b-wachstum-vertrieb-neufassung.html
+   (.hero/.demo/.browser/.cock/.crmlist/.phone/.ig). Farben auf --gn-* umgestellt,
+   literale Tints kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4 px.
+   Bewegung: Der Endzustand (alle Anmeldungen sichtbar) steht im Server-HTML; nur mit
+   JS/ohne Reduced-Motion setzt die Komponente kurz `.start` und löst es beim
+   Sichtbarwerden auf. Nur opacity/transform (kein CLS). */
+
+.hero {
+  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden; /* fängt den Bleed der Demo (width > 100%) ab → kein Seiten-Overflow */
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 96px 40px 110px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+.txt {
+  padding-right: 100px;
+  min-width: 0;
+}
+.h1 {
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 19ch;
+  text-wrap: balance;
+  margin: 0;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 50ch;
+  line-height: 1.62;
+}
+.acts {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 38px;
+}
+.b2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 15.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 3px;
+}
+.b2 svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+.trust {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  font-size: 13px;
+  color: var(--gn-on-dark-text);
+}
+.trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+}
+
+/* ---- Bleed-Demo: Kampagnen-Cockpit (illustrativ, kein Screenshot) ---- */
+.demo {
+  position: relative;
+  min-width: 0;
+  width: 150%; /* läuft rechts über den Rand hinaus (Bleed) */
+}
+.browser {
+  background: #fff;
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 60px 120px -50px rgba(0, 0, 0, 0.65); /* Tiefen-Schatten, 1:1 aus Mock */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.bar {
+  height: 40px;
+  background: var(--gn-mist);
+  border-bottom: 1px solid var(--gn-line);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+}
+.bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkte, Mock-Wert */
+  display: block;
+}
+.bar span {
+  margin-left: 12px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 4px;
+  padding: 4px 12px;
+  width: 280px;
+}
+.cock {
+  padding: 24px 26px 28px;
+  color: var(--gn-ink);
+}
+.ch {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gn-line);
+}
+.cl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.ct {
+  font-family: var(--gn-font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  margin-top: 5px;
+}
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 5px 11px;
+  white-space: nowrap;
+}
+.live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün-Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+}
+.cg {
+  margin-top: 16px;
+}
+.kv {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.kv div {
+  font-size: 12px;
+  color: var(--gn-muted);
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-pill);
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.kv div b {
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.crmlist {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 12px;
+}
+.crmlist .cl {
+  margin-bottom: 2px;
+}
+.crmrow {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 11px 13px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 11px;
+  align-items: center;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+.crmrow:nth-child(3) {
+  transition-delay: 0.45s;
+}
+.crmrow:nth-child(4) {
+  transition-delay: 0.9s;
+}
+.crmrow:nth-child(5) {
+  transition-delay: 1.35s;
+}
+/* Ausgangszustand (nur mit JS, kurz): Anmeldungen laufen von unten ein. */
+.start .crmrow {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.av {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: #fff;
+  font-family: var(--gn-font-display);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.crmrow b {
+  display: block;
+  font-size: 13px;
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.crmrow span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--gn-muted);
+}
+.st {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+.stB {
+  color: var(--gn-blue);
+  background: #e9f2f7; /* zarter Blau-Tint für „Erinnerung geplant", Mock-Wert */
+}
+
+/* ---- Instagram-Handy ---- */
+.phone {
+  position: absolute;
+  left: -120px;
+  bottom: -46px;
+  width: 206px;
+  background: #0b1f29; /* fast-schwarzes Gerätegehäuse, Mock-Wert */
+  border-radius: 30px;
+  padding: 11px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.scr {
+  background: #fff;
+  border-radius: 22px;
+  padding: 14px 13px 16px;
+  color: var(--gn-ink);
+}
+.ih {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.ih i {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  display: block;
+  flex: 0 0 auto;
+}
+.ih span {
+  display: block;
+  font-size: 9.5px;
+  color: var(--gn-muted);
+  font-weight: 500;
+}
+.im {
+  height: 118px;
+  border-radius: 8px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  margin: 11px 0 10px;
+  position: relative;
+}
+.im span {
+  position: absolute;
+  left: 11px;
+  bottom: 10px;
+  font-family: var(--gn-font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.igcta {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  border-radius: 4px;
+  padding: 8px;
+}
+.cap {
+  font-size: 10.5px;
+  color: var(--gn-muted);
+  margin-top: 9px;
+  line-height: 1.4;
+}
+
+@media (max-width: 1180px) {
+  .phone {
+    left: -100px;
+  }
+  .txt {
+    padding-right: 80px;
+  }
+}
+@media (max-width: 1080px) {
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+    padding: 70px 26px 96px;
+  }
+  .txt {
+    padding-right: 0;
+  }
+  .demo {
+    width: 118%;
+  }
+  .phone {
+    left: auto;
+    right: -6px;
+    bottom: -40px;
+  }
+}
+@media (max-width: 620px) {
+  .demo {
+    width: 112%;
+  }
+  .cock {
+    padding: 16px;
+  }
+  .phone {
+    width: 156px;
+    right: -4px;
+    bottom: -34px;
+  }
+  .scr {
+    padding: 10px 10px 12px;
+  }
+  .im {
+    height: 86px;
+  }
+  .in {
+    padding: 70px 20px 116px;
+  }
+}

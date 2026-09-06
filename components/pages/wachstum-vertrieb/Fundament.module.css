@@ -1,0 +1,199 @@
+/* Portiert aus 3.4b-wachstum-vertrieb-neufassung.html (Abschnitt 5 · .found/.fan/.lp/
+   .lb/.lc). Farben auf --gn-* umgestellt, literale Tints kommentiert. Karten-Radius
+   --gn-radius-lg (12). Sektionsabstand/Satzspiegel über die geteilten Tokens der
+   Neufassung. Bleed nach links (l1 left:-16%) wird vom overflow:hidden gekappt.
+
+   Bewegungs-Umkehr ggü. dem Mock: ENDZUSTAND (aufgefächert, sichtbar) ist der Default →
+   ohne JS / reduzierte Bewegung sofort sichtbar. `.start` (eingeklappt, transparent)
+   setzt die Komponente nur mit JS kurz und löst es beim Sichtbarwerden auf. Nur
+   opacity/transform (kein CLS). */
+
+.section {
+  background: var(--gn-sand);
+  overflow: hidden; /* fängt den nach links auslaufenden Fächer ab → kein Seiten-Overflow */
+  padding: var(--gn-section-y-lg) 0; /* 120px */
+}
+.wrap {
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.found {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 64px;
+  align-items: center;
+}
+.eyebrow {
+  margin-bottom: 18px;
+}
+.h2 {
+  font-size: var(--gn-h2-lg); /* clamp(30px,3.6vw,48px) */
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0 0 18px;
+  max-width: 22ch;
+  text-wrap: balance;
+  color: var(--gn-navy);
+}
+.p {
+  font-size: clamp(17px, 1.4vw, 19px);
+  color: var(--gn-ink);
+  line-height: 1.66;
+  margin: 0 0 22px;
+  max-width: 48ch;
+}
+
+/* ---- Fächer ---- */
+.fan {
+  position: relative;
+  height: 440px;
+  min-width: 0;
+}
+.lp {
+  position: absolute;
+  width: min(330px, 60%);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  box-shadow: 0 50px 90px -50px rgba(1, 65, 91, 0.55); /* weicher Navy-Schatten */
+  overflow: hidden;
+  opacity: 1; /* Endzustand */
+  transition:
+    transform 0.8s var(--gn-ease),
+    opacity 0.6s ease;
+}
+.lb {
+  height: 30px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  font-size: 10px;
+  color: var(--gn-muted);
+}
+.lb i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkte, Mock-Wert */
+  display: block;
+}
+.lb span {
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lc {
+  padding: 18px 20px 20px;
+}
+.lc .pic {
+  height: 96px;
+  border-radius: 8px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  margin-bottom: 12px;
+  position: relative;
+}
+.lc .pic b {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+}
+.lc i {
+  display: block;
+  height: 7px;
+  background: var(--gn-sand);
+  border-radius: 3px;
+  margin: 7px 0;
+}
+.btn {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  border-radius: 3px;
+  padding: 7px 12px;
+}
+/* Endzustand: aufgefächert. */
+.l1 {
+  left: -16%;
+  top: 80px;
+  transform: rotate(-6deg);
+}
+.l2 {
+  left: 18%;
+  top: 20px;
+  z-index: 2;
+  transform: none;
+  transition-delay: 0.15s;
+}
+.l3 {
+  left: 40%;
+  top: 100px;
+  transform: rotate(6deg);
+  transition-delay: 0.3s;
+}
+/* Ausgangszustand: eingeklappt, transparent (nur mit JS, kurz). */
+.start .lp {
+  opacity: 0;
+}
+.start .l1 {
+  transform: translateY(40px) rotate(-6deg);
+}
+.start .l2 {
+  transform: translateY(40px);
+}
+.start .l3 {
+  transform: translateY(40px) rotate(6deg);
+}
+
+@media (max-width: 960px) {
+  .wrap {
+    padding: 0 26px;
+  }
+}
+@media (max-width: 900px) {
+  .found {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .fan {
+    height: 380px;
+  }
+  .lp {
+    width: min(300px, 58%);
+  }
+  .l1 {
+    left: -4%;
+  }
+  .l3 {
+    left: 42%;
+  }
+}
+@media (max-width: 620px) {
+  .section {
+    padding: 72px 0;
+  }
+  .wrap {
+    padding: 0 20px;
+  }
+  .fan {
+    height: 320px;
+  }
+  .lc .pic {
+    height: 70px;
+  }
+  .lc {
+    padding: 14px;
+  }
+}

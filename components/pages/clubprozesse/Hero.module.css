@@ -1,0 +1,413 @@
+/* Portiert aus docs/design-system/mocks/3.5b-clubprozesse-neufassung.html
+   (.hero/.demo/.browser/.site/.snav/.pstat/.news/.nitem/.phone/.log). Farben auf
+   --gn-* umgestellt, literale Tints kommentiert. Große Flächen: --gn-radius-lg (12);
+   Bedienelemente 4 px. Bewegung: Der Endzustand (Platz bespielbar, alle News- und
+   Log-Zeilen sichtbar, Zusammenfassung eingeblendet) steht im Server-HTML → ohne JS
+   und bei prefers-reduced-motion sofort vollständig lesbar. Nur mit JS/ohne
+   Reduced-Motion setzt die Komponente kurz `.start` und löst es beim Sichtbarwerden
+   einmalig auf. Nur opacity/transform/background (kein CLS). */
+
+.hero {
+  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden; /* fängt den Bleed der Demo (width > 100%) ab → kein Seiten-Overflow */
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 96px 40px 110px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+.txt {
+  padding-right: 130px;
+  min-width: 0;
+}
+.h1 {
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 19ch;
+  text-wrap: balance;
+  margin: 0;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 50ch;
+  line-height: 1.62;
+}
+.acts {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 38px;
+}
+.b2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 15.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 3px;
+}
+.b2 svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+.trust {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  font-size: 13px;
+  color: var(--gn-on-dark-text);
+}
+.trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+}
+
+/* ---- Bleed-Demo: Clubwebsite (öffentlich) + Sonntags-Log (intern) ---- */
+.demo {
+  position: relative;
+  min-width: 0;
+  width: 150%; /* läuft rechts über den Rand hinaus (Bleed) */
+}
+.browser {
+  background: #fff;
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 60px 120px -50px rgba(0, 0, 0, 0.65); /* Tiefen-Schatten, 1:1 aus Mock */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.bar {
+  height: 40px;
+  background: var(--gn-mist);
+  border-bottom: 1px solid var(--gn-line);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+}
+.bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkte, Mock-Wert */
+  display: block;
+}
+.bar span {
+  margin-left: 12px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 4px;
+  padding: 4px 12px;
+  width: 280px;
+}
+
+/* Clubwebsite (öffentlich) */
+.site {
+  padding: 22px 26px 26px;
+  color: var(--gn-ink);
+}
+.snav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-bottom: 18px;
+}
+.snav b {
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  margin-right: auto;
+}
+.sgrid {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.sl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin-bottom: 8px;
+}
+.pstat {
+  border: 1px solid #cfe0d2; /* Endzustand „offen": grüner Rahmen, Mock-Wert */
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: var(--gn-ok-bg);
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease;
+}
+.pl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.pv {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 8px;
+  font-family: var(--gn-font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+}
+.pv i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün-Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+  transition: background 0.5s ease;
+}
+.pt {
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-top: 6px;
+}
+/* Ausgangszustand (nur transient mit JS): Platz „geschlossen" (gold), vor der Öffnung. */
+.start .pstat {
+  border-color: var(--gn-line);
+  background: #fff;
+}
+.start .pstat .pv i {
+  background: #c9a14a; /* gedämpftes Gold „Wintergrüns/geschlossen", Mock-Wert */
+}
+
+.news {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nitem {
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+.nitem:nth-child(2) {
+  transition-delay: 0.5s;
+}
+.nitem:nth-child(3) {
+  transition-delay: 1s;
+}
+.start .nitem {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.nitem .pic {
+  height: 48px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+}
+.nitem b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 13.5px;
+  color: var(--gn-navy);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.nitem span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--gn-muted);
+  margin-top: 3px;
+}
+
+/* Sonntags-Log auf dem Handy (intern) */
+.phone {
+  position: absolute;
+  left: -170px;
+  bottom: -46px;
+  width: 206px;
+  background: #0b1f29; /* fast-schwarzes Gerätegehäuse, Mock-Wert */
+  border-radius: 30px;
+  padding: 11px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.scr {
+  background: #fff;
+  border-radius: 22px;
+  padding: 16px 14px 18px;
+  color: var(--gn-ink);
+}
+.lh {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.lt {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+.ev2 {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 6px;
+  padding: 6px 0;
+  border-top: 1px solid var(--gn-line);
+  font-size: 10.5px;
+  color: var(--gn-ink);
+  line-height: 1.35;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+.ev2:first-of-type {
+  margin-top: 12px;
+}
+.ev2 b {
+  font-family: var(--gn-font-display);
+  font-weight: 700;
+  color: var(--gn-blue);
+  font-size: 10.5px;
+}
+.ev2 span {
+  display: block;
+  color: var(--gn-muted);
+  font-size: 9.5px;
+}
+.ev2:nth-of-type(2) {
+  transition-delay: 0.5s;
+}
+.ev2:nth-of-type(3) {
+  transition-delay: 1s;
+}
+.ev2:nth-of-type(4) {
+  transition-delay: 1.5s;
+}
+.ev2:nth-of-type(5) {
+  transition-delay: 2s;
+}
+.start .ev2 {
+  opacity: 0;
+  transform: translateX(8px);
+}
+.sum {
+  margin-top: 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-ok); /* dunkles Grün auf hellem Grün-Tint (kein Signalgrün) */
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 5px 9px;
+  text-align: center;
+  transition: opacity 0.4s ease 2.5s;
+}
+.start .sum {
+  opacity: 0;
+}
+
+@media (max-width: 1180px) {
+  .phone {
+    left: -140px;
+  }
+  .txt {
+    padding-right: 110px;
+  }
+}
+@media (max-width: 1080px) {
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+    padding: 70px 26px 96px;
+  }
+  .txt {
+    padding-right: 0;
+  }
+  .demo {
+    width: 118%;
+  }
+  .phone {
+    left: auto;
+    right: -6px;
+    bottom: -40px;
+  }
+}
+@media (max-width: 620px) {
+  .site {
+    padding: 16px;
+  }
+  .sgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .demo {
+    width: 112%;
+  }
+  .phone {
+    width: 156px;
+    right: -4px;
+    bottom: -34px;
+  }
+  .scr {
+    padding: 10px 10px 12px;
+  }
+  /* Unter 620px die späten Log-Zeilen ausblenden (Handy schmaler), 1:1 aus Mock. */
+  .ev2:nth-of-type(n + 4) {
+    display: none;
+  }
+  .in {
+    padding: 70px 20px 116px;
+  }
+}

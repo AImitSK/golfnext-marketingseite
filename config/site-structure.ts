@@ -107,10 +107,12 @@ export const ROUTES: Route[] = [
   {
     path: "/clubprozesse",
     label: "Clubprozesse",
-    status: "geplant",
+    status: "live",
     nav: "haupt",
     mock: "mocks/3.5b-clubprozesse-neufassung.html",
     briefing: "briefings/0018-clubprozesse.md",
+    // Briefing 0018 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
+    // nur Canonical wird gesetzt (wie Plattform/Wachstum/Startseite). Nicht erfinden (Feinschliff Phase 6).
     title: null,
     description: null,
   },

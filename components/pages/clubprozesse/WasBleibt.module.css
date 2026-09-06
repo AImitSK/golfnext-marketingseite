@@ -1,0 +1,93 @@
+/* Portiert aus 3.5b-clubprozesse-neufassung.html (.split2/.sbox). Farben auf --gn-*
+   umgestellt. Große Flächen: --gn-radius-lg (12). Zwei Spalten: „Läuft von allein"
+   (Navy-Box mit Modul-Labels) und „Bleibt beim Clubteam" (helle Box). Die Boxen
+   blenden über die geteilte Motion-Infra (Rise/RiseItem) einmalig gestaffelt auf;
+   Endzustand steht im Server-HTML (ohne JS/reduziert sofort sichtbar).
+   WICHTIG (Briefing 0018): Die dev-Auszeichnung der Modul-Labels (`.m.dev`) und die
+   Zeile „Stand je Modul wie im Footer: …" sind hier bewusst NICHT enthalten – Module
+   werden als verfügbar dargestellt, die Modul-Namen bleiben als Labels. */
+
+.split2 {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 22px;
+  align-items: stretch;
+}
+.sbox {
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 32px 32px 28px;
+  background: #fff;
+  min-width: 0;
+}
+.gn {
+  background: var(--gn-navy);
+  border-color: var(--gn-navy);
+  color: #fff;
+}
+.bl {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin-bottom: 18px;
+}
+.gn .bl {
+  color: var(--gn-signal); /* Signalgrün als Text auf Navy (Grün-Regel: erlaubt) */
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: baseline;
+  font-size: 15px;
+  padding: 11px 0;
+  border-top: 1px solid var(--gn-line);
+  line-height: 1.45;
+}
+.gn .li {
+  border-color: var(--gn-on-dark-line);
+}
+.li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.m {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gn-muted);
+  white-space: nowrap;
+}
+.gn .m {
+  color: var(--gn-sky);
+}
+.foot {
+  margin-top: 22px;
+  font-size: 13.5px;
+  color: var(--gn-muted);
+}
+.gn .foot {
+  color: var(--gn-on-dark-text);
+}
+
+@media (max-width: 900px) {
+  .split2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sbox {
+    padding: 26px 24px 22px;
+  }
+  .li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}

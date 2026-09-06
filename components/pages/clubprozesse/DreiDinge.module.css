@@ -1,0 +1,347 @@
+/* Portiert aus 3.5b-clubprozesse-neufassung.html (.bento/.bx/.viz + Concierge-Chat,
+   Platzstatus-Toggle, Gastfee-Zahlung). Farben auf --gn-* umgestellt, literale Tints
+   kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4/8 px.
+   Bewegung: Der ENDZUSTAND jeder Box steht im Server-HTML → ohne JS und bei
+   prefers-reduced-motion sofort vollständig lesbar. Nur mit JS/ohne Reduced-Motion
+   setzt die Box kurz `.start` und löst es beim Sichtbarwerden einmalig auf (Chat läuft
+   ein, Platz-Toggle springt, Zahlung wird bestätigt). Nur opacity/transform/background
+   (kein CLS). Der Modulstatus (Badges) wird bewusst NICHT dargestellt (Briefing 0018). */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 56px;
+}
+.bx {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 34px 34px 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s ease,
+    border-color 0.35s;
+}
+.bx:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45);
+  border-color: rgba(1, 65, 91, 0.35);
+}
+.no {
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gn-blue);
+}
+.h3 {
+  font-size: clamp(21px, 2vw, 26px);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 12px 0 12px;
+}
+.p {
+  font-size: 15px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+.mod {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gn-muted);
+  margin-bottom: 26px;
+}
+.mod b {
+  color: var(--gn-navy);
+}
+.viz {
+  margin-top: auto;
+  flex: 1;
+  background: var(--gn-mist);
+  border-top: 1px solid var(--gn-line);
+  margin-left: -34px;
+  margin-right: -34px;
+  padding: 24px 28px 28px;
+  min-height: 240px;
+}
+
+/* ---- 01 · Concierge (Chat) ---- */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.t {
+  font-size: 11px;
+  color: var(--gn-muted);
+  text-align: center;
+}
+.tPraxis {
+  margin-top: 6px;
+}
+.bub {
+  max-width: 88%;
+  font-size: 12.5px;
+  line-height: 1.45;
+  padding: 10px 13px;
+  border-radius: 12px;
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+.bubQ {
+  align-self: flex-end;
+  background: var(--gn-navy);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  transition-delay: 0.2s;
+}
+.bubA {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  color: var(--gn-ink);
+  border-bottom-left-radius: 4px;
+  transition-delay: 0.9s;
+}
+.start .bub {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.t2 {
+  font-size: 11px;
+  color: var(--gn-ok); /* dunkles Grün auf hellem Grund (kein Signalgrün) */
+  text-align: center;
+  transition: opacity 0.4s ease 1.4s;
+}
+.start .t2 {
+  opacity: 0;
+}
+
+/* ---- 02 · Platzstatus (Toggle → Website) ---- */
+.ps2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.row div {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gn-ink);
+}
+.row div span {
+  display: block;
+  font-size: 10.5px;
+  color: var(--gn-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.tgl {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--gn-signal); /* Endzustand „an": Signalgrün-Fläche (Grün-Regel: Fläche erlaubt) */
+  position: relative;
+  flex: 0 0 auto;
+  transition: background 0.35s ease;
+  transition-delay: 0.4s;
+}
+.tgl::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateX(20px);
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+  transition-delay: 0.4s;
+}
+.start .tgl {
+  background: #c9c3b6; /* Ausgangszustand „aus", Mock-Wert */
+}
+.start .tgl::after {
+  transform: translateX(0);
+}
+.arr {
+  text-align: center;
+  color: var(--gn-muted);
+  font-size: 11px;
+}
+.web {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin-bottom: 6px;
+}
+.pstat {
+  border: 1px solid #cfe0d2; /* Endzustand „offen": grüner Rahmen, Mock-Wert */
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: var(--gn-ok-bg);
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease;
+  transition-delay: 1s;
+}
+.pl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.pv {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 8px;
+  font-family: var(--gn-font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+}
+.pv i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün-Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+  transition: background 0.5s ease;
+  transition-delay: 1s;
+}
+.pt {
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-top: 6px;
+}
+.start .pstat {
+  border-color: var(--gn-line);
+  background: #fff;
+}
+.start .pstat .pv i {
+  background: #c9a14a; /* gedämpftes Gold „geschlossen", Mock-Wert */
+}
+
+/* ---- 03 · Gastfee (Zahlung + Bestätigung) ---- */
+.pay {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.payLabel {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.payRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--gn-ink);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--gn-line);
+}
+.payRow b {
+  font-weight: 600;
+}
+.pb {
+  margin-top: 12px;
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche mit Navy-Text (Grün-Regel: Fläche erlaubt) */
+  border-radius: 4px;
+  padding: 10px;
+  /* Endzustand: Button „gedrückt" und gedimmt, nachdem die Zahlung bestätigt ist. */
+  transform: scale(0.96);
+  opacity: 0.35;
+  transition:
+    transform 0.3s cubic-bezier(0.3, 1.4, 0.5, 1),
+    opacity 0.3s ease;
+  transition-delay: 0.6s;
+}
+.start .pb {
+  transform: scale(1);
+  opacity: 1;
+}
+.ok {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gn-ok);
+  font-weight: 600;
+  transition: opacity 0.4s ease 1.2s;
+}
+.ok i {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gn-ok-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.ok i svg {
+  width: 11px;
+  height: 11px;
+  display: block;
+}
+.start .ok {
+  opacity: 0;
+}
+.sub {
+  font-size: 11px;
+  color: var(--gn-muted);
+  margin-top: 6px;
+  transition: opacity 0.4s ease 1.5s;
+}
+.start .sub {
+  opacity: 0;
+}
+
+@media (max-width: 1000px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .bx {
+    padding: 28px 28px 0;
+  }
+  .viz {
+    margin-left: -28px;
+    margin-right: -28px;
+  }
+}

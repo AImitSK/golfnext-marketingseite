@@ -13,8 +13,10 @@ import styles from "./Vorteile.module.css";
  * Mikrovisualisierung (kein Hover-Trigger, kein Dauerlauf – Briefing). Die Visuals
  * sind dekorativ (`aria-hidden`) und wirken wie fertige Oberflächen.
  *
- * Bewegung nach 1.7: `Rise`-Container blendet die Karten einmalig gestaffelt auf;
- * die Mikrovisualisierungen selbst stehen fest. Endzustand im Server-HTML.
+ * Bewegung nach 1.7 / 0015: `Rise`-Container blendet die Karten einmalig gestaffelt
+ * auf; die Mikrovisualisierungen selbst stehen fest. Die Karten tragen den geteilten
+ * Hover-Lift (`gn-card-lift`: Navy-Rahmen + Schatten + 2 px anheben). Endzustand im
+ * Server-HTML.
  */
 
 /** Fixe 26-px-Kopf-Icons je Karte (dekorativ, Icon-Regel: nie ohne Größe). */
@@ -186,11 +188,16 @@ export function Vorteile({
         <h2>{headline}</h2>
         <Rise className={styles.vg}>
           {data.cards.map((card) => (
-            <RiseItem key={card.title} className={styles.vc}>
-              <CardIcon viz={card.viz} />
-              <h3>{card.title}</h3>
-              <p>{card.text}</p>
-              <Viz viz={card.viz} />
+            // Hover-Lift auf dem statischen inneren `.vc` – nicht auf dem RiseItem
+            // (motion.div), da Motion dort nach dem Reveal einen Inline-`transform`
+            // setzt, der den `:hover`-Transform überschreiben würde.
+            <RiseItem key={card.title} className={styles.vcWrap}>
+              <div className={`${styles.vc} gn-card-lift`}>
+                <CardIcon viz={card.viz} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+                <Viz viz={card.viz} />
+              </div>
             </RiseItem>
           ))}
         </Rise>

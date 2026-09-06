@@ -48,7 +48,12 @@ function KeyLines({ lines }: { lines: string[] }) {
 }
 
 function Karte({ card }: { card: PaketKarte }) {
-  const classes = [styles.pkc, VARIANT_CLASS[card.variant], card.highlight ? styles.mid : undefined]
+  const classes = [
+    styles.pkc,
+    "gn-card-lift",
+    VARIANT_CLASS[card.variant],
+    card.highlight ? styles.mid : undefined,
+  ]
     .filter(Boolean)
     .join(" ");
 

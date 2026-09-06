@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
  * Endzustand ohne Übergang, (c) kein Layout-Shift durch die Animation.
  */
 
-const revealText = "Blendet einmalig auf und schiebt sich 14 Pixel";
+const revealText = "Blendet einmalig auf und schiebt sich 28 Pixel";
 const riseItem = "Zweiter Punkt";
 const heading = "Bewegung";
 

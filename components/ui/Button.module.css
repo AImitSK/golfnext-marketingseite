@@ -77,6 +77,13 @@
   border-color: #fff;
   color: var(--gn-navy);
 }
+/* Hover: das Mock (2.5) definiert für .light keinen Hover; Briefing 0015 verlangt
+   für jede Variante einen spürbaren Zustand. Dezentes Eindunkeln der weißen Fläche
+   (warmer Sand-Ton), Navy-Text bleibt – bewusste Ergänzung zum Mock. */
+.light:hover {
+  background: #efece3; /* wie .disabled-Fläche (2.5 Z.78), hier als leiser Light-Hover */
+  border-color: #efece3;
+}
 
 .sm {
   font-size: 14px;

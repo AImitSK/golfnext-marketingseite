@@ -1,3 +1,4 @@
+import { CountUp } from "@/components/motion/CountUp";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Lead } from "@/components/ui/Lead";
 import { Section } from "@/components/ui/Section";
@@ -13,10 +14,12 @@ import styles from "./Praxis.module.css";
  * .second, Z.246–305, 801–882).
  *
  * Links das ANNA-Chatfenster (illustrative Beispiel-Konversation aus Mock 3.1), rechts
- * die Textspalte mit den bestätigten Kennzahlen. Die Kennzahlen werden **statisch**
- * angezeigt – **kein Hochzähl-Effekt** (CLAUDE.md: Zähler-Tabu außer Saisonrechnung).
+ * die Textspalte mit den bestätigten Kennzahlen. Die Kennzahlen **zählen einmal hoch**
+ * beim Sichtbarwerden (`CountUp`, Briefing 0015): der Endwert steht im Server-HTML –
+ * ohne JS und bei `prefers-reduced-motion` sofort der fertige, **wortgleiche** Wert.
  * Alle Werte bleiben jederzeit lesbar; nichts wird erfunden. Zweites Beispiel (Bad
- * Wörishofen) mit `Shot`-Platzhalter für das noch fehlende Foto. Reine Server-Komponente.
+ * Wörishofen) mit `Shot`-Platzhalter für das noch fehlende Foto und dem geteilten
+ * Karten-Hover-Lift. Reine Server-Komponente (die Client-Zutaten kapselt `CountUp`).
  */
 export function Praxis({
   eyebrow,
@@ -94,7 +97,7 @@ export function Praxis({
             <div className={styles.nums}>
               {anna.kennzahlen.map((k) => (
                 <div key={k.label} className={styles.num}>
-                  <div className={styles.n}>{k.value}</div>
+                  <CountUp className={styles.n} value={k.value} />
                   <div className={styles.l}>{k.label}</div>
                 </div>
               ))}
@@ -110,7 +113,7 @@ export function Praxis({
         </div>
 
         {/* Zweites Praxisbeispiel */}
-        <div className={styles.second}>
+        <div className={`${styles.second} gn-card-lift`}>
           <Shot
             ratio="4/3"
             tagline={second.shot.tagline}

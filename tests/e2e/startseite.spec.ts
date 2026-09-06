@@ -4,8 +4,9 @@ import { expect, test } from "@playwright/test";
  * Startseite `/` (Baustein 0013, Schritt 2.2). Prüft die harten Akzeptanzkriterien:
  * genau eine H1, kein horizontaler Overflow (über alle Breakpoints der Projektmatrix),
  * keine Konsolenfehler; der Wachstum/Clubprozesse-Umschalter ist OHNE JavaScript
- * bedienbar (native Radiogruppe + CSS); die Praxis-Kennzahlen stehen statisch als Text
- * (kein Hochzähler); die Hero-Strecke steht bei reduzierter Bewegung sofort im Endzustand.
+ * bedienbar (native Radiogruppe + CSS); die Praxis-Kennzahlen zählen mit JS einmal hoch
+ * und stehen ohne JS bzw. bei reduzierter Bewegung sofort im wortgleichen Endwert; die
+ * Hero-Strecke steht bei reduzierter Bewegung sofort im Endzustand.
  */
 
 test.describe("/ · Struktur und Overflow", () => {
@@ -30,11 +31,27 @@ test.describe("/ · Struktur und Overflow", () => {
     expect(consoleErrors, "Konsolenfehler").toEqual([]);
   });
 
-  test("Praxis-Kennzahlen stehen statisch als Text (kein Hochzähler)", async ({ page }) => {
+  test("Praxis-Kennzahlen zählen mit JS einmal hoch bis zum wortgleichen Endwert", async ({
+    page,
+  }) => {
     await page.goto("/");
-    // Der Zielwert steht direkt als Text im DOM – kein Zähler, der von 0 hochläuft.
+    // Beim Sichtbarwerden zählt der Wert einmal hoch und bleibt beim exakten Endwert
+    // stehen (wortgleich zum Content). Kein Layout-Shift: nur der Textknoten ändert sich.
+    await page.getByText("geführte Dialoge", { exact: true }).scrollIntoViewIfNeeded();
     await expect(page.getByText("Rund 1.600", { exact: true })).toBeVisible();
     await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
+  });
+
+  test("Karten-Hover-Lift ist spürbar (translateY)", async ({ page }) => {
+    await page.goto("/");
+    // Erste .gn-card-lift auf der Startseite ist eine Vorteils-Karte (statisches
+    // inneres Element, nicht das motion-RiseItem) – der Hover hebt sie an.
+    const card = page.locator(".gn-card-lift").first();
+    await card.scrollIntoViewIfNeeded();
+    await card.hover();
+    await expect
+      .poll(async () => card.evaluate((el) => getComputedStyle(el).transform))
+      .not.toBe("none");
   });
 });
 
@@ -70,6 +87,13 @@ test.describe("/ ohne JavaScript", () => {
       page.getByRole("link", { name: /Pakete und Leistungen vergleichen/ }),
     ).toBeVisible();
   });
+
+  test("Praxis-Kennzahlen stehen ohne JS sofort im wortgleichen Endwert", async ({ page }) => {
+    await page.goto("/");
+    // Der Endwert kommt aus dem Server-HTML (CountUp rendert children = Endwert).
+    await expect(page.getByText("Rund 1.600", { exact: true })).toBeVisible();
+    await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
+  });
 });
 
 test.describe("/ · reduzierte Bewegung", () => {
@@ -82,6 +106,22 @@ test.describe("/ · reduzierte Bewegung", () => {
     const station = page.getByText("Automatisierte Begleitung gestartet", { exact: true });
     await station.scrollIntoViewIfNeeded();
     expect(Number(await station.evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
+
+    await context.close();
+  });
+
+  test("Praxis-Kennzahlen zeigen bei reduzierter Bewegung sofort den Endwert", async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ reducedMotion: "reduce" });
+    const page = await context.newPage();
+    await page.goto("/");
+
+    // Kein Hochzählen von 0: der Endwert steht sofort und bleibt (wortgleich).
+    const value = page.getByText("Rund 1.600", { exact: true });
+    await value.scrollIntoViewIfNeeded();
+    await expect(value).toBeVisible();
+    await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
 
     await context.close();
   });

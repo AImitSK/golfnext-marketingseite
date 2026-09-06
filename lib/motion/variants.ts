@@ -24,15 +24,17 @@ export const EASE: [number, number, number, number] = [0.2, 0.8, 0.3, 1];
 /** Dauer aller Varianten in Sekunden – identisch zu `--gn-dur` (.55s). */
 export const DURATION = 0.55;
 
-/** Dezenter Versatz der Staffelung zwischen `rise`-Kindern (Sekunden). */
-export const STAGGER = 0.08;
+/** Klar wahrnehmbarer Versatz der Staffelung zwischen `rise`-Kindern (Sekunden). */
+export const STAGGER = 0.1;
 
 /**
- * Einmaliges Aufblenden: von leicht darunter (14 px) und transparent in den
- * Endzustand. Dient auch als Item-Variante innerhalb von `rise`.
+ * Einmaliges Aufblenden: von spürbar darunter (28 px) und transparent in den
+ * Endzustand. Dient auch als Item-Variante innerhalb von `rise`. Der Translate
+ * ist bewusst großzügig (Briefing 0015: Reveals sollen wahrnehmbar sein, nicht
+ * nur ein leises Fade) – bewegt weiterhin nur `opacity`/`transform` (kein CLS).
  */
 export const reveal: Variants = {
-  hidden: { opacity: 0, y: 14 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,

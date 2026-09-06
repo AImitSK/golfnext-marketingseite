@@ -1,16 +1,21 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Startseite `/` (Baustein 0013, Schritt 2.2). Prüft die harten Akzeptanzkriterien:
- * genau eine H1, kein horizontaler Overflow (über alle Breakpoints der Projektmatrix),
- * keine Konsolenfehler; der Wachstum/Clubprozesse-Umschalter ist OHNE JavaScript
- * bedienbar (native Radiogruppe + CSS); die Praxis-Kennzahlen zählen mit JS einmal hoch
- * und stehen ohne JS bzw. bei reduzierter Bewegung sofort im wortgleichen Endwert; die
- * Hero-Strecke steht bei reduzierter Bewegung sofort im Endzustand.
+ * Startseite `/` – Neufassung v01 (Rebuild aus Mock 3.1b, Briefing 0021, Schritt 2.2).
+ * Prüft die harten Akzeptanzkriterien: genau eine H1, kein horizontaler Overflow über
+ * die Projektmatrix (auch mit dem Hero-Bleed), keine Konsolenfehler; die „Drei
+ * Teile"-Boxen verlinken echt auf die live-Seiten; der Paketblock zeigt keine Preise/
+ * Summen und verlinkt auf `/pakete`; die Hero-Demo steht ohne JS und bei reduzierter
+ * Bewegung sofort im Endzustand („Platz bespielbar"); die Seite ist ohne JavaScript
+ * vollständig lesbar und der Rollen-Slider nativ scrollbar.
  */
 
+const BREAKPOINTS = [390, 768, 1024, 1180, 1440];
+
 test.describe("/ · Struktur und Overflow", () => {
-  test("genau eine H1, kein Overflow, keine Konsolenfehler", async ({ page }) => {
+  test("genau eine H1, kein Overflow (alle Breakpoints), keine Konsolenfehler", async ({
+    page,
+  }) => {
     const consoleErrors: string[] = [];
     page.on("console", (msg) => {
       if (msg.type() === "error") consoleErrors.push(msg.text());
@@ -20,33 +25,64 @@ test.describe("/ · Struktur und Overflow", () => {
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
     await expect(
-      page.getByRole("heading", { level: 1, name: /Mehr Menschen für Ihren Club/ }),
+      page.getByRole("heading", {
+        level: 1,
+        name: "Mehr Golfer auf dem Platz. Weniger Arbeit im Clubbüro.",
+      }),
     ).toBeVisible();
 
-    const hasOverflow = await page.evaluate(
-      () => document.documentElement.scrollWidth > window.innerWidth + 1,
-    );
-    expect(hasOverflow, "horizontaler Overflow").toBe(false);
+    for (const width of BREAKPOINTS) {
+      await page.setViewportSize({ width, height: 900 });
+      const hasOverflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > window.innerWidth + 1,
+      );
+      expect(hasOverflow, `horizontaler Overflow bei ${width}px`).toBe(false);
+    }
 
     expect(consoleErrors, "Konsolenfehler").toEqual([]);
   });
 
-  test("Praxis-Kennzahlen zählen mit JS einmal hoch bis zum wortgleichen Endwert", async ({
-    page,
-  }) => {
+  test("Drei-Teile-Links zeigen auf die live-Seiten", async ({ page }) => {
     await page.goto("/");
-    // Beim Sichtbarwerden zählt der Wert einmal hoch und bleibt beim exakten Endwert
-    // stehen (wortgleich zum Content). Kein Layout-Shift: nur der Textknoten ändert sich.
-    await page.getByText("geführte Dialoge", { exact: true }).scrollIntoViewIfNeeded();
-    await expect(page.getByText("Rund 1.600", { exact: true })).toBeVisible();
-    await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Plattform im Überblick" })).toHaveAttribute(
+      "href",
+      "/plattform",
+    );
+    await expect(page.getByRole("link", { name: "Wachstum & Vertrieb" })).toHaveAttribute(
+      "href",
+      "/wachstum-vertrieb",
+    );
+    // „Clubprozesse" steht auch in der Kopfnavigation – beide zeigen live auf /clubprozesse.
+    const clubprozesse = page.getByRole("link", { name: "Clubprozesse", exact: true });
+    for (const link of await clubprozesse.all()) {
+      await expect(link).toHaveAttribute("href", "/clubprozesse");
+    }
+  });
+
+  test("Paketblock ohne Preise/Summen, Link auf /pakete", async ({ page }) => {
+    await page.goto("/");
+    const pakete = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Eine Basis. Dazu genau das, was Ihr Club braucht." }) });
+    const text = (await pakete.innerText()) ?? "";
+    // Keine Preiszahlen (Fassung-2-Werte) und kein „€" im Paketblock.
+    expect(text).not.toMatch(/\d[\d.]*\s*€/);
+    for (const price of ["6.800", "238", "5.200", "312", "7.200", "462"]) {
+      expect(text, `Preis ${price} darf nicht im Paketblock stehen`).not.toContain(price);
+    }
+    await expect(pakete.getByRole("link", { name: "Pakete und Preise ansehen" })).toHaveAttribute(
+      "href",
+      "/pakete",
+    );
   });
 
   test("Karten-Hover-Lift ist spürbar (translateY)", async ({ page }) => {
     await page.goto("/");
-    // Erste .gn-card-lift auf der Startseite ist eine Vorteils-Karte (statisches
-    // inneres Element, nicht das motion-RiseItem) – der Hover hebt sie an.
-    const card = page.locator(".gn-card-lift").first();
+    // Erste Praxis-Artikelkarte: Hover hebt die Karte an (transform ≠ none).
+    const praxis = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Was in Golfclubs wirklich funktioniert." }) });
+    const card = praxis.locator("article").first();
     await card.scrollIntoViewIfNeeded();
     await card.hover();
     await expect
@@ -58,70 +94,43 @@ test.describe("/ · Struktur und Overflow", () => {
 test.describe("/ ohne JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
-  test("Umschalter Wachstum/Clubprozesse ist ohne JS bedienbar", async ({ page }) => {
-    await page.goto("/");
-
-    const wachstumKarte = page.getByRole("heading", { name: "Schnuppergolf und Platzreife" });
-    // exact, sonst matcht auch die Praxis-Überschrift „Der digitale Concierge ANNA".
-    const prozesseKarte = page.getByRole("heading", { name: "Concierge", exact: true });
-
-    // Startzustand: Wachstum-Ansicht sichtbar, Clubprozesse-Ansicht verborgen.
-    await expect(wachstumKarte).toBeVisible();
-    await expect(prozesseKarte).toBeHidden();
-
-    // Nativer Label-Klick schaltet die Radiogruppe – ohne JavaScript.
-    await page.locator('label[for="startseite-tab-prozesse"]').click();
-    await expect(prozesseKarte).toBeVisible();
-    await expect(wachstumKarte).toBeHidden();
-  });
-
   test("Seite ist ohne JS vollständig lesbar (Kernabschnitte sichtbar)", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Drei Teile. Ein System." })).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Vier Schritte. Zwei Wirkungen. Ein verbundenes System." }),
+      page.getByRole("heading", { name: "Ein Klick bei Instagram. Vier Wochen später ein Mitglied." }),
     ).toBeVisible();
-    // Fred-Zitat und Paketblock-Hauptlink ohne JS sichtbar.
-    await expect(page.getByText(/Aus Aufmerksamkeit muss Interesse werden/)).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: /Pakete und Leistungen vergleichen/ }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Vier Zusagen, die im Vertrag stehen." })).toBeVisible();
+    // Fred-Zitat und Paketblock-Link ohne JS sichtbar.
+    await expect(page.getByText(/Ein gutes Gespräch lässt sich nicht automatisieren/)).toBeVisible();
+    await expect(page.getByRole("link", { name: "Pakete und Preise ansehen" })).toBeVisible();
   });
 
-  test("Praxis-Kennzahlen stehen ohne JS sofort im wortgleichen Endwert", async ({ page }) => {
+  test("Hero-Demo steht ohne JS im Endzustand (Platz bespielbar)", async ({ page }) => {
     await page.goto("/");
-    // Der Endwert kommt aus dem Server-HTML (CountUp rendert children = Endwert).
-    await expect(page.getByText("Rund 1.600", { exact: true })).toBeVisible();
-    await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
+    await expect(page.getByText("Platz bespielbar", { exact: true }).first()).toBeVisible();
+  });
+
+  test("Rollen-Slider ist ohne JS nativ scrollbar", async ({ page }) => {
+    await page.goto("/");
+    const rail = page.getByTestId("rollen-rail");
+    await expect(rail).toBeVisible();
+    // Der Rail ist ein overflow-x-Scrollbereich (mehr Inhalt als Breite).
+    const scrollable = await rail.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
+    expect(scrollable, "Rollen-Rail ist horizontal scrollbar").toBe(true);
   });
 });
 
 test.describe("/ · reduzierte Bewegung", () => {
-  test("Hero-Strecke steht sofort im Endzustand (opacity 1)", async ({ browser }) => {
+  test("Hero-Demo steht sofort im Endzustand (Platz bespielbar, Toggle an)", async ({ browser }) => {
     const context = await browser.newContext({ reducedMotion: "reduce" });
     const page = await context.newPage();
     await page.goto("/");
 
-    // „Automatisierte Begleitung gestartet" kommt nur in der Hero-Strecke vor.
-    const station = page.getByText("Automatisierte Begleitung gestartet", { exact: true });
-    await station.scrollIntoViewIfNeeded();
-    expect(Number(await station.evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
-
-    await context.close();
-  });
-
-  test("Praxis-Kennzahlen zeigen bei reduzierter Bewegung sofort den Endwert", async ({
-    browser,
-  }) => {
-    const context = await browser.newContext({ reducedMotion: "reduce" });
-    const page = await context.newPage();
-    await page.goto("/");
-
-    // Kein Hochzählen von 0: der Endwert steht sofort und bleibt (wortgleich).
-    const value = page.getByText("Rund 1.600", { exact: true });
+    const value = page.getByText("Platz bespielbar", { exact: true }).first();
     await value.scrollIntoViewIfNeeded();
     await expect(value).toBeVisible();
-    await expect(page.getByText("72 Prozent", { exact: true })).toBeVisible();
 
     await context.close();
   });

@@ -1,0 +1,197 @@
+/* Portiert aus 3.1b-startseite-neufassung.html (Abschnitt 5 · .way/.wayline/.wgrid/
+   .wst/.yr/.dev). Farben auf --gn-* umgestellt, literale Tints kommentiert. Große
+   Flächen (Geräterahmen): --gn-radius-lg (12); Bedienelemente 4 px.
+
+   Bewegung: Der ENDZUSTAND steht im Server-HTML. Die (aria-hidden) Linie zieht über
+   die vier Schritte; `.start` (nur transient mit JS) setzt sie auf 0. Die Schritte
+   blenden über die Motion-Infra (Rise/RiseItem) gestaffelt auf. Die nummerierten
+   Knoten stehen dauerhaft im Endzustand (Navy-Fläche + Signalgrün-Ziffer) – bewusst
+   NICHT animiert, damit sichtbarer Text nie in einem kontrastschwachen Zwischenzustand
+   liegt (wie /ueber-golfnext). Nur opacity/transform/Linienbreite (kein CLS). */
+
+.way {
+  margin-top: 64px;
+  position: relative;
+}
+.wayline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22px;
+  height: 2px;
+  background: var(--gn-line);
+}
+.wayline i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--gn-navy);
+  transition: width 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+.start .wayline i {
+  width: 0;
+}
+.wgrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  position: relative;
+}
+.wst {
+  min-width: 0;
+}
+.yr {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gn-paper);
+  padding-right: 14px;
+  position: relative;
+  z-index: 1;
+}
+.yr i {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  border: 2px solid var(--gn-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--gn-font-display);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gn-signal); /* Signalgrün-Ziffer auf Navy (Grün-Regel: erlaubt) */
+  flex: 0 0 auto;
+}
+.yr b {
+  font-family: var(--gn-font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+}
+.wh {
+  font-size: 20px;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 18px 0 8px;
+  color: var(--gn-navy);
+}
+.wp {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  line-height: 1.58;
+  margin: 0 0 14px;
+}
+
+/* ---- Geräte-Fenster (illustrativ) ---- */
+.dev {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+}
+.dh {
+  height: 28px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.dh i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkt, Mock-Wert */
+  display: block;
+}
+.db {
+  padding: 12px 14px 14px;
+  font-size: 12px;
+  color: var(--gn-ink);
+  line-height: 1.45;
+}
+.pic {
+  height: 56px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  margin-bottom: 8px;
+  position: relative;
+}
+.pic b {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font-family: var(--gn-font-display);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gn-navy);
+}
+.dhead {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  color: var(--gn-navy);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.fld {
+  height: 26px;
+  border: 1px solid var(--gn-line);
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  color: var(--gn-muted);
+}
+.btn {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  border-radius: 3px;
+  padding: 6px 10px;
+}
+.tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 3px 8px;
+}
+.waylinks {
+  margin-top: 44px;
+  display: flex;
+  gap: 34px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1000px) {
+  .wgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wayline {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  .wgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

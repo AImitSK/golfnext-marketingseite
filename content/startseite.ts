@@ -1,428 +1,487 @@
+import type { RolleCard } from "./plattform";
 import type { Cta, PageContent } from "./types";
 
 /**
- * Startseite · /
- * Quelle der Texte: docs/design-system/briefings/3.1-startseite-umsetzungsbriefing.md
- * (finale, von Fred freigegebene Fassungen) für die Abschnitte 1–5 und 7.
- * Abschnitt 6 (Pakete) ist verbindlich die Preislogik Fassung 2 aus
- * docs/design-system/mocks/3.1a-startseite-paketblock-fassung2.html – NICHT die
- * überholten Fassung-1-Preise (8.500/250 …) aus Abschnitt 6 des Umsetzungsbriefings.
+ * Startseite · /  — Neufassung v01, gebaut aus Mock
+ * `docs/design-system/mocks/3.1b-startseite-neufassung.html` (Briefing 0021).
+ * Ersetzt die alte Fassung (0013, aus 3.1/3.1a) vollständig. Acht Abschnitte:
+ * Hero (Bleed-Demo + drei schwebende Karten), Vertrauensleiste, „Drei Teile"
+ * (Bento), Rollen-Slider, „Ein Weg" (4-Schritt-Zeitleiste), Pakete (ohne
+ * Preise/Summen, Fassung 2), „Vier Zusagen" (Navy-Band + Fred-Zitat) und Praxis.
  *
- * Regeln (CLAUDE.md): Texte wortgleich, keine erfundenen Zahlen/Modulstatus/Versprechen.
- * Preise werden NIE addiert (Sockel + Modulblock stehen getrennt, keine Summe).
- * Praxis-Kennzahlen zählen beim Sichtbarwerden EINMAL hoch (CountUp, Briefing 0015);
- * der Endwert steht wortgleich im HTML, Reduced-Motion/No-JS zeigt ihn sofort – die
- * Werte hier bleiben also die Wahrheit. Benennung „Turnier-News" (nicht „Club News", auch wenn
- * das Briefing an der Stelle noch „Club News" schreibt – Benennungsregel geht vor).
- * Wortlaut nur nach neuem Fred-Briefing / Freigabe Stefan ändern.
+ * Regeln (CLAUDE.md): Texte wortgleich aus 3.1b; keine erfundenen Zahlen/
+ * Versprechen; **kein Modulstatus** (Modul-Labels sind reine Namen); Preise
+ * werden NIE addiert – der Paketblock zeigt nur Basis + Modulblöcke, die Summe
+ * zieht der Leser auf `/pakete`. Beispiel-UI-Werte (Namen, „39 €", „65 €",
+ * Artikel-Titel/-Daten) sind illustrativ 1:1 aus dem Mock übernommen und
+ * `aria-hidden`; die Praxis-Artikel sind Platzhalter („Bild folgt" wortgleich).
+ * „Rehburg-Loccum/Pilotclub"-Wortlaut bleibt erhalten. Wortlaut nur nach neuem
+ * Fred-Briefing / Freigabe Stefan ändern.
  */
 
 /* ────────────────────────── 1 · Hero ────────────────────────── */
 
-/** Eine Station der Hero-Systemansicht (Kampagne … Buchung). */
-export interface HeroStation {
-  /** Kleines Label (uppercase), z. B. „Kampagne". */
-  label: string;
-  /** Titelzeile der Karte, z. B. „Schnuppergolf im Frühjahr". */
-  title: string;
-  /** Marketing-CRM und E-Mail-Sequenz: Signalgrün-Rahmen (Teil der Sequenz). */
-  seq?: boolean;
-  /** Eingebundener Inhalt unter der Sequenz – kein eigener Hauptschritt. */
-  sub?: { label: string; title: string };
+/** Eine schwebende Karte über der Clubwebsite-Demo (illustrativ, aria-hidden). */
+export interface HeroCard {
+  kind: "anmeldung" | "concierge" | "toggle";
 }
 
 export interface HeroData {
   ctaPrimary: Cta;
   ctaSecondary: Cta;
-  /** Barrierefreies Label der Systemansicht (dekorative UI-Ausschnitte sind aria-hidden). */
+  trust: string[];
+  /** Barrierefreies Label der gesamten Demo (die UI-Ausschnitte sind aria-hidden). */
   ariaLabel: string;
-  stations: HeroStation[];
+  demo: {
+    url: string;
+    brand: string;
+    nav: string[];
+    heroTitle: string;
+    heroBadge: string;
+    tiles: string[];
+    platzstatus: {
+      label: string;
+      /** Ausgangszustand (ohne JS/Reduced-Motion ist bereits der Endzustand gesetzt). */
+      valueStart: string;
+      valueOpen: string;
+    };
+  };
+  /** Karte 1: Anmeldung Anna Berger. */
+  anmeldung: { av: string; name: string; sub: string; status: string };
+  /** Karte 2: Concierge-Chat. */
+  concierge: { title: string; frage: string; antwort: string };
+  /** Karte 3: Platzstatus-Toggle vom Greenkeeper. */
+  toggle: { title: string; sub: string };
 }
 
 export const startseiteHero: HeroData = {
-  ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
-    target: "erstgespraech",
-  },
-  ctaSecondary: { label: "GolfNext selbst ansehen", target: "livedemo" },
-  ariaLabel: "Systemansicht: von der Kampagne bis zur bestätigten Buchung",
-  stations: [
-    { label: "Kampagne", title: "Schnuppergolf im Frühjahr" },
-    { label: "Landingpage", title: "Kurs ansehen und anmelden" },
-    { label: "Anfrage", title: "Anmeldung eingegangen" },
-    { label: "Marketing-CRM", title: "Kontakt und Interesse erkannt", seq: true },
-    {
-      label: "E-Mail-Sequenz",
-      title: "Automatisierte Begleitung gestartet",
-      seq: true,
-      sub: { label: "Eingebundener Inhalt", title: "Ratgeber zum Schnuppergolf" },
+  ctaPrimary: { label: "Live-Demo ansehen", hint: "ohne Anmeldung", target: "livedemo" },
+  ctaSecondary: { label: "Online-Erstgespräch vereinbaren", target: "erstgespraech" },
+  trust: ["Ihre Domain, Ihre Daten", "Keine Knebelverträge", "Ein Mensch am Telefon"],
+  ariaLabel: "Beispiel einer Clubwebsite mit Anmeldung, Concierge-Chat und Platzstatus",
+  demo: {
+    url: "golfclub-musterhausen.de",
+    brand: "GC Musterhausen",
+    nav: ["Club", "Platz", "Golf lernen", "Greenfee", "Mitglied werden"],
+    heroTitle: "Golf beginnt hier.",
+    heroBadge: "Schnuppergolf am Samstag",
+    tiles: ["Greenfee & Gastspiel", "Aktuell im Club"],
+    platzstatus: {
+      label: "Platzstatus",
+      valueStart: "Wintergrüns",
+      valueOpen: "Platz bespielbar",
     },
-    { label: "Buchung", title: "Platz im Kurs bestätigt" },
-  ],
+  },
+  anmeldung: {
+    av: "AB",
+    name: "Anna Berger",
+    sub: "Schnuppergolf · Samstag 10 Uhr · über Instagram",
+    status: "angemeldet",
+  },
+  concierge: {
+    title: "Concierge · Sonntag, 21:14 Uhr",
+    frage: "Kann ich morgen als Gast spielen?",
+    antwort:
+      "Ja, gern. Montag ab 8 Uhr, Greenfee 18 Loch 65 €. Soll ich Ihnen den Zahlungslink schicken?",
+  },
+  toggle: { title: "Platz bespielbar", sub: "Greenkeeper · Handy · 06:40 Uhr" },
 };
 
-/* ────────────────────────── 2 · Vorteile ────────────────────────── */
+/* ────────────────────────── 2 · Vertrauensleiste ────────────────────────── */
 
-/** Eine Vorteilskarte mit feststehender Mikrovisualisierung (viz = Illustrations-Id). */
-export interface Vorteil {
+export interface VertrauenData {
+  label: string;
+  clubs: string[];
+  siegel: string[];
+}
+
+export const startseiteVertrauen: VertrauenData = {
+  label: "Entwickelt mit",
+  clubs: [
+    "Golfclub Rehburg-Loccum",
+    "GC Hainmühlen-Bremerhaven",
+    "Golfclub Widukind-Land",
+    "Golfclub Sittensen",
+    "Münchner GC Eschenried",
+  ],
+  siegel: ["Hosting in Deutschland", "Ansprechpartner: PGA Golfprofessional"],
+};
+
+/* ────────────────────────── 3 · Drei Teile (Bento) ────────────────────────── */
+
+/** Illustrative Mikrovisualisierung einer Bento-Box (aria-hidden). */
+export type TeilViz =
+  | {
+      kind: "website";
+      url: string;
+      picTitle: string;
+      rows: { left: string; right: string }[];
+      own: string;
+    }
+  | {
+      kind: "crm";
+      rows: { av: string; name: string; sub: string; status: string; statusVariant?: "b" }[];
+    }
+  | {
+      kind: "log";
+      head: string;
+      events: { time: string; text: string; sub: string }[];
+      sum: string;
+    };
+
+export interface TeilBox {
+  no: string;
   title: string;
   text: string;
-  /** Welche feststehende, aria-hidden Mikrovisualisierung die Karte zeigt. */
-  viz: "funnel" | "book" | "crm" | "done";
+  /** Interner Teaser-Link (Live-Gate über internalHref). */
+  link: { label: string; path: string };
+  viz: TeilViz;
 }
 
-export interface VorteileData {
-  cards: Vorteil[];
-  cta: Cta;
+export const startseiteTeile: TeilBox[] = [
+  {
+    no: "/ 01",
+    title: "Ihre Clubwebsite.",
+    text: "Schnell, modern, unter Ihrer Domain. Jedes Angebot hat eine eigene Seite mit einer Frage und einer Handlung: anmelden, anfragen, bezahlen. Die Basis in jedem Paket – auch einzeln buchbar.",
+    link: { label: "Plattform im Überblick", path: "/plattform" },
+    viz: {
+      kind: "website",
+      url: "golfclub-musterhausen.de/schnuppergolf",
+      picTitle: "Schnuppergolf am Samstag",
+      rows: [
+        { left: "Samstag, 10 Uhr", right: "noch 4 Plätze" },
+        { left: "Zwei Stunden, alles gestellt", right: "39 €" },
+      ],
+      own: "Ihre Domain · Ihre Inhalte · Ihre Kontakte",
+    },
+  },
+  {
+    no: "/ 02",
+    title: "Neue Golfer finden Ihren Club.",
+    text: "Anzeigen bei Instagram, Facebook und Google – für Schnuppergolf, Platzreife, Mitgliedschaft, Greenfee und Firmen-Events. Danach die richtige Nachricht zur richtigen Zeit, automatisch.",
+    link: { label: "Wachstum & Vertrieb", path: "/wachstum-vertrieb" },
+    viz: {
+      kind: "crm",
+      rows: [
+        { av: "AB", name: "Anna Berger", sub: "Schnuppergolf · über Instagram", status: "angemeldet" },
+        {
+          av: "JK",
+          name: "Jens Kraft",
+          sub: "Platzreife · über Google",
+          status: "Erinnerung geplant",
+          statusVariant: "b",
+        },
+        { av: "FM", name: "Familie Meier", sub: "Mitgliedschaft · Gespräch vereinbart", status: "Termin" },
+        { av: "TS", name: "Tom Schulz", sub: "Greenfee · Gastfee bezahlt", status: "bezahlt" },
+      ],
+    },
+  },
+  {
+    no: "/ 03",
+    title: "Das Büro macht weniger Routine.",
+    text: "Fragen beantwortet der Concierge, der Platzstatus kommt vom Greenkeeper, die Gastfee bezahlt der Gast, der Turnierbericht schreibt sich aus der Ergebnisliste. Was bleibt, ist die Arbeit, für die man Menschen braucht.",
+    link: { label: "Clubprozesse", path: "/clubprozesse" },
+    viz: {
+      kind: "log",
+      head: "Sonntag · ohne das Büro erledigt",
+      events: [
+        { time: "06:40", text: "Platz auf „bespielbar“", sub: "Greenkeeper · Platzstatus" },
+        { time: "08:15", text: "Gastfee bezahlt und bestätigt", sub: "Gast · Gastfee" },
+        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", sub: "Concierge · beantwortet" },
+        { time: "17:50", text: "Turnierbericht veröffentlicht", sub: "Turnier-News · 3 Kanäle" },
+      ],
+      sum: "4 Vorgänge · 0 Anrufe im Büro",
+    },
+  },
+];
+
+/* ────────────────────────── 4 · Rollen-Slider ────────────────────────── */
+
+/** Sechs Rollen (Typ `RolleCard` aus content/plattform – Modul-Tags sind Labels, kein Status). */
+export const startseiteRollen: RolleCard[] = [
+  {
+    dir: "out",
+    label: "Vorstand · Präsidium",
+    name: "Vorstand",
+    question: "„Rechnet sich das?“",
+    text: "Mehr Mitglieder, nachvollziehbare Zahlen je Kampagne, überschaubare Kosten ohne Vertragsfalle. Ein Ansprechpartner, der die Branche kennt.",
+    mods: ["Reach", "Marketing-CRM", "Pakete"],
+  },
+  {
+    dir: "out",
+    label: "Geschäftsführung · Clubmanager",
+    name: "Clubmanager",
+    question: "„Ich will ein System, nicht fünf Werkzeuge.“",
+    text: "Ein Login für Website, Kampagnen, Kontakte und Kommunikation. Jeder Interessent hat eine Geschichte, die alle im Büro sehen.",
+    mods: ["Marketing-CRM", "Lifecycle", "Landingpages"],
+  },
+  {
+    dir: "in",
+    label: "Sekretariat · Clubbüro",
+    name: "Sekretariat",
+    question: "„Endlich Zeit für Menschen.“",
+    text: "Der Concierge nimmt die Routinefragen, die Gastfee läuft digital, der Platzstatus kommt vom Platz. Was bleibt, ist die Arbeit, für die man Sie braucht.",
+    mods: ["Concierge", "Gastfee", "Platzstatus"],
+  },
+  {
+    dir: "in",
+    label: "Greenkeeping",
+    name: "Greenkeeper",
+    question: "„Melden, nicht erklären.“",
+    text: "Ein Schalter auf dem Handy: bespielbar, Wintergrüns, gesperrt. Die Website ist in derselben Sekunde aktuell – ohne Anruf im Büro.",
+    mods: ["Platzstatus"],
+  },
+  {
+    dir: "out",
+    label: "Pro · Golfschule",
+    name: "Golflehrer",
+    question: "„Volle Kurse, ohne Nachtelefonieren.“",
+    text: "Schnuppergolf und Platzreife mit Anmeldung, Erinnerung und dem nächsten Angebot nach dem Kurs – automatisch.",
+    mods: ["Landingpages", "Lifecycle", "Content"],
+  },
+  {
+    dir: "in",
+    label: "Mannschaft · Turnierleitung",
+    name: "Captain",
+    question: "„Unser Spieltag soll sichtbar sein.“",
+    text: "Ergebnis per App eintragen, Bericht steht auf der Website und in den sozialen Kanälen – ohne dass jemand im Büro tippt.",
+    mods: ["Captains App", "Turnier-News"],
+  },
+];
+
+/* ────────────────────────── 5 · Ein Weg (Zeitleiste) ────────────────────────── */
+
+/** Illustratives Geräte-Fenster eines Schritts (aria-hidden). */
+export interface WegDevice {
+  head: string;
+  /** Bild-Platzhalter mit Titel (nur Schritt 1). */
+  pic?: string;
+  /** Fließtext im Fenster (Schritt 1/3). */
+  body?: string[];
+  /** Überschrift im Fenster (Schritt 2/3/4). */
+  title?: string;
+  /** Formularfelder (Schritt 2). */
+  fields?: string[];
+  /** Grüner Button (Schritt 1/2). */
+  button?: string;
+  /** Grüner Status-Tag (Schritt 3/4). */
+  tag?: string;
 }
 
-export const startseiteVorteile: VorteileData = {
-  cards: [
+export interface WegSchritt {
+  n: string;
+  zeit: string;
+  title: string;
+  text: string;
+  device: WegDevice;
+}
+
+export interface WegData {
+  schritte: WegSchritt[];
+  links: Cta[];
+}
+
+export const startseiteWeg: WegData = {
+  schritte: [
     {
-      title: "Mehr qualifizierte Anfragen",
-      text: "Ihre Angebote erreichen Menschen, für die sie im richtigen Moment relevant sind.",
-      viz: "funnel",
+      n: "01",
+      zeit: "Sonntag, 20:14",
+      title: "Die Anzeige",
+      text: "Instagram, 30 Kilometer um den Club: „Schnuppergolf am Samstag.“",
+      device: {
+        head: "Instagram",
+        pic: "Schnuppergolf am Samstag",
+        body: ["Zwei Stunden, alles gestellt. 39 €."],
+        button: "Platz sichern",
+      },
     },
     {
-      title: "Mehr Abschlüsse",
-      text: "Klare Wege führen Interessenten gezielt zur Anfrage, Buchung oder Mitgliedschaft.",
-      viz: "book",
+      n: "02",
+      zeit: "Sonntag, 20:16",
+      title: "Die Anmeldung",
+      text: "Drei Felder, fertig. Landet im Marketing-CRM – mit Herkunft der Anzeige.",
+      device: {
+        head: "Landingpage",
+        title: "Samstag, 10 Uhr – noch 4 Plätze",
+        fields: ["Anna Berger", "anna@…"],
+        button: "Anmelden",
+      },
     },
     {
-      title: "Mehr Überblick",
-      text: "Kontakte, Reaktionen und nächste Schritte bleiben strukturiert und steuerbar.",
-      viz: "crm",
+      n: "03",
+      zeit: "Donnerstag",
+      title: "Die Erinnerung",
+      text: "Was mitbringen, wo Treffpunkt. Automatisch. Kein Anruf im Sekretariat.",
+      device: {
+        head: "E-Mail · automatisch",
+        title: "Was Sie am Samstag erwartet",
+        body: ["Bequeme Kleidung reicht. Schläger stellen wir. Treffpunkt Clubhaus, 9:45 Uhr."],
+        tag: "Kein Anruf im Büro",
+      },
     },
     {
-      title: "Weniger Routine",
-      text: "Wiederkehrende Kommunikation und Aufgaben laufen einfacher und zunehmend digital.",
-      viz: "done",
+      n: "04",
+      zeit: "Vier Wochen später",
+      title: "Der nächste Schritt",
+      text: "Nach dem Kurs kam das Angebot zur Platzreife. Anna hat sich angemeldet.",
+      device: {
+        head: "Marketing-CRM",
+        title: "Anna Berger",
+        body: ["Schnuppergolf · teilgenommen", "Platzreife · angemeldet"],
+        tag: "Das Büro hat nichts getippt",
+      },
     },
   ],
-  cta: { label: "GolfNext im Überblick", target: "intern", href: "/plattform" },
+  links: [
+    {
+      label: "So arbeitet GolfNext – alle Sequenzen im Detail",
+      target: "intern",
+      href: "/plattform/so-arbeitet-golfnext",
+    },
+    { label: "Live-Demo ansehen", target: "livedemo" },
+  ],
 };
 
-/* ────────────────────────── 3 · Journey + Zitat ────────────────────────── */
+/* ────────────────────────── 6 · Pakete (Fassung 2, ohne Preise) ────────────────────────── */
 
-/** Ein Journey-Schritt (obere Ebene). Die UI-Ausschnitte je Schritt sind dekorativ. */
-export interface JourneyStep {
-  /** „Schritt 1" … „Schritt 4". */
+/**
+ * Teaser eines Pakets auf der Startseite. **Ohne Preise/Summen** – die stehen
+ * ausschließlich auf `/pakete`. `base` ist der navyfarbene Sockel mit „+"-Marke;
+ * die übrigen Karten tragen Modul-Labels (kein Status).
+ */
+export interface PaketTeaser {
+  base?: boolean;
+  role: string;
+  name: string;
+  text: string;
+  mods?: string[];
+}
+
+export interface PaketeData {
+  cards: PaketTeaser[];
+  note: string;
+  link: { label: string; path: string };
+}
+
+export const startseitePakete: PaketeData = {
+  cards: [
+    {
+      base: true,
+      role: "Basis in jedem Paket",
+      name: "Ihre Clubwebsite",
+      text: "Schnell, modern, unter Ihrer Domain. Technisch betreut, mit Landingpages für jedes Angebot. Auch einzeln buchbar.",
+    },
+    {
+      role: "Marketing und Nachfrage",
+      name: "Wachstum",
+      text: "Anzeigen, Landingpages, Marketing-CRM und automatische Nachrichten: Aus Sichtbarkeit werden Anmeldungen, die begleitet werden.",
+      mods: ["Reach", "Search", "Landingpages", "Marketing-CRM", "Lifecycle", "Content"],
+    },
+    {
+      role: "Digitale Clubzentrale",
+      name: "Komplett",
+      text: "Alles aus Wachstum plus Concierge, Platzstatus, Gastfee, Turnier-News, Firmen-Events und Captains App. Wachstum nach außen, Entlastung nach innen.",
+      mods: ["Wachstum", "+ alle Clubprozesse"],
+    },
+  ],
+  note: "Alle Preise stehen offen auf der Paketseite – ohne Anfrage, ohne Angebot anfordern. Das Werbebudget legen Sie selbst fest.",
+  link: { label: "Pakete und Preise ansehen", path: "/pakete" },
+};
+
+/* ────────────────────────── 7 · Vier Zusagen + Fred ────────────────────────── */
+
+export interface Zusage {
   n: string;
   title: string;
   text: string;
 }
 
-/** Eine der zwei dauerhaften Plattformebenen (Entlasten / Verbinden). */
-export interface JourneyBand {
-  name: string;
-  text: string;
-  /** Dauerhaft sichtbare Aktionen entlang der Strecke (Endzustand: alle aktiv). */
-  actions: string[];
+export interface ZusagenData {
+  vows: Zusage[];
+  zitat: { text: string; name: string; role: string };
 }
 
-export interface JourneyData {
-  steps: JourneyStep[];
-  bands: JourneyBand[];
-  quote: { text: string; name: string; role: string };
-  ctaPrimary: Cta;
-  ctaSecondary: Cta;
-}
-
-export const startseiteJourney: JourneyData = {
-  steps: [
+export const startseiteZusagen: ZusagenData = {
+  vows: [
     {
-      n: "Schritt 1",
-      title: "Gefunden werden",
-      text: "Kampagnen, Search und relevanter Content schaffen Aufmerksamkeit.",
+      n: "1",
+      title: "Ihre Domain, Ihre Daten, Ihr Zugang.",
+      text: "Website, Inhalte und Kontakte gehören Ihrem Club. Nicht uns.",
     },
     {
-      n: "Schritt 2",
-      title: "Führen",
-      text: "Landingpages und klare Angebote geben Orientierung.",
+      n: "2",
+      title: "Alles mitnehmen.",
+      text: "Wenn Sie gehen, bekommen Sie alle Daten in offenen Formaten. Kein Lock-in durch Technik.",
     },
     {
-      n: "Schritt 3",
-      title: "Konvertieren",
-      text: "Anfragen, Buchungen und Bezahlung werden einfach.",
+      n: "3",
+      title: "Faire Laufzeiten.",
+      text: "Keine Knebelverträge. Wer bleibt, bleibt wegen der Qualität.",
     },
     {
-      n: "Schritt 4",
-      title: "Entwickeln",
-      text: "Marketing-CRM, automatisierte E-Mail-Sequenzen und passende Inhalte begleiten den Kontakt weiter.",
+      n: "4",
+      title: "Ein Mensch am Telefon.",
+      text: "Ihr Ansprechpartner ist Fred Hoffmann, PGA Golfprofessional. Kein Ticketsystem.",
     },
   ],
-  bands: [
-    {
-      name: "Entlasten",
-      text: "Wiederkehrende Kommunikation und Abläufe laufen digital.",
-      actions: [
-        "Häufige Frage beantwortet",
-        "Bestätigung versendet",
-        "E-Mail-Sequenz gestartet",
-        "Inhalt bereitgestellt",
-      ],
-    },
-    {
-      name: "Verbinden",
-      text: "Kontakte, Inhalte, Reaktionen und nächste Schritte bleiben in einem System.",
-      actions: [
-        "Herkunft erfasst",
-        "Kontakt angelegt",
-        "Zielgruppe zugeordnet",
-        "Nächster Schritt vorbereitet",
-      ],
-    },
-  ],
-  quote: {
-    text: "Aus Aufmerksamkeit muss Interesse werden. Aus Interesse eine konkrete Handlung. Und aus dieser Handlung kann eine langfristige Beziehung zum Club entstehen.",
+  zitat: {
+    text: "Ein gutes Gespräch lässt sich nicht automatisieren. Die Arbeit davor oft schon.",
     name: "Fred Hoffmann",
-    role: "Gründer von GolfNext · PGA Golfprofessional",
+    role: "Gründer von GolfNext, PGA Golfprofessional, seit mehr als 30 Jahren im Golfmarkt",
   },
-  ctaPrimary: {
-    label: "So arbeitet GolfNext",
-    target: "intern",
-    href: "/plattform/so-arbeitet-golfnext",
-  },
-  ctaSecondary: { label: "Live-Demo ansehen", target: "livedemo" },
 };
 
-/* ────────────────────────── 4 · Wachstum ↔ Clubprozesse ────────────────────────── */
+/* ────────────────────────── 8 · Praxis ────────────────────────── */
 
-export interface UmschalterCard {
+/** Ein Praxis-Artikel als beschrifteter Platzhalter („Bild folgt" wortgleich). */
+export interface PraxisArtikel {
+  /** Rubrik-Farbe: default (blau), pr (grün), td (navy/mist). */
+  catVariant: "default" | "pr" | "td";
+  cat: string;
   title: string;
   text: string;
-}
-
-export interface UmschalterData {
-  wachstum: { cards: UmschalterCard[]; cta: Cta };
-  prozesse: {
-    cards: UmschalterCard[];
-    ergaenzungLabel: string;
-    ergaenzungValue: string;
-    cta: Cta;
-  };
-}
-
-export const startseiteUmschalter: UmschalterData = {
-  wachstum: {
-    cards: [
-      {
-        title: "Schnuppergolf und Platzreife",
-        text: "Aus erster Neugier wird eine konkrete Anmeldung.",
-      },
-      {
-        title: "Mitgliedschaft und Clubwechsel",
-        text: "Aus Interesse entsteht ein persönliches Mitgliedschaftsgespräch.",
-      },
-      {
-        title: "Greenfee und Gäste",
-        text: "Von der Suche führt ein klarer Weg zur passenden Spielmöglichkeit.",
-      },
-      {
-        title: "Firmenkunden",
-        text: "Aus vorhandenen Leistungen werden professionelle Eventangebote.",
-      },
-    ],
-    cta: { label: "Wachstum und Vertrieb ansehen", target: "intern", href: "/wachstum-vertrieb" },
-  },
-  prozesse: {
-    cards: [
-      {
-        title: "Concierge",
-        text: "Beantwortet häufige Fragen auch außerhalb der Bürozeiten.",
-      },
-      {
-        title: "Platzstatus",
-        text: "Bringt aktuelle Platzinformationen in wenigen Schritten online.",
-      },
-      {
-        title: "Firmen-Events",
-        text: "Erfasst Anfragen vollständig und leitet sie gezielt weiter.",
-      },
-      {
-        // Benennungsregel: „Turnier-News" statt „Club News" (Briefing schreibt hier noch „Club News").
-        title: "Turnier-News",
-        text: "Macht aus vorhandenen Informationen schnell aktuelle Meldungen.",
-      },
-    ],
-    ergaenzungLabel: "Weitere Clubprozesse auf der Plattform:",
-    ergaenzungValue: "Gastfee und Captains App",
-    cta: { label: "Clubprozesse ansehen", target: "intern", href: "/clubprozesse" },
-  },
-};
-
-/* ────────────────────────── 5 · Praxis ────────────────────────── */
-
-export interface PraxisKennzahl {
-  /** Wert, wortgleich – z. B. „Rund 1.600" oder „68 Prozent". Wird per CountUp einmal
-   * hochgezählt; der Endwert ist exakt dieser String (Reduced-Motion/No-JS = Endwert). */
-  value: string;
-  label: string;
+  autor: { initialen: string; name: string };
+  datum: string;
+  lesezeit: string;
 }
 
 export interface PraxisData {
-  chat: {
-    name: string;
-    role: string;
-    liveLabel: string;
-    messages: { from: "q" | "a"; text: string; time: string }[];
-    placeholder: string;
-  };
-  anna: {
-    tag: string;
-    title: string;
-    text: string;
-    kennzahlen: PraxisKennzahl[];
-    status: string;
-    cta: Cta;
-  };
-  second: {
-    club: string;
-    title: string;
-    text: string;
-    meta: string;
-    cta: Cta;
-    shot: { tagline: string; title: string; text: string };
-  };
-  cta: Cta;
+  artikel: PraxisArtikel[];
+  link: { label: string; path: string };
 }
 
 export const startseitePraxis: PraxisData = {
-  chat: {
-    name: "ANNA",
-    role: "Digitaler Concierge des Clubs",
-    liveLabel: "antwortet rund um die Uhr",
-    messages: [
-      { from: "q", text: "Wann startet der nächste Schnupperkurs?", time: "22:38 Uhr" },
-      {
-        from: "a",
-        text: "Der nächste Schnupperkurs beginnt am Samstag, 14. März, um 10 Uhr. Es sind noch vier Plätze frei – soll ich Ihnen den Anmeldelink schicken?",
-        time: "ANNA · 22:38 Uhr",
-      },
-      { from: "q", text: "Was kostet ein Greenfee unter der Woche?", time: "22:39 Uhr" },
-      {
-        from: "a",
-        text: "Werktags 55 Euro, mit DGV-Ausweis 45 Euro. Startzeiten können Sie direkt online reservieren.",
-        time: "ANNA · 22:39 Uhr",
-      },
-    ],
-    placeholder: "Frage an den Club stellen …",
-  },
-  anna: {
-    tag: "Hauptbeispiel · Golfclub Rehburg-Loccum",
-    title: "Der digitale Concierge ANNA",
-    text: "ANNA beantwortet Fragen zu Schnuppergolf, Platzreife, Greenfee, Mitgliedschaft und Clubbetrieb. Auch dann, wenn das Clubteam nicht erreichbar ist.",
-    // Werte wortgleich – einmaliger Hochzähler per CountUp (Briefing 0015), Endwert
-    // = exakt dieser String (Reduced-Motion/No-JS zeigt ihn sofort). Nichts erfinden.
-    kennzahlen: [
-      { value: "Rund 1.600", label: "geführte Dialoge" },
-      { value: "Rund 600", label: "Nutzerinnen und Nutzer" },
-      { value: "68 Prozent", label: "Nutzung außerhalb regulärer Bürozeiten" },
-      { value: "72 Prozent", label: "vollständig geführte Dialoge" },
-    ],
-    status: "Pilotprojekt im Clubbetrieb",
-    cta: { label: "Praxisbeispiel ansehen", target: "intern", href: "/praxis" },
-  },
-  second: {
-    club: "Golfclub Bad Wörishofen",
-    title: "Aus Leistungen werden Angebote, die sich verkaufen lassen.",
-    text: "Sponsoring und Firmen-Events wurden klar strukturiert und professionell vermarktbar gemacht.",
-    meta: "Kommunikations- und Vermarktungsprojekt",
-    cta: { label: "Praxisbeispiel ansehen", target: "intern", href: "/praxis" },
-    shot: {
-      tagline: "Foto folgt",
-      title: "Golfclub Bad Wörishofen",
-      text: "Ein Eindruck aus dem Projekt folgt an dieser Stelle.",
-    },
-  },
-  cta: { label: "GolfNext in der Praxis", target: "intern", href: "/praxis" },
-};
-
-/* ────────────────────────── 6 · Pakete (Fassung 2, aus 3.1a) ────────────────────────── */
-
-/** Ein Preisfeld: großer Wert + zweizeiliger Schlüssel (nie mit anderen addiert). */
-export interface PricePair {
-  value: string;
-  keyLines: string[];
-}
-
-export interface StartPaketKarte {
-  /** Stufenklasse a|b|c (Stripe-Farbe). b ist die mittige Karte (Navy-Rahmen, KEINE Bestseller-Badge). */
-  variant: "a" | "b" | "c";
-  mid?: boolean;
-  role: string;
-  name: string;
-  claim: string;
-  modLabel: string;
-  /** Modul-Preisfelder der Stufe (Einrichtung + monatlich) – stehen getrennt vom Sockel. */
-  modRows: PricePair[];
-  link: Cta;
-}
-
-export interface PaketeData {
-  sockband: {
-    label: string;
-    name: string;
-    prices: PricePair[];
-    badge: string;
-  };
-  cards: StartPaketKarte[];
-  note: string;
-  mainLink: Cta;
-}
-
-export const startseitePakete: PaketeData = {
-  sockband: {
-    label: "Basis in jedem Paket",
-    name: "Ihre Clubwebsite",
-    prices: [
-      { value: "6.800 €", keyLines: ["einmalige Einrichtung"] },
-      { value: "238 €", keyLines: ["monatlich für Betrieb und Support"] },
-    ],
-    badge: "Auch einzeln buchbar",
-  },
-  cards: [
+  artikel: [
     {
-      variant: "a",
-      role: "Marketing und Nachfrage",
-      name: "Wachstum",
-      claim: "Aus digitaler Sichtbarkeit werden Anfragen, die begleitet werden.",
-      modLabel: "Wachstumsmodule",
-      modRows: [
-        { value: "5.200 €", keyLines: ["einmalige", "Einrichtung"] },
-        { value: "312 €", keyLines: ["monatlich"] },
-      ],
-      link: { label: "Paket ansehen", target: "pakete" },
+      catVariant: "default",
+      cat: "Mitgliedergewinnung",
+      title:
+        "Warum Ihr Schnupperkurs im Netz nicht gefunden wird – und was stattdessen funktioniert",
+      text: "Wer „Golf lernen“ googelt, landet bei Portalen. Wer abends bei Instagram scrollt, hat noch gar nicht gesucht.",
+      autor: { initialen: "FH", name: "Fred Hoffmann" },
+      datum: "5. September 2026",
+      lesezeit: "6 Min.",
     },
     {
-      variant: "b",
-      mid: true,
-      role: "Digitale Clubzentrale",
-      name: "Komplett",
-      claim: "Wachstum nach außen und Entlastung nach innen in einem System.",
-      modLabel: "Komplettmodule",
-      modRows: [
-        { value: "7.200 €", keyLines: ["einmalige", "Einrichtung"] },
-        { value: "462 €", keyLines: ["monatlich"] },
-      ],
-      link: { label: "Paket ansehen", target: "pakete" },
+      catVariant: "pr",
+      cat: "Praxisbericht",
+      title: "Rehburg-Loccum: Ein Concierge zieht ins Clubbüro",
+      text: "Wie ein Pilotclub die häufigsten Fragen aus dem Telefon geholt hat – und was das Sekretariat dazu sagt.",
+      autor: { initialen: "FH", name: "Fred Hoffmann" },
+      datum: "28. August 2026",
+      lesezeit: "5 Min.",
     },
     {
-      variant: "c",
-      role: "Clubspezifisch",
-      name: "Individuell",
-      claim: "Für Anlagen mit eigenen Systemen oder mehreren Standorten.",
-      modLabel: "Individuelle Module",
-      modRows: [
-        { value: "auf Anfrage", keyLines: ["einmalige", "Einrichtung"] },
-        { value: "ab 662 €", keyLines: ["monatlich"] },
-      ],
-      link: { label: "Anforderungen besprechen", target: "pakete" },
+      catVariant: "td",
+      cat: "Technik & Datenschutz",
+      title: "Wem gehören die Daten Ihres Clubs? Vier Fragen an jeden Anbieter",
+      text: "Domain, Inhalte, Kontakte, Export: Was ein Vorstand vor der Unterschrift klären sollte.",
+      autor: { initialen: "SK", name: "Stefan Kühne" },
+      datum: "7. August 2026",
+      lesezeit: "7 Min.",
     },
   ],
-  note: "Alle Preise netto zuzüglich Umsatzsteuer. Das Werbebudget legen Sie selbst fest; darauf berechnen wir 10 % Verwaltungshonorar. Stand September 2026.",
-  mainLink: { label: "Pakete und Leistungen vergleichen", target: "pakete" },
+  link: { label: "Alle Beiträge", path: "/praxis" },
 };
 
 /* ────────────────────────── Seiten-Content + footerClose ────────────────────────── */
@@ -434,54 +493,56 @@ export const startseite: PageContent = {
   sections: [
     {
       id: "hero",
-      eyebrow: "Die aktive digitale Clubzentrale für Golfclubs",
-      headlineLines: ["Mehr Menschen für Ihren Club.", "Weniger Aufwand für Ihr Team."],
+      eyebrow: "Die Plattform für Golfclubs",
+      headline: "Mehr Golfer auf dem Platz. Weniger Arbeit im Clubbüro.",
       text: [
-        "GolfNext verbindet Website, Kampagnen, Landingpages, Marketing-CRM, automatisierte E-Mail-Sequenzen und ausgewählte Clubprozesse. So gewinnt Ihr Club mehr qualifizierte Kontakte und Ihr Team mehr Zeit.",
+        "GolfNext ist eine Clubwebsite, die Anmeldungen annimmt. Kampagnen, die neue Golfer bringen. Und digitale Helfer, die dem Büro die Routine abnehmen. Ein System, das alles zusammenhält – entwickelt mit Golfclubs, betreut von einem PGA Golfprofessional.",
       ],
     },
     {
-      id: "vorteile",
-      eyebrow: "Was sich für Ihren Club verbessert",
-      headline: "Mehr Nachfrage. Mehr Abschlüsse. Weniger Aufwand.",
-    },
-    {
-      id: "journey",
-      eyebrow: "So arbeitet GolfNext",
-      headline: "Vier Schritte. Zwei Wirkungen. Ein verbundenes System.",
+      id: "teile",
+      eyebrow: "Was GolfNext ist",
+      headline: "Drei Teile. Ein System.",
       text: [
-        "GolfNext begleitet Menschen vom ersten digitalen Kontakt bis zum nächsten wichtigen Schritt mit Ihrem Club.",
+        "Eine Website, die Ihrem Club gehört. Kampagnen, die neue Golfer bringen. Und Abläufe, die ohne das Büro laufen. Jedes Teil funktioniert allein – zusammen wird daraus die digitale Clubzentrale.",
       ],
     },
     {
-      id: "umschalter",
-      eyebrow: "Zwei Seiten derselben Plattform",
-      headline: "Wachstum nach außen. Entlastung nach innen.",
-      text: ["GolfNext gewinnt neue Kontakte und erleichtert gleichzeitig den Cluballtag."],
+      id: "rollen",
+      eyebrow: "Für jede Rolle im Club",
+      headline: "Jeder im Club hat eine andere Frage. GolfNext hat für jede eine Antwort.",
+      text: ["Nach rechts wischen oder mit den Pfeilen blättern."],
     },
     {
-      id: "praxis",
-      eyebrow: "GolfNext im Cluballtag",
-      headline: "Was im Cluballtag zählt, muss dort funktionieren.",
-      text: [
-        "GolfNext entsteht nicht am Reißbrett, sondern in realen Projekten und Abläufen mit Golfclubs.",
-      ],
+      id: "weg",
+      eyebrow: "So greift es ineinander",
+      headline: "Ein Klick bei Instagram. Vier Wochen später ein Mitglied.",
+      text: ["Ein Beispiel, wie es tatsächlich läuft – und wo das Clubbüro dabei nichts tippen muss."],
     },
     {
       id: "pakete",
-      eyebrow: "Drei Ausbaustufen",
-      headline: "GolfNext wächst mit den Zielen Ihres Clubs.",
+      eyebrow: "Pakete",
+      headline: "Eine Basis. Dazu genau das, was Ihr Club braucht.",
       text: [
-        "Jeder Club startet mit derselben Basis: einer individuellen Clubwebsite, die technisch betreut wird. Darauf kommt genau das, was Ihr Club zusätzlich braucht.",
+        "Jeder Club startet mit derselben Basis: einer eigenen Clubwebsite, die technisch betreut wird. Darauf kommt der Modulblock, der zu Ihren Zielen passt – Wachstum nach außen oder beides zusammen.",
       ],
+    },
+    {
+      id: "zusagen",
+      eyebrow: "Woran Sie uns messen können",
+      headline: "Vier Zusagen, die im Vertrag stehen.",
+    },
+    {
+      id: "praxis",
+      eyebrow: "Praxis",
+      headline: "Was in Golfclubs wirklich funktioniert.",
     },
   ],
   footerClose: {
     eyebrow: "GolfNext persönlich kennenlernen",
     headline: "Was könnte GolfNext in Ihrem Club verändern?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele, Ihre größten Hebel und die Frage, ob GolfNext grundsätzlich zu Ihrem Club passt.",
-      "Sie erhalten eine ehrliche erste Einschätzung, welche Lösungen und welche Ausbaustufe für Sie sinnvoll sein könnten.",
+      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
       label: "Online-Erstgespräch vereinbaren",
@@ -489,7 +550,10 @@ export const startseite: PageContent = {
       target: "erstgespraech",
     },
     secondary: { label: "Oder zuerst die Live-Demo ansehen", target: "livedemo" },
-    persoenlicheZeile:
-      "Ihr Ansprechpartner ist Fred Hoffmann, Gründer von GolfNext und seit mehr als 30 Jahren professionell im Golfmarkt tätig.",
+    // Wortgleich aus Mock 3.1b `.f-person`: Name (fett) + Rolle, mit Porträt-Platzhalter.
+    person: {
+      name: "Fred Hoffmann",
+      role: "Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt",
+    },
   },
 };

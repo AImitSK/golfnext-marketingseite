@@ -1,202 +1,457 @@
-/* Portiert aus docs/design-system/mocks/3.1-startseite.html (.hero/.sysview/.track/
-   .stations/.stn/.card-ui/.subcard, Z.62–103, 377). Farben auf --gn-* umgestellt,
-   literale rgba-Tints kommentiert.
-   Abweichung 1.7-Bewegung: Die JS-Zustände (.sysview.on, wandernder Puls) entfallen.
-   Der Endzustand steht im Server-HTML (ohne JS voll sichtbar): Verbindungslinie
-   vollständig, Knoten/Sequenzkarten „lit". Der 1.7-Rise-Wrapper blendet die Stationen
-   nach Mount einmalig gestaffelt auf. */
+/* Portiert aus docs/design-system/mocks/3.1b-startseite-neufassung.html
+   (.hero/.demo/.browser/.site/.pstat/.fl/.tgl). Farben auf --gn-* umgestellt,
+   literale Tints kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4 px.
+
+   Bewegung (invertiert ggü. Mock für SSR/No-JS): Der ENDZUSTAND steht im Server-HTML
+   (alle Karten sichtbar, Toggle an, Platzstatus offen = „Platz bespielbar"). Nur mit
+   JS und ohne reduzierte Bewegung setzt die Komponente kurz `.start` (Karten laufen
+   ein) und spielt die Toggle-/Platzstatus-Sequenz einmalig ab. Nur opacity/transform
+   (kein CLS); die Demo läuft rechts aus dem Raster (Bleed), `.hero{overflow:hidden}`
+   fängt den Seiten-Overflow ab. */
 
 .hero {
   background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
   color: #fff;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* fängt den Bleed der Demo (width > 100%) ab → kein Seiten-Overflow */
 }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(900px 420px at 88% -5%, rgba(127, 211, 240, 0.16), transparent 62%); /* --gn-sky als Schein */
+  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
   pointer-events: none;
 }
-/* Hero-Aufteilung = neuer Seiten-Standard (Entscheidung Stefan, 06.09.2026):
-   dominante Textspalte 1.75fr, Systemspalte 1fr; unter 1080px einspaltig.
-   Übernommen aus dem Pakete-Hero, dokumentiert in docs/design-system/README.md. */
 .in {
   position: relative;
   z-index: 1;
-  max-width: var(--gn-wrap);
+  max-width: var(--gn-wrap-wide);
   margin: 0 auto;
-  padding: 76px 40px 84px;
+  padding: 96px 40px 110px;
   display: grid;
   grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
-  gap: 56px;
+  gap: 48px;
   align-items: center;
 }
-
+.txt {
+  padding-right: 110px;
+  min-width: 0;
+}
 .h1 {
   color: #fff;
-  font-size: clamp(32px, 4.3vw, 52px); /* 1:1 aus Mock (.hero h1) */
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
   font-weight: 800;
-  line-height: 1.07;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
   max-width: 19ch;
   text-wrap: balance;
-}
-.br {
-  display: block;
+  margin: 0;
 }
 .lead {
   color: var(--gn-on-dark-text);
-  font-size: clamp(16px, 1.35vw, 18.5px);
-  margin-top: 22px;
-  max-width: 58ch;
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 50ch;
   line-height: 1.62;
 }
 .acts {
   display: flex;
-  gap: 22px;
+  gap: 26px;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 34px;
+  margin-top: 38px;
 }
-/* Sekundäre Aktion auf dunkel: heller Link mit unterer Linie (.b2). */
 .b2 {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   color: var(--gn-on-dark-link);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15.5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
   padding-bottom: 3px;
 }
-
-/* ---- Systemansicht (Strecke) ---- */
-.sysview {
-  position: relative;
-  min-width: 0;
-}
-/* Verbindungslinie – baut sich per RevealLine (scaleY, transform-origin oben)
-   einmalig auf; Endzustand voll gefüllt, kein wandernder Puls. */
-.track {
-  position: absolute;
-  left: 26px;
-  top: 14px;
-  bottom: 14px;
-  width: 2px;
-  border-radius: 2px;
-  background: linear-gradient(180deg, rgba(0, 232, 5, 0.85), rgba(0, 232, 5, 0.45)); /* Signalgrün-Linie (Grün-Regel: Linie ok) */
-}
-.stations {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-  position: relative;
-  z-index: 1;
-}
-.stn {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  /* Endzustand sichtbar (kein opacity:0 im CSS – der Rise-Wrapper blendet nach Mount ein). */
-}
-.knot {
-  flex: 0 0 auto;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #0b4c6b; /* dunkler Navy-Knoten, Mock-Wert */
-  border: 2px solid var(--gn-signal); /* „lit"-Endzustand */
-  margin-left: 20px;
-  margin-top: 14px;
-}
-.cardUi {
-  flex: 1;
-  min-width: 0;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 5px; /* 5px: UI-Ausschnitt-Radius 1:1 aus Mock (.card-ui), bewusst nicht --gn-radius */
-  padding: 11px 14px;
-}
-.cl {
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gn-sky);
-  font-weight: 700;
-}
-.ct {
-  font-size: 14.5px;
-  color: #fff;
-  font-weight: 600;
-  margin-top: 3px;
-  letter-spacing: -0.01em;
-}
-.bars {
-  display: flex;
-  gap: 5px;
-  margin-top: 8px;
-}
-.bars i {
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.28);
+.b2 svg {
+  width: 15px;
+  height: 15px;
   display: block;
 }
-.bars i:first-child {
-  width: 38%;
-}
-.bars i:last-child {
-  width: 22%;
-}
-/* Marketing-CRM und E-Mail-Sequenz: Signalgrün-Rand (Teil der Sequenz). */
-.seq .cardUi {
-  border-color: rgba(0, 232, 5, 0.42);
-  background: rgba(0, 232, 5, 0.07);
-}
-/* Signalgrün-Text: `.cardUi` liegt im Navy-Hero (--gn-navy-deep/--gn-navy); die
-   rgba(0,232,5,.07)-Fläche ist auf dem dunklen Träger effektiv navy-getönt – Text
-   auf dunklem Grund, Grün-Regel eingehalten. */
-.seq .cl {
-  color: var(--gn-signal);
-}
-/* Eingebundener Inhalt – gehört zur Sequenz, kein eigener Hauptschritt. */
-.subcard {
-  margin-top: 9px;
-  margin-left: 14px;
-  border-left: 2px solid rgba(0, 232, 5, 0.45);
-  padding-left: 12px;
-}
-.sl {
-  font-size: 9.5px;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--gn-sky);
-  font-weight: 700;
-}
-.stt {
+.trust {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 34px;
   font-size: 13px;
-  color: #fff;
-  font-weight: 600;
-  margin-top: 2px;
+  color: var(--gn-on-dark-text);
+}
+.trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
 }
 
+/* ---- Bleed-Demo: Clubwebsite + drei schwebende Karten (illustrativ) ---- */
+.demo {
+  position: relative;
+  min-width: 0;
+  width: 150%; /* läuft rechts über den Rand hinaus (Bleed) */
+  padding: 30px 0 76px;
+}
+.browser {
+  background: #fff;
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 60px 120px -50px rgba(0, 0, 0, 0.65); /* Tiefen-Schatten, 1:1 aus Mock */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.bar {
+  height: 40px;
+  background: var(--gn-mist);
+  border-bottom: 1px solid var(--gn-line);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+}
+.bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkte, Mock-Wert */
+  display: block;
+}
+.bar span {
+  margin-left: 12px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 4px;
+  padding: 4px 12px;
+  width: 280px;
+}
+.site {
+  padding: 22px 26px 26px;
+  color: var(--gn-ink);
+}
+.snav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-bottom: 18px;
+}
+.snav b {
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  margin-right: auto;
+}
+.shero {
+  height: 170px;
+  border-radius: 8px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  position: relative;
+  margin-bottom: 18px;
+}
+.shero .stitle {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  font-family: var(--gn-font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+}
+.shero .sb {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  border-radius: 4px;
+  padding: 7px 12px;
+}
+.sgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.tile {
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.tile b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  color: var(--gn-navy);
+  letter-spacing: -0.01em;
+}
+.tile i {
+  display: block;
+  height: 6px;
+  background: var(--gn-sand);
+  border-radius: 3px;
+  margin-top: 8px;
+}
+.tile i + i {
+  width: 60%;
+}
+.pstat {
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #fff;
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease;
+}
+.pl {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.pv {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+  font-family: var(--gn-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+}
+.pv i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c9a14a; /* Gold-Ton „Wintergrüns", Mock-Wert */
+  display: block;
+  transition: background 0.5s ease;
+}
+.pstat.open {
+  border-color: #cfe0d2; /* zarter Grün-Rand, Mock-Wert */
+  background: var(--gn-ok-bg);
+}
+.pstat.open .pv i {
+  background: var(--gn-signal); /* Signalgrün-Punkt (Grün-Regel: Punkt erlaubt) */
+}
+
+/* ---- Drei schwebende Karten ---- */
+.fl {
+  position: absolute;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 10px;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  transition: transform 0.6s var(--gn-ease);
+}
+/* Ausgangszustand (nur transient mit JS): Karten laufen von unten ein. Bewusst NUR
+   Transform (kein Opacity), damit der Kartentext nie in einem kontrastschwachen
+   Zwischenzustand liegt (axe) – wie in der Bento-Neufassung dokumentiert. */
+.start .fl {
+  transform: translateY(14px) scale(0.97);
+}
+.f1 {
+  left: -96px;
+  top: -4px;
+  width: 290px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 11px;
+  align-items: center;
+  transition-delay: 0.4s;
+}
+.f1 .av {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: #fff;
+  font-family: var(--gn-font-display);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.f1 b {
+  display: block;
+  font-size: 13px;
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.f1 span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--gn-muted);
+}
+.f1 .stt {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+.f2 {
+  left: -110px;
+  bottom: 0;
+  width: 300px;
+  padding: 12px 14px;
+  transition-delay: 1s;
+}
+.f2 .t {
+  font-size: 10.5px;
+  color: var(--gn-muted);
+  margin-bottom: 8px;
+}
+.f2 .q {
+  font-size: 12.5px;
+  color: #fff;
+  background: var(--gn-navy);
+  border-radius: 10px 10px 2px 10px;
+  padding: 8px 11px;
+  margin-left: 40px;
+  line-height: 1.4;
+}
+.f2 .a {
+  font-size: 12.5px;
+  color: var(--gn-ink);
+  background: var(--gn-mist);
+  border-radius: 10px 10px 10px 2px;
+  padding: 8px 11px;
+  margin: 8px 40px 0 0;
+  line-height: 1.4;
+}
+.f3 {
+  left: 300px;
+  top: -14px;
+  width: 230px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition-delay: 1.6s;
+}
+.f3 div {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gn-ink);
+}
+.f3 div span {
+  display: block;
+  font-size: 10.5px;
+  color: var(--gn-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.tgl {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #c9c3b6; /* Aus-Zustand, Mock-Wert */
+  position: relative;
+  flex: 0 0 auto;
+  transition: background 0.35s ease;
+}
+.tgl::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.tgl.on {
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+}
+.tgl.on::after {
+  transform: translateX(20px);
+}
+
+@media (max-width: 1180px) {
+  .txt {
+    padding-right: 90px;
+  }
+}
 @media (max-width: 1080px) {
   .in {
     grid-template-columns: minmax(0, 1fr);
-    gap: 44px;
-    padding-top: 60px;
+    gap: 56px;
+    padding: 70px 26px 90px;
   }
-}
-@media (max-width: 960px) {
-  .in {
-    padding-left: 26px;
-    padding-right: 26px;
+  .txt {
+    padding-right: 0;
+  }
+  .demo {
+    width: 100%;
+    padding: 30px 0 36px;
+  }
+  .f1 {
+    left: -10px;
+  }
+  .f2 {
+    left: -10px;
+  }
+  .f3 {
+    left: auto;
+    right: -10px;
   }
 }
 @media (max-width: 620px) {
   .in {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 70px 20px 90px;
+  }
+  .site {
+    padding: 16px;
+  }
+  .shero {
+    height: 120px;
+  }
+  .sgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tile:nth-child(3) {
+    display: none;
+  }
+  .f1 {
+    width: 250px;
+    left: -6px;
+  }
+  .f2 {
+    display: none;
+  }
+  .f3 {
+    width: 200px;
+    left: auto;
+    right: -6px;
+  }
+  .demo {
+    padding: 26px 0 10px;
   }
 }

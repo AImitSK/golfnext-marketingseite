@@ -1,0 +1,143 @@
+/* Portiert aus 3.1b-startseite-neufassung.html (Abschnitt 6 · .pkgrid/.pkx/.pkline).
+   Farben auf --gn-* umgestellt, literale Tints kommentiert. Karten-Radius
+   --gn-radius-lg (12).
+
+   Wichtig (CLAUDE.md/Briefing 0021): Der Paketblock zeigt Basis + Modulblöcke als
+   Teaser OHNE Preise/Summen. Preise stehen ausschließlich auf `/pakete` (Link in der
+   `.pkline`). Keine Bestseller-Optik, keine durchgestrichenen Preise, kein Modulstatus
+   (die Modul-Tags sind reine Namens-Labels). */
+
+.pkgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 52px;
+}
+/* `.pkxWrap` ist der Motion-Wrapper (RiseItem); der Hover-Lift sitzt auf `.pkx`,
+   weil Motion auf dem Wrapper nach dem Reveal einen Inline-`transform` setzt. */
+.pkxWrap {
+  min-width: 0;
+  display: flex;
+}
+.pkx {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 30px 30px 28px;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+.pkx:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
+  border-color: rgba(1, 65, 91, 0.35);
+}
+.base {
+  background: var(--gn-navy);
+  border-color: var(--gn-navy);
+  color: #fff;
+}
+.role {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.base .role {
+  color: var(--gn-signal); /* Signalgrün-Text auf Navy (Grün-Regel: erlaubt) */
+}
+.name {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 24px;
+  color: var(--gn-navy);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 8px 0 10px;
+}
+.base .name {
+  color: #fff;
+}
+.pkx p {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+.base p {
+  color: var(--gn-on-dark-text);
+}
+.mods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--gn-line);
+}
+.mods span {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gn-muted);
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+.plus {
+  position: absolute;
+  right: -23px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: var(--gn-signal); /* Signalgrün-„+" auf Navy (Grün-Regel: erlaubt) */
+  font-family: var(--gn-font-display);
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border: 2px solid var(--gn-sand);
+}
+.pkline {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 14.5px;
+  color: var(--gn-muted);
+}
+.pkline span {
+  max-width: 68ch;
+}
+
+@media (max-width: 1000px) {
+  .pkgrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .plus {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -22px;
+    transform: translateX(-50%);
+  }
+}

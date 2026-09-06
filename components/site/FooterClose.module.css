@@ -82,6 +82,39 @@
   max-width: 62ch;
 }
 
+/* Persönlicher Abschluss mit Porträt-Platzhalter (portiert aus Mock 3.1b .f-person):
+   kleiner Porträt-Kreis (beschrifteter Platzhalter, kein Foto) + Name (fett) und Rolle. */
+.person {
+  margin: 22px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.personPh {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  /* dunkler Porträt-Platzhalter, Mock-Werte (3.1b .f-person .ph) */
+  background: linear-gradient(150deg, #2a4c5c, #1b3a48);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(127, 211, 240, 0.55); /* --gn-sky @ .55, Mock-Wert */
+}
+.personText {
+  font-size: 14px;
+  color: var(--gn-on-dark-text);
+  line-height: 1.45;
+}
+.personText b {
+  display: block;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+}
+
 @media (max-width: 960px) {
   .inner {
     grid-template-columns: minmax(0, 1fr);

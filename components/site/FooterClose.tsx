@@ -10,7 +10,7 @@ import styles from "./FooterClose.module.css";
  * Reine Server-Komponente; kein FooterClose-Text wird hier erfunden.
  */
 export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
-  const { eyebrow, headline, text, cta, secondary, persoenlicheZeile } = footerClose;
+  const { eyebrow, headline, text, cta, secondary, persoenlicheZeile, person } = footerClose;
 
   return (
     <section className={styles.close} aria-label="Gespräch und Demo">
@@ -23,8 +23,34 @@ export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
               {line}
             </p>
           ))}
-          {/* Persönliche Zeile (Fred als Ansprechpartner) – nur auf der Startseite gesetzt. */}
-          {persoenlicheZeile ? (
+          {/* Persönlicher Abschluss mit Porträt-Platzhalter (Name fett + Rolle),
+              wortgleich aus Mock 3.1b `.f-person` – nur auf der Startseite gesetzt.
+              Fallback auf die einzeilige `persoenlicheZeile` (Legacy). */}
+          {person ? (
+            <div className={styles.person}>
+              <span className={styles.personPh} aria-hidden="true">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <circle cx="12" cy="9" r="3.4" />
+                  <path d="M4.8 20c1.5-3.4 4.2-5.1 7.2-5.1s5.7 1.7 7.2 5.1" />
+                </svg>
+              </span>
+              <span className={styles.personText}>
+                <b>{person.name}</b>
+                {person.role}
+              </span>
+            </div>
+          ) : persoenlicheZeile ? (
             <p className={styles.personline}>{persoenlicheZeile}</p>
           ) : null}
         </div>

@@ -1,0 +1,148 @@
+/* Portiert aus 3.8b-ueber-golfnext-neufassung.html (Abschnitt 4 · .team/.tcard/.pt/
+   .tb/.facts/.partners/.haltung). Farben auf --gn-* umgestellt, literale Tints
+   kommentiert. Karten-Radius --gn-radius-lg (12); Fakten-Chips als Pills (20 px).
+   Der Porträt-Platzhalter (.pt) ist ein dekorativer, beschrifteter Platzhalter –
+   kein Foto/Stock/KI; das Personen-Icon hat eine fixe Größe (44 px). */
+
+.team {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 22px;
+  margin-top: 56px;
+}
+.tcard {
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  background: #fff;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  min-width: 0;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s ease;
+}
+.tcard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.4); /* weicher Navy-Schatten */
+}
+.pt {
+  background: linear-gradient(150deg, #2a4c5c, #1b3a48); /* dunkler Porträt-Platzhalter, Mock-Werte */
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pt svg {
+  width: 44px;
+  height: 44px;
+  color: rgba(127, 211, 240, 0.45); /* --gn-sky gedämpft */
+}
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche mit Navy-Text (Grün-Regel: Fläche ok) */
+  border-radius: 2px;
+  padding: 3px 7px;
+}
+.tb {
+  padding: 26px 26px 24px;
+  min-width: 0;
+}
+.rl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-blue);
+}
+.tb b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 22px;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  margin: 8px 0 10px;
+}
+.tb p {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+.facts span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gn-navy);
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-pill); /* Pill 20px */
+  padding: 4px 10px;
+}
+.partners {
+  margin: 18px 0 0;
+  font-size: 14px;
+  color: var(--gn-muted);
+  max-width: 70ch;
+}
+.haltung {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+  border-top: 1px solid var(--gn-line);
+  padding-top: 56px;
+}
+.hq {
+  margin: 0;
+  font-family: var(--gn-font-display);
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 700;
+  color: var(--gn-navy);
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+.hq em {
+  font-style: normal;
+  color: var(--gn-blue);
+}
+.ht {
+  margin: 0;
+  font-size: clamp(16px, 1.3vw, 18px);
+  color: var(--gn-muted);
+  line-height: 1.66;
+  max-width: 44ch;
+}
+
+@media (max-width: 900px) {
+  .team {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .haltung {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+@media (max-width: 560px) {
+  .tcard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pt {
+    min-height: 160px;
+  }
+}

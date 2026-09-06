@@ -6,8 +6,13 @@ import { Wrap } from "@/components/ui/Wrap";
 import type { CmpCell, VergleichData } from "@/content/pakete";
 import styles from "./Vergleich.module.css";
 
-/** Farbklasse des „Enthalten"-Punkts je Paketspalte (0…3), 1:1 aus Mock .dot/.b/.c/.d. */
-const DOT_CLASS = [styles.dot, styles.dotB, styles.dotC, styles.dotD] as const;
+/**
+ * Farbklasse des „Enthalten"-Punkts je Paketspalte (0…3), 1:1 aus Mock (`<span class="dot b">`).
+ * WICHTIG: Immer die Basisklasse `.dot` (Größe/Form) PLUS die Farbklasse – sonst hätten die
+ * Spalten 1–3 nur `background` ohne width/height und blieben unsichtbar (0 × 0 px).
+ */
+const DOT_COLOR = [undefined, styles.dotB, styles.dotC, styles.dotD] as const;
+const dotClass = (col: number) => [styles.dot, DOT_COLOR[col]].filter(Boolean).join(" ");
 /** Farbige Oberkante der Kopfzellen, 1:1 aus Mock .h0/.h1/.h2/.h3 (Leistung + Nur Website = h0). */
 const HEAD_CLASS = [styles.h0, styles.h0, styles.h1, styles.h2, styles.h3] as const;
 
@@ -16,7 +21,7 @@ function Cell({ cell, col }: { cell: CmpCell; col: number }) {
     case "yes":
       return (
         <>
-          <span className={DOT_CLASS[col]} aria-hidden="true" />
+          <span className={dotClass(col)} aria-hidden="true" />
           <span className={styles.srOnly}>Enthalten</span>
         </>
       );

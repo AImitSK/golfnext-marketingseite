@@ -11,19 +11,13 @@ import styles from "./Footer.module.css";
  * .fx). Vier Zonen: Abschluss-CTA (FooterClose, prop-getrieben), Modul-Landkarte,
  * persönlicher Kontakt und Rechtszeile.
  *
- * Datengetrieben aus config/site-structure.ts: Module + Status-Punkte aus MODULE,
- * Kontakt aus KONTAKT. Modul-/Impressum-/Datenschutz-Links laufen über isLinkable –
- * nicht-live Ziele bleiben `#` und werden automatisch aktiv, sobald ihr Status auf
- * `live` geht. Reine Server-Komponente; nur „Cookie-Einstellungen" ist ein
- * kleiner Client-Button. Enthält bewusst KEINE <h1>.
+ * Datengetrieben aus config/site-structure.ts: Modulnamen aus MODULE, Kontakt aus
+ * KONTAKT. Modul-/Impressum-/Datenschutz-Links laufen über isLinkable – nicht-live
+ * Ziele bleiben `#` und werden automatisch aktiv, sobald ihr Status auf `live` geht.
+ * Der Modulstatus (im-einsatz/pilot/in-entwicklung) wird bewusst NICHT mehr angezeigt
+ * (Briefing 0014): keine Status-Punkte, keine Legende. Reine Server-Komponente; nur
+ * „Cookie-Einstellungen" ist ein kleiner Client-Button. Enthält bewusst KEINE <h1>.
  */
-
-/** Status → Punktfarbe: im-einsatz grün · pilot gold · in-entwicklung weiß (2.4). */
-const STATUS_DOT: Record<(typeof MODULE)[number]["status"], string> = {
-  "im-einsatz": styles.dotLive,
-  pilot: styles.dotPilot,
-  "in-entwicklung": styles.dotDev,
-};
 
 /** Die zwei Modulgruppen aus MODULE.gruppe mit ihren freigegebenen Spaltenlabeln. */
 const GRUPPEN = [
@@ -64,30 +58,12 @@ export function Footer({ footerClose }: { footerClose: FooterCloseType }) {
                 <div className={styles.mods}>
                   {MODULE.filter((m) => m.gruppe === gruppe.key).map((m) => (
                     <a key={m.slug} href={moduleHref(m.slug)} className={styles.mod}>
-                      <span
-                        className={`${styles.dot} ${STATUS_DOT[m.status]}`}
-                        aria-hidden="true"
-                      />
                       <b>{m.name}</b>
                     </a>
                   ))}
                 </div>
               </div>
             ))}
-          </div>
-          <div className={styles.legend}>
-            <span className={styles.legendItem}>
-              <span className={`${styles.dot} ${styles.dotLive}`} aria-hidden="true" />
-              Im Einsatz
-            </span>
-            <span className={styles.legendItem}>
-              <span className={`${styles.dot} ${styles.dotPilot}`} aria-hidden="true" />
-              Pilot
-            </span>
-            <span className={styles.legendItem}>
-              <span className={`${styles.dot} ${styles.dotDev}`} aria-hidden="true" />
-              In Entwicklung
-            </span>
           </div>
         </div>
       </section>

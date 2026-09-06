@@ -157,6 +157,13 @@
   white-space: nowrap;
   line-height: 1.2;
   cursor: pointer;
+  /* Weiche Flächen-Transition wie .btn.cta (Briefing 0014 Korrektur 3). */
+  transition: background 0.15s;
+}
+/* Hover wie .btn.cta:hover – Fläche dunkelt auf #00CE04 ab, Navy-Text bleibt
+   (Grün-Regel). Der Fokusring läuft weiter über den globalen :focus-visible. */
+.hbtn:hover {
+  background: #00ce04; /* Mock-Wert, kein Token (2.5 Z.69, cta:hover) */
 }
 .hbtn .small {
   font-size: 11px;

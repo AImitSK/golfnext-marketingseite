@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { SyntheticEvent } from "react";
 import { usePathname } from "next/navigation";
-import { Badge } from "@/components/ui/Badge";
 import { KONTAKT } from "@/config/site-structure";
 import type { Cta } from "@/content/types";
 import { resolveCta } from "@/lib/links";
-import { MODULE_STATUS_LABEL, type NavItem } from "@/lib/navigation";
+import { type NavItem } from "@/lib/navigation";
 import styles from "./MobileNav.module.css";
 
 /**
@@ -97,14 +96,10 @@ export function MobileNav({ items, cta }: { items: NavItem[]; cta: Cta }) {
                   <a href={item.href} className={styles.subLead}>
                     {item.label} ansehen
                   </a>
+                  {/* Nur Modulname + Link; der Modulstatus wird nicht mehr angezeigt (Briefing 0014). */}
                   {item.children.map((child) => (
                     <a key={child.path} href={child.href} className={styles.subLink}>
                       <span>{child.label}</span>
-                      {child.status ? (
-                        <Badge status={child.status} className={styles.subBadge}>
-                          {MODULE_STATUS_LABEL[child.status]}
-                        </Badge>
-                      ) : null}
                     </a>
                   ))}
                 </div>

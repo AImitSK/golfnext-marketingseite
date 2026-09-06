@@ -5,7 +5,8 @@
    Tokens auf --gn-*. Literale Mock-Tints ohne Token sind als „Mock-Wert" kommentiert.
    Bewusste Abweichungen zum Mock (Briefing 1.3, „Dropdown reduziert"):
    - Panel ist eine positionierte Karte pro Hauptpunkt (nicht der full-bleed Balken).
-   - mgrid ohne Modul-Icons/-Beschreibungen; Eintrag = Modulname-Link + Status-Badge.
+   - mgrid ohne Modul-Icons/-Beschreibungen; Eintrag = reiner Modulname-Link (der
+     Modulstatus wird nicht mehr angezeigt, Briefing 0014).
    - Caret liegt auf einem eigenen <button> (Disclosure) statt als ::after am Link,
      damit aria-expanded/aria-controls sauber sitzen; ohne JS öffnet :focus-within. */
 
@@ -144,12 +145,10 @@
   list-style: none;
 }
 
-/* 2.4 .mitem (Z.125): Zeile aus Modulname (links) und Status-Badge (rechts). */
+/* 2.4 .mitem (Z.125): Zeile mit dem Modulname-Link (Status-Badge entfällt, Briefing 0014). */
 .mitem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px;
   padding: 8px 0;
   min-width: 0;
 }
@@ -162,9 +161,6 @@
 }
 .mlink:hover {
   color: var(--gn-blue);
-}
-.mbadge {
-  flex: 0 0 auto;
 }
 
 /* Responsive Verdichtung der Leiste (2.4 Z.114–115, an Breakpoint 1024 angepasst),

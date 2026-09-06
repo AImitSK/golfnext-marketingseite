@@ -1,3 +1,4 @@
+import { RevealLine } from "@/components/motion/RevealLine";
 import { Rise, RiseItem } from "@/components/motion/Rise";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -49,8 +50,9 @@ export function Hero({
 
         <div className={styles.stackwrap}>
           <Rise className={styles.stack}>
-            {/* Rückgrat-Linie: dekorativ, kein Stagger-Kind (bleibt statisch sichtbar). */}
-            <span className={styles.spine} aria-hidden="true" />
+            {/* Rückgrat-Linie: baut sich per RevealLine (scaleY) einmalig auf, dann
+                Endzustand; dekorativ, kein Stagger-Kind. */}
+            <RevealLine orientation="vertical" className={styles.spine} />
             {data.stack.map((row) => (
               <RiseItem
                 key={row.name}

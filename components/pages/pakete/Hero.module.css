@@ -83,7 +83,8 @@
   position: relative;
   padding-left: 28px;
 }
-/* Rückgrat-Linie (statisch sichtbar, kein wandernder Puls). */
+/* Rückgrat-Linie: baut sich per RevealLine (scaleY, transform-origin oben) einmalig
+   auf; Endzustand voll sichtbar, kein wandernder Puls. */
 .spine {
   position: absolute;
   left: 0;

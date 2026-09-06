@@ -24,7 +24,8 @@ Mocks öffnen: einfach im Browser. Sie laden Archivo und Inter von Google Fonts 
 |---|---|---|---|---|---|
 | 3.1 | Startseite | `/` | `3.1-startseite.html` | `3.1-startseite-umsetzungsbriefing.md` | Layout freigegeben. Abschnitt 6 (Pakete) zeigt noch Fassung 1 – **Ersatz: 3.1a** |
 | 3.1a | Startseite · Paketblock Fassung 2 | `/` Abschnitt 6 | `3.1a-startseite-paketblock-fassung2.html` | `../02-preislogik.md` | Ausschnitt; ersetzt Abschnitt 6 von 3.1. Sockelband + drei Modulkarten, keine Summen. |
-| 3.2 | Plattform | `/plattform` | `3.2-plattform.html` | `3.2-plattform-umsetzungsbriefing.md` | freigegeben |
+| 3.2 | Plattform, Fassung 1 | – | `3.2-plattform.html` | `3.2-plattform-umsetzungsbriefing.md` | **Archiv, nicht bauen** (ersetzt durch 3.2c) |
+| 3.2c | Plattform, Neufassung v02 | `/plattform` | `3.2c-plattform-neufassung.html` | `../briefings/0016-plattform.md` | **gültig**, von Stefan freigegeben (06.09.2026). Modernes Layout: Wrap 1180, Radius 12 (große Flächen), Sektionen 120 px, H2 bis 48 px |
 | 3.3 | So arbeitet GolfNext | `/plattform/so-arbeitet-golfnext` | `3.3-so-arbeitet-golfnext.html` | `3.3-so-arbeitet-golfnext-briefing.md` | freigegeben |
 | 3.4 | Wachstum & Vertrieb | `/wachstum-vertrieb` | `3.4-wachstum-vertrieb.html` | `3.4-wachstum-vertrieb-briefing.md` | freigegeben; doppelte Headline in Abschnitt 4/Footer – Fred entscheidet |
 | 3.5 | Clubprozesse | `/clubprozesse` | `3.5-clubprozesse.html` | `3.5-clubprozesse-briefing.md` | freigegeben |

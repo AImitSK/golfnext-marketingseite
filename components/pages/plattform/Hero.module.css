@@ -1,0 +1,358 @@
+/* Portiert aus docs/design-system/mocks/3.2c-plattform-neufassung.html
+   (.hero/.demo/.browser/.site/.pstat/.phone/.tgl). Farben auf --gn-* umgestellt,
+   literale Tints kommentiert. Layout-Erweiterungen der Neufassung: --gn-wrap-wide
+   (1180), --gn-radius-lg (12) für große Flächen (Browser-Rahmen). Bedienelemente
+   (Toggle) bleiben klein-radig.
+   Bewegung: Der Endzustand steht im Server-HTML (Klassen aus dem Komponenten-State);
+   die Übergänge unten laufen nur mit JS/ohne Reduced-Motion. Nur Farbe/Transform. */
+
+.hero {
+  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden; /* fängt den Bleed der Demo (width > 100%) ab → kein Seiten-Overflow */
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 96px 40px 110px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); /* Hero-Standard 1.75/1 */
+  gap: 48px;
+  align-items: center;
+}
+
+.h1 {
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 19ch;
+  text-wrap: balance;
+  margin: 0;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 56ch;
+  line-height: 1.62;
+}
+.acts {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 38px;
+}
+/* Sekundäre Aktion auf dunkel: heller Link mit unterer Linie (.b2). */
+.b2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 15.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 3px;
+}
+.b2 svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+.trust {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  font-size: 13px;
+  color: var(--gn-on-dark-text);
+}
+.trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+}
+
+/* ---- Bleed-Demo: schematische Club-Website (illustrativ, kein Screenshot) ---- */
+.demo {
+  position: relative;
+  min-width: 0;
+  width: 150%; /* läuft rechts über den Rand hinaus (Bleed) */
+}
+.browser {
+  background: #fff;
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 60px 120px -50px rgba(0, 0, 0, 0.65); /* Tiefen-Schatten, 1:1 aus Mock */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.bar {
+  height: 40px;
+  background: var(--gn-mist);
+  border-bottom: 1px solid var(--gn-line);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+}
+.bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkte, Mock-Wert */
+  display: block;
+}
+.bar span {
+  margin-left: 12px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 4px;
+  padding: 4px 12px;
+  width: 280px;
+}
+.site {
+  padding: 22px 26px 26px;
+  color: var(--gn-ink);
+}
+.snav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-bottom: 18px;
+}
+.snav b {
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  margin-right: auto;
+}
+.shero {
+  height: 150px;
+  border-radius: 8px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  position: relative;
+  margin-bottom: 18px;
+}
+.shero span {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  font-family: var(--gn-font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+}
+.sgrid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.stext {
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  line-height: 1.55;
+  padding-top: 6px;
+}
+.stext i {
+  display: block;
+  height: 8px;
+  background: var(--gn-sand);
+  border-radius: 3px;
+  margin: 8px 0;
+}
+.pstat {
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 16px 18px;
+  background: #fff;
+  transition:
+    border-color 0.5s ease,
+    background 0.5s ease;
+}
+.pl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.pv {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 8px;
+  font-family: var(--gn-font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+}
+.pv i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #c9a14a; /* gedämpftes Gold: „Wintergrüns"-Zustand, Mock-Wert */
+  display: block;
+  transition: background 0.5s ease;
+}
+.pt {
+  font-size: 12px;
+  color: var(--gn-muted);
+  margin-top: 6px;
+}
+.pstatOpen {
+  border-color: #cfe0d2; /* zarter grüner Rahmen im Endzustand, Mock-Wert */
+  background: var(--gn-ok-bg);
+}
+.pstatOpen .pv i {
+  background: var(--gn-signal);
+}
+.phone {
+  position: absolute;
+  left: 54%;
+  bottom: -44px;
+  width: 196px;
+  background: #0b1f29; /* fast-schwarzes Gerätegehäuse, Mock-Wert */
+  border-radius: 30px;
+  padding: 11px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.scr {
+  background: var(--gn-paper);
+  border-radius: 22px;
+  padding: 18px 16px 20px;
+  color: var(--gn-ink);
+}
+.ph1 {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.ph2 {
+  font-family: var(--gn-font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  margin-top: 5px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--gn-line);
+}
+.row span {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gn-ink);
+}
+.tgl {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #c9c3b6; /* Toggle-Aus, Mock-Wert */
+  position: relative;
+  flex: 0 0 auto;
+  transition: background 0.35s ease;
+}
+.tgl::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.tglOn {
+  background: var(--gn-signal); /* Toggle-An: Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+}
+.tglOn::after {
+  transform: translateX(20px);
+}
+.ok {
+  font-size: 11px;
+  color: var(--gn-ok);
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.okShow {
+  opacity: 1;
+}
+
+@media (max-width: 1080px) {
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+    padding: 70px 26px 90px;
+  }
+  .demo {
+    width: 118%;
+  }
+  .phone {
+    left: auto;
+    right: 6%;
+    bottom: -34px;
+  }
+}
+@media (max-width: 620px) {
+  .demo {
+    width: 112%;
+  }
+  .site {
+    padding: 16px;
+  }
+  .sgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .shero {
+    height: 110px;
+  }
+  .phone {
+    width: 150px;
+    right: 2%;
+    bottom: -30px;
+  }
+  .scr {
+    padding: 12px 11px 14px;
+  }
+  .in {
+    padding: 70px 20px 110px;
+  }
+}

@@ -73,9 +73,6 @@ export interface AdBox {
   label: string;
   title: string;
   text: string;
-  calcLabel: string;
-  rows: { label: string; value: string; fee?: boolean }[];
-  note: string;
 }
 
 export interface PaketeData {
@@ -275,12 +272,6 @@ export const paketePakete: PaketeData = {
     label: "Nicht in den Paketpreisen enthalten",
     title: "Das Werbebudget legen Sie selbst fest.",
     text: "Das Reach-Modul spielt Werbung über Social Media und Google aus. Das Mediabudget geht direkt an die Werbekanäle, und Ihr Club bestimmt seine Höhe. GolfNext berechnet darauf 10 % Verwaltungshonorar für Einrichtung, Steuerung und Auswertung der Kampagnen.",
-    calcLabel: "Beispielrechnung",
-    rows: [
-      { label: "Mediabudget, von Ihnen festgelegt", value: "1.000 €" },
-      { label: "10 % Verwaltungshonorar", value: "100 €", fee: true },
-    ],
-    note: "Das Honorar richtet sich immer nach dem tatsächlich eingesetzten Mediabudget. Netto zuzüglich Umsatzsteuer.",
   },
 };
 

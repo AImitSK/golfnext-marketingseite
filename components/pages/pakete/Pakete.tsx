@@ -109,7 +109,8 @@ function Karte({ card }: { card: PaketKarte }) {
 /**
  * Abschnitt 3 „Die drei Pakete" (portiert aus 3.7-pakete.html, Z.518–645). Drei
  * Karten (Sockel + Pluszeichen + Modulblock + aufklappbare Leistungen) und darunter
- * die Werbebudget-Box mit gekennzeichneter Beispielrechnung. Reine Server-Komponente.
+ * die Werbebudget-Box (ohne Beispielrechnung – der Club rechnet den Betrag selbst).
+ * Reine Server-Komponente.
  */
 export function Pakete({
   id,
@@ -139,22 +140,13 @@ export function Pakete({
           ))}
         </div>
 
+        {/* Werbebudget-Box ohne Beispielrechnung: der Club rechnet den Betrag selbst
+            aus (Entscheidung Stefan, 06.09.2026). Das 10-%-Verwaltungshonorar steht im
+            Fließtext, damit die Rechnung nachvollziehbar bleibt. */}
         <div className={styles.adbox}>
-          <div>
-            <div className={styles.al}>{adbox.label}</div>
-            <h3>{adbox.title}</h3>
-            <p>{adbox.text}</p>
-          </div>
-          <div className={styles.adcalc}>
-            <div className={styles.cl}>{adbox.calcLabel}</div>
-            {adbox.rows.map((row) => (
-              <div key={row.label} className={row.fee ? `${styles.cr} ${styles.fee}` : styles.cr}>
-                <span>{row.label}</span>
-                <b>{row.value}</b>
-              </div>
-            ))}
-            <p className={styles.cn}>{adbox.note}</p>
-          </div>
+          <div className={styles.al}>{adbox.label}</div>
+          <h3>{adbox.title}</h3>
+          <p>{adbox.text}</p>
         </div>
       </Wrap>
     </Section>

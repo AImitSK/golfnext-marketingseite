@@ -64,8 +64,8 @@ export const ROUTES: Route[] = [
     path: "/",
     label: "Startseite",
     status: "live",
-    mock: "mocks/3.1-startseite.html",
-    briefing: "briefings/3.1-startseite-umsetzungsbriefing.md",
+    mock: "mocks/3.1b-startseite-neufassung.html",
+    briefing: "briefings/0021-startseite-neufassung.md",
     // Briefing liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx), nicht erfinden (Phase 6).
     title: null,
     description: null,

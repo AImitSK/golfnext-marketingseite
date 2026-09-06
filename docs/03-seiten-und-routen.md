@@ -4,7 +4,7 @@ Status pflegen, wenn eine Seite gebaut ist. Spalte „Bilder offen" listet die `
 
 | Route | Quelle | Status | Bilder offen (Fred) |
 |---|---|---|---|
-| `/` | 3.1 + Preislogik Fassung 2 | **live** (2.2) | Foto Fred (Zitat, Abschluss); Foto Golfclub Bad Wörishofen (Praxis) |
+| `/` | 3.1b (Neufassung v01) | **live** (2.2) · Rebuild aus 3.1b geplant | Foto Fred (Zitat/Abschluss) als Platzhalter; **kein Modulstatus** |
 | `/plattform` | 3.2c (Neufassung v02) | **live** (2.3) | keine – die Oberflächen (Browser-Demo, Marketing-CRM-Liste, Concierge-Chat, Geräterahmen der Scroll-Geschichte) sind bewusst **schematische Illustrationen** (kein `Shot`, kein echter Screenshot, kein Foto nötig) |
 | `/plattform/so-arbeitet-golfnext` | 3.3 | offen | Marketing-CRM-Board, E-Mail-Sequenz, Landingpage, Ratgeberartikel – Screenshots ohne personenbezogene Daten |
 | `/wachstum-vertrieb` | 3.4b (Neufassung v01) | **live** (2.5) | keine – die Oberflächen (Kampagnen-Cockpit, Instagram-Anzeige, Such-/Feed-/Zeitleisten-Visuals, Geräterahmen der Kampagnen-Geschichte, Landingpage-Fächer) sind bewusst **schematische Illustrationen** (kein `Shot`, kein echter Screenshot, kein Foto nötig) |

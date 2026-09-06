@@ -313,7 +313,8 @@ export const startseitePraxis: PraxisData = {
     tag: "Hauptbeispiel · Golfclub Rehburg-Loccum",
     title: "Der digitale Concierge ANNA",
     text: "ANNA beantwortet Fragen zu Schnuppergolf, Platzreife, Greenfee, Mitgliedschaft und Clubbetrieb. Auch dann, wenn das Clubteam nicht erreichbar ist.",
-    // STATISCH – kein Hochzähler (CLAUDE.md-Tabu). Werte bestätigt, nichts erfinden.
+    // Werte wortgleich – einmaliger Hochzähler per CountUp (Briefing 0015), Endwert
+    // = exakt dieser String (Reduced-Motion/No-JS zeigt ihn sofort). Nichts erfinden.
     kennzahlen: [
       { value: "Rund 1.600", label: "geführte Dialoge" },
       { value: "Rund 600", label: "Nutzerinnen und Nutzer" },

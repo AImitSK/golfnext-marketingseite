@@ -45,9 +45,11 @@ Empfohlene Komponenten: `Header`, `Footer`, `Section`, `Eyebrow`, `Button`, `Tex
 ## Bewegung
 
 - Bibliothek: `motion/react` (kostenlos). Vor dem Bauen einer Animation den `/motion`-Skill laden (liefert aktuelle API und Best Practices). Gemeinsame Varianten liegen in `lib/motion/variants.ts` – neue Varianten nur, wenn ein Mock sie wirklich braucht.
-- Einmalig pro Aufruf: `whileInView` mit `viewport={{ once: true, amount: .2 }}`.
-- Tabu (von Fred ausgeschlossen, auch wenn Motion sie anbietet): Typewriter, ScrambleText, splitText, Ticker, Carousel, Cursor-Effekte, Zähler außer der gekennzeichneten Saisonrechnung auf Clubprozesse.
-- Endzustand bleibt stehen. Kein Loop, kein Ton, kein Scroll-Zwang, kein Typewriter, keine Layoutverschiebung (nur `opacity`/`transform`, Höhen vorab reservieren).
+- **Haltung (gelockert 06.09.2026, Stefan): Bewegung mit Absicht – modern und lebendig, aber seriös.** Die Seite darf sich nicht wie statisches HTML anfühlen: Hover-/Micro-Interaktionen, weiche Übergänge, spürbare Scroll-Reveals, dezent lebendige Elemente sind erwünscht.
+- Scroll-Reveals standardmäßig einmalig: `whileInView` mit `viewport={{ once: true, amount: .2 }}`; sie dürfen **spürbar** sein (großzügiger Translate, klare Staffelung), nicht nur ein leises Fade.
+- **Kontinuierliche/wiederkehrende Bewegung erlaubt**, wenn dezent, langsam und nicht ablenkend (kein hektisches Blinken, kein aufdringlicher Dauer-Effekt). **Zähler** für echte Kennzahlen erlaubt (einmal hochzählen, Reduced-Motion zeigt den Endwert).
+- **Mit Bedacht statt Tabu:** Typewriter, ScrambleText, splitText, Ticker, Carousel, Cursor-Effekte nur, wo sie dem Inhalt dienen und seriös wirken – nie als Selbstzweck; im Zweifel schlicht.
+- Nicht verhandelbar: Endzustand bleibt stehen; kein Ton, kein Scroll-Zwang; **keine Layoutverschiebung/CLS** (nur `opacity`/`transform`/`pathLength`, Höhen vorab reservieren).
 - `prefers-reduced-motion: reduce` → Endzustand sofort, alle `transition/animation: none`.
 - Ohne JavaScript sind alle Inhalte sichtbar: Server-HTML rendert den Endzustand, `initial`-Startzustände werden erst clientseitig gesetzt (Muster in `lib/motion/variants.ts`).
 

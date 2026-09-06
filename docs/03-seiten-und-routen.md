@@ -4,7 +4,7 @@ Status pflegen, wenn eine Seite gebaut ist. Spalte „Bilder offen" listet die `
 
 | Route | Quelle | Status | Bilder offen (Fred) |
 |---|---|---|---|
-| `/` | 3.1 + Preislogik Fassung 2 | offen | Foto Fred (Zitat, Abschluss) |
+| `/` | 3.1 + Preislogik Fassung 2 | **live** (2.2) | Foto Fred (Zitat, Abschluss); Foto Golfclub Bad Wörishofen (Praxis) |
 | `/plattform` | 3.2 | offen | Foto Fred |
 | `/plattform/so-arbeitet-golfnext` | 3.3 | offen | Marketing-CRM-Board, E-Mail-Sequenz, Landingpage, Ratgeberartikel – Screenshots ohne personenbezogene Daten |
 | `/wachstum-vertrieb` | 3.4 | offen | 15 Screenshots (Clubwebsite, Landingpages je Zielgruppe, Marketing-CRM, Analytics, Firmen-Event-Anfrage …) |

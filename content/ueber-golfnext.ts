@@ -1,11 +1,277 @@
-import type { PageContent } from "./types";
+import type { Cta, PageContent } from "./types";
 
 /**
  * Über GolfNext · /ueber-golfnext
- * Quelle: docs/design-system/briefings/3.8-ueber-golfnext-briefing.md (nur „Websiteinhalt"),
- * Layout: docs/design-system/mocks/3.8-ueber-golfnext.html
- * Wortlaut nicht ändern. Änderungen nur nach neuem Briefing von Fred.
+ * Quelle der Texte: docs/design-system/mocks/3.8b-ueber-golfnext-neufassung.html
+ * (Neufassung v01, von Stefan freigegeben) und Briefing docs/briefings/0019-ueber-golfnext.md.
+ * Die alte 3.8-ueber-golfnext.html ist Archiv und wird NICHT verwendet.
+ *
+ * Regeln (CLAUDE.md / 0019): Texte wortgleich (Zeichensetzung, „…“-Anführungen,
+ * en-Dash „–“). Keine erfundenen Zahlen/Versprechen. Porträts, Club-„Logos“ und
+ * Artikel-„Bild folgt“ bleiben beschriftete Platzhalter (kein Stock/KI); die
+ * „…folgt“-Beschriftungen aus dem Mock bleiben wortgleich.
+ *
+ * WICHTIG (Entscheidung Stefan, Briefing 0019): KEIN Modulstatus.
+ * - Der Grundsatz /02 „Wir versprechen nur, was läuft.“ mit der Aufzählung
+ *   „Im Einsatz / Pilot / In Entwicklung“ und der Status-Legende wird NICHT gebaut.
+ *   Gebaut werden nur die beiden übrigen Grundsätze; die Überschrift lautet daher
+ *   „Zwei Grundsätze …“. Es wird KEIN Ersatz-Grundsatz erfunden. Die beiden Karten
+ *   sind konsistent als „/ 01“ und „/ 02“ nummeriert (statt der Mock-Kennungen
+ *   /01 und /03), damit „Zwei Grundsätze“ und die Nummerierung zusammenpassen.
+ * - Der „Pilotclub“-/Entwicklungspartner-Wortlaut BLEIBT wortgleich (Grundsatz /01
+ *   „entsteht in einem Pilotclub“, Abschnitt „Gemeinsame Projekte“ „im Pilot weiter“,
+ *   Abschnitt „Wissen“ „aus der Arbeit mit Pilotclubs“). Er beschreibt
+ *   Entwicklungspartnerschaften – kein Modul-Status – und steht so bereits live auf
+ *   der Startseite.
+ *
+ * Bild-Platzhalter (kein Stock/KI): Porträts Fred/Stefan als `Portrait`-Platzhalter
+ * („Porträt folgt“), Club-„Logos“ und Artikel-„Bild folgt“ als beschriftete
+ * Kacheln. Die endgültige Club-Liste, Logos, Freigaben, Porträts sowie Artikel-Titel
+ * und -Bilder liefert Fred.
  */
+
+/* ────────────────────────── 1 · Hero (zwei Porträtkarten) ────────────────────────── */
+
+/** Eine Porträtkarte im Hero (Fred/Stefan) – beschrifteter Platzhalter, kein Foto. */
+export interface HeroPerson {
+  tag: string;
+  name: string;
+  role: string;
+  /** Kurzcredit unter dem Namen (Signalgrün auf Navy). */
+  credit: string;
+}
+
+export interface HeroData {
+  ctaPrimary: Cta;
+  ctaSecondary: Cta;
+  /** Zitatzeile unter den Aktionen (Archivo, grüner linker Balken). */
+  quote: string;
+  people: HeroPerson[];
+}
+
+/* ────────────────────────── 2 · Unser Weg (Zeitleiste) ────────────────────────── */
+
+/** Eine Station der Zeitleiste (imageGolf → Consulting → GolfNext). */
+export interface WegStation {
+  /** Kurzmarke im Jahres-Pill (z. B. „2016“, „dann“, „2026“). */
+  jahr: string;
+  /** Kurzclaim neben dem Jahr. */
+  claim: string;
+  /** Markenname der Stufe. */
+  marke: string;
+  titel: string;
+  text: string;
+  /** Die dritte (aktuelle) Station wird als weiße Karte hervorgehoben. */
+  now?: boolean;
+}
+
+export type WegData = WegStation[];
+
+/* ────────────────────────── 3 · Zwei Grundsätze (Navy-Band) ────────────────────────── */
+
+/** Ein Grundsatz im Navy-Band (Nummer, Titel, Text) – ohne Modulstatus. */
+export interface Grundsatz {
+  nummer: string;
+  titel: string;
+  text: string;
+}
+
+export type GrundsaetzeData = Grundsatz[];
+
+/* ────────────────────────── 4 · Die Menschen dahinter ────────────────────────── */
+
+/** Eine Personenkarte (Fred/Stefan) mit Porträt-Platzhalter und Fakten-Chips. */
+export interface TeamPerson {
+  rolle: string;
+  name: string;
+  text: string;
+  facts: string[];
+}
+
+export interface MenschenData {
+  /** Beschriftung des Porträt-Platzhalters auf den Personenkarten (kein Foto). */
+  portraitTag: string;
+  personen: TeamPerson[];
+  /** Partner-/Fachpartner-Zeile unter den Karten. */
+  partner: string;
+  /** Haltungssatz, zweiteilig: der zweite Teil ist hervorgehoben (blau). */
+  haltungLead: string;
+  haltungEm: string;
+  haltungText: string;
+}
+
+/* ────────────────────────── 5 · Gemeinsame Projekte (Logos) ────────────────────────── */
+
+export interface ProjekteData {
+  /** Club-Namen bzw. „Logo folgt“ – beschriftete Platzhalter-Kacheln. */
+  logos: string[];
+  /** Text-Link „…Praxis“ (Ziel /praxis, bis live → #). */
+  praxisLink: string;
+  /** Interner Vermerk zu Logos/Freigaben (bleibt wortgleich aus dem Mock). */
+  note: string;
+}
+
+/* ────────────────────────── 6 · Wissen (Artikel-Slider) ────────────────────────── */
+
+/** Eine Artikel-Platzhalterkarte im Wissen-Slider. */
+export interface WissenCard {
+  /** Bild-Platzhalter-Label (bleibt „Bild folgt“). */
+  bild: string;
+  /** Rubrik/Quelle (z. B. „golfmanager · Fachartikel“). */
+  quelle: string;
+  titel: string;
+  text: string;
+  autor: string;
+  lesezeit: string;
+}
+
+export interface WissenData {
+  cards: WissenCard[];
+  /** „Alle Artikel“-Link: zeigt auf `path`, solange die Route live ist (sonst `#`). */
+  alleArtikel: { label: string; path: string };
+}
+
+/* ────────────────────────── Sektionsdaten ────────────────────────── */
+
+export const ueberGolfnextHero: HeroData = {
+  ctaPrimary: { label: "Live-Demo ansehen", hint: "ohne Anmeldung", target: "livedemo" },
+  ctaSecondary: { label: "Online-Erstgespräch vereinbaren", target: "erstgespraech" },
+  quote: "Wir machen digital. Damit mehr Zeit für das bleibt, was keinen Bildschirm braucht.",
+  people: [
+    {
+      tag: "Porträt folgt",
+      name: "Fred Hoffmann",
+      role: "Gründer · PGA Golfprofessional",
+      credit: "30 Jahre im Golfmarkt",
+    },
+    {
+      tag: "Porträt folgt",
+      name: "Stefan Kühne",
+      role: "Online-Marketing und Entwicklung",
+      credit: "Technologie",
+    },
+  ],
+};
+
+export const ueberGolfnextWeg: WegData = [
+  {
+    jahr: "2016",
+    claim: "Erst mal ins Netz",
+    marke: "imageGolf",
+    titel: "Clubwebsites, Social Media, Kampagnen.",
+    text: "Mit der Gründung von imageGolf ging es los. Golfclubs bekamen einen digitalen Auftritt. Ihre Angebote ein Publikum.",
+  },
+  {
+    jahr: "dann",
+    claim: "Klick gemacht. Fragen offen.",
+    marke: "GolfNext Consulting",
+    titel: "Zusammenhänge erklären, Clubteams schulen.",
+    text: "Online-Marketing ist schnell beauftragt. Es wirklich zu verstehen, braucht mehr: Wie greifen Kanäle, Inhalte und Mitgliedergewinnung ineinander? Wir haben Clubbüros in Social Media, Suchmaschinen, Blogartikeln und später im Einsatz von KI geschult.",
+  },
+  {
+    jahr: "2026",
+    claim: "Aus „Man müsste mal“ wird Software",
+    marke: "GolfNext",
+    titel: "Eine Plattform für Website, Mitgliedergewinnung und Cluballtag.",
+    text: "Seit 2026 nutzen wir KI-gestützte Entwicklung, um eigene Anwendungen wirtschaftlich umzusetzen – zu Budgets, die auch zu kleineren Golfclubs und Golfanlagen passen. Viele Clubprojekte, viele Erkenntnisse, heute eine Plattform.",
+    now: true,
+  },
+];
+
+// KEIN Grundsatz /02 „Wir versprechen nur, was läuft.“ (Modulstatus, Entscheidung
+// Stefan). Die beiden übrigen Grundsätze sind konsistent /01 und /02 nummeriert.
+export const ueberGolfnextGrundsaetze: GrundsaetzeData = [
+  {
+    nummer: "/ 01",
+    titel: "Mit Clubs entwickelt, nicht für sie.",
+    text: "Jedes Modul entsteht in einem Pilotclub und wird dort im Alltag getestet – vom Sekretariat, vom Greenkeeper, vom Captain. Erst dann bekommen es andere.",
+  },
+  {
+    nummer: "/ 02",
+    titel: "Ein Mensch am Telefon.",
+    text: "Ihr Ansprechpartner ist Fred Hoffmann, PGA Golfprofessional. Kein Ticketsystem, keine Hotline. Rückmeldung innerhalb eines Werktags.",
+  },
+];
+
+export const ueberGolfnextMenschen: MenschenData = {
+  portraitTag: "Porträt folgt",
+  personen: [
+    {
+      rolle: "Gründer · Ihr Ansprechpartner",
+      name: "Fred Hoffmann",
+      text: "PGA Golfprofessional mit mehr als 30 Jahren Berufserfahrung im Golfmarkt. Kennt Vorstand, Sekretariat und Range aus eigenem Alltag – und spricht deshalb nicht wie ein Berater von außen.",
+      facts: ["PGA Golfprofessional", "30 Jahre Golfmarkt", "Autor im golfmanager"],
+    },
+    {
+      rolle: "Technologie · Online-Marketing",
+      name: "Stefan Kühne",
+      text: "Verbindet langjährige Erfahrung im Online-Marketing mit technischer Entwicklung. Baut die Plattform, auf der GolfNext läuft – und die Kampagnen, die darüber laufen.",
+      facts: ["Online-Marketing", "Softwareentwicklung", "KI-gestützte Entwicklung"],
+    },
+  ],
+  partner:
+    "Bei Spezialfragen zu Datenschutz und KI-Regulierung unterstützen uns erfahrene Fachpartner. Technologiepartner von GolfNext ist SK Online Marketing, Bad Oeynhausen.",
+  haltungLead: "Uns begeistert, was Technik möglich macht. Noch mehr begeistert uns,",
+  haltungEm: "was Menschen mit der gewonnenen Zeit anfangen.",
+  haltungText:
+    "Ein gutes Gespräch lässt sich nicht automatisieren. Die Arbeit davor oft schon. Deshalb bauen wir Software, die dem Clubteam die Wiederholung abnimmt – nicht die Beziehung.",
+};
+
+export const ueberGolfnextProjekte: ProjekteData = {
+  logos: [
+    "Golfclub Rehburg-Loccum",
+    "GC Hainmühlen-Bremerhaven",
+    "Golfclub Widukind-Land",
+    "Golfclub Sittensen",
+    "Münchner GC Eschenried",
+    "Logo folgt",
+    "Logo folgt",
+    "Logo folgt",
+    "Logo folgt",
+    "Logo folgt",
+  ],
+  praxisLink: "Was diese Clubs mit GolfNext machen – Praxis",
+  note: "Logos und Freigaben: Fred liefert die endgültige Liste.",
+};
+
+export const ueberGolfnextWissen: WissenData = {
+  cards: [
+    {
+      bild: "Bild folgt",
+      quelle: "golfmanager · Fachartikel",
+      titel: "Titel folgt: Mitgliedergewinnung",
+      text: "Freds Beitrag aus dem golfmanager – Titel, Teaser und Ausgabe liefert Fred.",
+      autor: "Fred Hoffmann",
+      lesezeit: "Lesezeit folgt",
+    },
+    {
+      bild: "Bild folgt",
+      quelle: "golfmanager · Fachartikel",
+      titel: "Titel folgt: Das Clubbüro entlasten",
+      text: "Freds Beitrag aus dem golfmanager – Titel, Teaser und Ausgabe liefert Fred.",
+      autor: "Fred Hoffmann",
+      lesezeit: "Lesezeit folgt",
+    },
+    {
+      bild: "Bild folgt",
+      quelle: "GolfNext · Blog",
+      titel: "Titel folgt: KI im Golfclub",
+      text: "Beitrag aus der Arbeit mit Pilotclubs – Titel und Teaser folgen.",
+      autor: "GolfNext",
+      lesezeit: "Lesezeit folgt",
+    },
+    {
+      bild: "Bild folgt",
+      quelle: "GolfNext · Blog",
+      titel: "Titel folgt: Schnupperkurse füllen",
+      text: "Beitrag aus der Arbeit mit Pilotclubs – Titel und Teaser folgen.",
+      autor: "GolfNext",
+      lesezeit: "Lesezeit folgt",
+    },
+  ],
+  alleArtikel: { label: "Alle Artikel", path: "/ratgeber" },
+};
+
 export const ueberGolfnext: PageContent = {
   route: "/ueber-golfnext",
   meta: {
@@ -15,79 +281,50 @@ export const ueberGolfnext: PageContent = {
   },
   sections: [
     {
-      id: "einstieg",
+      id: "hero",
       eyebrow: "Über GolfNext",
-      headlineLines: ["Wir hängen am Golf.", "Nicht am Gestern."],
+      headline: "Wir hängen am Golf. Nicht am Gestern.",
       text: [
-        "Mehr Menschen auf den Platz bringen. Mehr Zeit fürs Clubleben schaffen. Dafür entwickeln wir die GolfNext-Plattform. Sie verbindet Websites, die Lust auf Golf machen, mit Marketing, das Menschen erreicht, und digitalen Helfern, die dem Clubbüro Arbeit abnehmen.",
+        "Mehr Menschen auf den Platz bringen. Mehr Zeit fürs Clubleben schaffen. Dafür entwickeln wir die GolfNext-Plattform: Websites, die Lust auf Golf machen, Marketing, das Menschen erreicht, und digitale Helfer, die dem Clubbüro Arbeit abnehmen.",
       ],
-      data: {
-        schlussgedanke: "Wir machen digital. Damit mehr Zeit für das bleibt, was keinen Bildschirm braucht.",
-      },
-      cta: { label: "GolfNext in der Live-Demo ansehen", target: "livedemo" },
     },
     {
       id: "weg",
       eyebrow: "Unser Weg",
-      headlineLines: ["Wir wollten Websites bauen.", "Dann haben wir zugehört."],
-      data: {
-        stationen: [
-          {
-            marke: "imageGolf",
-            titel: "2016 · Erst mal ins Netz.",
-            text: [
-              "Mit der Gründung von imageGolf ging es los: Clubwebsites, Social Media und Werbekampagnen. Golfclubs bekamen einen digitalen Auftritt. Ihre Angebote ein Publikum.",
-            ],
-          },
-          {
-            marke: "GolfNext Consulting",
-            titel: "Danach · Klick gemacht. Fragen offen.",
-            text: [
-              "Online-Marketing ist schnell beauftragt. Es wirklich zu verstehen, braucht mehr. Wie greifen Kanäle, Inhalte und Mitgliedergewinnung ineinander?",
-              "Aus diesem Beratungsbedarf wurde GolfNext Consulting. Wir erklärten Zusammenhänge und schulten Mitarbeiter im Clubbüro in Social Media, Suchmaschinenoptimierung, dem Schreiben von Blogartikeln und später im Einsatz von KI.",
-            ],
-          },
-          {
-            marke: "GolfNext",
-            titel: "Heute · Aus „Man müsste mal“ wird Software.",
-            text: [
-              "Seit 2026 nutzen wir KI-gestützte Entwicklung, um eigene Anwendungen wirtschaftlicher umzusetzen. So werden Lösungen möglich, die auch zu den Budgets kleinerer Golfclubs und Golfanlagen passen.",
-            ],
-          },
-        ],
-        abschluss:
-          "Viele Clubprojekte. Viele Erkenntnisse. Heute eine Plattform: GolfNext verbindet Clubwebsite, Mitgliedergewinnung und digitale Tools für den Cluballtag.",
-      },
+      headline: "Wir wollten Websites bauen. Dann haben wir zugehört.",
+      text: [
+        "Aus zehn Jahren Arbeit mit Golfclubs wurde erst Beratung, dann Software. Jede Stufe hat die nächste nötig gemacht.",
+      ],
     },
     {
-      id: "projekte",
-      eyebrow: "Gemeinsame Projekte",
-      headline: "Diese Partner haben mitgeschrieben.",
-      text: [
-        "An unserer Geschichte. Und an der Idee hinter GolfNext.",
-        "Für sie haben wir Websites gestaltet, Kampagnen umgesetzt und Printprojekte entwickelt. Ihre Teams haben wir beraten und geschult.",
-      ],
-      // Logos: Fred liefert Liste, Dateien, Freigaben und Beschriftungen. Bis dahin Platzhalter-Raster (nicht aus dieser Datei).
+      id: "grundsaetze",
+      eyebrow: "Wie wir arbeiten",
+      headline: "Zwei Grundsätze, an denen Sie uns messen können.",
+      text: ["Wir sind ein kleines Team aus dem Golfmarkt, kein Konzern. Das hat Folgen – gute, finden wir."],
     },
     {
       id: "menschen",
       eyebrow: "Die Menschen dahinter",
-      headlineLines: ["Künstliche Intelligenz.", "Echte Golfverrückte."],
+      headline: "Künstliche Intelligenz. Echte Golfverrückte.",
       text: [
-        "Fred Hoffmann bringt mehr als 30 Jahre Berufserfahrung im Golfmarkt als PGA Golfprofessional mit.",
-        "Stefan Kühne verbindet langjährige Erfahrung im Online-Marketing mit technischer Entwicklung.",
-        "Bei Spezialfragen zu Datenschutz und KI-Regulierung unterstützen uns erfahrene Fachpartner.",
+        "Zwei Leute, die den Golfmarkt seit Jahrzehnten von innen kennen – einer vom Platz, einer vom Bildschirm.",
       ],
-      data: {
-        haltung:
-          "Uns begeistert, was Technik möglich macht. Noch mehr begeistert uns, was Menschen mit der gewonnenen Zeit anfangen.",
-        statementLines: ["Ein gutes Gespräch lässt sich nicht automatisieren.", "Die Arbeit davor oft schon."],
-        personen: [
-          { name: "Fred Hoffmann", rolle: "PGA Golfprofessional" },
-          { name: "Stefan Kühne", rolle: "Online-Marketing und Entwicklung" },
-        ],
-      },
-      cta: { label: "Unser Team kennenlernen", target: "team" },
+    },
+    {
+      id: "projekte",
+      eyebrow: "Gemeinsame Projekte",
+      headline: "Diese Clubs haben mitgeschrieben.",
+      text: [
+        "An unserer Geschichte und an der Idee hinter GolfNext. Für sie haben wir Websites gestaltet, Kampagnen umgesetzt und Teams geschult – und mit einigen entwickeln wir die Plattform heute im Pilot weiter.",
+      ],
+    },
+    {
+      id: "wissen",
+      eyebrow: "Wissen",
+      headline: "Was wir über Golfclubs gelernt haben, schreiben wir auf.",
+      text: [
+        "Fachartikel aus dem golfmanager und Beiträge aus der Arbeit mit Clubs – zum Mitnehmen, auch ohne GolfNext.",
+      ],
     },
   ],
   footerClose: {
@@ -99,5 +336,7 @@ export const ueberGolfnext: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
+    secondary: { label: "Oder zuerst die Live-Demo ansehen", target: "livedemo" },
+    persoenlicheZeile: "Fred Hoffmann, Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt",
   },
 };

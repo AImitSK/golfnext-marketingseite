@@ -1,0 +1,234 @@
+/* Portiert aus docs/design-system/mocks/3.8b-ueber-golfnext-neufassung.html
+   (.hero/.txt/.quote/.people/.pcard/.ph/.cap). Farben auf --gn-* umgestellt, literale
+   Tints kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4 px.
+   Bewegung: Der Endzustand (beide Porträtkarten sichtbar) steht im Server-HTML → ohne
+   JS und bei prefers-reduced-motion sofort sichtbar. Nur mit JS/ohne Reduced-Motion
+   setzt die Komponente kurz `.start` und löst es beim Sichtbarwerden einmalig auf.
+   Nur opacity/transform (kein CLS; .people-Höhe ist fest reserviert). */
+
+.hero {
+  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden; /* fängt den Bleed der Porträtkarten (.people width > 100%) ab */
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 96px 40px 110px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+.txt {
+  min-width: 0;
+  padding-right: 40px;
+}
+.h1 {
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 19ch;
+  text-wrap: balance;
+  margin: 0;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 50ch;
+  line-height: 1.62;
+}
+.acts {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 38px;
+}
+.b2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 15.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 3px;
+}
+.b2 svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+.quote {
+  margin: 34px 0 0;
+  padding-left: 18px;
+  border-left: 3px solid var(--gn-signal); /* Signalgrün-Linie (Grün-Regel: Linie erlaubt) */
+  font-family: var(--gn-font-display);
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  max-width: 30ch;
+}
+
+/* ---- Porträt-Platzhalterkarten (dekorativ, beschriftet – kein Foto/Stock/KI) ---- */
+.people {
+  position: relative;
+  height: 530px; /* Höhe fest reserviert → kein CLS */
+  width: 150%; /* läuft rechts über den Rand hinaus (Bleed) */
+  min-width: 0;
+}
+.pcard {
+  position: absolute;
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  background: linear-gradient(150deg, #2a4c5c, #1b3a48); /* dunkler Porträt-Platzhalter, Mock-Werte */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 60px 120px -50px rgba(0, 0, 0, 0.7); /* Tiefen-Schatten, 1:1 aus Mock */
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease,
+    transform 0.8s var(--gn-ease);
+}
+.fred {
+  left: 0;
+  top: 0;
+  width: 340px;
+  height: 440px;
+  z-index: 1;
+}
+.stefan {
+  left: 250px;
+  top: 170px;
+  width: 270px;
+  height: 340px;
+  z-index: 2;
+  transition-delay: 0.2s;
+}
+/* Ausgangszustand (nur transient mit JS): Karten leicht versetzt und ausgeblendet. */
+.start .pcard {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ph svg {
+  width: 64px;
+  height: 64px;
+  color: rgba(127, 211, 240, 0.45); /* --gn-sky gedämpft */
+}
+.tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche mit Navy-Text (Grün-Regel: Fläche/Text auf … ok) */
+  border-radius: 2px;
+  padding: 3px 8px;
+}
+.cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 20px;
+  background: linear-gradient(transparent, rgba(1, 27, 38, 0.92) 40%); /* navy-deep-Verlauf, Mock-Wert */
+}
+.cap b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 19px;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.cap span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--gn-on-dark-text);
+  margin-top: 3px;
+}
+.cap em {
+  display: inline-block;
+  font-style: normal;
+  margin-top: 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gn-signal); /* Signalgrün als Text auf Navy (Grün-Regel: erlaubt) */
+}
+
+@media (max-width: 1080px) {
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+    padding: 70px 26px 90px;
+  }
+  .txt {
+    padding-right: 0;
+  }
+  .people {
+    width: 100%;
+    height: 480px;
+  }
+  .fred {
+    width: min(340px, 58%);
+    height: 420px;
+  }
+  .stefan {
+    left: auto;
+    right: 0;
+    top: 90px;
+    width: min(280px, 48%);
+    height: 340px;
+  }
+}
+@media (max-width: 620px) {
+  .in {
+    padding: 70px 20px 84px;
+  }
+  .people {
+    height: 400px;
+  }
+  .fred {
+    height: 340px;
+  }
+  .stefan {
+    height: 280px;
+    top: 90px;
+  }
+  .cap b {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard {
+    transition: none;
+  }
+}

@@ -46,10 +46,11 @@ describe("getNavModel", () => {
     expect(reach && "status" in reach).toBe(false);
   });
 
-  it("verlinkt live-Routen echt (Plattform, Wachstum & Vertrieb, Clubprozesse, Pakete) und nicht-live Punkte als Platzhalter (#)", () => {
+  it("verlinkt live-Routen echt (Plattform, Wachstum & Vertrieb, Clubprozesse, Pakete, Über GolfNext) und nicht-live Punkte als Platzhalter (#)", () => {
     // Live-Hauptpunkte: /pakete (Schritt 2.1), /plattform (Schritt 2.3, Briefing 0016),
-    // /wachstum-vertrieb (Schritt 2.5, Briefing 0017) und /clubprozesse (Schritt 2.6, Briefing 0018).
-    const liveHaupt = new Set(["/pakete", "/plattform", "/wachstum-vertrieb", "/clubprozesse"]);
+    // /wachstum-vertrieb (Schritt 2.5, Briefing 0017), /clubprozesse (Schritt 2.6, Briefing 0018)
+    // und /ueber-golfnext (Schritt 2.7, Briefing 0019).
+    const liveHaupt = new Set(["/pakete", "/plattform", "/wachstum-vertrieb", "/clubprozesse", "/ueber-golfnext"]);
     for (const item of model) {
       if (liveHaupt.has(item.path)) {
         expect(item.href).toBe(item.path);

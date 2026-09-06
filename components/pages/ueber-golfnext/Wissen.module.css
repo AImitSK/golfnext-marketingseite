@@ -1,0 +1,155 @@
+/* Portiert aus 3.8b-ueber-golfnext-neufassung.html (Abschnitt 6 · .know/.rail/.kcard/
+   .kp/.kb/.km/.rnav). Farben auf --gn-* umgestellt, literale Tints kommentiert.
+   Karten-Radius --gn-radius-lg (12). Bleed nach rechts über calc(50% - 50vw); der
+   Abschnitt kappt mit overflow:hidden (PlattformSection overflowHidden) → kein
+   Seiten-Overflow. Die Bild-Platzhalter (.kp „Bild folgt“) sind beschriftete Flächen
+   – kein Stock/KI. */
+
+.know {
+  position: relative;
+  margin-top: 56px;
+}
+.rail {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  margin-right: calc(50% - 50vw); /* Bleed: Rail läuft bis zum rechten Viewport-Rand */
+  padding-right: calc(50vw - 50%); /* Platz, damit die letzte Karte einrasten kann */
+  scrollbar-width: none;
+  cursor: grab;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail.drag {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+.kcard {
+  flex: 0 0 380px;
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s ease,
+    border-color 0.35s;
+}
+.kcard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
+  border-color: rgba(1, 65, 91, 0.35);
+}
+.kp {
+  height: 170px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  position: relative;
+}
+.kp span {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-paper);
+  border: 1px solid var(--gn-line);
+  border-radius: 2px;
+  padding: 3px 8px;
+}
+.kb {
+  padding: 24px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.kt {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-blue);
+}
+.kb b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 20px;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 10px 0 10px;
+}
+.kb p {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  line-height: 1.58;
+  margin: 0 0 18px;
+}
+.km {
+  margin-top: auto;
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--gn-line);
+}
+.rnav {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  right: 0;
+  top: -72px;
+}
+.rnav button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--gn-line);
+  background: #fff;
+  color: var(--gn-navy);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.rnav button:hover:not(:disabled) {
+  background: var(--gn-navy);
+  color: #fff;
+  border-color: var(--gn-navy);
+}
+.rnav button svg {
+  width: 18px;
+  height: 18px;
+}
+.rnav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.alle {
+  margin: 28px 0 0;
+}
+
+@media (max-width: 620px) {
+  .kcard {
+    flex-basis: 290px;
+  }
+  .kp {
+    height: 140px;
+  }
+  .rnav {
+    display: none;
+  }
+}

@@ -1,0 +1,66 @@
+/* Portiert aus 3.8b-ueber-golfnext-neufassung.html (Abschnitt 5 · .logos/.logo/
+   .logonote). Farben auf --gn-* umgestellt, literale Tints kommentiert. Die Kacheln
+   sind beschriftete Platzhalter (Clubname bzw. „Logo folgt“) mit gestrichelter
+   Innenlinie – kein Stock/KI-Logo. */
+
+.logos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 48px;
+}
+.logo {
+  height: 92px;
+  padding: 0 14px;
+  text-align: center;
+  line-height: 1.3;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gn-muted);
+  letter-spacing: -0.01em;
+  position: relative;
+  transition:
+    border-color 0.3s,
+    transform 0.3s;
+}
+.logo:hover {
+  border-color: var(--gn-navy);
+}
+.logo::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed rgba(1, 65, 91, 0.18); /* navy #01415B @ .18 */
+  border-radius: 5px;
+  pointer-events: none;
+}
+.logonote {
+  margin: 22px 0 0;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 14px;
+  color: var(--gn-muted);
+}
+
+@media (max-width: 900px) {
+  .logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .logo {
+    height: 76px;
+  }
+}

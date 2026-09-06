@@ -141,7 +141,7 @@ export const ROUTES: Route[] = [
   {
     path: "/ueber-golfnext",
     label: "Über GolfNext",
-    status: "geplant",
+    status: "live",
     nav: "haupt",
     mock: "mocks/3.8b-ueber-golfnext-neufassung.html",
     briefing: "briefings/0019-ueber-golfnext.md",

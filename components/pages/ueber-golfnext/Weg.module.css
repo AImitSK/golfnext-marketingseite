@@ -1,0 +1,128 @@
+/* Portiert aus 3.8b-ueber-golfnext-neufassung.html (Abschnitt 2 · .way/.wayline/
+   .wgrid/.wst/.yr/.brand). Farben auf --gn-* umgestellt, literale Werte kommentiert.
+   Große Fläche (weiße „now“-Karte): --gn-radius-lg (12).
+
+   Bewegung: Der Endzustand steht im Server-HTML. Die (aria-hidden) Linie zieht über die
+   Stufen; `.start` (nur transient mit JS) setzt sie auf 0. Die Stationen blenden über
+   die Motion-Infra (Rise/RiseItem) gestaffelt auf. Die Jahres-Pills sind bewusst NICHT
+   animiert (dauerhaft Navy-Fläche + Signalgrün-Text) – so liegt sichtbarer Text nie in
+   einem kontrastschwachen Zwischenzustand. Nur opacity/transform/Linienbreite (die
+   Linie liegt absolut → kein CLS). */
+
+.way {
+  margin-top: 64px;
+  position: relative;
+}
+.wayline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22px;
+  height: 2px;
+  background: var(--gn-line);
+}
+.wayline i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--gn-navy);
+  transition: width 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+.start .wayline i {
+  width: 0;
+}
+.wgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  position: relative;
+}
+.wst {
+  padding-top: 0;
+  min-width: 0;
+}
+.yr {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gn-paper);
+  padding-right: 14px;
+  position: relative;
+  z-index: 1;
+}
+.yr i {
+  min-width: 46px;
+  height: 46px;
+  padding: 0 10px;
+  border-radius: 23px;
+  background: var(--gn-navy);
+  border: 2px solid var(--gn-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--gn-font-display);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--gn-signal); /* Signalgrün als Text auf Navy (Grün-Regel: erlaubt) */
+  letter-spacing: 0.02em;
+}
+.yr b {
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+}
+.brand {
+  margin-top: 22px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.wh {
+  font-size: clamp(21px, 2vw, 26px);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 8px 0 12px;
+  color: var(--gn-navy);
+}
+.wp {
+  font-size: 15px;
+  color: var(--gn-muted);
+  line-height: 1.62;
+  margin: 0 0 10px;
+  max-width: 38ch;
+}
+.now {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 26px 26px 26px;
+  margin: -26px -26px 0;
+}
+.now .yr {
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  .wgrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .wayline {
+    display: none;
+  }
+  .now {
+    margin: 0;
+    padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wayline i {
+    transition: none;
+  }
+}

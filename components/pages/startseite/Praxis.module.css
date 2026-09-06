@@ -206,7 +206,9 @@
   gap: 10px;
   margin-top: 34px;
   font-size: 13.5px;
-  color: var(--gn-warn);
+  /* AA-Fix wie Briefing 0003 (Badge „Pilot"): --gn-warn (#8a6d3b) auf warn-bg = 4,3:1.
+     Lokal auf #856835 abgedunkelt → 4,59:1 (kein Token geändert). */
+  color: #856835;
   background: var(--gn-warn-bg);
   border: 1px solid #eadcb4; /* Mock-Wert */
   border-radius: 3px;

@@ -79,20 +79,12 @@
 .paneProzesse {
   display: none;
 }
+/* Sofortiger Wechsel (kein Einblenden): Endzustand steht ohne Lade-Animation, die
+   aktive Ansicht ist jederzeit voll deckend (kein Kontrast-Flackern, keine
+   Layoutverschiebung). „Ruhig und verständlich" ohne aus dem Sichtfeld zu fliegen. */
 .inWachstum:checked ~ .panes .paneWachstum,
 .inProzesse:checked ~ .panes .paneProzesse {
   display: block;
-  animation: paneIn 0.45s ease;
-}
-@keyframes paneIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .pgrid {
@@ -143,13 +135,6 @@
 }
 .pcta {
   margin-top: 26px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .inWachstum:checked ~ .panes .paneWachstum,
-  .inProzesse:checked ~ .panes .paneProzesse {
-    animation: none;
-  }
 }
 
 @media (max-width: 1080px) {

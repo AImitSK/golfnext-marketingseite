@@ -1,6 +1,8 @@
 /* Portiert 1:1 aus docs/design-system/mocks/3.7-pakete.html (Abschnitt 3 „Die drei Pakete"
-   + Werbebudget, .pk3/.pkc/.stackprice/.adbox/.adcalc, Z.194–254). Werte unverändert,
+   + Werbebudget, .pk3/.pkc/.stackprice/.adbox, Z.194–254). Werte unverändert,
    Kurznamen auf --gn-* umgestellt, literale rgba-Tints kommentiert.
+   Die Werbebudget-Box ist bewusst OHNE Rechen-Teil (der Mock-`.adcalc`-Block entfällt,
+   Freigabe Stefan 06.09.2026 – der Club rechnet den Betrag selbst).
    Abweichung 1.6: Die aufklappbaren Leistungen stehen auf <details>/<summary> statt
    Button+hidden+JS – der Mock-Selektor `.inctoggle[aria-expanded="true"] svg` ist zu
    `details[open] .summary svg` geworden, das geschlossene Panel blendet <details> nativ aus. */

@@ -1,0 +1,55 @@
+/* Portiert aus 3.2c-plattform-neufassung.html (.psec/.pwrap/.eyebrow/h2/.lead).
+   Layout-Erweiterungen der Neufassung als benannte Tokens (globals.css), nur hier
+   angewandt: --gn-wrap-wide (1180), --gn-section-y-lg (120), --gn-h2-lg. */
+
+.psec {
+  padding: var(--gn-section-y-lg) 0; /* 120px */
+}
+@media (max-width: 620px) {
+  .psec {
+    padding: 72px 0;
+  }
+}
+.sand {
+  background: var(--gn-sand);
+}
+.mist {
+  background: var(--gn-mist);
+}
+.clip {
+  overflow: hidden; /* fängt den Bleed des Rollen-Sliders ab → kein Seiten-Overflow */
+}
+
+.pwrap {
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+@media (max-width: 960px) {
+  .pwrap {
+    padding: 0 26px;
+  }
+}
+@media (max-width: 620px) {
+  .pwrap {
+    padding: 0 20px;
+  }
+}
+
+.eyebrow {
+  margin-bottom: 18px;
+}
+.h2 {
+  font-size: var(--gn-h2-lg); /* clamp(30px,3.6vw,48px) */
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0 0 18px;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.lead {
+  font-size: clamp(17px, 1.4vw, 20px);
+  color: var(--gn-muted);
+  max-width: 58ch;
+  margin: 0;
+}

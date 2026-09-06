@@ -5,7 +5,7 @@ Status pflegen, wenn eine Seite gebaut ist. Spalte „Bilder offen" listet die `
 | Route | Quelle | Status | Bilder offen (Fred) |
 |---|---|---|---|
 | `/` | 3.1 + Preislogik Fassung 2 | **live** (2.2) | Foto Fred (Zitat, Abschluss); Foto Golfclub Bad Wörishofen (Praxis) |
-| `/plattform` | 3.2c (Neufassung v02) | offen | Produkt-Screenshots (Clubwebsite, Marketing-CRM, Concierge-Chat, Landingpage, E-Mail-Sequenzen) als `Shot`-Platzhalter; kein Foto nötig |
+| `/plattform` | 3.2c (Neufassung v02) | **live** (2.3) | keine – die Oberflächen (Browser-Demo, Marketing-CRM-Liste, Concierge-Chat, Geräterahmen der Scroll-Geschichte) sind bewusst **schematische Illustrationen** (kein `Shot`, kein echter Screenshot, kein Foto nötig) |
 | `/plattform/so-arbeitet-golfnext` | 3.3 | offen | Marketing-CRM-Board, E-Mail-Sequenz, Landingpage, Ratgeberartikel – Screenshots ohne personenbezogene Daten |
 | `/wachstum-vertrieb` | 3.4 | offen | 15 Screenshots (Clubwebsite, Landingpages je Zielgruppe, Marketing-CRM, Analytics, Firmen-Event-Anfrage …) |
 | `/clubprozesse` | 3.5 | offen | Concierge-Dialog, Platzstatus (mobil/Website), Gastfee mit Zahlung, Firmen-Event-Anfrage, Turnier-News (PDF-Upload, erkannte Ergebnisse, Rahmenbedingungen, Tonalität, Bildauswahl, Websitevorschau, Facebook-/Instagram-Beitrag), Captains App (Auswahl bis Veröffentlichung), Mannschaftsbeitrag auf der Website |

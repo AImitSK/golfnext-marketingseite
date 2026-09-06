@@ -73,10 +73,12 @@ export const ROUTES: Route[] = [
   {
     path: "/plattform",
     label: "Plattform",
-    status: "geplant",
+    status: "live",
     nav: "haupt",
     mock: "mocks/3.2c-plattform-neufassung.html",
     briefing: "briefings/0016-plattform.md",
+    // Briefing 0016 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
+    // nur Canonical wird gesetzt (wie Startseite). Nicht erfinden (Feinschliff Phase 6).
     title: null,
     description: null,
   },

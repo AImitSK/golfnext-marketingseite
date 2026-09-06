@@ -5,7 +5,7 @@
 | Route | Title | Description |
 |---|---|---|
 | `/` | GolfNext – Marketing und Automation für Golfclubs | aus Startseiten-Briefing übernehmen |
-| `/plattform` | GolfNext Plattform | aus Briefing |
+| `/plattform` | Root-Default „GolfNext" (Phase 6) | Briefing 0016 liefert keinen Meta-Titel/-Text → aktuell Root-Default + Canonical (title/description in site-structure.ts = null). Endgültiger Titel/Beschreibung im Feinschliff festlegen **[S]** |
 | `/plattform/so-arbeitet-golfnext` | So arbeitet GolfNext | aus Briefing |
 | `/wachstum-vertrieb` | Wachstum & Vertrieb für Golfclubs | aus Briefing |
 | `/clubprozesse` | Clubprozesse digital – GolfNext | aus Briefing |

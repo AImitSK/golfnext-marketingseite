@@ -118,6 +118,17 @@
   /* Bewegung */
   --gn-ease: cubic-bezier(0.2, 0.8, 0.3, 1);
   --gn-dur: 0.55s;
+
+  /* Layout-Erweiterungen der Plattform-Neufassung v02 (Briefing 0016).
+     Benannte, wiederverwendbare Tokens einer großzügigeren Layout-Sprache
+     (breiterer Satzspiegel, größere Flächen-Radien, mehr Sektionsluft, größere H2).
+     Werden bewusst NUR auf /plattform angewandt (components/pages/plattform/*).
+     Pakete/Startseite bleiben auf --gn-wrap/--gn-radius/--gn-section-y/--gn-h2.
+     Ob das site-weit Standard wird, entscheidet Stefan (offene Frage 0016). */
+  --gn-wrap-wide: 1180px; /* breiter Satzspiegel der Neufassung */
+  --gn-radius-lg: 12px; /* große Flächen: Geräterahmen, Boxen, Slider-Karten (Bedienelemente bleiben 4px) */
+  --gn-section-y-lg: 120px; /* großzügiger Sektionsabstand (72px ≤620px) */
+  --gn-h2-lg: clamp(30px, 3.6vw, 48px); /* größere H2-Skala der Neufassung */
 }
 
 /* Basis-Styles nach Briefing 0001 / docs/design-system */

@@ -67,9 +67,37 @@ components/
 3. Ein System, keine Modulsammlung – Verbindung sichtbar machen (Linien, Stapel, Sockel).
 4. Persönlich – Fred ist Ansprechpartner, der Abschluss jeder Seite ist ein Gespräch, keine Leistungsliste.
 
+## Hero-Layout (Standard für alle Seiten)
+
+Seit 06.09.2026 (Entscheidung Stefan, Briefing 0015) gilt **eine** Hero-Aufteilung für alle Seiten – die dominante Textspalte des Pakete-Heros, **nicht** 50/50:
+
+- Raster `grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr)`, `gap: 56px`, `align-items: center`.
+- Textspalte dominant: `h1` `max-width: ~19ch`, Lead `max-width: ~58ch`.
+- Systemspalte rechts (Strecke/Stapel/Grafik) ist die schmalere 1fr-Spalte.
+- Unter **1080 px** einspaltig (`minmax(0, 1fr)`), Reihenfolge Text → Grafik.
+- Genau **eine** `<h1>` je Seite; kein horizontaler Overflow @390–1440.
+
+Umgesetzt in `components/pages/*/Hero.module.css` (Startseite und Pakete identisch aufgeteilt).
+
 ## Bewegung (gilt seitenübergreifend)
 
 Einmalig, Endzustand bleibt, kein Loop, kein Ton, kein Scroll-Zwang, keine Layoutverschiebung, Reduced Motion zeigt sofort den Endzustand, Inhalte ohne JS lesbar. Welche Animation je Seite gewollt ist, steht im jeweiligen Briefing und ist im Mock umgesetzt.
+
+### Bewegungs-Standard der Umsetzung (Briefing 0015)
+
+**Scroll-Reveals** (`lib/motion/variants.ts`, Wrapper in `components/motion/`):
+
+- `reveal` – einmaliges Aufblenden, **spürbarer** Translate von 28 px von unten (`opacity`+`y`), `.55 s`, Ease `[.2,.8,.3,1]`. Für Überschriften, Absätze, einzelne Karten.
+- `rise` + `RiseItem` – Container staffelt seine Kinder mit `STAGGER = .1 s` klar nacheinander. Für Karten-/Stationen-Gruppen.
+- `draw` (`Draw`, SVG-Pfad) und `RevealLine` (CSS-Balken über `scaleX`/`scaleY`) – für Verbindungslinien (Hero-Strecke, Journey-Linie, Pakete-„Rückgrat").
+- `CountUp` – echte Kennzahlen zählen **einmal** hoch beim Sichtbarwerden (Wert wortgleich; Reduced-Motion/No-JS = Endwert).
+- Auslöser überall `whileInView` mit `viewport={{ once: true, amount: .2 }}`; `initial` wird erst nach Mount und nur ohne `prefers-reduced-motion` gesetzt (Muster `useMountedReveal`) → Server-HTML rendert den Endzustand, ohne JS voll sichtbar.
+
+**Hover-/Micro-Interaktionen (geteilte Konvention):**
+
+- **Buttons:** jede Variante hat einen weichen Flächen-/Rahmen-Hover (`.cta`, `.primary`, `.ghost`, `.light`, `.hbtn`).
+- **Karten-Hover-Lift:** globale Klasse **`.gn-card-lift`** (`app/globals.css`) – Navy-Rahmen + weicher Schatten + `translateY(-2px)`, `~.2 s`. An interaktive Karten hängen (Pakete-Karten, Vorteils-Karten, Praxis-Beispiel). Reduced-Motion: kein Anheben. Die Karte braucht einen sichtbaren `border`.
+- **TextLink:** Pfeil rückt beim Hover `translateX(3px)`. Fokusring bleibt überall sichtbar (`:focus-visible`).
 
 ## Offene Assets (Fred liefert)
 

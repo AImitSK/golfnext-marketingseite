@@ -579,7 +579,7 @@ export default function BausteinePage() {
               <Reveal className={styles.motionCard}>
                 <h3>Reveal</h3>
                 <p>
-                  Blendet einmalig auf und schiebt sich 14 Pixel von unten in seine Position – die
+                  Blendet einmalig auf und schiebt sich 28 Pixel von unten in seine Position – die
                   Grundbewegung für Überschriften, Absätze und einzelne Karten.
                 </p>
               </Reveal>

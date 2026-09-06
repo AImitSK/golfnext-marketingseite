@@ -179,6 +179,29 @@
   }
 }
 
+/* Karten-Hover-Lift · wiederverwendbare Konvention (Briefing 0015, Muster .pkc:hover).
+   Auf interaktive Karten anwenden: Navy-Rahmen + weicher Schatten + 2 px anheben,
+   weiche Transition (~.2 s). Bewegt nur transform/box-shadow/border → kein CLS. Die
+   Karte muss einen sichtbaren Rahmen (border) tragen, damit border-color greift. */
+.gn-card-lift {
+  transition:
+    border-color 0.2s var(--gn-ease),
+    box-shadow 0.2s var(--gn-ease),
+    transform 0.2s var(--gn-ease);
+}
+.gn-card-lift:hover {
+  border-color: var(--gn-navy);
+  box-shadow: 0 26px 52px -34px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten (wie .pkc:hover) */
+  transform: translateY(-2px);
+}
+/* Reduzierte Bewegung: kein Anheben; Rahmen/Schatten bleiben als statische
+   Hervorhebung erhalten, die Übergangszeit wird global ohnehin auf ~0 gesetzt. */
+@media (prefers-reduced-motion: reduce) {
+  .gn-card-lift:hover {
+    transform: none;
+  }
+}
+
 /* Reduced Motion: sofort Endzustand, keine Übergänge */
 @media (prefers-reduced-motion: reduce) {
   *,

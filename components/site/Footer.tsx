@@ -101,7 +101,9 @@ export function Footer({ footerClose }: { footerClose: FooterCloseType }) {
         <a href={routeHref("/impressum")}>Impressum</a>
         <a href={routeHref("/datenschutz")}>Datenschutz</a>
         <CookieSettingsButton className={styles.cookieBtn} />
-        <span className={styles.sp}>Ein Produkt von SK Online Marketing und Fred Hoffmann</span>
+        {/* Die Zeile „Ein Produkt von SK Online Marketing und Fred Hoffmann" gehört laut
+            Umsetzungsbriefing 3.1 (Tabelle 6) nicht in den sichtbaren Footer, sondern ins
+            Impressum – hier bewusst entfernt (matcht Mock 3.1). */}
       </div>
     </footer>
   );

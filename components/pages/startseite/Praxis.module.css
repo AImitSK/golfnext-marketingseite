@@ -1,0 +1,324 @@
+/* Portiert aus docs/design-system/mocks/3.1-startseite.html (.anna/.chatbox/.msg/.nums/
+   .second, Z.246–305). Farben auf --gn-* umgestellt, literale Tints kommentiert.
+   Kennzahlen sind statisch (kein Hochzähler) – die JS-Chat-Einblendung entfällt, der
+   Chat steht als sichtbarer Endzustand. */
+
+.anna {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: 46px;
+  margin-top: 46px;
+  align-items: center;
+}
+
+/* ---- Chatfenster ---- */
+.chatbox {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  overflow: hidden;
+  box-shadow: 0 30px 60px -46px rgba(1, 65, 91, 0.55);
+}
+.ch {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+}
+.av {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--gn-font-display);
+  font-weight: 800;
+  font-size: 15px;
+  flex: 0 0 auto;
+}
+.who {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.who b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 17px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.who em {
+  display: block;
+  font-style: normal;
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin-top: 2px;
+}
+.live {
+  margin-left: auto;
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border: 1px solid #cfe0d2; /* Mock-Wert */
+  border-radius: var(--gn-radius-pill);
+  padding: 4px 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal);
+  display: block;
+  flex: 0 0 auto;
+}
+.chatbody {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.msg {
+  max-width: 80%;
+}
+.bub {
+  font-size: 15px;
+  line-height: 1.62;
+  padding: 14px 18px;
+  display: block;
+}
+.mt {
+  display: block;
+  font-size: 11.5px;
+  color: var(--gn-muted);
+  margin-top: 7px;
+  letter-spacing: 0.02em;
+}
+.q {
+  align-self: flex-end;
+}
+.q .bub {
+  background: var(--gn-navy);
+  color: #fff;
+  border-radius: 5px 5px 0 5px;
+}
+.q .mt {
+  text-align: right;
+}
+.a {
+  align-self: flex-start;
+}
+.a .bub {
+  background: var(--gn-mist);
+  color: var(--gn-ink);
+  border: 1px solid var(--gn-line);
+  border-radius: 5px 5px 5px 0;
+}
+.chatfoot {
+  border-top: 1px solid var(--gn-line);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--gn-paper);
+}
+.fake {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-pill);
+  padding: 9px 16px;
+  font-size: 13.5px;
+  color: var(--gn-muted);
+  background: #fff;
+}
+.send {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+/* ---- Textspalte ---- */
+.tag {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  font-weight: 700;
+}
+.annaH {
+  font-size: clamp(22px, 2.3vw, 27px);
+  margin: 12px 0 16px;
+  line-height: 1.2;
+}
+.annaP {
+  font-size: 16px;
+  color: var(--gn-muted);
+  margin: 0 0 34px;
+  line-height: 1.65;
+  max-width: 46ch;
+}
+.nums {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 26px;
+}
+.num {
+  border-top: 3px solid var(--gn-signal); /* Signalgrün-Linie – Grün-Regel ok */
+  padding-top: 16px;
+}
+.n {
+  font-family: var(--gn-font-display);
+  font-size: clamp(26px, 2.7vw, 34px);
+  color: var(--gn-navy);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.l {
+  font-size: 13px;
+  color: var(--gn-muted);
+  margin-top: 9px;
+  line-height: 1.5;
+}
+.statusline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 34px;
+  font-size: 13.5px;
+  /* AA-Fix wie Briefing 0003 (Badge „Pilot"): --gn-warn (#8a6d3b) auf warn-bg = 4,3:1.
+     Lokal auf #856835 abgedunkelt → 4,59:1 (kein Token geändert). */
+  color: #856835;
+  background: var(--gn-warn-bg);
+  border: 1px solid #eadcb4; /* Mock-Wert */
+  border-radius: 3px;
+  padding: 9px 14px;
+}
+.statusline i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-gold);
+  display: block;
+  flex: 0 0 auto;
+}
+.annaCta {
+  margin-top: 26px;
+}
+
+/* ---- Zweites Praxisbeispiel ---- */
+.second {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 34px;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  padding: 32px 34px;
+  margin-top: 40px;
+  align-items: center;
+}
+.secondShot {
+  width: 100%;
+}
+.club {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  font-weight: 700;
+  margin: 0 0 9px;
+}
+.secondH {
+  font-size: 21px;
+  margin-bottom: 12px;
+  line-height: 1.25;
+  max-width: 26ch;
+}
+.secondP {
+  font-size: 15px;
+  color: var(--gn-muted);
+  margin: 0 0 18px;
+  line-height: 1.6;
+  max-width: 56ch;
+}
+.meta {
+  font-size: 13px;
+  color: var(--gn-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: 3px;
+  padding: 7px 13px;
+}
+.secondCta {
+  margin-top: 18px;
+}
+.seccta {
+  margin-top: 30px;
+}
+
+@media (max-width: 1080px) {
+  .anna {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+@media (max-width: 960px) {
+  .second {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .secondShot {
+    max-width: 200px;
+  }
+}
+@media (max-width: 620px) {
+  .nums {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .chatbody {
+    padding: 20px 18px;
+    gap: 16px;
+  }
+  .ch {
+    flex-wrap: wrap;
+    padding: 16px 18px;
+  }
+  .live {
+    margin-left: 0;
+    font-size: 11px;
+  }
+  .who {
+    flex: 1 1 100%;
+  }
+  .msg {
+    max-width: 92%;
+  }
+  .second {
+    padding: 24px 22px;
+    gap: 22px;
+  }
+}

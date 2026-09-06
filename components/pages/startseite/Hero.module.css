@@ -1,0 +1,195 @@
+/* Portiert aus docs/design-system/mocks/3.1-startseite.html (.hero/.sysview/.track/
+   .stations/.stn/.card-ui/.subcard, Z.62–103, 377). Farben auf --gn-* umgestellt,
+   literale rgba-Tints kommentiert.
+   Abweichung 1.7-Bewegung: Die JS-Zustände (.sysview.on, wandernder Puls) entfallen.
+   Der Endzustand steht im Server-HTML (ohne JS voll sichtbar): Verbindungslinie
+   vollständig, Knoten/Sequenzkarten „lit". Der 1.7-Rise-Wrapper blendet die Stationen
+   nach Mount einmalig gestaffelt auf. */
+
+.hero {
+  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 420px at 88% -5%, rgba(127, 211, 240, 0.16), transparent 62%); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap);
+  margin: 0 auto;
+  padding: 76px 40px 84px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.h1 {
+  color: #fff;
+  font-size: clamp(32px, 4.3vw, 52px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.07;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+.br {
+  display: block;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(16px, 1.35vw, 18.5px);
+  margin-top: 22px;
+  max-width: 52ch;
+  line-height: 1.62;
+}
+.acts {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 34px;
+}
+/* Sekundäre Aktion auf dunkel: heller Link mit unterer Linie (.b2). */
+.b2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 3px;
+}
+
+/* ---- Systemansicht (Strecke) ---- */
+.sysview {
+  position: relative;
+  min-width: 0;
+}
+/* Verbindungslinie – statisch im Endzustand (voll gefüllt), kein wandernder Puls. */
+.track {
+  position: absolute;
+  left: 26px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(0, 232, 5, 0.85), rgba(0, 232, 5, 0.45)); /* Signalgrün-Linie (Grün-Regel: Linie ok) */
+}
+.stations {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  position: relative;
+  z-index: 1;
+}
+.stn {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  /* Endzustand sichtbar (kein opacity:0 im CSS – der Rise-Wrapper blendet nach Mount ein). */
+}
+.knot {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #0b4c6b; /* dunkler Navy-Knoten, Mock-Wert */
+  border: 2px solid var(--gn-signal); /* „lit"-Endzustand */
+  margin-left: 20px;
+  margin-top: 14px;
+}
+.cardUi {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 5px; /* 5px: UI-Ausschnitt-Radius 1:1 aus Mock (.card-ui), bewusst nicht --gn-radius */
+  padding: 11px 14px;
+}
+.cl {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gn-sky);
+  font-weight: 700;
+}
+.ct {
+  font-size: 14.5px;
+  color: #fff;
+  font-weight: 600;
+  margin-top: 3px;
+  letter-spacing: -0.01em;
+}
+.bars {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+}
+.bars i {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.28);
+  display: block;
+}
+.bars i:first-child {
+  width: 38%;
+}
+.bars i:last-child {
+  width: 22%;
+}
+/* Marketing-CRM und E-Mail-Sequenz: Signalgrün-Rand (Teil der Sequenz). */
+.seq .cardUi {
+  border-color: rgba(0, 232, 5, 0.42);
+  background: rgba(0, 232, 5, 0.07);
+}
+.seq .cl {
+  color: var(--gn-signal);
+}
+/* Eingebundener Inhalt – gehört zur Sequenz, kein eigener Hauptschritt. */
+.subcard {
+  margin-top: 9px;
+  margin-left: 14px;
+  border-left: 2px solid rgba(0, 232, 5, 0.45);
+  padding-left: 12px;
+}
+.sl {
+  font-size: 9.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gn-sky);
+  font-weight: 700;
+}
+.stt {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+@media (max-width: 1080px) {
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+    padding-top: 60px;
+  }
+}
+@media (max-width: 960px) {
+  .in {
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+}
+@media (max-width: 620px) {
+  .in {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

@@ -11,7 +11,7 @@ function desktopOnly(page: import("@playwright/test").Page) {
 }
 
 test.describe("Header · Struktur und Daten", () => {
-  test("Wortmarke ist Home-Link mit aria-label; Nav-Punkte sind Platzhalter (#)", async ({
+  test("Wortmarke ist Home-Link mit aria-label; nicht-live Nav-Punkte sind Platzhalter (#)", async ({
     page,
   }) => {
     await page.goto("/_bausteine");
@@ -25,16 +25,21 @@ test.describe("Header · Struktur und Daten", () => {
     const headerH1 = page.locator("header h1");
     await expect(headerH1).toHaveCount(0);
 
-    // Seit Schritt 2.1 ist /pakete live → der Pakete-Link zeigt echt auf „/pakete",
-    // alle übrigen (noch nicht live) Navigations-Links bleiben Platzhalter „#".
-    // CSS-Locator, damit display:none Navigationen mitzählen.
+    // Live-Routen werden echt verlinkt: /pakete (Schritt 2.1) und /plattform
+    // (Schritt 2.3, Briefing 0016). Alle übrigen (noch nicht live) Navigations-Links
+    // bleiben Platzhalter „#". CSS-Locator, damit display:none Navigationen mitzählen.
+    const live = ["/pakete", "/plattform"];
     const hrefs = await page
       .locator("header nav a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
     expect(hrefs.length).toBeGreaterThan(0);
     expect(hrefs, "Pakete ist live und wird verlinkt").toContain("/pakete");
+    expect(hrefs, "Plattform ist live und wird verlinkt").toContain("/plattform");
     for (const href of hrefs) {
-      expect(href === "#" || href === "/pakete", "nur /pakete ist live, sonst #").toBe(true);
+      expect(
+        href === "#" || (href !== null && live.includes(href)),
+        "nur live-Routen echt verlinkt, sonst #",
+      ).toBe(true);
     }
   });
 });

@@ -10,8 +10,9 @@ import type { Cta, PageContent } from "./types";
  *
  * Regeln (CLAUDE.md): Texte wortgleich, keine erfundenen Zahlen/Modulstatus/Versprechen.
  * Preise werden NIE addiert (Sockel + Modulblock stehen getrennt, keine Summe).
- * Praxis-Kennzahlen werden STATISCH angezeigt (kein Hochzähl-Effekt – Zähler-Tabu
- * außer der Saisonrechnung). Benennung „Turnier-News" (nicht „Club News", auch wenn
+ * Praxis-Kennzahlen zählen beim Sichtbarwerden EINMAL hoch (CountUp, Briefing 0015);
+ * der Endwert steht wortgleich im HTML, Reduced-Motion/No-JS zeigt ihn sofort – die
+ * Werte hier bleiben also die Wahrheit. Benennung „Turnier-News" (nicht „Club News", auch wenn
  * das Briefing an der Stelle noch „Club News" schreibt – Benennungsregel geht vor).
  * Wortlaut nur nach neuem Fred-Briefing / Freigabe Stefan ändern.
  */
@@ -254,7 +255,8 @@ export const startseiteUmschalter: UmschalterData = {
 /* ────────────────────────── 5 · Praxis ────────────────────────── */
 
 export interface PraxisKennzahl {
-  /** Statischer Wert, wortgleich – z. B. „Rund 1.600" oder „68 Prozent". */
+  /** Wert, wortgleich – z. B. „Rund 1.600" oder „68 Prozent". Wird per CountUp einmal
+   * hochgezählt; der Endwert ist exakt dieser String (Reduced-Motion/No-JS = Endwert). */
   value: string;
   label: string;
 }

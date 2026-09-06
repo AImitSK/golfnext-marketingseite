@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { EASE } from "@/lib/motion/variants";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -15,8 +15,10 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  *
  * SSR/No-JS: Der Token wird **erst nach Mount** gerendert (vorher `null`) – ohne
  * JavaScript steht die Journey vollständig und statisch (Linie, Schritte, Bänder sind
- * echter Server-Inhalt; der Token ist nur die Bewegungs-Zutat). `prefers-reduced-
- * motion`: der Token steht sofort statisch am letzten Schritt, ohne Wanderung.
+ * echter Server-Inhalt; der Token ist nur die Bewegungs-Zutat). Die Wanderung startet
+ * erst, wenn der Journey-Abschnitt **in den sichtbaren Bereich scrollt** (`useInView`,
+ * einmalig) – so bleibt sie nachvollziehbar. `prefers-reduced-motion`: der Token steht
+ * sofort statisch am letzten Schritt, ohne Wanderung.
  *
  * Die Schritt-Positionen werden aus dem umgebenden `[data-journey]`-Container und
  * seinen `[data-jstep]`-Kindern gemessen (responsiv, ohne feste Pixel).
@@ -32,6 +34,7 @@ export function JourneyToken({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, amount: 0.4 });
   const [mounted, setMounted] = useState(false);
   const [offsets, setOffsets] = useState<number[] | null>(null);
   const [resting, setResting] = useState(false);
@@ -43,8 +46,7 @@ export function JourneyToken({
   useIsomorphicLayoutEffect(() => {
     if (!mounted) return;
     const measure = () => {
-      const el = ref.current;
-      const jr = el?.closest<HTMLElement>("[data-journey]");
+      const jr = ref.current?.closest<HTMLElement>("[data-journey]");
       if (!jr) return;
       const steps = jr.querySelectorAll<HTMLElement>("[data-jstep]");
       if (steps.length === 0) {
@@ -59,33 +61,43 @@ export function JourneyToken({
     return () => window.removeEventListener("resize", measure);
   }, [mounted]);
 
-  if (!mounted || !offsets || offsets.length === 0) return null;
+  // Der Token wird ab Mount gerendert (der Ref muss hängen, damit gemessen und
+  // `useInView` beobachtet werden kann). Ohne JS: gar kein Token, Journey statisch.
+  if (!mounted) return null;
 
-  const last = offsets[offsets.length - 1];
-  const times = offsets.map((_, i) => (offsets.length === 1 ? 0 : i / (offsets.length - 1)));
+  const ready = !!offsets && offsets.length > 0;
+  const steps = offsets ?? [];
+  const last = ready ? steps[steps.length - 1] : 0;
+  const times = ready ? steps.map((_, i) => (steps.length === 1 ? 0 : i / (steps.length - 1))) : [];
   const staticRest = prefersReducedMotion || resting;
+  const traveling = ready && !staticRest && inView;
+
+  let animateTo: { x?: number | number[]; opacity: number };
+  if (!ready) animateTo = { opacity: 0 };
+  else if (staticRest) animateTo = { x: last, opacity: 1 };
+  else if (inView) animateTo = { x: steps, opacity: 1 };
+  else animateTo = { x: steps[0], opacity: 0 }; // gemessen, aber noch nicht im Blick: verdeckt am Start
 
   return (
     <motion.div
       ref={ref}
       className={className}
       aria-hidden="true"
-      initial={staticRest ? false : { x: offsets[0], opacity: 0 }}
-      animate={staticRest ? { x: last, opacity: 1 } : { x: offsets, opacity: 1 }}
+      initial={{ x: 0, opacity: 0 }}
+      animate={animateTo}
       transition={
-        staticRest
-          ? { duration: 0 }
-          : {
-              x: {
-                duration: Math.max(2.6, offsets.length * 0.85),
-                ease: "easeInOut",
-                times,
-                delay: 0.5,
-              },
-              opacity: { duration: 0.4, ease: EASE, delay: 0.5 },
+        traveling
+          ? {
+              x: { duration: Math.max(2.6, steps.length * 0.85), ease: "easeInOut", times, delay: 0.3 },
+              opacity: { duration: 0.4, ease: EASE, delay: 0.3 },
             }
+          : staticRest
+            ? { duration: 0 }
+            : { duration: 0.3 }
       }
-      onAnimationComplete={() => setResting(true)}
+      onAnimationComplete={() => {
+        if (traveling) setResting(true);
+      }}
     >
       <span className={dotClassName} aria-hidden="true" />
       {label}

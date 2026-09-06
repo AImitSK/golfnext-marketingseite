@@ -3,9 +3,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { KeyboardEvent, ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
-import { MODULE_STATUS_LABEL, type NavItem } from "@/lib/navigation";
+import { type NavItem } from "@/lib/navigation";
 import styles from "./Nav.module.css";
 
 /**
@@ -170,16 +169,12 @@ function DropdownItem({
           <ul className={styles.mgrid}>
             {item.children.map((child) => (
               <li key={child.path} className={styles.mitem}>
-                {/* Reduziert: Modulname + Status-Badge + Link. Icons/Beschreibungen
-                    kommen mit dem Phase-2-Content (bewusst nicht erfunden). */}
+                {/* Reduziert: nur Modulname + Link. Der Modulstatus wird nicht mehr
+                    angezeigt (Briefing 0014). Icons/Beschreibungen kommen mit dem
+                    Phase-2-Content (bewusst nicht erfunden). */}
                 <a href={child.href} className={styles.mlink}>
                   {child.label}
                 </a>
-                {child.status ? (
-                  <Badge status={child.status} className={styles.mbadge}>
-                    {MODULE_STATUS_LABEL[child.status]}
-                  </Badge>
-                ) : null}
               </li>
             ))}
           </ul>

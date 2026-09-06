@@ -56,6 +56,40 @@ test.describe("Header · Desktop-Dropdown (mit JS)", () => {
     await page.keyboard.press("Escape");
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
+
+  // Briefing 0014: Der Modulstatus wird nicht mehr angezeigt – im Dropdown steht nur
+  // Modulname + Link, kein Status-Badge.
+  test("zeigt im Dropdown keinen Status-Badge (nur Modulname + Link)", async ({ page }) => {
+    await page.goto("/_bausteine");
+    test.skip(!desktopOnly(page), "nur Desktop-Breakpoints");
+
+    const nav = page.getByRole("navigation", { name: "Hauptnavigation", exact: true });
+    await page.getByRole("button", { name: /Untermenü Plattform/ }).click();
+    await expect(nav.getByRole("link", { name: "Reach", exact: true })).toBeVisible();
+
+    for (const label of ["Im Einsatz", "Pilot", "In Entwicklung"]) {
+      await expect(nav.getByText(label, { exact: true })).toHaveCount(0);
+    }
+  });
+});
+
+test.describe("Header · CTA-Hover (hbtn)", () => {
+  // Briefing 0014 Korrektur 3: Der Header-CTA dunkelt beim Hover auf #00CE04 ab
+  // (rgb(0,206,4)), Navy-Text bleibt.
+  test("Header-CTA wechselt beim Hover auf #00CE04", async ({ page }) => {
+    await page.goto("/_bausteine");
+    test.skip(!desktopOnly(page), "CTA nur ab 1024 px sichtbar");
+
+    const cta = page
+      .locator("header")
+      .getByRole("link", { name: /Online-Erstgespräch vereinbaren/ });
+    await expect(cta).toBeVisible();
+
+    await cta.hover();
+    await expect
+      .poll(() => cta.evaluate((el) => getComputedStyle(el).backgroundColor))
+      .toBe("rgb(0, 206, 4)");
+  });
 });
 
 test.describe("Header · Mobil-Menü (mit JS)", () => {

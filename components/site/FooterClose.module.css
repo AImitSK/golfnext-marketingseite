@@ -2,8 +2,9 @@
    (.f-cta Z.173–182). Token-Mapping: var(--fline)→var(--gn-on-dark-line),
    var(--ftext)→var(--gn-on-dark-text). Literale Mock-Tints (Gradient-Stops,
    Sky-Radial) ohne Token sind als „Mock-Wert" kommentiert.
-   Abweichung wie im Header (1.3): Fläche full-bleed, Inhalt auf var(--gn-wrap)
-   zentriert, damit der Fuß mit den Sektionen fluchtet. */
+   Abweichung wie im Header (Briefing 0014, ersetzt 1.3/1.4): Fläche full-bleed UND
+   der Inhalt spannt über die volle Viewport-Breite – nicht mehr auf var(--gn-wrap)
+   zentriert. Seitlich nur die Standard-Gutter (var(--gn-gutter): 40/26/20). */
 
 .close {
   position: relative;
@@ -25,8 +26,7 @@
 .inner {
   position: relative;
   z-index: 1;
-  max-width: var(--gn-wrap);
-  margin: 0 auto;
+  /* Volle Breite (Briefing 0014): kein max-width/margin:auto mehr, nur Gutter am Rand. */
   padding: 52px var(--gn-gutter);
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);

@@ -123,11 +123,10 @@
   font-weight: 600;
   color: var(--gn-blue);
 }
+/* Nur Modulname-Link; der Status-Badge entfällt (Briefing 0014). */
 .subLink {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px;
   padding: 8px 0;
   font-size: 14px;
   font-weight: 400;
@@ -135,9 +134,6 @@
 }
 .subLink:hover {
   color: var(--gn-ink);
-}
-.subBadge {
-  flex: 0 0 auto;
 }
 
 /* Fixierte Aktionsleiste (2.4 .ph-bar Z.162–166). */

@@ -3,7 +3,8 @@ import { getNavModel } from "./navigation";
 
 /**
  * Sichert die eine Wahrheit: Das Navigationsmodell spiegelt genau
- * config/site-structure.ts (Hauptpunkte, Dropdown-Kinder, Status, live/nicht-live).
+ * config/site-structure.ts (Hauptpunkte, Dropdown-Kinder, live/nicht-live).
+ * Der Modulstatus wird nicht mehr abgeleitet (Briefing 0014).
  */
 describe("getNavModel", () => {
   const model = getNavModel();
@@ -37,14 +38,12 @@ describe("getNavModel", () => {
     ]);
   });
 
-  it("versieht nur Modul-Kinder mit einem Status, nicht die Unterseite", () => {
+  it("leitet keinen Modulstatus mehr ab (Anzeige entfällt, Briefing 0014)", () => {
     const plattform = model.find((i) => i.path === "/plattform");
-    const soArbeitet = plattform?.children.find((c) => c.path === "/plattform/so-arbeitet-golfnext");
     const reach = plattform?.children.find((c) => c.path === "/module/reach");
-    const crm = plattform?.children.find((c) => c.path === "/module/marketing-crm");
-    expect(soArbeitet?.status).toBeUndefined();
-    expect(reach?.status).toBe("im-einsatz");
-    expect(crm?.status).toBe("pilot");
+    // Der Status ist kein Feld des Navigationsmodells mehr.
+    expect(reach).toBeDefined();
+    expect(reach && "status" in reach).toBe(false);
   });
 
   it("verlinkt live-Routen echt (Pakete) und nicht-live Punkte als Platzhalter (#)", () => {

@@ -34,6 +34,14 @@ export interface Route {
   redirectsFrom?: string[];
 }
 
+/**
+ * Die zwölf Module, zwei Richtungen (gruppe), ein Vertrag.
+ *
+ * Hinweis zum Feld `status` (im-einsatz/pilot/in-entwicklung): aktuell ungenutzt –
+ * die Anzeige des Modulstatus entfällt (Briefing 0014, Stand 06.09.2026). Das Feld
+ * bleibt als Datenfeld erhalten, wird aber nirgends mehr gerendert. Werte NICHT auf
+ * „im-einsatz" fälschen; wenn der Status später wieder gebraucht wird, hier pflegen.
+ */
 export const MODULE = [
   // Wachstum nach außen
   { slug: "reach", name: "Reach", gruppe: "wachstum", status: "im-einsatz" },

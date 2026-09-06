@@ -1,0 +1,256 @@
+/* Portiert aus docs/design-system/mocks/3.1-startseite.html (.vg/.vc/.viz*, Z.105–148).
+   Farben auf --gn-* umgestellt, literale Tints kommentiert. Die Mikrovisualisierungen
+   sind feststehend (kein Hover, kein Dauerlauf) und dekorativ (aria-hidden im TSX). */
+
+.vg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 38px;
+}
+.vc {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  padding: 26px 24px 24px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.vc > svg {
+  color: var(--gn-navy);
+  margin-bottom: 16px;
+}
+.vc h3 {
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+.vc p {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  margin: 0 0 18px;
+}
+
+/* Feststehende Mikrovisualisierung */
+.viz {
+  margin-top: auto;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  background: var(--gn-mist);
+  padding: 12px 13px;
+}
+.vl {
+  font-size: 9.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+/* 1 · Funnel: Reichweite verdichtet sich zur qualifizierten Anfrage */
+.funnel .fbars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 38px;
+}
+.funnel .fbars i {
+  flex: 1;
+  border-radius: 2px;
+  background: #c8d9e1; /* heller Blaugrau-Balken, Mock-Wert */
+  display: block;
+}
+.funnel .fbars i:nth-child(1) {
+  height: 100%;
+}
+.funnel .fbars i:nth-child(2) {
+  height: 78%;
+}
+.funnel .fbars i:nth-child(3) {
+  height: 58%;
+}
+.funnel .fbars i:nth-child(4) {
+  height: 40%;
+  background: #8fb6c6; /* Mock-Wert */
+}
+.funnel .fbars i:nth-child(5) {
+  height: 26%;
+  background: var(--gn-navy);
+}
+.funnel .fout {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--gn-line);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gn-ok);
+}
+.funnel .qd {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gn-signal);
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 3px rgba(0, 232, 5, 0.2);
+}
+
+/* 2 · Book: Aus dem nächsten Schritt wird eine bestätigte Buchung */
+.book .step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 3px;
+  padding: 7px 9px;
+  font-size: 12px;
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.book .ic2 {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--gn-navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.book .arrowdown {
+  height: 14px;
+  position: relative;
+  margin: 3px 0 3px 16px;
+}
+.book .arrowdown::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--gn-signal);
+}
+.book .conf {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gn-ok-bg);
+  border: 1px solid #bfd9c2; /* Mock-Wert (Grünrand) */
+  border-radius: 3px;
+  padding: 7px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gn-ok);
+}
+
+/* 3 · CRM: Kontakte ordnen sich in CRM-Phasen */
+.crm .cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.crm .col {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 3px;
+  padding: 6px 6px 7px;
+  min-width: 0;
+}
+.crm .cn {
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gn-muted);
+  font-weight: 700;
+  margin-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+.crm .col i {
+  display: block;
+  height: 7px;
+  border-radius: 2px;
+  background: #d9e4ea; /* Mock-Wert */
+  margin-bottom: 4px;
+}
+.crm .col:nth-child(2) i {
+  background: #9fc2d2; /* Mock-Wert */
+}
+.crm .col:nth-child(3) i {
+  background: var(--gn-signal);
+}
+.crm .col:nth-child(3) .cn {
+  color: var(--gn-navy);
+}
+
+/* 4 · Done: Wiederkehrende Aufgaben sind eindeutig erledigt */
+.done .tk {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 0;
+  font-size: 12px;
+  color: var(--gn-muted);
+}
+.done .tk + .tk {
+  border-top: 1px solid var(--gn-line);
+}
+.done .bx {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1.6px solid var(--gn-line);
+  background: #fff;
+  flex: 0 0 auto;
+  position: relative;
+}
+.done .ok .bx {
+  background: var(--gn-ok);
+  border-color: var(--gn-ok);
+}
+.done .ok .bx::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 5px;
+  width: 6px;
+  height: 3px;
+  border-left: 1.8px solid #fff;
+  border-bottom: 1.8px solid #fff;
+  transform: rotate(-45deg);
+}
+.done .ok span {
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.done .tag2 {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: 2px;
+  padding: 2px 6px;
+}
+
+.seccta {
+  margin-top: 30px;
+}
+
+@media (max-width: 1080px) {
+  .vg {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .vg {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

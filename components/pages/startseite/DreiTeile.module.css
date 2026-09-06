@@ -1,0 +1,298 @@
+/* Portiert aus 3.1b-startseite-neufassung.html (Abschnitt 3 · .bento/.bx/.viz +
+   .mini/.crmlist/.crmrow/.log). Farben auf --gn-* umgestellt, literale Tints
+   kommentiert. Box-Radius --gn-radius-lg (12).
+
+   Bewegung (invertiert ggü. Mock für SSR/No-JS): Der ENDZUSTAND ist der CSS-Default
+   (Box aufgeblendet, Website-„own"-Badge sichtbar, CRM-Zeilen da, Logbuch gefüllt) →
+   ohne JS / reduzierte Bewegung sofort lesbar. Nur mit JS setzt die Box-Komponente
+   kurz `.start` (Ausgangszustand) und löst es beim Sichtbarwerden gestaffelt auf. Nur
+   opacity/transform, Höhen über die Viz-Min-Höhe reserviert (kein CLS). */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 56px;
+}
+.bx {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 34px 34px 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform 0.45s var(--gn-ease),
+    box-shadow 0.35s ease,
+    border-color 0.35s;
+}
+.bx:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
+  border-color: rgba(1, 65, 91, 0.35);
+}
+/* Ausgangszustand der Box: nur Transform (Hereinschieben), ohne Opacity, damit der
+   reale Box-Text jederzeit vollen Kontrast hat (axe). */
+.start.bx {
+  transform: translateY(18px);
+}
+.no {
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gn-blue);
+}
+.h3 {
+  font-size: clamp(21px, 2vw, 26px);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 12px 0 12px;
+  color: var(--gn-navy);
+}
+.p {
+  font-size: 15px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+.go {
+  margin-top: auto;
+  padding-bottom: 22px;
+}
+.viz {
+  margin-top: auto;
+  flex: 1;
+  background: var(--gn-mist);
+  border-top: 1px solid var(--gn-line);
+  margin-left: -34px;
+  margin-right: -34px;
+  padding: 24px 28px 28px;
+  min-height: 240px; /* Höhe vorab reserviert → kein CLS */
+}
+
+/* ---- 01 · Mini-Website ---- */
+.mini {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mb {
+  height: 26px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+}
+.mb i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d5cfc3; /* Fenster-Punkt, Mock-Wert */
+  display: block;
+}
+.mb span {
+  margin-left: 8px;
+  font-size: 9.5px;
+  color: var(--gn-muted);
+}
+.mc {
+  padding: 12px 14px 14px;
+}
+.pic {
+  height: 64px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  position: relative;
+  margin-bottom: 10px;
+}
+.pic b {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--gn-navy);
+}
+.mrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--gn-muted);
+  padding: 6px 0;
+  border-top: 1px solid var(--gn-line);
+}
+.mrow b {
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.own {
+  margin-top: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 4px 9px;
+  display: inline-block;
+  transition: transform 0.4s ease 0.9s;
+}
+/* Reveal-Zustände bewusst NUR über Transform (kein Opacity), damit sichtbarer Text nie
+   in einem kontrastschwachen Zwischenzustand liegt (axe) – wie in der Bento-Neufassung
+   von /wachstum-vertrieb dokumentiert. */
+.start .own {
+  transform: translateY(6px);
+}
+
+/* ---- 02 · CRM-Liste ---- */
+.crmlist {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.crmrow {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 11px 13px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 11px;
+  align-items: center;
+  transition: transform 0.5s ease;
+}
+.start .crmrow {
+  transform: translateY(10px);
+}
+.crmrow:nth-child(2) {
+  transition-delay: 0.4s;
+}
+.crmrow:nth-child(3) {
+  transition-delay: 0.8s;
+}
+.crmrow:nth-child(4) {
+  transition-delay: 1.2s;
+}
+/* `.crmrow .av` (nicht nur `.av`), damit die weiße Ziffernfarbe die generische Regel
+   `.crmrow span { color: muted }` überstimmt (sonst muted auf Navy → axe-Kontrast). */
+.crmrow .av {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: #fff;
+  font-family: var(--gn-font-display);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.crmrow b {
+  display: block;
+  font-size: 13px;
+  color: var(--gn-ink);
+  font-weight: 600;
+}
+.crmrow span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--gn-muted);
+}
+.st {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+.stB {
+  color: var(--gn-blue);
+  background: #e9f2f7; /* zarter Blau-Tint für „Erinnerung geplant", Mock-Wert */
+}
+
+/* ---- 03 · Logbuch ---- */
+.log {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.lh {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin-bottom: 4px;
+}
+.ev {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px solid var(--gn-line);
+  font-size: 12px;
+  color: var(--gn-ink);
+  transition: transform 0.4s ease;
+}
+.ev b {
+  font-family: var(--gn-font-display);
+  font-weight: 700;
+  color: var(--gn-blue);
+  font-size: 11.5px;
+}
+.ev span {
+  display: block;
+  color: var(--gn-muted);
+  font-size: 10.5px;
+}
+.start .ev {
+  transform: translateX(8px);
+}
+.ev:nth-of-type(2) {
+  transition-delay: 0.4s;
+}
+.ev:nth-of-type(3) {
+  transition-delay: 0.8s;
+}
+.ev:nth-of-type(4) {
+  transition-delay: 1.2s;
+}
+.sum {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+  border-radius: var(--gn-radius-pill);
+  padding: 5px 10px;
+  text-align: center;
+  transition: transform 0.4s ease 1.7s;
+}
+.start .sum {
+  transform: translateY(6px);
+}
+
+@media (max-width: 1000px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .bx {
+    padding: 28px 28px 0;
+  }
+  .viz {
+    margin-left: -28px;
+    margin-right: -28px;
+  }
+}

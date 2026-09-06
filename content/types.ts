@@ -36,6 +36,13 @@ export interface FooterClose {
    * (pakete, ueber-golfnext) bleiben unverändert.
    */
   persoenlicheZeile?: string;
+  /**
+   * Optionaler persönlicher Abschluss mit Porträt-Platzhalter (Name fett + Rolle),
+   * wortgleich aus Mock 3.1b `.f-person`. Nur die Startseite setzt dies; andere Seiten
+   * bleiben bei `persoenlicheZeile` bzw. ohne. Wird bevorzugt vor `persoenlicheZeile`
+   * gerendert, wenn beide gesetzt sind.
+   */
+  person?: { name: string; role: string };
 }
 
 export interface PageContent {

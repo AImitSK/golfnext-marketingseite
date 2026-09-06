@@ -1,0 +1,171 @@
+/* Portiert aus 3.1b-startseite-neufassung.html (Abschnitt 7 · .vband/.vgrid/.vow/
+   .fredq). Navy-Band mit vier Zusagen und Fred-Zitat. Farben auf --gn-* umgestellt,
+   literale Tints kommentiert. Karten-Radius --gn-radius-lg (12).
+
+   Signalgrün erscheint nur als Text auf Navy (Eyebrow, Nummernkreis-Ziffer) – nach der
+   Grün-Regel erlaubt. Der `.vowWrap` ist der Motion-Wrapper (RiseItem); der Hover-Lift
+   sitzt auf `.vow`, weil Motion dort nach dem Reveal einen Inline-`transform` setzt.
+   Das Fred-Porträt ist ein beschrifteter Platzhalter (kein Stock/KI-Bild). */
+
+.vband {
+  background: linear-gradient(150deg, var(--gn-navy-deep) 0%, var(--gn-navy) 70%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: var(--gn-section-y-lg) 0;
+}
+.vband::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 400px at 90% 120%, rgba(127, 211, 240, 0.16), transparent 62%); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.eyebrow {
+  margin-bottom: 18px;
+}
+.h2 {
+  color: #fff;
+  font-size: var(--gn-h2-lg);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.vgrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 52px;
+}
+.vowWrap {
+  min-width: 0;
+  display: flex;
+}
+.vow {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--gn-radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 26px 24px;
+  min-width: 0;
+  width: 100%;
+  transition:
+    background 0.35s,
+    border-color 0.35s,
+    transform 0.35s var(--gn-ease);
+}
+.vow:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(127, 211, 240, 0.5);
+  transform: translateY(-6px);
+}
+.vn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün-Fläche (Grün-Regel: Fläche ok) */
+  color: var(--gn-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+.vow b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.vow p {
+  font-size: 14px;
+  color: var(--gn-on-dark-text);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ---- Fred-Zitat ---- */
+.fredq {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+}
+.ph {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #2a4c5c, #1b3a48); /* dunkler Porträt-Platzhalter, Mock-Werte */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.ph svg {
+  width: 30px;
+  height: 30px;
+  color: rgba(127, 211, 240, 0.55);
+}
+.q {
+  font-family: var(--gn-font-display);
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  max-width: 34ch;
+  margin: 0;
+}
+.who {
+  font-size: 13.5px;
+  color: var(--gn-on-dark-text);
+  margin: 8px 0 0;
+}
+.who b {
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+  .vgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 960px) {
+  .wrap {
+    padding: 0 26px;
+  }
+}
+@media (max-width: 620px) {
+  .vband {
+    padding: 72px 0;
+  }
+  .wrap {
+    padding: 0 20px;
+  }
+}
+@media (max-width: 560px) {
+  .vgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fredq {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

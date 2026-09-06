@@ -1,30 +1,45 @@
 import type { Metadata } from "next";
+import { PlattformSection } from "@/components/pages/plattform/PlattformSection";
+import { RollenSlider } from "@/components/pages/plattform/RollenSlider";
+import { DreiTeile } from "@/components/pages/startseite/DreiTeile";
+import { EinWeg } from "@/components/pages/startseite/EinWeg";
 import { Hero } from "@/components/pages/startseite/Hero";
-import { Journey } from "@/components/pages/startseite/Journey";
-import { Paketblock } from "@/components/pages/startseite/Paketblock";
+import { Pakete } from "@/components/pages/startseite/Pakete";
 import { Praxis } from "@/components/pages/startseite/Praxis";
-import { Umschalter } from "@/components/pages/startseite/Umschalter";
-import { Vorteile } from "@/components/pages/startseite/Vorteile";
+import { Vertrauensleiste } from "@/components/pages/startseite/Vertrauensleiste";
+import { Zusagen } from "@/components/pages/startseite/Zusagen";
 import { Footer } from "@/components/site/Footer";
 import {
   startseite,
   startseiteHero,
-  startseiteJourney,
   startseitePakete,
   startseitePraxis,
-  startseiteUmschalter,
-  startseiteVorteile,
+  startseiteRollen,
+  startseiteTeile,
+  startseiteVertrauen,
+  startseiteWeg,
+  startseiteZusagen,
 } from "@/content/startseite";
 
 /**
- * Startseite `/` – Teaser-Seite, gebaut aus Mock `3.1-startseite.html` (Abschnitte
- * 1–5, 7) und `3.1a-startseite-paketblock-fassung2.html` (Abschnitt 6, Preislogik
- * Fassung 2). Alle Texte kommen wortgleich aus `content/startseite.ts`. Genau eine
- * `<h1>` (im Hero). Der persönliche Abschluss ist der obere Teil des dunklen Footers
- * (`FooterClose`) – keine doppelte Gespräch/Demo-Zone.
+ * Startseite `/` – Neufassung v01, gebaut aus Mock
+ * `docs/design-system/mocks/3.1b-startseite-neufassung.html` (Briefing 0021). Ersetzt
+ * die alte Fassung (0013, aus 3.1/3.1a) vollständig. Acht Abschnitte: Hero
+ * (Bleed-Demo + drei schwebende Karten), Vertrauensleiste, „Drei Teile" (Bento mit
+ * echten Links auf `/plattform`, `/wachstum-vertrieb`, `/clubprozesse`),
+ * Rollen-Slider (geteilte Komponente aus /plattform), „Ein Weg" (4-Schritt-
+ * Zeitleiste), Pakete (Fassung 2, **ohne Preise/Summen**), „Vier Zusagen" (Navy-Band
+ * + Fred-Zitat) und Praxis. Danach der persönliche Abschluss (`FooterClose`) im
+ * geteilten `Footer` – ohne Modulstatus.
  *
- * Metadata: das Briefing liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx)
- * bleibt bestehen (Feinschliff Phase 6), nur der Canonical wird gesetzt.
+ * Alle Texte kommen wortgleich aus `content/startseite.ts`. Genau eine `<h1>` (im
+ * Hero). Layout-Tokens der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind
+ * geteilte Tokens aus `app/globals.css`; die Startseite spricht damit dieselbe
+ * moderne Sprache wie die übrigen Seiten (Ausnahme: Pakete-Seite, separater Angleich).
+ *
+ * Metadata: Briefing 0021 liefert keinen Meta-Titel/-Text → Root-Default
+ * (app/layout.tsx) bleibt bestehen, nur der Canonical wird gesetzt (wie die übrigen
+ * Seiten). `/` bleibt `live`.
  */
 export const metadata: Metadata = {
   alternates: { canonical: startseite.route },
@@ -39,51 +54,50 @@ function section(id: string) {
 
 export default function Home() {
   const hero = section("hero");
-  const vorteile = section("vorteile");
-  const journey = section("journey");
-  const umschalter = section("umschalter");
-  const praxis = section("praxis");
+  const teile = section("teile");
+  const rollen = section("rollen");
+  const weg = section("weg");
   const pakete = section("pakete");
+  const zusagen = section("zusagen");
+  const praxis = section("praxis");
 
   return (
     <main>
-      <Hero
-        eyebrow={hero.eyebrow!}
-        headlineLines={hero.headlineLines!}
-        lead={hero.text![0]}
-        data={startseiteHero}
+      <Hero eyebrow={hero.eyebrow!} headline={hero.headline!} lead={hero.text![0]} data={startseiteHero} />
+
+      <Vertrauensleiste data={startseiteVertrauen} />
+
+      <DreiTeile
+        eyebrow={teile.eyebrow!}
+        headline={teile.headline!}
+        lead={teile.text![0]}
+        data={startseiteTeile}
       />
 
-      <Vorteile eyebrow={vorteile.eyebrow!} headline={vorteile.headline!} data={startseiteVorteile} />
+      <PlattformSection
+        variant="mist"
+        overflowHidden
+        eyebrow={rollen.eyebrow!}
+        headline={rollen.headline!}
+        lead={rollen.text![0]}
+      >
+        <RollenSlider data={startseiteRollen} />
+      </PlattformSection>
 
-      <Journey
-        eyebrow={journey.eyebrow!}
-        headline={journey.headline!}
-        lead={journey.text![0]}
-        data={startseiteJourney}
-      />
+      <PlattformSection eyebrow={weg.eyebrow!} headline={weg.headline!} lead={weg.text![0]}>
+        <EinWeg data={startseiteWeg} />
+      </PlattformSection>
 
-      <Umschalter
-        eyebrow={umschalter.eyebrow!}
-        headline={umschalter.headline!}
-        lead={umschalter.text![0]}
-        data={startseiteUmschalter}
-      />
-
-      <Praxis
-        eyebrow={praxis.eyebrow!}
-        headline={praxis.headline!}
-        lead={praxis.text![0]}
-        data={startseitePraxis}
-      />
-
-      <Paketblock
-        id={pakete.id}
+      <Pakete
         eyebrow={pakete.eyebrow!}
         headline={pakete.headline!}
         lead={pakete.text![0]}
         data={startseitePakete}
       />
+
+      <Zusagen eyebrow={zusagen.eyebrow!} headline={zusagen.headline!} data={startseiteZusagen} />
+
+      <Praxis eyebrow={praxis.eyebrow!} headline={praxis.headline!} data={startseitePraxis} />
 
       <Footer footerClose={startseite.footerClose} />
     </main>

@@ -1,0 +1,67 @@
+/* Portiert aus 3.1b-startseite-neufassung.html (.trustbar). Farben auf --gn-*
+   umgestellt. Reine, statische Leiste (kein Modulstatus). */
+
+.trustbar {
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-paper);
+}
+.inner {
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 22px 40px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--gn-muted);
+}
+.lab {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.clubs {
+  display: flex;
+  gap: 10px 22px;
+  flex-wrap: wrap;
+  font-family: var(--gn-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  letter-spacing: -0.01em;
+}
+.sp {
+  margin-left: auto;
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.sp span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sp i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün-Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+}
+
+@media (max-width: 960px) {
+  .inner {
+    padding: 22px 26px;
+  }
+  .sp {
+    margin-left: 0;
+  }
+}
+@media (max-width: 620px) {
+  .inner {
+    padding: 20px;
+  }
+}

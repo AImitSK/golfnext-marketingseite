@@ -19,6 +19,9 @@
   background: radial-gradient(900px 420px at 88% -5%, rgba(127, 211, 240, 0.16), transparent 62%); /* --gn-sky als Schein */
   pointer-events: none;
 }
+/* Hero-Aufteilung = neuer Seiten-Standard (Entscheidung Stefan, 06.09.2026):
+   dominante Textspalte 1.75fr, Systemspalte 1fr; unter 1080px einspaltig.
+   Übernommen aus dem Pakete-Hero, dokumentiert in docs/design-system/README.md. */
 .in {
   position: relative;
   z-index: 1;
@@ -26,7 +29,7 @@
   margin: 0 auto;
   padding: 76px 40px 84px;
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
   gap: 56px;
   align-items: center;
 }
@@ -36,7 +39,7 @@
   font-size: clamp(32px, 4.3vw, 52px); /* 1:1 aus Mock (.hero h1) */
   font-weight: 800;
   line-height: 1.07;
-  max-width: 15ch;
+  max-width: 19ch;
   text-wrap: balance;
 }
 .br {
@@ -46,7 +49,7 @@
   color: var(--gn-on-dark-text);
   font-size: clamp(16px, 1.35vw, 18.5px);
   margin-top: 22px;
-  max-width: 52ch;
+  max-width: 58ch;
   line-height: 1.62;
 }
 .acts {
@@ -73,7 +76,8 @@
   position: relative;
   min-width: 0;
 }
-/* Verbindungslinie – statisch im Endzustand (voll gefüllt), kein wandernder Puls. */
+/* Verbindungslinie – baut sich per RevealLine (scaleY, transform-origin oben)
+   einmalig auf; Endzustand voll gefüllt, kein wandernder Puls. */
 .track {
   position: absolute;
   left: 26px;

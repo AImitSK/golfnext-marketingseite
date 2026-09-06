@@ -1,3 +1,4 @@
+import { RevealLine } from "@/components/motion/RevealLine";
 import { Rise, RiseItem } from "@/components/motion/Rise";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -12,10 +13,11 @@ import styles from "./Hero.module.css";
  * verbundene Vertriebs-/Kommunikationsstrecke (Concierge/Platzstatus wurden bewusst
  * entfernt) mit benannter E-Mail-Sequenz und eingebundenem Ratgeber-Inhalt.
  *
- * Bewegung nach 1.7: Der Stationen-Stapel ist ein `Rise`-Container mit `RiseItem`-
- * Kindern (einmaliges, gestaffeltes Aufblenden). Die Verbindungslinie (`.track`)
- * steht statisch im Endzustand. Server-HTML zeigt den Endzustand → ohne JS voll
- * sichtbar; `useReducedMotion` zeigt sofort den Endzustand (Wrapper-Logik).
+ * Bewegung nach 1.7 / 0015: Die Verbindungslinie (`.track`) baut sich beim Rein-
+ * scrollen von oben auf (`RevealLine`, `scaleY`), die Stationen blenden als
+ * `Rise`-Container mit `RiseItem`-Kindern gestaffelt ein und bleiben stehen.
+ * Server-HTML zeigt den Endzustand → ohne JS voll sichtbar; `useReducedMotion`
+ * zeigt sofort den Endzustand (Wrapper-Logik). Kein CLS (nur transform/opacity).
  */
 export function Hero({
   eyebrow,
@@ -48,7 +50,7 @@ export function Hero({
         </div>
 
         <div className={styles.sysview} aria-label={data.ariaLabel}>
-          <span className={styles.track} aria-hidden="true" />
+          <RevealLine orientation="vertical" className={styles.track} />
           <Rise className={styles.stations}>
             {data.stations.map((stn) => (
               <RiseItem

@@ -1,5 +1,6 @@
 import { Draw } from "@/components/motion/Draw";
 import { Rise, RiseItem } from "@/components/motion/Rise";
+import { JourneyToken } from "./JourneyToken";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Lead } from "@/components/ui/Lead";
@@ -17,13 +18,14 @@ import styles from "./Journey.module.css";
  * schiedlich großen** Systemausschnitten (keine Reihe identischer Wireframe-Boxen).
  * Darunter: die zwei dauerhaften Plattformebenen Entlasten und Verbinden.
  *
- * Bewegung nach 1.7: Die Verbindungslinie wird per `Draw` einmalig gezogen
- * (Endzustand: volle Linie), die vier Schritte blenden per `Rise` gestaffelt auf.
- * Die Plattformbänder stehen dauerhaft im aktiven Endzustand. Der frühere wandernde
- * „Kontakt"-Token und das schrittweise Aufdimmen (JS-Choreografie) entfallen bewusst
- * (Bewegungsregeln 1.7: ein Aufbau, ruhiger Endzustand, ohne JS voll sichtbar) – alle
- * vier Schritte und beide Ebenen sind sofort vollständig lesbar. Die Systemausschnitte
- * sind dekorativ (`aria-hidden`); die Aussage steht in Titel und Text jedes Schritts.
+ * Bewegung nach 1.7 / 0015: Die Verbindungslinie wird per `Draw` einmalig gezogen,
+ * die vier Schritte blenden per `Rise` gestaffelt auf, und der „Kontakt"-Token
+ * (`JourneyToken`) wandert **einmal** nachvollziehbar durch die vier Phasen und bleibt
+ * dann am letzten Schritt stehen (Choreografie aus Mock 3.1 wieder aufgebaut). Der
+ * Token ist rein dekorativ und wird nur mit JS gerendert – **ohne JS steht die Journey
+ * vollständig und statisch** (Linie, Schritte, beide Plattformbänder sind Server-
+ * Inhalt); `prefers-reduced-motion` zeigt den Token sofort am Endzustand. Die System-
+ * ausschnitte sind dekorativ (`aria-hidden`); die Aussage steht in Titel und Text.
  */
 
 /** Dekorativer Systemausschnitt je Schritt (aria-hidden, illustrativ aus Mock 3.1). */
@@ -129,12 +131,13 @@ export function Journey({
         <h2>{headline}</h2>
         <Lead>{lead}</Lead>
 
-        <div className={styles.jr}>
+        <div className={styles.jr} data-journey>
           <Draw className={styles.jrline} />
+          <JourneyToken label="Kontakt" className={styles.jtoken} dotClassName={styles.jtokenDot} />
           <Rise className={styles.jsteps}>
             {data.steps.map((step, i) => (
               <RiseItem key={step.n} className={styles.js}>
-                <span className={styles.knob} aria-hidden="true" />
+                <span className={styles.knob} data-jstep aria-hidden="true" />
                 <div className={styles.jn}>{step.n}</div>
                 <div className={styles.jt}>{step.title}</div>
                 <div className={styles.jd}>{step.text}</div>

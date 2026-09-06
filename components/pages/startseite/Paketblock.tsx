@@ -97,7 +97,7 @@ export function Paketblock({
           {cards.map((card) => (
             <div
               key={card.name}
-              className={`${styles.pkc} ${styles[card.variant]} ${card.mid ? styles.mid : ""}`}
+              className={`${styles.pkc} gn-card-lift ${styles[card.variant]} ${card.mid ? styles.mid : ""}`}
             >
               <div className={styles.stripe} aria-hidden="true" />
               <span className={styles.role}>{card.role}</span>

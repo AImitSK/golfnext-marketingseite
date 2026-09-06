@@ -1,9 +1,9 @@
 /* Portiert aus docs/design-system/mocks/3.1-startseite.html (.jr/.jsteps/.js/.jbox/
-   .jband/.jacts, Z.150–223). Farben auf --gn-* umgestellt, literale Tints kommentiert.
-   Abweichung 1.7-Bewegung: Die JS-Choreografie (wandernder „Kontakt"-Token, schritt-
-   weises Aufdimmen, .fire/.lit-Umschalten) entfällt. Endzustand im Server-HTML: alle
-   vier Schritte voll sichtbar, beide Plattformbänder dauerhaft aktiv. Die Linie wird
-   per 1.7-`Draw` einmalig gezogen (ohne JS steht sie sofort vollständig). */
+   .jband/.jacts/.jtoken, Z.150–223). Farben auf --gn-* umgestellt, literale Tints
+   kommentiert. Bewegung 0015: Die Choreografie ist wieder aufgebaut – die Linie wird
+   per `Draw` gezogen, der „Kontakt"-Token wandert einmal durch die vier Schritte
+   (JourneyToken, transform-basiert). Endzustand im Server-HTML: alle vier Schritte
+   voll sichtbar, beide Plattformbänder dauerhaft aktiv; ohne JS steht alles statisch. */
 
 .jr {
   margin-top: 44px;
@@ -17,6 +17,35 @@
   top: 9px;
   width: 100%;
   height: 6px;
+}
+/* Wandernder „Kontakt"-Token (Mock .jtoken, Z.155). Absolut → außerhalb des Flusses,
+   kein Layout-Shift. Bewegung über transform:translateX (JourneyToken). Auf schmalen
+   Layouts ausgeblendet (wie die Linie), da die vier Schritte dort umbrechen. */
+.jtoken {
+  position: absolute;
+  top: -9px;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--gn-navy);
+  color: #fff;
+  border-radius: 3px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 3;
+  box-shadow: 0 10px 22px -12px rgba(1, 65, 91, 0.9); /* Mock-Wert */
+  pointer-events: none;
+}
+.jtokenDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün-Punkt auf Navy – Grün-Regel ok */
+  display: block;
+  flex: 0 0 auto;
 }
 .jsteps {
   display: grid;
@@ -287,7 +316,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 26px;
   }
-  .jrline {
+  .jrline,
+  .jtoken {
     display: none;
   }
   .jband {

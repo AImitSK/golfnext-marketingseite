@@ -100,6 +100,8 @@
   gap: 22px;
   margin-top: 14px;
 }
+/* Hover-Lift über die geteilte Konvention `gn-card-lift` (globals.css) – im TSX
+   an die Karte gehängt; hier nur die Grundoptik. */
 .pkc {
   background: #fff;
   border: 1px solid var(--gn-line);
@@ -108,12 +110,6 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
-}
-.pkc:hover {
-  border-color: var(--gn-navy);
-  box-shadow: 0 26px 52px -34px rgba(1, 65, 91, 0.45);
-  transform: translateY(-2px);
 }
 .mid {
   border-color: var(--gn-navy);
@@ -199,15 +195,6 @@
 }
 .pkcta {
   margin-top: 22px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pkc {
-    transition: none;
-  }
-  .pkc:hover {
-    transform: none;
-  }
 }
 
 @media (max-width: 1080px) {

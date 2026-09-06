@@ -1,0 +1,225 @@
+/* Portiert aus docs/design-system/mocks/3.1a-startseite-paketblock-fassung2.html
+   (.sockband/.plusrow/.pk3/.pkc/.pknote, Z.78–110). Farben auf --gn-* umgestellt.
+   Stufenfarben aus --gn-stage-*. Preise stehen getrennt (Sockband + „+" + Modulblock),
+   werden NIE addiert. Mittlere Karte nur Navy-Rahmen – keine Bestseller-Badge. */
+
+.sockband {
+  margin-top: 38px;
+  border: 1px solid var(--gn-navy);
+  border-radius: var(--gn-radius);
+  background: #fff;
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+}
+.sl {
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.sn {
+  font-family: var(--gn-font-display);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  display: block;
+  margin-top: 3px;
+}
+.sp {
+  display: flex;
+  gap: 26px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.spitem b {
+  font-family: var(--gn-font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.spitem > span {
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin-left: 7px;
+}
+.sb {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-ok-bg);
+  border: 1px solid #cfe0d2; /* Mock-Wert */
+  border-radius: var(--gn-radius-pill);
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.plusrow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 14px;
+}
+.pl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pl i {
+  flex: 1;
+  height: 1px;
+  background: var(--gn-line);
+  display: block;
+}
+.pl em {
+  font-style: normal;
+  font-family: var(--gn-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gn-signal); /* grüner Text auf Navy-Kreis – Grün-Regel ok */
+  background: var(--gn-navy);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.pk3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 14px;
+}
+.pkc {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius);
+  padding: 26px 28px 28px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.pkc:hover {
+  border-color: var(--gn-navy);
+  box-shadow: 0 26px 52px -34px rgba(1, 65, 91, 0.45);
+  transform: translateY(-2px);
+}
+.mid {
+  border-color: var(--gn-navy);
+}
+.stripe {
+  height: 3px;
+  width: 44px;
+  border-radius: 2px;
+  margin-bottom: 18px;
+}
+.a .stripe {
+  background: var(--gn-stage-2);
+}
+.b .stripe {
+  background: var(--gn-stage-3);
+}
+.c .stripe {
+  background: var(--gn-navy-deep);
+}
+.role {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.pn {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 23px;
+  color: var(--gn-navy);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-top: 6px;
+}
+.pp {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  margin: 8px 0 20px;
+  min-height: 2.9em;
+  line-height: 1.45;
+}
+.ml {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  border-top: 1px solid var(--gn-line);
+  padding-top: 16px;
+}
+.mv {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-top: 8px;
+}
+.mv b {
+  font-family: var(--gn-font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  line-height: 1;
+}
+.mv span {
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  line-height: 1.35;
+}
+.plink {
+  margin-top: auto;
+  padding-top: 22px;
+}
+.pknote {
+  font-size: 13.5px;
+  color: var(--gn-muted);
+  margin-top: 24px;
+  max-width: 70ch;
+}
+.pkcta {
+  margin-top: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pkc {
+    transition: none;
+  }
+  .pkc:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 1080px) {
+  .sockband {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .plusrow {
+    display: none;
+  }
+  .pk3 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}

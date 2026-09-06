@@ -60,12 +60,13 @@ pnpm sanity:deploy  # Schema deployen (nach Schema-Änderungen)
 - Genau eine `<h1>` pro Seite. Abschnitte `<h2>`, Unterpunkte `<h3>`.
 - `.hint`-Baustein (Info-Icon + Text) immer mit fixer Icon-Größe 15 px – ein SVG ohne Größe skaliert auf Containerbreite (ist zweimal passiert).
 
-**Bewegung**
-- Jede Animation läuft **einmal** pro Seitenaufruf, kein Loop, kein Ton, kein Scroll-Hijacking, keine Layoutverschiebung.
-- `prefers-reduced-motion: reduce` zeigt sofort den Endzustand.
-- Texte und Bedienelemente sind ohne Animation und **ohne JavaScript** lesbar und bedienbar.
-- `whileInView` mit `viewport={{ once: true }}`; `useReducedMotion()` beachten. Server-HTML zeigt immer den Endzustand.
-- Tabu, auch wenn die Motion-Doku sie anbietet: Typewriter, ScrambleText, splitText (Buchstabenflug), Ticker, Carousel, Cursor-Effekte, Zähler außer der gekennzeichneten Saisonrechnung. Fred hat sie in den Briefings ausgeschlossen.
+**Bewegung** (gelockert am 06.09.2026, Entscheidung Stefan)
+- **Haltung: Bewegung mit Absicht – modern und lebendig, aber seriös.** GolfNext tritt als Technologieführer für Golf + Internet auf; die Seite darf sich **nicht wie statisches HTML** anfühlen. Bewegung macht Zusammenhänge sichtbar und das Produkt spürbar – über Hover-/Micro-Interaktionen, weiche Übergänge, Scroll-Reveals mit echter Präsenz und dezent lebendige Elemente. Sie ersetzt keine Aussage und drängt sich nicht auf.
+- **Nicht verhandelbar (Barrierefreiheit, Recht, Performance):** `prefers-reduced-motion: reduce` zeigt **sofort den Endzustand**; Texte und Bedienelemente sind **ohne JavaScript** lesbar und bedienbar (Server-HTML rendert den Endzustand); **keine Layoutverschiebung / kein CLS** (nur `opacity`/`transform`/`pathLength`, Höhen vorab reservieren); **kein automatischer Ton; kein Scroll-Hijacking**.
+- **Scroll-Reveals** laufen standardmäßig **einmal** und bleiben im Endzustand (`whileInView` mit `viewport={{ once: true }}`, `useReducedMotion()` beachten). Sie dürfen **spürbar** sein (großzügiger Translate, klare Staffelung), nicht nur ein leises Fade.
+- **Kontinuierliche/wiederkehrende Bewegung** ist erlaubt, wenn sie **dezent, langsam und nicht ablenkend** ist (z. B. ein sanft lebendiges Detail, eine ruhige Ambient-Bewegung) – **kein** hektisches Blinken, **kein** aufdringlicher Dauer-Effekt, der vom Inhalt abzieht.
+- **Zähler** für echte Kennzahlen sind erlaubt: einmaliges Hochzählen beim Sichtbarwerden, Werte jederzeit lesbar, Reduced-Motion zeigt sofort den Endwert.
+- **Mit Bedacht statt Tabu:** Effekte wie Typewriter, ScrambleText, splitText, Ticker, Carousel oder Cursor-Effekte nur dort, wo sie dem Inhalt wirklich dienen und **seriös** wirken – nie als Selbstzweck; im Zweifel schlicht und hochwertig. (Fred hatte sie ursprünglich ausgeschlossen; auf Stefans Entscheidung gelockert.)
 
 **Datenschutz / Recht**
 - Kein Third-Party-Script vor Einwilligung (Consent-Tool, Google Consent Mode v2). Vercel Web Analytics ist cookielos und darf ohne Consent laufen.

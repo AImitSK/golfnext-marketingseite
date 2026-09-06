@@ -10,7 +10,7 @@ import styles from "./FooterClose.module.css";
  * Reine Server-Komponente; kein FooterClose-Text wird hier erfunden.
  */
 export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
-  const { eyebrow, headline, text, cta, secondary } = footerClose;
+  const { eyebrow, headline, text, cta, secondary, persoenlicheZeile } = footerClose;
 
   return (
     <section className={styles.close} aria-label="Gespräch und Demo">
@@ -23,6 +23,10 @@ export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
               {line}
             </p>
           ))}
+          {/* Persönliche Zeile (Fred als Ansprechpartner) – nur auf der Startseite gesetzt. */}
+          {persoenlicheZeile ? (
+            <p className={styles.personline}>{persoenlicheZeile}</p>
+          ) : null}
         </div>
         <div className={styles.acts}>
           <Button variant="cta" cta={cta} secondLine={cta.hint}>

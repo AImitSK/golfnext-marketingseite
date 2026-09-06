@@ -67,6 +67,17 @@
   align-items: flex-start;
 }
 
+/* Persönliche Zeile (Startseite Abschnitt 7, .f-personline aus Mock 3.1 Z.335):
+   linker Signalgrün-Balken (Grün-Regel: Linie ok), heller Text auf Navy. */
+.personline {
+  margin: 22px 0 0;
+  padding: 12px 0 12px 18px;
+  border-left: 3px solid var(--gn-signal);
+  color: var(--gn-on-dark-text);
+  font-size: 14px;
+  max-width: 62ch;
+}
+
 @media (max-width: 960px) {
   .inner {
     grid-template-columns: minmax(0, 1fr);

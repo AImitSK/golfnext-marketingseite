@@ -30,6 +30,12 @@ export interface FooterClose {
   text: string[];
   cta: Cta;
   secondary?: Cta;
+  /**
+   * Optionale persönliche Zeile (Fred als Ansprechpartner) für den Startseiten-
+   * Abschluss (Abschnitt 7). Wird nur gerendert, wenn gesetzt – andere Seiten
+   * (pakete, ueber-golfnext) bleiben unverändert.
+   */
+  persoenlicheZeile?: string;
 }
 
 export interface PageContent {

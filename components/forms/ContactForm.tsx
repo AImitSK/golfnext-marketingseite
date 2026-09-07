@@ -67,7 +67,14 @@ export function ContactForm({
   /** Signierter Zeitstempel, vom Server gerendert (Spam-Stufe A). */
   ts: string;
   texte: FormularData;
-  /** Ziel der Einwilligung – läuft über `internalHref` und zeigt bis 5.2 auf `#`. */
+  /**
+   * Ziel der Einwilligung, aufgelöst über `internalHref`. Solange `/datenschutz`
+   * nicht `live` ist (Masterplan 5.2), kommt hier `#` an – dann steht das Wort als
+   * Text statt als Link, genau wie in der Anschrift und in der Bodenleiste des
+   * Footers. Ein Link, der nichts tut, ist für Tastatur und Screenreader ein toter
+   * Bedienpunkt (Briefing 0022). Der Link erscheint von selbst, sobald die Route
+   * gebaut ist – ohne Codeänderung. Der Wortlaut bleibt in beiden Fällen gleich.
+   */
   datenschutzHref: string;
   /** Buchungsweg für den Folge-Link im Erfolgsalert. */
   buchungHref?: string;
@@ -370,7 +377,11 @@ export function ContactForm({
         onChange={(event) => check("einwilligung", event.currentTarget.checked ? "on" : "")}
       >
         {texte.einwilligung.vorLink}
-        <a href={datenschutzHref}>{texte.einwilligung.link}</a>
+        {datenschutzHref === "#" ? (
+          <span>{texte.einwilligung.link}</span>
+        ) : (
+          <a href={datenschutzHref}>{texte.einwilligung.link}</a>
+        )}
         {texte.einwilligung.nachLink}
       </Checkbox>
       {einwilligungFehler ? (

@@ -124,6 +124,19 @@ test.describe("Kontakt · Aufbau und Texte", () => {
     );
   });
 
+  test("führt keinen toten #-Link – auch nicht in der Einwilligung", async ({ page }) => {
+    await page.goto("/kontakt");
+    const hrefs = await page
+      .locator("main a")
+      .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
+    expect(hrefs.length).toBeGreaterThan(0);
+    // Solange /datenschutz und /impressum nicht live sind, stehen sie als Text da
+    // (Briefing 0022: ein Link, der nichts tut, ist ein toter Bedienpunkt).
+    expect(hrefs, 'kein href="#" auf /kontakt').not.toContain("#");
+    // Das Wort bleibt trotzdem wortgleich stehen.
+    await expect(page.getByText(kontaktFormular.einwilligung.link, { exact: true })).toBeVisible();
+  });
+
   test("verweist auf Buchung, Live-Demo und Telefon – nichts hart kodiert", async ({ page }) => {
     await page.goto("/kontakt");
     const telHref = `tel:${KONTAKT.telefon.replace(/\s+/g, "")}`;
@@ -248,6 +261,28 @@ test.describe("Kontakt · Versand über den Mock-Transport", () => {
 
     await expect(page.getByText(formMessages.form.success.title, { exact: true })).toBeVisible();
     expect((await mailsMit(kennung, seit)).length, "kein Doppelversand").toBe(1);
+  });
+
+  test("meldet während des Versands aria-busy und den Ladezustand am Button", async ({ page }) => {
+    const seit = Date.now();
+    const kennung = `laden${seit}`;
+    await page.goto("/kontakt");
+    await ausfuellen(page, { email: `${kennung}@example.de` });
+    await zeitfalleAbwarten(page);
+
+    const form = page.locator("form");
+    const button = page.getByRole("button", { name: /Nachricht senden/ });
+    await expect(form).not.toHaveAttribute("aria-busy", "true");
+
+    // Nicht auf den Klick warten: Der Ladezustand beginnt im Absende-Ereignis und
+    // hält mindestens 400 ms (docs/08 §2), ist also zuverlässig zu beobachten.
+    const klick = button.click();
+    await expect(form).toHaveAttribute("aria-busy", "true");
+    await expect(button).toHaveAttribute("aria-busy", "true");
+    await klick;
+
+    await expect(page.getByText(formMessages.form.success.title, { exact: true })).toBeVisible();
+    expect((await mailsMit(kennung, seit)).length).toBe(1);
   });
 
   test("verwirft eine Sendung mit gefülltem Honigtopf still – ohne Mail", async ({ page }) => {

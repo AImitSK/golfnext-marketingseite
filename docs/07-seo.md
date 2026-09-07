@@ -24,7 +24,7 @@ Titel-Suffix „ – GolfNext" über `title.template` in `app/layout.tsx`, auße
 - `app/sitemap.ts`: alle statischen Routen + Sanity-Artikel/Rubriken mit `lastModified`.
 - `app/robots.ts`: `Disallow: /studio, /api, /_bausteine`, Sitemap-URL.
 - Preview-Deployments: `X-Robots-Tag: noindex, nofollow`.
-- Platzhalter-Routen (Praxis, Kontakt) mit `robots: { index: false }` bis Inhalte vorliegen.
+- Platzhalter-Routen (nur noch Praxis) mit `robots: { index: false }` bis Inhalte vorliegen. `/kontakt` ist seit Briefing 0025 gebaut, `live` und indexierbar (Masterplan 4.3).
 - Entfallene Routen (`/team`, `/ratgeber`, `/module/<slug>` – Briefing 0023) liefern 404 **ohne Weiterleitung**: sie waren nie öffentlich erreichbar. Nichts verlinkt mehr darauf.
 
 ## Strukturierte Daten (JSON-LD)

@@ -72,8 +72,8 @@ export default function KontaktPage() {
         seitenspalte={kontaktSeitenspalte}
         ts={signTimestamp()}
         // `/datenschutz` entsteht erst mit Masterplan 5.2; bis dahin liefert
-        // internalHref `#`. Der Wortlaut der Einwilligung bleibt unverändert stehen
-        // (Briefing 0025).
+        // internalHref `#`, und die Einwilligung zeigt das Wort als Text statt als
+        // toten Link (wie Anschrift und Footer). Der Wortlaut bleibt unverändert.
         datenschutzHref={internalHref("/datenschutz")}
       />
 

@@ -6,7 +6,12 @@ import { initialContactState, type ContactState } from "@/lib/forms/contact-stat
 import { Alert } from "@/components/feedback/Alert";
 import { Button } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
-import { KONTAKT_ROLLEN, KONTAKT_THEMEN, type FormularData } from "@/content/kontakt";
+import {
+  KONTAKT_AUSWAHL_LEER,
+  KONTAKT_ROLLEN,
+  KONTAKT_THEMEN,
+  type FormularData,
+} from "@/content/kontakt";
 import { formMessages, type FieldMessageKey } from "@/lib/forms/messages";
 import {
   CONFIRMABLE_FIELDS,
@@ -269,6 +274,9 @@ export function ContactForm({
         messageVariant="h"
       >
         <Select name="rolle" defaultValue={values.rolle} disabled={loading} className={styles.inp}>
+          {/* Neutrale Vorauswahl: ohne sie meldet jede Anfrage die erste Rolle,
+              auch wenn niemand sie gewählt hat (Entscheidung Stefan, 07.09.2026). */}
+          <option value="">{KONTAKT_AUSWAHL_LEER}</option>
           {KONTAKT_ROLLEN.map((rolle) => (
             <option key={rolle} value={rolle}>
               {rolle}
@@ -309,6 +317,7 @@ export function ContactForm({
             disabled={loading}
             className={styles.inp}
           >
+            <option value="">{KONTAKT_AUSWAHL_LEER}</option>
             {KONTAKT_THEMEN.map((thema) => (
               <option key={thema} value={thema}>
                 {thema}

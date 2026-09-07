@@ -96,7 +96,7 @@ sanity login             # Sanity-Konto von Stefan/Fred, Project wsj8a3ho
 ```
 
 **MCP (`.mcp.json`, Claude Code lädt sie beim Start):**
-- `sanity` – Schema lesen/deployen, Dokumente lesen/schreiben, GROQ. Braucht `SANITY_API_TOKEN` in der Shell-Umgebung: unter Windows einmalig `setx SANITY_API_TOKEN "<Token aus .env.local>"` (dann Terminal neu öffnen). Schreibzugriffe auf `production` nur nach Rückfrage.
+- **Sanity läuft NICHT über `.mcp.json`** (Stand 07.09.2026). Der Eintrag `npx @sanity/mcp-server` wurde entfernt: Das Paket bringt in Version 0.12.2 keine ausführbare Datei mit (`npm error could not determine executable to run`), der Server konnte also nie starten – unabhängig vom Token. Sanity ist stattdessen als **OAuth-Connector** in Claude Code verbunden (Schema lesen, Dokumente abfragen, GROQ). Kein Token in der Shell-Umgebung nötig. Schreibzugriffe auf `production` nur nach Rückfrage.
 - `vercel` – Deployments, Logs, Env-Variablen (OAuth beim ersten Aufruf).
 - `playwright` – Browser-Prüfung der laufenden Seite aus Claude Code heraus.
 - `motion` (AI Kit, kostenloser Teil) – aktuelle Motion-Dokumentation im Kontext, `/motion`-Skill mit Best Practices, CSS-Spring-Generierung. Installation über `npx motion-ai` (Masterplan 0.10); der Installer trägt die gehosteten MCP-Server selbst in `.mcp.json` ein und legt den Skill an. Motion+-Funktionen (MotionScore, Transition-Editor, Beispielcode) bleiben ohne Lizenz einfach inaktiv.

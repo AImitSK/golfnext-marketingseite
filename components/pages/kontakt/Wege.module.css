@@ -1,0 +1,115 @@
+/* Portiert aus docs/design-system/mocks/3.10-kontakt.html (.ways3/.way3, Z.234–246)
+   auf der Mist-Fläche des Abschnitts. Tokens auf --gn-*.
+
+   Bewegung: Der Hover-Lift ist der Mock-Wert (6 px, weicher Navy-Schatten) und
+   bewegt nur transform/box-shadow/border-color – kein CLS. Bei reduzierter Bewegung
+   bleibt der Rahmen als statische Hervorhebung, das Anheben entfällt. */
+
+.section {
+  background: var(--gn-mist);
+  padding: var(--gn-section-y-lg) 0; /* 120px */
+}
+.wrap {
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.h2 {
+  font-size: var(--gn-h2-lg);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0 0 18px;
+  max-width: 22ch;
+}
+.lead {
+  font-size: clamp(17px, 1.4vw, 20px);
+  color: var(--gn-muted);
+  max-width: 58ch;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 52px;
+}
+.card {
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  background: #fff; /* Weiß = Mock-Wert (kein Token) */
+  padding: 30px 28px 28px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s var(--gn-ease),
+    border-color 0.35s var(--gn-ease);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.42); /* weicher Navy-Schatten, 1:1 aus Mock */
+  border-color: rgba(1, 65, 91, 0.3); /* Navy @30 %, 1:1 aus Mock */
+}
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--gn-navy);
+}
+.cardHeadline {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  margin-bottom: 9px;
+}
+.card p {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  line-height: 1.58;
+  margin: 0 0 18px;
+}
+.card a {
+  margin-top: auto;
+}
+
+@media (max-width: 960px) {
+  .wrap {
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+@media (max-width: 620px) {
+  .section {
+    padding: 72px 0;
+  }
+  .wrap {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+}

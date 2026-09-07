@@ -15,7 +15,9 @@ import { getNavModel } from "./navigation";
  * abgeleitet (Briefing 0014).
  *
  * Seit Briefing 0024 ist `/plattform/so-arbeitet-golfnext` gebaut und `live` – damit
- * trägt „Plattform" das erste Dropdown, mit genau diesem einen Punkt.
+ * trägt „Plattform" das erste Dropdown, mit genau diesem einen Punkt. Seit Briefing 0025
+ * ist `/kontakt` gebaut und `live` – damit hat auch „Über GolfNext" ein Dropdown, das
+ * bisher nur „Kontakt" enthält (`/praxis` bleibt Platzhalter bis Phase 3).
  */
 describe("getNavModel", () => {
   const model = getNavModel();
@@ -45,9 +47,9 @@ describe("getNavModel", () => {
     }
   });
 
-  it("zeigt genau ein Dropdown: Plattform mit „So arbeitet GolfNext“", () => {
+  it("zeigt zwei Dropdowns: Plattform und Über GolfNext", () => {
     const mitDropdown = model.filter((i) => i.children.length > 0);
-    expect(mitDropdown.map((i) => i.path)).toEqual(["/plattform"]);
+    expect(mitDropdown.map((i) => i.path)).toEqual(["/plattform", "/ueber-golfnext"]);
     expect(mitDropdown[0]!.children).toEqual([
       {
         path: "/plattform/so-arbeitet-golfnext",
@@ -57,9 +59,9 @@ describe("getNavModel", () => {
     ]);
   });
 
-  it("gibt „Über GolfNext“ noch kein Dropdown – Ratgeber und Kontakt sind nicht live", () => {
+  it("führt „Kontakt“ im Über-GolfNext-Dropdown – Ratgeber fehlt weiter", () => {
     const ueber = model.find((i) => i.path === "/ueber-golfnext");
-    expect(ueber?.children).toEqual([]);
+    expect(ueber?.children).toEqual([{ path: "/kontakt", label: "Kontakt", href: "/kontakt" }]);
   });
 });
 
@@ -69,7 +71,8 @@ describe("getNavModel", () => {
  * sobald eine Route auf `live` wechselt.
  */
 describe("Struktur v2 in site-structure", () => {
-  const kinderVon = (parent: string) => ROUTES.filter((r) => r.parent === parent).map((r) => r.path);
+  const kinderVon = (parent: string) =>
+    ROUTES.filter((r) => r.parent === parent).map((r) => r.path);
 
   it("hängt Praxis und Kontakt unter Über GolfNext – in dieser Reihenfolge", () => {
     expect(kinderVon("/ueber-golfnext")).toEqual(["/praxis", "/kontakt"]);
@@ -91,13 +94,14 @@ describe("Struktur v2 in site-structure", () => {
   });
 
   it("liefert nicht-live Kinder gar nicht erst aus", () => {
-    // `/praxis` und `/kontakt` sind nicht `live` – sie tauchen im Modell nicht auf.
-    // Nur das gebaute Kind „So arbeitet GolfNext" steht im Dropdown.
+    // `/praxis` ist nicht `live` (der Blog kommt in Phase 3 aus Sanity) und taucht
+    // im Modell nicht auf. Gebaut und im Dropdown sind „So arbeitet GolfNext" und
+    // seit Briefing 0025 „Kontakt".
     const nichtLiveKinder = ROUTES.filter((r) => r.parent && !isLinkable(r.path));
-    expect(nichtLiveKinder.map((r) => r.path)).toEqual(["/praxis", "/kontakt"]);
+    expect(nichtLiveKinder.map((r) => r.path)).toEqual(["/praxis"]);
 
     const imModell = getNavModel().flatMap((i) => i.children.map((c) => c.path));
-    expect(imModell).toEqual(["/plattform/so-arbeitet-golfnext"]);
+    expect(imModell).toEqual(["/plattform/so-arbeitet-golfnext", "/kontakt"]);
   });
 
   it("behält die zwölf Modulnamen als reine Datenliste", () => {

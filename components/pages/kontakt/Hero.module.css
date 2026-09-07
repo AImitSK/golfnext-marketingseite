@@ -1,0 +1,90 @@
+/* Portiert aus docs/design-system/mocks/3.10-kontakt.html (.hero.plain, Z.140–145
+   auf dem geteilten Neufassungs-Hero der Mocks 3.2c/3.3b/3.4b). Farben auf --gn-*,
+   literale Tints kommentiert.
+
+   „plain" heißt: einspaltig, kein Visual rechts – die Kontaktseite braucht keine
+   Illustration, das Formular kommt sofort danach. Kein CTA im Hero (der Mock hat
+   keinen); die drei Vertrauenspunkte stehen direkt unter dem Lead. */
+
+.hero {
+  background: linear-gradient(
+    160deg,
+    var(--gn-navy-deep) 0%,
+    var(--gn-navy) 58%,
+    #065877 100%
+  ); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    1000px 500px at 88% -10%,
+    rgba(127, 211, 240, 0.18),
+    transparent 62%
+  ); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 86px 40px 78px;
+}
+.txt {
+  min-width: 0;
+}
+.h1 {
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 17ch;
+  text-wrap: balance;
+  margin: 0;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 56ch;
+  line-height: 1.62;
+}
+.trust {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  font-size: 13px;
+  color: var(--gn-on-dark-text);
+}
+.trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 960px) {
+  .in {
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+}
+@media (max-width: 620px) {
+  .in {
+    padding: 56px 20px;
+  }
+}

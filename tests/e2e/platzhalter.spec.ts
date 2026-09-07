@@ -3,9 +3,10 @@ import { MODULE } from "../../config/site-structure";
 import { uiMessages } from "../../lib/ui/messages";
 
 /**
- * Platzhalter-Routen (Masterplan 2.8, Briefing 0022): noch `/praxis` und `/kontakt`.
+ * Platzhalter-Routen (Masterplan 2.8, Briefing 0022): nur noch `/praxis`.
  * `/team` und die zwölf `/module/<slug>` sind mit Briefing 0023 ersatzlos entfallen
- * und liefern jetzt 404. Läuft über alle Breakpoint-Projekte (390–1440).
+ * und liefern jetzt 404; `/kontakt` ist mit Briefing 0025 eine echte Seite geworden
+ * (siehe tests/e2e/kontakt.spec.ts). Läuft über alle Breakpoint-Projekte (390–1440).
  *
  * Geprüft wird vor allem, was NICHT da sein darf: erfundene Inhalte, Modulstatus,
  * Praxis-Artikel aus den Mocks 3.9a/3.9b, tote `#`-Links.
@@ -14,7 +15,6 @@ const PLATZHALTER = [
   // `/praxis` trägt seit 07.09.2026 das Menü-Label „Ratgeber" (Entscheidung Stefan);
   // die Adresse bleibt `/praxis`. Die Platzhalterseite betitelt sich mit dem Label.
   { path: "/praxis", titel: "Ratgeber", zurueck: "/ueber-golfnext" },
-  { path: "/kontakt", titel: "Kontakt", zurueck: null },
 ];
 
 /** Routen, die es seit Briefing 0023 nicht mehr gibt – ohne Weiterleitung. */
@@ -41,15 +41,9 @@ test.describe("Platzhalter-Routen", () => {
       await expect(page.locator("header")).toHaveCount(1);
       await expect(page.locator("footer")).toHaveCount(1);
 
-      // Rücklink in den passenden, bereits gebauten Bereich – oder gar keiner.
+      // Rücklink in den passenden, bereits gebauten Bereich.
       const main = page.locator("main");
-      if (seite.zurueck) {
-        await expect(main.locator(`a[href="${seite.zurueck}"]`)).toHaveCount(1);
-      } else {
-        await expect(
-          page.getByText(uiMessages.platzhalter.kontaktHinweis, { exact: true }),
-        ).toBeVisible();
-      }
+      await expect(main.locator(`a[href="${seite.zurueck}"]`)).toHaveCount(1);
     });
   }
 
@@ -69,11 +63,12 @@ test.describe("Platzhalter-Routen", () => {
       expect(hasOverflow, `horizontaler Overflow auf ${seite.path}`).toBe(false);
 
       // Icon-Guard: kein SVG über 90 px außer der Wortmarke ([data-large-svg]).
-      const zuGross = await page.evaluate(() =>
-        Array.from(document.querySelectorAll("svg"))
-          .filter((svg) => !svg.closest("[data-large-svg]"))
-          .map((svg) => svg.getBoundingClientRect())
-          .filter((r) => r.width > 90 || r.height > 90).length,
+      const zuGross = await page.evaluate(
+        () =>
+          Array.from(document.querySelectorAll("svg"))
+            .filter((svg) => !svg.closest("[data-large-svg]"))
+            .map((svg) => svg.getBoundingClientRect())
+            .filter((r) => r.width > 90 || r.height > 90).length,
       );
       expect(zuGross, `zu großes SVG auf ${seite.path}`).toBe(0);
     }
@@ -109,7 +104,7 @@ test.describe("Platzhalter-Routen", () => {
   });
 
   test("die zwölf Modulnamen stehen im Footer – als Text ohne Link", async ({ page }) => {
-    await page.goto("/kontakt");
+    await page.goto("/praxis");
     const footer = page.locator("footer");
     for (const m of MODULE) {
       await expect(footer.getByText(m.name, { exact: true }), m.name).toHaveCount(1);
@@ -117,11 +112,14 @@ test.describe("Platzhalter-Routen", () => {
     const hrefs = await footer
       .locator("a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href") ?? ""));
-    expect(hrefs.filter((h) => h.startsWith("/module/")), "kein Modul-Link im Footer").toEqual([]);
+    expect(
+      hrefs.filter((h) => h.startsWith("/module/")),
+      "kein Modul-Link im Footer",
+    ).toEqual([]);
   });
 
   test("Header und Footer führen keine toten #-Links mehr", async ({ page }) => {
-    await page.goto("/kontakt");
+    await page.goto("/praxis");
     for (const bereich of ["header", "footer"]) {
       const hrefs = await page
         .locator(`${bereich} a`)

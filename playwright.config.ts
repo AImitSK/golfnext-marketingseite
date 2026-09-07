@@ -2,7 +2,9 @@ import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Playwright-Prüfungen laufen gegen den Produktionsbuild (`pnpm start`).
- * Vor dem Lauf muss `pnpm build` gelaufen sein (CI baut separat, lokal via reuseExistingServer).
+ * Vor dem Lauf muss `pnpm build` gelaufen sein. Playwright startet den Server immer
+ * selbst und legt dabei die Umgebung fest (siehe `webServer.env`); ein bereits
+ * laufender Dev-Server wird NICHT wiederverwendet.
  * Breakpoints nach QA-Vorgabe: 390 / 768 / 1024 / 1180 / 1440.
  */
 const BREAKPOINTS = [390, 768, 1024, 1180, 1440];
@@ -28,7 +30,25 @@ export default defineConfig({
   webServer: {
     command: "pnpm start",
     url: "http://localhost:3000",
-    reuseExistingServer: !isCI,
+    // **Playwright startet den Server IMMER selbst** – auch lokal (Briefing 0025).
+    // Grund: Die `env` unten wirkt nur auf einen von Playwright gestarteten Prozess.
+    // Mit `reuseExistingServer` hängte sich ein lokaler Lauf an einen bereits
+    // laufenden `pnpm dev`/`pnpm start` – der lädt `.env.local` und verschickt mit
+    // gültigem SendGrid-Schlüssel **echte Mails an info@golfnext.de**. Genau das ist
+    // beim Bau von 4.3 passiert. Ist Port 3000 belegt, bricht der Lauf jetzt mit
+    // einer klaren Meldung ab, statt still echte Anfragen zu senden – dann bitte den
+    // Dev-Server beenden und erneut starten.
+    reuseExistingServer: false,
     timeout: 120_000,
+    env: {
+      // Der Testserver verschickt NIEMALS echte Mails und schreibt NIEMALS in die
+      // gemeinsame Redis-Datenbank – auch dann nicht, wenn in `.env.local` gültige
+      // Schlüssel stehen.
+      MAIL_TRANSPORT: "mock",
+      RATELIMIT_STORE: "memory",
+      // Der Spam-Schutz wird nicht abgeschaltet, nur der Schlüssel festgelegt.
+      FORM_SIGNING_SECRET:
+        process.env.FORM_SIGNING_SECRET ?? "playwright-only-signing-secret-not-for-production",
+    },
   },
 });

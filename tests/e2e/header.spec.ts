@@ -5,9 +5,13 @@ import { expect, test } from "@playwright/test";
  * Breakpoint-Projekte (390–1440); Desktop-/Mobil-Erwartungen werden anhand der
  * Viewport-Breite gewählt (Breakpoint 1024 px).
  *
- * Seit Briefing 0022 rendert die Navigation NUR `live`-Routen: keine `href="#"`-
- * Platzhalter mehr, „Praxis" fehlt und die beiden Modul-Dropdowns erscheinen nicht,
- * solange keine Modulseite live ist (docs/10, „Navigation v1").
+ * Struktur v2 (Briefing 0023, 07.09.2026): Plattform · Wachstum & Vertrieb ·
+ * Clubprozesse · Pakete · Über GolfNext plus CTA. „Praxis" ist Unterpunkt von
+ * „Über GolfNext" geworden, die zwölf Modulseiten sind entfallen.
+ *
+ * Die Navigation rendert NUR `live`-Routen (Briefing 0022): keine `href="#"`-
+ * Platzhalter mehr, und weil weder „So arbeitet GolfNext" noch Praxis oder Kontakt
+ * live sind, erscheint aktuell überhaupt kein Dropdown.
  */
 function desktopOnly(page: import("@playwright/test").Page) {
   const vp = page.viewportSize();
@@ -51,15 +55,39 @@ test.describe("Header · Struktur und Daten", () => {
     }
   });
 
-  test("nicht-live Punkte fehlen: kein Praxis, keine Modul-Dropdowns", async ({ page }) => {
+  test("Praxis steht nicht mehr in der Hauptnavigation, kein Dropdown ist offen", async ({
+    page,
+  }) => {
     await page.goto("/_bausteine");
 
     const nav = page.locator("header nav");
+    // Praxis ist seit 0023 Kind von „Über GolfNext" und nicht live – weder als
+    // Hauptpunkt noch im Dropdown.
     await expect(nav.locator('a:text-is("Praxis")')).toHaveCount(0);
+    await expect(nav.locator('a:text-is("Kontakt")')).toHaveCount(0);
     // Ohne live-Kinder gibt es keinen Dropdown-Öffner.
     await expect(page.getByRole("button", { name: /Untermenü/ })).toHaveCount(0);
+    // Die Modulseiten sind entfallen; ihre Namen stehen nur noch im Footer.
     for (const modul of ["Reach", "Gastfee", "Captains App"]) {
       await expect(nav.locator(`a:text-is("${modul}")`)).toHaveCount(0);
+    }
+  });
+
+  test("Header und Mobilmenü führen keinen einzigen #-Link", async ({ page }) => {
+    await page.goto("/_bausteine");
+
+    // CSS-Locator, damit auch das per display:none verborgene Mobilmenü mitzählt.
+    const hrefs = await page
+      .locator("header a")
+      .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
+    expect(hrefs.length).toBeGreaterThan(0);
+    expect(hrefs, 'Header und Mobilmenü ohne href="#"').not.toContain("#");
+
+    // Kein interner Link zeigt auf eine entfernte Route.
+    for (const href of hrefs) {
+      expect(href ?? "", `entfernte Route verlinkt: ${href}`).not.toMatch(
+        /^\/(team|ratgeber|module)(\/|$)/,
+      );
     }
   });
 });

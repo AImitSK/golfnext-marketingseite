@@ -7,6 +7,13 @@ import { uiMessages } from "../../lib/ui/messages";
  *
  * Die Texte müssen wortgleich aus `lib/ui/messages.ts` kommen; das Fehlerobjekt darf
  * nirgends sichtbar werden.
+ *
+ * Der zweite Fall aus 0022 – `notFound()` aus einer Segment-Route, wo Next 16 die
+ * Wurzel-404 innerhalb der Shell rendert und die Seite ohne JavaScript leer bleibt –
+ * ist hier nicht mehr geprüft: `/module/[slug]` war die einzige Route, die
+ * `notFound()` warf, und sie ist mit Briefing 0023 gelöscht. Dass die entfernten
+ * Routen 404 liefern, sichert `tests/e2e/platzhalter.spec.ts`. Der Fall kommt in
+ * Phase 3 mit `/praxis/[slug]` zurück – siehe docs/entscheidungen.md.
  */
 test.describe("404", () => {
   test("erfundene URL: Statuscode 404, Texte wortgleich, Header, Footer, zwei Aktionen", async ({
@@ -29,19 +36,6 @@ test.describe("404", () => {
     await expect(
       page.locator("main").getByRole("link", { name: uiMessages.notFound.actionContact }),
     ).toHaveCount(1);
-  });
-
-  test("unbekannter Modul-Slug: 404 statt leerer Platzhalterseite, genau eine Kopfzeile", async ({
-    page,
-  }) => {
-    const response = await page.goto("/module/gibt-es-nicht");
-    expect(response?.status()).toBe(404);
-    await expect(page.locator("h1")).toHaveText(uiMessages.notFound.title);
-    // Next rendert die Wurzel-404 hier innerhalb der (site)-Shell; der
-    // Fallback-Header der 404 wird ausgeblendet (app/globals.css).
-    await expect(page.locator("header:visible")).toHaveCount(1);
-    // Der Platzhaltertext darf hier NICHT stehen – es ist keine Platzhalterseite.
-    await expect(page.getByText(uiMessages.platzhalter.body, { exact: true })).toHaveCount(0);
   });
 
   test("kein Overflow, keine Konsolenfehler", async ({ page }) => {

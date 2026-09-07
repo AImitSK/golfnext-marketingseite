@@ -47,6 +47,14 @@ import styles from "./ContactForm.module.css";
 /** Mindestanzeige des Ladezustands, damit der Ring bei schnellen Antworten nicht flackert. */
 const MIN_PENDING_MS = 400;
 
+/**
+ * Nach zehn Sekunden ohne Antwort wird der Button freigegeben und `form.network`
+ * angezeigt (docs/08 §2). Die Server Action lässt sich nicht abbrechen – kommt die
+ * Antwort doch noch, gewinnt sie: Erfolg ersetzt das Formular, ein Serverfehler
+ * ersetzt die Netzmeldung. Der Nutzer hängt so nie ohne Ausweg im Ladezustand fest.
+ */
+const TIMEOUT_MS = 10_000;
+
 function serverErrorsOf(state: ContactState): FieldErrors {
   return state.status === "error" ? (state.fieldErrors ?? {}) : {};
 }
@@ -85,7 +93,9 @@ export function ContactForm({
   // (docs/08 §2). Gestartet wird er im Absende-Ereignis – ohne JavaScript gibt es
   // weder das Ereignis noch einen Ladezustand, und das Formular sendet trotzdem.
   const [mindestAnzeige, setMindestAnzeige] = useState(false);
-  const loading = isPending || mindestAnzeige;
+  const [zeitueberschreitung, setZeitueberschreitung] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const loading = (isPending || mindestAnzeige) && !zeitueberschreitung;
 
   // `null` = im Browser geprüft und in Ordnung (schlägt eine ältere Servermeldung),
   // ein Schlüssel = Fehler, `undefined` = noch nicht geprüft (Servermeldung gilt).
@@ -142,6 +152,11 @@ export function ContactForm({
   // Erst NACH dem Ladezustand: Während des Versands sind alle Felder `disabled`,
   // und ein deaktiviertes Feld nimmt keinen Fokus an. Die Mindestanzeige des
   // Ladezustands (400 ms) läuft noch, wenn die Antwort schon da ist.
+  // Ergebnis da: Die Zeitüberschreitung wird nicht mehr gebraucht.
+  useEffect(() => {
+    if (state.status !== "idle") clearTimeout(timeoutRef.current);
+  }, [state]);
+
   useEffect(() => {
     if (loading) return;
     if (state.status === "ok") {
@@ -172,7 +187,8 @@ export function ContactForm({
     );
   }
 
-  const formError = state.status === "error" ? state.formError : undefined;
+  // Kommt eine echte Antwort, gewinnt sie über die Netzmeldung der Zeitüberschreitung.
+  const formError = state.status === "error" ? state.formError : zeitueberschreitung ? "network" : undefined;
   const felder = texte.felder;
   const einwilligungFehler = errorOf("einwilligung");
 
@@ -181,8 +197,11 @@ export function ContactForm({
       ref={formRef}
       action={formAction}
       onSubmit={() => {
+        setZeitueberschreitung(false);
         setMindestAnzeige(true);
         setTimeout(() => setMindestAnzeige(false), MIN_PENDING_MS);
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => setZeitueberschreitung(true), TIMEOUT_MS);
       }}
       noValidate
       aria-busy={loading || undefined}

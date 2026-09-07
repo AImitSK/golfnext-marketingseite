@@ -1,7 +1,10 @@
 /* Portiert aus 3.8b-ueber-golfnext-neufassung.html (Abschnitt 5 · .logos/.logo/
-   .logonote). Farben auf --gn-* umgestellt, literale Tints kommentiert. Die Kacheln
-   sind beschriftete Platzhalter (Clubname bzw. „Logo folgt“) mit gestrichelter
-   Innenlinie – kein Stock/KI-Logo. */
+   .logonote). Farben auf --gn-* umgestellt, literale Tints kommentiert.
+
+   Stand 07.09.2026: In den Kacheln stehen die echten, freigegebenen Clublogos.
+   Die gestrichelte Innenlinie (`.logo::before`) war die Platzhalter-Optik des
+   Mocks und ist damit entfallen, ebenso die Textformate der Kachel – es steht
+   dort kein Text mehr, sondern eine Grafik. */
 
 .logos {
   display: grid;
@@ -12,19 +15,12 @@
 .logo {
   height: 92px;
   padding: 0 14px;
-  text-align: center;
-  line-height: 1.3;
   border: 1px solid var(--gn-line);
   border-radius: 8px;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--gn-font-display);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gn-muted);
-  letter-spacing: -0.01em;
   position: relative;
   transition:
     border-color 0.3s,
@@ -33,14 +29,38 @@
 .logo:hover {
   border-color: var(--gn-navy);
 }
-.logo::before {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border: 1px dashed rgba(1, 65, 91, 0.18); /* navy #01415B @ .18 */
-  border-radius: 5px;
-  pointer-events: none;
+
+/* Fünf fremde Wort-Bild-Marken nebeneinander werden schnell unruhig. Deshalb
+   liegen sie in Graustufe und bekennen beim Überfahren Farbe (Entscheidung
+   Stefan, 07.09.2026). Die Höhe ist gedeckelt, die Breite folgt dem Seiten-
+   verhältnis – so stehen hochformatige und sehr breite Logos gleich groß da. */
+.logoBild {
+  /* Höhe je Logo aus `content/ueber-golfnext.ts` (optischer Ausgleich). */
+  max-height: var(--gn-logo-h, 52px);
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.68;
+  transition:
+    filter 0.3s,
+    opacity 0.3s;
 }
+.logo:hover .logoBild {
+  filter: none;
+  opacity: 1;
+}
+
+/* Ohne Zeigegerät gibt es kein Überfahren – dort stehen die Logos von Anfang
+   an in Farbe, sonst sähe sie auf dem Telefon niemand. */
+@media (hover: none) {
+  .logoBild {
+    filter: none;
+    opacity: 1;
+  }
+}
+
 .logonote {
   margin: 22px 0 0;
   display: flex;
@@ -62,5 +82,15 @@
   }
   .logo {
     height: 76px;
+  }
+  .logoBild {
+    max-height: calc(var(--gn-logo-h, 52px) * 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .logoBild {
+    transition: none;
   }
 }

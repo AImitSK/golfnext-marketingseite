@@ -23,7 +23,7 @@ Alle acht Seiten wie gemockt, Navigation nach § Navigation v2.
 Voraussetzungen **[F]**, mit Frist:
 - rund 30 Produktoberflächen als Screenshots (Liste in `03-seiten-und-routen.md`), ohne personenbezogene Daten
 - Porträts Fred und Stefan
-- Partnerlogos mit Freigabe und Beschriftung
+- ~~Partnerlogos mit Freigabe und Beschriftung~~ – erledigt am 07.09.2026: fünf freigegebene Clublogos liegen in `public/clubs`
 - ~~Briefings für Praxis, Team und die zwölf Modulseiten~~ – hinfällig seit 07.09.2026: Team und die Modulseiten entfallen, Praxis entsteht mit dem Sanity-Briefing in Phase 3. **Kontakt braucht keins** – Stefan hat die Seite am 07.09.2026 beschlossen, sie entsteht nach §40 als schlichte Seite mit dem UI-Kit-Formular (Masterplan 4.3)
 - mindestens drei Praxis-Artikel, sonst bleibt `/praxis` aus der Navigation
 - Zieladressen: Buchung, Live-Demo
@@ -39,7 +39,7 @@ Live gehen mit dem, was vollständig ist, und den Rest ehrlich weglassen statt z
   `site-structure.ts`), nicht mit Platzhalter veröffentlicht. Die Neufassungen haben das erledigt: Wachstum & Vertrieb (3.4b) und
   So arbeitet GolfNext (3.3b) brauchen **keine Screenshots** mehr – ihre Oberflächen sind schematische Illustrationen. Es bleibt
   nichts auszublenden; die Regel gilt weiter für künftige `Shot`-Sektionen.
-- **Über GolfNext:** Partnerlogo-Abschnitt ausgeblendet, bis Logos und Freigaben da sind; Porträts als kleine Platzhalter sind vertretbar, große nicht.
+- **Über GolfNext:** Der Abschnitt „Gemeinsame Projekte" zeigt seit 07.09.2026 die fünf freigegebenen Clublogos – nichts mehr auszublenden. Porträts stehen seit 05.09.2026 als echte Bilder.
 - **Praxis (der Blog):** erst in Navigation und Sitemap, wenn Artikel veröffentlicht sind.
 - **Kontakt:** bis zum Formular führt der Footer auf Telefon/E-Mail; die Seite entsteht in Masterplan 4.3.
 

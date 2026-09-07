@@ -13,8 +13,11 @@ Status pflegen, wenn eine Seite gebaut ist. Spalte „Bilder offen" listet die `
 | `/ueber-golfnext` | 3.8b (Neufassung v01) | **live** (2.7) | Porträts Fred und Stefan (Hero + „Menschen dahinter“) als beschriftete Platzhalter, Partnerlogos + Freigaben (Club-Kacheln „Logo folgt“), Artikelbilder/-titel im Wissen-Slider („Bild folgt“/„Titel folgt“) – Fred liefert; **kein Modulstatus**: Grundsatz /02 „Wir versprechen nur, was läuft.“ + Status-Aufzählung/-Legende **nicht gebaut** (Überschrift „Zwei Grundsätze“), „Pilotclub“-/Entwicklungspartner-Wortlaut bleibt wortgleich |
 | `/ratgeber`, `/ratgeber/[slug]`, `/ratgeber/rubrik/[slug]` | Sanity | offen | Artikelbilder aus Sanity |
 | `/impressum`, `/datenschutz` | docs/legal | offen | – |
-| `/praxis`, `/praxis/[slug]` | 3.9a (Übersicht) + 3.9b (Artikel), Neufassung v01 | offen | Artikelbilder/Porträts als Platzhalter; **kein Modulstatus** |
-| `/team`, `/kontakt`, `/module/[slug]` | kein Briefing | Platzhalter (noindex) | – |
+| `/praxis` | 3.9a (Übersicht) + 3.9b (Artikel), Neufassung v01 | **Platzhalter (noindex)** (2.8, Briefing 0022) – die neun Artikel der Mocks sind unfreigegebene Beispieltexte; der Blog entsteht in Phase 3 aus Sanity | Artikelbilder/Porträts als Platzhalter; **kein Modulstatus** |
+| `/team`, `/module/<slug>` (zwölf) | kein Briefing | **Platzhalter (noindex)** (2.8, Briefing 0022) – nicht verlinkt, nur per direkter URL erreichbar; kein Modulstatus | – |
+| `/kontakt` | kein Briefing nötig (docs/10 §40) | **Platzhalter (noindex)** (2.8, Briefing 0022) – Zwischenstand; die echte Seite mit dem UI-Kit-Formular entsteht in 4.3. Ziel des CTA-Fallbacks aus `lib/links.ts` | – |
+| 404 (jede unbekannte URL) | kein Mock | **gebaut** (2.9, Briefing 0022) – `app/not-found.tsx` mit Header, Footer, Startseite + Erstgespräch; Texte aus `lib/ui/messages.ts` | – |
+| Fehlerseiten | kein Mock | **gebaut** (2.9, Briefing 0022) – `app/(site)/error.tsx` (reset()) und `app/global-error.tsx` | – |
 | `/studio` | Sanity Studio | offen | – |
 
 ## Weiterleitungen (bestehende golfnext.de)

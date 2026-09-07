@@ -50,6 +50,34 @@ test.describe("Platzhalter-Routen", () => {
     });
   }
 
+  test("kein Overflow, keine zu großen Icons, keine Konsolenfehler", async ({ page }) => {
+    const consoleErrors: string[] = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") consoleErrors.push(msg.text());
+    });
+    page.on("pageerror", (err) => consoleErrors.push(err.message));
+
+    for (const seite of PLATZHALTER) {
+      await page.goto(seite.path);
+
+      const hasOverflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > window.innerWidth + 1,
+      );
+      expect(hasOverflow, `horizontaler Overflow auf ${seite.path}`).toBe(false);
+
+      // Icon-Guard: kein SVG über 90 px außer der Wortmarke ([data-large-svg]).
+      const zuGross = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("svg"))
+          .filter((svg) => !svg.closest("[data-large-svg]"))
+          .map((svg) => svg.getBoundingClientRect())
+          .filter((r) => r.width > 90 || r.height > 90).length,
+      );
+      expect(zuGross, `zu großes SVG auf ${seite.path}`).toBe(0);
+    }
+
+    expect(consoleErrors, "Konsolenfehler").toEqual([]);
+  });
+
   test("kein Modulstatus und kein Text aus den Praxis-Mocks", async ({ page }) => {
     for (const path of ["/module/gastfee", "/module/captains-app", "/praxis"]) {
       await page.goto(path);

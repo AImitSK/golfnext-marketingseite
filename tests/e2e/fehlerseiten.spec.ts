@@ -44,6 +44,26 @@ test.describe("404", () => {
     await expect(page.getByText(uiMessages.platzhalter.body, { exact: true })).toHaveCount(0);
   });
 
+  test("kein Overflow, keine Konsolenfehler", async ({ page }) => {
+    const consoleErrors: string[] = [];
+    page.on("console", (msg) => {
+      // Der Browser protokolliert die 404-Antwort des Dokuments selbst als
+      // „Failed to load resource … 404". Das ist der gewollte Statuscode, kein
+      // Anwendungsfehler – alles andere zählt.
+      if (msg.type() === "error" && !msg.text().includes("status of 404")) {
+        consoleErrors.push(msg.text());
+      }
+    });
+    page.on("pageerror", (err) => consoleErrors.push(err.message));
+
+    await page.goto("/diese-seite-gibt-es-nicht");
+    const hasOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth + 1,
+    );
+    expect(hasOverflow, "horizontaler Overflow").toBe(false);
+    expect(consoleErrors, "Konsolenfehler").toEqual([]);
+  });
+
   test("zeigt keine Technik: kein Stacktrace, keine Fehlermeldung", async ({ page }) => {
     await page.goto("/diese-seite-gibt-es-nicht");
     const text = (await page.locator("body").innerText()).toLowerCase();

@@ -62,6 +62,7 @@ export function Button({
   href,
   cta,
   type = "button",
+  onClick,
   disabled,
   loading = false,
   loadingLabel = uiMessages.sending,
@@ -75,6 +76,12 @@ export function Button({
   href?: string;
   cta?: Cta;
   type?: "button" | "submit" | "reset";
+  /**
+   * Klick-Handler für die `<button>`-Form. Darf nur aus einer Client-Komponente
+   * übergeben werden (Server-Komponenten können keine Funktionen weiterreichen) –
+   * erster Einsatz: „Noch einmal versuchen" auf `app/(site)/error.tsx`.
+   */
+  onClick?: () => void;
   disabled?: boolean;
   loading?: boolean;
   loadingLabel?: string;
@@ -135,6 +142,7 @@ export function Button({
       // nicht mehr. Klicks blockt `pointer-events:none` (.loading); den erneuten
       // Absende-Versuch fängt die Formularlogik ab (Phase 4).
       disabled={disabled}
+      onClick={onClick}
       aria-busy={loading || undefined}
       className={classes}
     >

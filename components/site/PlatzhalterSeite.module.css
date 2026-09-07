@@ -1,0 +1,82 @@
+/* Platzhalterseite (Briefing 0022). Kein Mock – die Schale entsteht aus den
+   vorhandenen Tokens: Satzspiegel var(--gn-wrap-wide), Sektionsluft
+   var(--gn-section-y-lg), H2-Skala var(--gn-h2-lg) für die H1 (die Seite hat
+   keine Headline-Hierarchie, ein Hero-H1 wäre für eine leere Seite zu laut).
+   Bewusst ruhig: eine Bildschirmhöhe, keine Flächen, keine Karten, kein
+   Verkaufsblock. Signalgrün kommt nur als Buttonfläche vor (Grün-Regel). */
+
+.main {
+  /* Füllt den Raum zwischen Sticky-Header und Footer, damit der Footer bei einer
+     kurzen Seite nicht in der Bildschirmmitte klebt. `min-height` statt `height`
+     → kein CLS, der Inhalt darf wachsen. */
+  display: flex;
+  min-height: calc(100svh - var(--gn-header-h));
+  flex-direction: column;
+}
+
+.section {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  padding: var(--gn-section-y-lg) 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 0 var(--gn-gutter);
+}
+
+.stack {
+  max-width: 62ch;
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+}
+
+.titel {
+  margin: 0;
+  font-size: var(--gn-h2-lg);
+  letter-spacing: -0.03em;
+  color: var(--gn-navy);
+}
+
+.body {
+  margin-top: 18px;
+}
+
+/* Aktionen: grüner Button (Fläche, Navy-Text) und optional ein blauer Textlink
+   zurück in den thematisch passenden Bereich. Umbruch statt Overflow ≤620px. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 32px;
+}
+
+/* Kontakt-Hinweis nur auf /kontakt – muted, eine Zeile, kein Icon (der `.hint`-
+   Baustein trägt ein Info-Icon und wäre hier eine Meldung zu viel). */
+.hinweis {
+  max-width: 72ch;
+  margin-top: 28px;
+  font-size: var(--gn-small);
+  color: var(--gn-muted);
+}
+
+@media (max-width: 960px) {
+  .wrap {
+    padding: 0 26px;
+  }
+}
+
+@media (max-width: 620px) {
+  .section {
+    padding: 72px 0;
+  }
+  .wrap {
+    padding: 0 20px;
+  }
+}

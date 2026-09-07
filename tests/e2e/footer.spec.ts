@@ -6,29 +6,38 @@ import { expect, test } from "@playwright/test";
  * Modulstatus (Punkte/Legende) entfällt, der Inhalt spannt über die volle Breite.
  */
 test.describe("Footer · Modulkarte ohne Status (Briefing 0014)", () => {
-  test("listet Modulnamen als Links, ohne Status-Punkte und ohne Legende", async ({ page }) => {
+  test("listet alle Modulnamen, ohne Status-Punkte und ohne Legende", async ({ page }) => {
     await page.goto("/_bausteine");
 
     const footer = page.locator("footer");
     const map = footer.getByRole("region", { name: "Module im Überblick" });
 
-    // Module erscheinen weiterhin als Links (Beispiele aus beiden Gruppen).
-    await expect(map.getByRole("link", { name: "Reach", exact: true })).toBeVisible();
-    await expect(map.getByRole("link", { name: "Platzstatus", exact: true })).toBeVisible();
+    // Die Landkarte zeigt weiterhin alle zwölf Module (Beispiele aus beiden Gruppen).
+    await expect(map.getByText("Reach", { exact: true })).toBeVisible();
+    await expect(map.getByText("Platzstatus", { exact: true })).toBeVisible();
 
-    // Nicht-live Module bleiben Platzhalter (#).
+    // Briefing 0022: nicht-live Module stehen als Text da – kein href="#" mehr,
+    // also gar kein fokussierbarer Link, der nichts tut.
     const hrefs = await map
       .locator("a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
-    expect(hrefs.length).toBeGreaterThan(0);
-    for (const href of hrefs) {
-      expect(href).toBe("#");
-    }
+    expect(hrefs, "keine Modul-Links, solange keine Modulseite live ist").toEqual([]);
 
     // Keine Status-Legende mehr im Footer.
     for (const label of ["Im Einsatz", "Pilot", "In Entwicklung"]) {
       await expect(footer.getByText(label, { exact: true })).toHaveCount(0);
     }
+  });
+});
+
+test.describe("Footer · keine toten Links (Briefing 0022)", () => {
+  test("kein href=„#“ im gesamten Footer", async ({ page }) => {
+    await page.goto("/_bausteine");
+    const hrefs = await page
+      .locator("footer a")
+      .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
+    expect(hrefs.length).toBeGreaterThan(0);
+    expect(hrefs).not.toContain("#");
   });
 });
 

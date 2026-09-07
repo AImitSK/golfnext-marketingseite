@@ -9,6 +9,15 @@
  *                           solange docs/10-launch-umfang.md sie nicht freigibt
  *  - "system"               technische Route (Studio, API), nie in Navigation oder Sitemap
  *
+ * Platzhalterseiten (Briefing 0022): `/praxis` (geplant) und `/team`, `/kontakt`,
+ * `/module/<slug>` (wartet-auf-briefing) rendern seit Schritt 2.8 dieselbe leere
+ * Platzhalterseite – beide Status also, nicht nur „wartet-auf-briefing". Sie bleiben
+ * trotzdem UNVERLINKT: `isLinkable` prüft weiterhin nur `live`, damit Navigation und
+ * Teaser-Links niemanden auf eine leere Seite schicken. Erreichbar sind sie per
+ * direkter URL (Lesezeichen, alte Links, der CTA-Fallback aus `lib/links.ts`).
+ * Sobald eine Seite gebaut ist, wechselt ihr Status auf `live`, `noindex` fällt weg,
+ * und Navigation wie Teaser ziehen automatisch nach.
+ *
  * Titel und Beschreibung stammen aus den „Technischen Seitenangaben" der Fred-Briefings.
  * Fehlt dort eine Angabe, steht hier `null` – nicht erfinden, sondern nachfragen.
  */
@@ -125,6 +134,9 @@ export const ROUTES: Route[] = [
     briefing: "briefings/0020-praxis.md",
     title: null,
     description: null,
+    // Platzhalterseite bis der Blog in Phase 3 aus Sanity kommt: die neun Artikel in
+    // 3.9a/3.9b sind Beispieltexte ohne Fred-Freigabe (Briefing 0022).
+    noindex: true,
   },
   {
     path: "/pakete",

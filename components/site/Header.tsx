@@ -15,9 +15,14 @@ import styles from "./Header.module.css";
  * und MobileNav. Der Header enthält bewusst KEINE <h1> (die Wortmarke ist ein Link).
  *
  * Navigation, Dropdown-Einträge und Status stammen ausschließlich aus
- * config/site-structure.ts (über getNavModel) – keine hart kodierten Menüpunkte.
+ * config/site-structure.ts (über getNavModel) – nur `live`-Routen, keine hart
+ * kodierten Menüpunkte, keine Platzhalter-Links (Briefing 0022).
+ *
+ * `fallback`: markiert einen Header, den eine Seite selbst mitbringt, weil sie ohne
+ * Shell laufen kann (`app/not-found.tsx`). Fällt dieselbe Seite doch einmal INNERHALB
+ * der Shell an, blendet `app/globals.css` den zweiten Header aus – siehe dort.
  */
-export function Header() {
+export function Header({ fallback = false }: { fallback?: boolean } = {}) {
   const items = getNavModel();
 
   // CTA-Ziel nie hart kodiert: Label/Hint aus site-structure, URL über resolveCta.
@@ -28,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-gn-fallback-header={fallback || undefined}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo} aria-label="GolfNext, zur Startseite">
           <Wortmarke className={styles.logoMark} />

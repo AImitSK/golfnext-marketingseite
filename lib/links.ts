@@ -25,6 +25,8 @@ export function liveDemoUrl(): string {
  * `live` ist (config/site-structure.ts), sonst auf `#`. So aktivieren sich CTAs
  * auf der Startseite (Plattform, Wachstum & Vertrieb, Clubprozesse, So arbeitet
  * GolfNext, Praxis) automatisch, sobald ihre Seite live geht – ohne Codeänderung.
+ * Der Pfad muss dafür in ROUTES stehen; auf entfernte Routen zeigt nichts mehr
+ * (`/team`, `/ratgeber`, `/module/<slug>` sind mit Briefing 0023 entfallen).
  */
 export function internalHref(path: string): string {
   return isLinkable(path) ? path : "#";
@@ -39,8 +41,6 @@ export function resolveCta(cta: Cta): string {
       return liveDemoUrl();
     case "pakete":
       return "/pakete";
-    case "team":
-      return "/team";
     case "kontakt":
       return "/kontakt";
     case "intern":

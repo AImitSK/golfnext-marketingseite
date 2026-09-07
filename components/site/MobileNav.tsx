@@ -14,7 +14,7 @@ import styles from "./MobileNav.module.css";
  *
  * Progressive Enhancement:
  *  - OHNE JS bedienbar: Das Vollbild-Menü ist ein <details> mit dem Burger als
- *    <summary>; die Modulgruppen sind verschachtelte <details>. Alles öffnet und
+ *    <summary>; die Untermenüs sind verschachtelte <details>. Alles öffnet und
  *    schließt nativ, ohne JavaScript.
  *  - MIT JS angereichert: aria-expanded/aria-controls am Burger, Escape schließt und
  *    gibt den Fokus zurück, der Fokus wandert beim Öffnen ins Menü, der Body-Scroll
@@ -96,7 +96,7 @@ export function MobileNav({ items, cta }: { items: NavItem[]; cta: Cta }) {
                   <a href={item.href} className={styles.subLead}>
                     {item.label} ansehen
                   </a>
-                  {/* Nur Modulname + Link; der Modulstatus wird nicht mehr angezeigt (Briefing 0014). */}
+                  {/* Nur Label + Link – keine Icons, keine Beschreibungen. */}
                   {item.children.map((child) => (
                     <a key={child.path} href={child.href} className={styles.subLink}>
                       <span>{child.label}</span>
@@ -128,7 +128,7 @@ export function MobileNav({ items, cta }: { items: NavItem[]; cta: Cta }) {
   );
 }
 
-/** Chevron nach unten (Modulgruppe auf-/zuklappen), fix 14 × 14 px. */
+/** Chevron nach unten (Untermenü auf-/zuklappen), fix 14 × 14 px. */
 function ChevronDown() {
   return (
     <svg

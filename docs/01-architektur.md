@@ -27,10 +27,9 @@ app/
     clubprozesse/page.tsx
     pakete/page.tsx
     ueber-golfnext/page.tsx
-    praxis/ team/ kontakt/ module/[slug]/   (Platzhalter bis Briefing)
-    ratgeber/page.tsx
-    ratgeber/[slug]/page.tsx
-    ratgeber/rubrik/[slug]/page.tsx
+    praxis/ kontakt/                        (Platzhalter, bis der Inhalt steht)
+    praxis/[slug]/page.tsx                  (Phase 3, aus Sanity)
+    praxis/thema/[slug]/page.tsx            (Phase 3, aus Sanity)
     impressum/page.tsx  datenschutz/page.tsx
     not-found.tsx
   studio/[[...tool]]/page.tsx

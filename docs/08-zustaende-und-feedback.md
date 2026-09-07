@@ -4,13 +4,13 @@ Quelle: UI-Kit `docs/design-system/mocks/2.5-ui-kit.html`, Abschnitt 7 „Alerts
 
 ## Grundsatz
 
-Die statischen Marketingseiten laden ohne Wartezustand – sie sind vorgerendert, Fonts und Bilder sind reserviert, es gibt nichts zu überbrücken. Ladezustände entstehen nur an drei Stellen: Inhalte aus Sanity (Ratgeber, FAQ), das Formular beim Absenden, und Bilder. Für jede Stelle gibt es genau eine Antwort; keine kreativen Loader, keine Vollbild-Spinner, kein globaler Fortschrittsbalken.
+Die statischen Marketingseiten laden ohne Wartezustand – sie sind vorgerendert, Fonts und Bilder sind reserviert, es gibt nichts zu überbrücken. Ladezustände entstehen nur an drei Stellen: Inhalte aus Sanity (Praxis-Artikel, FAQ), das Formular beim Absenden, und Bilder. Für jede Stelle gibt es genau eine Antwort; keine kreativen Loader, keine Vollbild-Spinner, kein globaler Fortschrittsbalken.
 
 ## 1 · Inhalte, die noch laden: Skeleton statt Spinner
 
 Heute üblich und für uns richtig: **Skeleton-Platzhalter in der Form des späteren Inhalts**, damit sich nichts verschiebt, wenn die Daten kommen.
 
-- `app/(site)/ratgeber/loading.tsx` und `ratgeber/[slug]/loading.tsx` rendern `Skeleton`-Komponenten, die Maße und Raster der echten Karten bzw. des Artikels haben (Bild 16/10, Rubrik-Zeile, zwei Titelzeilen, eine Textzeile – wie `.skel .b1–.b4` im UI-Kit).
+- `app/(site)/praxis/loading.tsx` und `praxis/[slug]/loading.tsx` rendern `Skeleton`-Komponenten, die Maße und Raster der echten Karten bzw. des Artikels haben (Bild 16/10, Rubrik-Zeile, zwei Titelzeilen, eine Textzeile – wie `.skel .b1–.b4` im UI-Kit).
 - Shimmer aus dem UI-Kit (`@keyframes shimmer`, 1.4 s, Sand-Töne). Bei `prefers-reduced-motion` steht der Shimmer still (einfarbige Fläche).
 - `Suspense`-Grenzen nur um wirklich dynamische Bereiche (z. B. „Weitere Artikel" unter einem Artikel), damit der Rest sofort steht (Streaming). Der Hauptinhalt eines Artikels wird nicht hinter einem Skeleton versteckt – er ist statisch/ISR und kommt mit dem ersten Byte.
 - Skeleton nie länger als nötig; maximale sichtbare Dauer ist durch ISR/CDN ohnehin kurz. Kein künstliches Delay.
@@ -32,7 +32,7 @@ Kein Skeleton für: Header, Footer, statische Sektionen, Consent-Dialog, Navigat
 | Validierungsfehler | `.fmsg e` am Feld + `Alert err` (`role="alert"`) über dem Button | Fokus auf erstes fehlerhaftes Feld, Eingaben bleiben |
 | Server-/Netzfehler | `Alert err` über dem Button | konkreter Ausweg (Mail, Telefon), Eingaben bleiben |
 | Cookie-Einstellungen gespeichert | `Toast` (Navy, unten rechts, 3 s, `role="status"`) | einziger Toast-Einsatz auf der Website |
-| Ratgeber-Filter ohne Treffer | `Empty` (gestrichelter Rahmen, Icon, H4, Text, Button „Alle Artikel") | Wortlaut ohne Marketing, ein Ausweg |
+| Praxis-Filter ohne Treffer | `Empty` (gestrichelter Rahmen, Icon, H4, Text, Button „Alle Artikel") | Wortlaut ohne Marketing, ein Ausweg |
 | Sanity nicht erreichbar | `error.tsx` im Segment: `Alert err` in der Seite, Header/Footer bleiben | Button „Noch einmal versuchen" (`reset()`), kein Stacktrace |
 | 404 | `not-found.tsx` im Design | CTA Startseite und Erstgespräch |
 

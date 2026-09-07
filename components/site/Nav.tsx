@@ -169,9 +169,8 @@ function DropdownItem({
           <ul className={styles.mgrid}>
             {item.children.map((child) => (
               <li key={child.path} className={styles.mitem}>
-                {/* Reduziert: nur Modulname + Link. Der Modulstatus wird nicht mehr
-                    angezeigt (Briefing 0014). Icons/Beschreibungen kommen mit dem
-                    Phase-2-Content (bewusst nicht erfunden). */}
+                {/* Reduziert: nur Label + Link. Icons und Beschreibungen kommen
+                    später (bewusst nicht erfunden). */}
                 <a href={child.href} className={styles.mlink}>
                   {child.label}
                 </a>

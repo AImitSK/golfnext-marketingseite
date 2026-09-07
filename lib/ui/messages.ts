@@ -39,7 +39,7 @@ export const uiMessages = {
 
   /**
    * Platzhalterseite für Routen, die es schon gibt, aber noch keinen Inhalt haben
-   * (`/praxis`, `/team`, `/kontakt`, `/module/<slug>` – Briefing 0022). Bewusst ohne
+   * (`/praxis`, `/kontakt` – Briefing 0022, gekürzt mit 0023). Bewusst ohne
    * Zeitangabe und ohne Marketing-Zeile: die Seite sagt nur, dass hier noch nichts
    * steht, und zeigt den Weg zurück. Die `<h1>` ist das `label` der Route aus
    * `config/site-structure.ts` und steht deshalb nicht in diesem Katalog.

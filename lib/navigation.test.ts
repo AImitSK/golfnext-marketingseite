@@ -1,14 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { ROUTES, isLinkable } from "@/config/site-structure";
+import { MODULE, ROUTES, isLinkable } from "@/config/site-structure";
 import { getNavModel } from "./navigation";
 
 /**
  * Sichert die eine Wahrheit: Das Navigationsmodell spiegelt genau
  * config/site-structure.ts – und zwar nur die `live`-Routen.
  *
+ * Struktur v2 (Briefing 0023, 07.09.2026):
+ *   Plattform ▾ (So arbeitet GolfNext) · Wachstum & Vertrieb · Clubprozesse ·
+ *   Pakete · Über GolfNext ▾ (Praxis, Kontakt) · CTA
+ *
  * Seit Briefing 0022 gibt es keine Platzhalter-Einträge (`href="#"`) mehr: nicht-live
- * Hauptpunkte und Kinder werden gar nicht erst gerendert (docs/10, „Navigation v1").
- * Der Modulstatus wird nicht abgeleitet (Briefing 0014).
+ * Hauptpunkte und Kinder werden gar nicht erst gerendert. Der Modulstatus wird nicht
+ * abgeleitet (Briefing 0014).
  */
 describe("getNavModel", () => {
   const model = getNavModel();
@@ -23,7 +27,7 @@ describe("getNavModel", () => {
     ]);
   });
 
-  it("lässt Praxis weg, solange die Route nicht live ist", () => {
+  it("führt Praxis nicht mehr als Hauptpunkt", () => {
     expect(model.map((i) => i.path)).not.toContain("/praxis");
   });
 
@@ -38,15 +42,51 @@ describe("getNavModel", () => {
     }
   });
 
-  it("zeigt aktuell kein Dropdown – Modulseiten und Unterseiten sind nicht live", () => {
+  it("zeigt aktuell kein Dropdown – kein Kind ist live", () => {
     expect(model.filter((i) => i.children.length > 0)).toEqual([]);
   });
+});
 
-  it("nimmt ein Kind auf, sobald seine Route live ist (Gegenprobe an der Datenquelle)", () => {
-    // Die Kinder von /plattform stehen in ROUTES – sie erscheinen im Modell erst,
-    // wenn ihr Status auf `live` wechselt. Heute ist keines live.
-    const kinder = ROUTES.filter((r) => r.parent === "/plattform");
+/**
+ * Die Datenlage hinter der Navigation – unabhängig davon, was heute `live` ist.
+ * Diese Tests halten die Struktur v2 fest; das Modell oben zieht automatisch nach,
+ * sobald eine Route auf `live` wechselt.
+ */
+describe("Struktur v2 in site-structure", () => {
+  const kinderVon = (parent: string) => ROUTES.filter((r) => r.parent === parent).map((r) => r.path);
+
+  it("hängt Praxis und Kontakt unter Über GolfNext – in dieser Reihenfolge", () => {
+    expect(kinderVon("/ueber-golfnext")).toEqual(["/praxis", "/kontakt"]);
+  });
+
+  it("lässt /plattform genau ein Kind: So arbeitet GolfNext", () => {
+    expect(kinderVon("/plattform")).toEqual(["/plattform/so-arbeitet-golfnext"]);
+  });
+
+  it("gibt Clubprozesse keine Kinder mehr", () => {
+    expect(kinderVon("/clubprozesse")).toEqual([]);
+  });
+
+  it("kennt /team, /ratgeber und die Modulrouten nicht mehr", () => {
+    const pfade = ROUTES.map((r) => r.path);
+    expect(pfade).not.toContain("/team");
+    expect(pfade).not.toContain("/ratgeber");
+    expect(pfade.filter((p) => p.startsWith("/module/"))).toEqual([]);
+  });
+
+  it("liefert nicht-live Kinder gar nicht erst aus", () => {
+    // Alle drei Kinder sind heute nicht `live` – deshalb steht in keinem
+    // Hauptpunkt ein Dropdown, und keines taucht im Modell auf.
+    const kinder = ROUTES.filter((r) => r.parent);
     expect(kinder.length).toBeGreaterThan(0);
     expect(kinder.every((r) => !isLinkable(r.path))).toBe(true);
+
+    const imModell = getNavModel().flatMap((i) => i.children.map((c) => c.path));
+    expect(imModell).toEqual([]);
+  });
+
+  it("behält die zwölf Modulnamen als reine Datenliste", () => {
+    expect(MODULE).toHaveLength(12);
+    expect(MODULE.map((m) => m.name)).toContain("Turnier-News");
   });
 });

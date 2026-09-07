@@ -216,11 +216,18 @@
 /* Genau eine Kopfzeile je Seite (Briefing 0022).
    `app/not-found.tsx` bringt ihren Header selbst mit, weil sie unter dem Root-Layout
    ohne Shell läuft (nicht gefundene URL). Next rendert dieselbe Datei aber auch,
-   wenn `notFound()` aus einer Segment-Route kommt (unbekannter Modul-Slug) – dann
-   liegt sie INNERHALB von `app/(site)/layout.tsx`, dessen Header bereits steht. Ein
-   nachfolgender Fallback-Header wird deshalb ausgeblendet (auch aus dem
-   Accessibility-Baum: `display:none`). Ein Segment-`not-found.tsx` hilft hier nicht –
-   Next 16 rendert für `notFound()` immer die Wurzel-404. */
+   wenn `notFound()` aus einer Segment-Route kommt – dann liegt sie INNERHALB von
+   `app/(site)/layout.tsx`, dessen Header bereits steht. Ein nachfolgender
+   Fallback-Header wird deshalb ausgeblendet (auch aus dem Accessibility-Baum:
+   `display:none`). Ein Segment-`not-found.tsx` hilft hier nicht – Next 16 rendert
+   für `notFound()` immer die Wurzel-404.
+
+   Stand nach Briefing 0023: `/module/[slug]` war die einzige Route in der (site)-Shell
+   mit `notFound()` und ist gelöscht; der Fall tritt aktuell nirgends mehr auf. Die
+   Regel bleibt trotzdem stehen – sie schadet nicht und wird in Phase 3 wieder
+   gebraucht, sobald `/praxis/[slug]` für unbekannte Artikel-Slugs `notFound()` wirft
+   (siehe docs/entscheidungen.md: vorher ist zu klären, wie die Seite dabei ohne
+   JavaScript lesbar bleibt). */
 header ~ header[data-gn-fallback-header] {
   display: none;
 }

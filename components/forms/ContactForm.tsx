@@ -175,8 +175,12 @@ export function ContactForm({
     if (element instanceof HTMLElement) element.focus();
   }, [state, loading]);
 
-  if (state.status === "ok") {
+  if (state.status === "ok" && !mindestAnzeige) {
     // Erfolg ersetzt das Formular – keine Weiterleitung, kein Toast (docs/08 §3).
+    // `!mindestAnzeige`: Die Mindestanzeige (400 ms) gilt für den GESAMTEN
+    // Übergang, nicht nur für den Button. Antwortet der Server schneller, wurde
+    // das Formular sonst ausgetauscht, bevor der Ladezustand überhaupt sichtbar
+    // war – genau das Aufblitzen, das docs/08 §2 verhindern will.
     return (
       <div ref={successRef} tabIndex={-1} className={styles.successBox}>
         <Alert variant="ok" className={styles.success}>

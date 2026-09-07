@@ -9,14 +9,30 @@
  *                           solange docs/10-launch-umfang.md sie nicht freigibt
  *  - "system"               technische Route (Studio, API), nie in Navigation oder Sitemap
  *
- * Platzhalterseiten (Briefing 0022): `/praxis` (geplant) und `/team`, `/kontakt`,
- * `/module/<slug>` (wartet-auf-briefing) rendern seit Schritt 2.8 dieselbe leere
- * Platzhalterseite – beide Status also, nicht nur „wartet-auf-briefing". Sie bleiben
- * trotzdem UNVERLINKT: `isLinkable` prüft weiterhin nur `live`, damit Navigation und
- * Teaser-Links niemanden auf eine leere Seite schicken. Erreichbar sind sie per
- * direkter URL (Lesezeichen, alte Links, der CTA-Fallback aus `lib/links.ts`).
- * Sobald eine Seite gebaut ist, wechselt ihr Status auf `live`, `noindex` fällt weg,
- * und Navigation wie Teaser ziehen automatisch nach.
+ * Die Navigation ergibt sich allein aus den Feldern `nav` und `parent`: `nav: "haupt"`
+ * macht eine Route zum Hauptpunkt, `parent` hängt sie als Kind in dessen Dropdown.
+ * Im Header steht kein Menüpunkt hart kodiert.
+ *
+ * NICHT-`live` Punkte werden gar nicht gerendert – weder als Hauptpunkt noch im
+ * Dropdown (`lib/navigation.ts`), weder im Footer noch in Teaser-Links (`isLinkable`
+ * prüft nur `live`). Ein Link, der nichts tut (`href="#"`), ist für Tastatur und
+ * Screenreader ein toter Bedienpunkt; es gibt hier keinen mehr. Folge: ein Hauptpunkt
+ * ohne `live`-Kinder hat sichtbar kein Dropdown, und Punkte erscheinen von selbst,
+ * sobald ihr Status auf `live` wechselt – ohne Codeänderung.
+ *
+ * Struktur v2 (Entscheidung Fred/Stefan, 07.09.2026 – Briefing 0023):
+ *   Plattform ▾ (So arbeitet GolfNext) · Wachstum & Vertrieb · Clubprozesse · Pakete ·
+ *   Über GolfNext ▾ (Praxis, Kontakt) · CTA
+ * `/team`, `/ratgeber` und die zwölf `/module/<slug>` sind ersatzlos entfallen. Die
+ * Mock-Köpfe unter docs/design-system/mocks/ zeigen noch die alte Navigation – das ist
+ * kein Fehler, die Mocks bleiben nur für Seiteninhalte verbindlich.
+ *
+ * Platzhalterseiten (Briefing 0022): `/praxis` (geplant) und `/kontakt`
+ * (wartet-auf-briefing) rendern seit Schritt 2.8 dieselbe leere Platzhalterseite –
+ * beide Status also, nicht nur „wartet-auf-briefing". Sie bleiben trotzdem UNVERLINKT,
+ * erreichbar per direkter URL (Lesezeichen, alte Links, der CTA-Fallback aus
+ * `lib/links.ts`). Sobald eine Seite gebaut ist, wechselt ihr Status auf `live`,
+ * `noindex` fällt weg, und Navigation wie Teaser ziehen automatisch nach.
  *
  * Titel und Beschreibung stammen aus den „Technischen Seitenangaben" der Fred-Briefings.
  * Fehlt dort eine Angabe, steht hier `null` – nicht erfinden, sondern nachfragen.
@@ -30,7 +46,7 @@ export interface Route {
   status: RouteStatus;
   /** Erscheint in der Hauptnavigation (Kapitel 2.4) */
   nav?: "haupt";
-  /** Untermenü eines Hauptpunkts (Modul-Dropdowns) */
+  /** Untermenü eines Hauptpunkts (Dropdown) */
   parent?: string;
   /** Mock und Fred-Briefing unter docs/design-system/ */
   mock?: string;
@@ -45,6 +61,10 @@ export interface Route {
 
 /**
  * Die zwölf Module, zwei Richtungen (gruppe), ein Vertrag.
+ *
+ * Seit Briefing 0023 eine reine Datenliste: Es gibt keine `/module/<slug>`-Routen
+ * mehr. Die Namen stehen weiterhin in der Systemkarte des Footers – dort als Text
+ * ohne Link. `gruppe` sortiert sie in die beiden Spalten.
  *
  * Hinweis zum Feld `status` (im-einsatz/pilot/in-entwicklung): aktuell ungenutzt –
  * die Anzeige des Modulstatus entfällt (Briefing 0014, Stand 06.09.2026). Das Feld
@@ -126,12 +146,18 @@ export const ROUTES: Route[] = [
     description: null,
   },
   {
+    // Seit 07.09.2026 Unterpunkt von „Über GolfNext" statt Hauptpunkt (Briefing 0023).
+    // Die Adresse bleibt `/praxis` (Entscheidung Stefan) – nur die Menüposition wandert,
+    // deshalb keine Weiterleitung. `/praxis` ist zugleich der Blog (früher `/ratgeber`).
     path: "/praxis",
     label: "Praxis",
     status: "geplant",
-    nav: "haupt",
+    parent: "/ueber-golfnext",
     mock: "mocks/3.9a-praxis-uebersicht.html",
-    briefing: "briefings/0020-praxis.md",
+    // Es gibt kein Praxis-Briefing und wird keines geben (`0020-praxis.md` existiert
+    // nicht); die Seite entsteht mit dem Sanity-Briefing in Phase 3. Bewusst leer
+    // gelassen statt auf eine nicht existierende Datei zu zeigen.
+    briefing: undefined,
     title: null,
     description: null,
     // Platzhalterseite bis der Blog in Phase 3 aus Sanity kommt: die neun Artikel in
@@ -162,18 +188,17 @@ export const ROUTES: Route[] = [
       "Von imageGolf zur GolfNext-Plattform: unsere Geschichte, die Menschen dahinter und unser Antrieb für mehr Mitglieder und mehr Zeit fürs Clubleben.",
     redirectsFrom: ["/ueber-golfnext/"],
   },
-  { path: "/team", label: "Team", status: "wartet-auf-briefing", title: null, description: null, noindex: true },
-  { path: "/kontakt", label: "Kontakt", status: "wartet-auf-briefing", title: null, description: null, noindex: true },
-  ...MODULE.map<Route>((m) => ({
-    path: `/module/${m.slug}`,
-    label: m.name,
+  {
+    // Kind von „Über GolfNext" (Briefing 0023). Erscheint im Dropdown erst, wenn die
+    // Seite mit dem Formular gebaut ist (Masterplan 4.3) und der Status auf `live` geht.
+    path: "/kontakt",
+    label: "Kontakt",
     status: "wartet-auf-briefing",
-    parent: m.gruppe === "wachstum" ? "/plattform" : "/clubprozesse",
+    parent: "/ueber-golfnext",
     title: null,
     description: null,
     noindex: true,
-  })),
-  { path: "/ratgeber", label: "Ratgeber", status: "geplant", title: "Ratgeber – GolfNext", description: null },
+  },
   { path: "/impressum", label: "Impressum", status: "geplant", title: "Impressum – GolfNext", description: null, noindex: false, redirectsFrom: ["/impressum/"] },
   { path: "/datenschutz", label: "Datenschutz", status: "geplant", title: "Datenschutzerklärung – GolfNext", description: null },
   { path: "/studio", label: "Studio", status: "system", title: null, description: null, noindex: true },

@@ -39,6 +39,7 @@ export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
                   width={46}
                   height={46}
                   className={styles.personFoto}
+                  unoptimized
                 />
               </span>
               <span className={styles.personText}>

@@ -85,6 +85,7 @@ export function Hero({
                   sizes="(max-width: 1080px) 50vw, 320px"
                   className={styles.foto}
                   priority={i === 0}
+                  unoptimized
                 />
               </div>
               <div className={styles.cap}>

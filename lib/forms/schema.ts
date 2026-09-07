@@ -51,11 +51,12 @@ export const contactSchema = z.object({
     .trim()
     .min(2, "nachname" satisfies FieldMessageKey)
     .max(MAX.name, "tooLong" satisfies FieldMessageKey),
-  // Auswahlfelder sind optional (Briefing 0025). Der Mock führt keine leere
-  // Vorauswahl – ein unbekannter Wert wäre also manipuliert und wird abgewiesen.
-  rolle: z.enum(KONTAKT_ROLLEN).optional(),
+  // Auswahlfelder sind optional (Briefing 0025) und tragen eine neutrale
+  // Vorauswahl (leerer Wert = keine Angabe, Entscheidung Stefan 07.09.2026).
+  // Ein NICHT leerer, unbekannter Wert wäre manipuliert und wird abgewiesen.
+  rolle: z.literal("").or(z.enum(KONTAKT_ROLLEN)).optional(),
   club: optionalText(MAX.club),
-  thema: z.enum(KONTAKT_THEMEN).optional(),
+  thema: z.literal("").or(z.enum(KONTAKT_THEMEN)).optional(),
   email: z
     .string()
     .trim()

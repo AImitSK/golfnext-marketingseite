@@ -45,7 +45,7 @@ export function Zusagen({
           {/* Echtes Porträt (seit 07.09.2026). `aria-hidden`, weil die Namenszeile
               der figcaption direkt daneben steht. */}
           <span className={styles.ph} aria-hidden="true">
-            <Image src={FRED.quadrat} alt="" width={72} height={72} className={styles.foto} />
+            <Image src={FRED.quadrat} alt="" width={72} height={72} className={styles.foto} unoptimized />
           </span>
           <div>
             <blockquote className={styles.q}>{`„${data.zitat.text}“`}</blockquote>

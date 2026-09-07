@@ -97,6 +97,6 @@ pnpm sanity:deploy  # Schema deployen (nach Schema-Änderungen)
 
 ## MCP und CLI
 
-- `.mcp.json`: Sanity MCP (nur inspizieren und abfragen – Schema code-first, Inhalte über Studio), Vercel MCP (Deployments, Logs), Playwright MCP (Browser-Prüfung), Motion MCP (nach `npx motion-ai`, Masterplan 0.10).
+- `.mcp.json`: Vercel MCP (Deployments, Logs), Playwright MCP (Browser-Prüfung), Motion MCP (nach `npx motion-ai`, Masterplan 0.10). **Sanity läuft über den OAuth-Connector, nicht über `.mcp.json`** (der npx-Eintrag war nicht startbar, entfernt am 07.09.2026) – nur inspizieren und abfragen, Schema code-first, Inhalte über Studio.
 - CLI: `gh` (GitHub), `vercel` (Link, Env, Deploy), `sanity` (Schema-Deploy, Dataset). Details in `docs/01-architektur.md`.
 - Git-Remote: `https://github.com/AImitSK/golfnext-marketingseite.git`, Hauptzweig `main`, Vercel deployt `main` automatisch, Feature-Branches erzeugen Preview-Deployments.

@@ -6,7 +6,12 @@ import { initialContactState, type ContactState } from "@/lib/forms/contact-stat
 import { Alert } from "@/components/feedback/Alert";
 import { Button } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
-import { KONTAKT_ROLLEN, KONTAKT_THEMEN, type FormularData } from "@/content/kontakt";
+import {
+  KONTAKT_AUSWAHL_LEER,
+  KONTAKT_ROLLEN,
+  KONTAKT_THEMEN,
+  type FormularData,
+} from "@/content/kontakt";
 import { formMessages, type FieldMessageKey } from "@/lib/forms/messages";
 import {
   CONFIRMABLE_FIELDS,
@@ -170,8 +175,12 @@ export function ContactForm({
     if (element instanceof HTMLElement) element.focus();
   }, [state, loading]);
 
-  if (state.status === "ok") {
+  if (state.status === "ok" && !mindestAnzeige) {
     // Erfolg ersetzt das Formular – keine Weiterleitung, kein Toast (docs/08 §3).
+    // `!mindestAnzeige`: Die Mindestanzeige (400 ms) gilt für den GESAMTEN
+    // Übergang, nicht nur für den Button. Antwortet der Server schneller, wurde
+    // das Formular sonst ausgetauscht, bevor der Ladezustand überhaupt sichtbar
+    // war – genau das Aufblitzen, das docs/08 §2 verhindern will.
     return (
       <div ref={successRef} tabIndex={-1} className={styles.successBox}>
         <Alert variant="ok" className={styles.success}>
@@ -269,6 +278,9 @@ export function ContactForm({
         messageVariant="h"
       >
         <Select name="rolle" defaultValue={values.rolle} disabled={loading} className={styles.inp}>
+          {/* Neutrale Vorauswahl: ohne sie meldet jede Anfrage die erste Rolle,
+              auch wenn niemand sie gewählt hat (Entscheidung Stefan, 07.09.2026). */}
+          <option value="">{KONTAKT_AUSWAHL_LEER}</option>
           {KONTAKT_ROLLEN.map((rolle) => (
             <option key={rolle} value={rolle}>
               {rolle}
@@ -309,6 +321,7 @@ export function ContactForm({
             disabled={loading}
             className={styles.inp}
           >
+            <option value="">{KONTAKT_AUSWAHL_LEER}</option>
             {KONTAKT_THEMEN.map((thema) => (
               <option key={thema} value={thema}>
                 {thema}

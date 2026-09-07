@@ -38,6 +38,7 @@ export function Menschen({
                 fill
                 sizes="(max-width: 900px) 100vw, 380px"
                 className={styles.foto}
+                unoptimized
               />
             </div>
             <div className={styles.tb}>

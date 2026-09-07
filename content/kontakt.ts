@@ -28,9 +28,16 @@ import type { Cta, PageContent } from "./types";
  * „Ich bin …" – die fünf Rollen aus Mock 3.10, in dieser Reihenfolge und
  * Schreibweise. Auch die Server-Validierung prüft gegen genau diese Liste.
  *
- * Der Mock führt KEINE leere Vorauswahl; das erste Element ist vorbelegt. Das
- * bleibt so (nichts erfinden) – offene Frage an Stefan, siehe PR.
+ * Der Mock führt keine leere Vorauswahl. Bewusste Abweichung (Entscheidung Stefan,
+ * 07.09.2026): Beide Auswahlfelder sind optional – ohne neutralen ersten Eintrag
+ * würde jede Anfrage 'Ehrenamtlicher Vorstand eines e.V.' bzw.
+ * 'Erstgespräch vereinbaren' melden, auch wenn niemand das gewählt hat. Fred
+ * bekäme also eine erfundene Angabe. Der Mock ist ein statisches Bild und kennt
+ * diese Frage nicht.
  */
+/** Neutrale Vorauswahl beider Auswahlfelder. Leerer Wert = keine Angabe. */
+export const KONTAKT_AUSWAHL_LEER = "Bitte wählen";
+
 export const KONTAKT_ROLLEN = [
   "Ehrenamtlicher Vorstand eines e.V.",
   "Betreiber einer Golfanlage",

@@ -1,42 +1,11 @@
+import Image from "next/image";
+import { FRED } from "@/lib/people";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { TextLink } from "@/components/ui/TextLink";
 import { KONTAKT } from "@/config/site-structure";
 import type { FormularData, SeitenspalteData } from "@/content/kontakt";
 import { resolveCta } from "@/lib/links";
 import styles from "./Formular.module.css";
-
-/**
- * 2 · „Ihre Nachricht an GolfNext" (portiert aus 3.10-kontakt.html, `.kwrap`).
- *
- * Links die Formularkarte mit dem einzigen interaktiven Teil der Seite
- * (`ContactForm`, Client), rechts die klebende Seitenspalte: Fred mit Telefon und
- * E-Mail, der Rollen-Hinweis und der Verweis auf die Live-Demo.
- *
- * Kontaktdaten kommen aus `KONTAKT` (config/site-structure.ts), das Demo-Ziel aus
- * `lib/links.ts` – nichts hart kodiert. Das Porträt ist ein Platzhalter (Silhouette),
- * kein Stock- und kein KI-Bild.
- */
-
-/** Silhouette im Porträt-Platzhalter, fix 28 px (Icon-Regel: nie ohne Größe). */
-function PersonIcon() {
-  return (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <circle cx="12" cy="9" r="3.4" />
-      <path d="M4.8 20c1.5-3.4 4.2-5.1 7.2-5.1s5.7 1.7 7.2 5.1" />
-    </svg>
-  );
-}
 
 /** Hörer, fix 17 px. */
 function PhoneIcon() {
@@ -117,7 +86,8 @@ export function Formular({
         <aside className={styles.side}>
           <div className={styles.person}>
             <span className={styles.avatar}>
-              <PersonIcon />
+              {/* Echtes Porträt (seit 07.09.2026); Name und Rolle stehen darunter. */}
+              <Image src={FRED.quadrat} alt="" width={64} height={64} className={styles.avatarFoto} />
             </span>
             <b className={styles.personName}>{KONTAKT.name}</b>
             <p className={styles.personRole}>{seitenspalte.rolleLang}</p>

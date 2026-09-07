@@ -232,3 +232,11 @@
     transition: none;
   }
 }
+
+/* Echtes Porträt in der Karte (seit 07.09.2026). Füllt die Fläche formatfüllend;
+   die Quelle ist 3:4, die Fläche im Mock 4:5 – `cover` schneidet oben/unten
+   minimal an, statt zu verzerren. Kein CLS: `.ph` ist absolut und reserviert. */
+.foto {
+  object-fit: cover;
+  object-position: 50% 30%;
+}

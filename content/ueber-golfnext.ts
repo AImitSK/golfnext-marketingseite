@@ -34,7 +34,6 @@ import type { Cta, PageContent } from "./types";
 
 /** Eine Porträtkarte im Hero (Fred/Stefan) – beschrifteter Platzhalter, kein Foto. */
 export interface HeroPerson {
-  tag: string;
   name: string;
   role: string;
   /** Kurzcredit unter dem Namen (Signalgrün auf Navy). */
@@ -90,7 +89,6 @@ export interface TeamPerson {
 
 export interface MenschenData {
   /** Beschriftung des Porträt-Platzhalters auf den Personenkarten (kein Foto). */
-  portraitTag: string;
   personen: TeamPerson[];
   /** Partner-/Fachpartner-Zeile unter den Karten. */
   partner: string;
@@ -139,13 +137,11 @@ export const ueberGolfnextHero: HeroData = {
   quote: "Wir machen digital. Damit mehr Zeit für das bleibt, was keinen Bildschirm braucht.",
   people: [
     {
-      tag: "Porträt folgt",
       name: "Fred Hoffmann",
       role: "Gründer · PGA Golfprofessional",
       credit: "30 Jahre im Golfmarkt",
     },
     {
-      tag: "Porträt folgt",
       name: "Stefan Kühne",
       role: "Online-Marketing und Entwicklung",
       credit: "Technologie",
@@ -194,7 +190,6 @@ export const ueberGolfnextGrundsaetze: GrundsaetzeData = [
 ];
 
 export const ueberGolfnextMenschen: MenschenData = {
-  portraitTag: "Porträt folgt",
   personen: [
     {
       rolle: "Gründer · Ihr Ansprechpartner",

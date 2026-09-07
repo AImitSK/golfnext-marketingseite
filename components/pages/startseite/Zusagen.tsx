@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { FRED } from "@/lib/people";
 import { Rise, RiseItem } from "@/components/motion/Rise";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import type { ZusagenData } from "@/content/startseite";
@@ -40,22 +42,10 @@ export function Zusagen({
         </Rise>
 
         <figure className={styles.fredq}>
+          {/* Echtes Porträt (seit 07.09.2026). `aria-hidden`, weil die Namenszeile
+              der figcaption direkt daneben steht. */}
           <span className={styles.ph} aria-hidden="true">
-            <svg
-              width="30"
-              height="30"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <circle cx="12" cy="9" r="3.4" />
-              <path d="M4.8 20c1.5-3.4 4.2-5.1 7.2-5.1s5.7 1.7 7.2 5.1" />
-            </svg>
+            <Image src={FRED.quadrat} alt="" width={72} height={72} className={styles.foto} />
           </span>
           <div>
             <blockquote className={styles.q}>{`„${data.zitat.text}“`}</blockquote>

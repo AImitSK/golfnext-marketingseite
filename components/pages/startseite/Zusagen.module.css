@@ -169,3 +169,11 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Echtes Porträt im runden Rahmen (seit 07.09.2026). */
+.foto {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}

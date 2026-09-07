@@ -17,6 +17,9 @@ const eslintConfig = defineConfig([
     "Template/**",
     "playwright-report/**",
     "test-results/**",
+    // Von `pnpm sanity:typegen` erzeugt (Briefing 0026) – kein Handcode, kein Lint
+    "sanity.types.ts",
+    "sanity/schema.json",
   ]),
 ]);
 

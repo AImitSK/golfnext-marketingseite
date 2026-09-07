@@ -10,8 +10,10 @@ import { expect, test } from "@playwright/test";
  * „Über GolfNext" geworden, die zwölf Modulseiten sind entfallen.
  *
  * Die Navigation rendert NUR `live`-Routen (Briefing 0022): keine `href="#"`-
- * Platzhalter mehr, und weil weder „So arbeitet GolfNext" noch Praxis oder Kontakt
- * live sind, erscheint aktuell überhaupt kein Dropdown.
+ * Platzhalter mehr. Seit Briefing 0024 ist „So arbeitet GolfNext" gebaut und `live` –
+ * damit trägt „Plattform" das erste und bisher einzige Dropdown, mit genau diesem
+ * einen Punkt. „Über GolfNext" bleibt ohne Dropdown (Ratgeber/`/praxis` und Kontakt
+ * sind nicht live).
  */
 function desktopOnly(page: import("@playwright/test").Page) {
   const vp = page.viewportSize();
@@ -26,6 +28,9 @@ const LIVE_HAUPT = [
   "/pakete",
   "/ueber-golfnext",
 ];
+
+/** Live geschaltete Dropdown-Punkte (Briefing 0024: das erste Untermenü). */
+const LIVE_KINDER = ["/plattform/so-arbeitet-golfnext"];
 
 test.describe("Header · Struktur und Daten", () => {
   test("Wortmarke ist Home-Link mit aria-label; nur live-Routen sind verlinkt", async ({ page }) => {
@@ -49,24 +54,37 @@ test.describe("Header · Struktur und Daten", () => {
       expect(hrefs, `${path} ist live und wird verlinkt`).toContain(path);
     }
     // Kein toter Bedienpunkt mehr: jeder Navigationslink zeigt auf eine live-Route.
+    const erlaubt = [...LIVE_HAUPT, ...LIVE_KINDER];
     for (const href of hrefs) {
       expect(href, "nur live-Routen in der Navigation").not.toBe("#");
-      expect(href !== null && LIVE_HAUPT.includes(href), `unerwarteter Link ${href}`).toBe(true);
+      expect(href !== null && erlaubt.includes(href), `unerwarteter Link ${href}`).toBe(true);
     }
   });
 
-  test("Praxis steht nicht mehr in der Hauptnavigation, kein Dropdown ist offen", async ({
+  test("Plattform trägt das einzige Dropdown; Ratgeber und Kontakt fehlen weiter", async ({
     page,
   }) => {
     await page.goto("/_bausteine");
 
     const nav = page.locator("header nav");
-    // Praxis ist seit 0023 Kind von „Über GolfNext" und nicht live – weder als
-    // Hauptpunkt noch im Dropdown.
+    // `/praxis` (Menü-Label „Ratgeber") und `/kontakt` sind Kinder von „Über GolfNext"
+    // und nicht live – weder als Hauptpunkt noch im Dropdown.
     await expect(nav.locator('a:text-is("Praxis")')).toHaveCount(0);
+    await expect(nav.locator('a:text-is("Ratgeber")')).toHaveCount(0);
     await expect(nav.locator('a:text-is("Kontakt")')).toHaveCount(0);
-    // Ohne live-Kinder gibt es keinen Dropdown-Öffner.
-    await expect(page.getByRole("button", { name: /Untermenü/ })).toHaveCount(0);
+
+    // Genau ein Dropdown-Öffner: „Plattform" (Desktop; mobil klappt <details> auf).
+    if (desktopOnly(page)) {
+      const oeffner = page.getByRole("button", { name: /Untermenü/ });
+      await expect(oeffner).toHaveCount(1);
+      await expect(oeffner).toHaveAccessibleName(/Untermenü Plattform/);
+    }
+    // Der eine Dropdown-Punkt ist im Server-HTML vorhanden und echt verlinkt.
+    await expect(nav.locator('a[href="/plattform/so-arbeitet-golfnext"]').first()).toHaveAttribute(
+      "href",
+      "/plattform/so-arbeitet-golfnext",
+    );
+
     // Die Modulseiten sind entfallen; ihre Namen stehen nur noch im Footer.
     for (const modul of ["Reach", "Gastfee", "Captains App"]) {
       await expect(nav.locator(`a:text-is("${modul}")`)).toHaveCount(0);
@@ -137,11 +155,17 @@ test.describe("Header ohne JavaScript", () => {
     await page.goto("/_bausteine");
 
     if (desktopOnly(page)) {
-      // Desktop: die Hauptpunkte sind reine Links (aktuell ohne Dropdown).
+      // Desktop: jeder Hauptpunkt bleibt ein echter Link; das Plattform-Dropdown
+      // öffnet ohne JS über :hover/:focus-within (Briefing 0024).
       const nav = page.getByRole("navigation", { name: "Hauptnavigation", exact: true });
       const plattform = nav.getByRole("link", { name: "Plattform", exact: true });
       await expect(plattform).toBeVisible();
       await expect(plattform).toHaveAttribute("href", "/plattform");
+
+      const unterpunkt = nav.getByRole("link", { name: "So arbeitet GolfNext", exact: true });
+      await plattform.focus();
+      await expect(unterpunkt).toBeVisible();
+      await expect(unterpunkt).toHaveAttribute("href", "/plattform/so-arbeitet-golfnext");
     } else {
       // Mobil: <details>/<summary> öffnet nativ ohne JavaScript.
       const burger = page.locator('summary[aria-controls="mobile-menu"]');

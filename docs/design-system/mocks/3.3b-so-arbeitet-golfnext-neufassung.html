@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfNext So arbeitet GolfNext · Neufassung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* GOLFNEXT · /plattform/so-arbeitet-golfnext · Neufassung v01 (07.09.2026). Ersetzt 3.3: vier Sektionen statt acht, Kern sind die tatsaechlichen Nachrichten. */
+:root{
+  --navy:#01415B; --navy-deep:#012B3D; --blue:#0B6A90; --sky:#7FD3F0; --signal:#00E805;
+  --paper:#FFFCF5; --sand:#F5F1E6; --mist:#F3F6F4;
+  --ink:#16262C; --muted:#5C6F76; --line:#E6E1D6;
+  --ok:#2E6B38; --okbg:#EDF4EA; --err:#A3564A; --warn:#8A6D3B;
+  --fline:rgba(255,255,255,.14); --ftext:#B9D2DE;
+  --display:"Archivo",system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter",system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);font-weight:700;line-height:1.14;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.pwrap{max-width:1140px;margin:0 auto;padding:0 40px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;font-weight:600;color:var(--blue);display:block;margin-bottom:14px}
+.psec{padding:86px 0}
+.psec.sand{background:var(--sand)}
+.psec.mist{background:var(--mist)}
+.psec h2{font-size:clamp(27px,3.2vw,40px);margin-bottom:16px;max-width:24ch;text-wrap:balance}
+.psec .lead{font-size:clamp(16px,1.3vw,19px);color:var(--muted);max-width:62ch}
+.btn-cta{display:inline-flex;flex-direction:column;gap:2px;background:var(--signal);color:var(--navy);font-weight:700;font-size:16px;border-radius:4px;padding:13px 26px;line-height:1.25}
+.btn-cta small{font-size:12.5px;font-weight:500;opacity:.82}
+.tlink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15.5px;color:var(--blue)}
+.tlink svg{width:15px;height:15px;transition:transform .15s}
+.tlink:hover svg{transform:translateX(3px)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+
+/* ---------- Header ---------- */
+.hdr{display:flex;align-items:center;gap:34px;height:80px;padding:0 40px;background:rgba(255,252,245,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;backdrop-filter:blur(8px)}
+.hdr .jslogo{color:var(--navy);display:inline-flex;flex:0 0 auto}
+.hdr .jslogo svg{height:19px;width:auto}
+.hnav{display:flex;gap:30px;flex:0 0 auto}
+.hnav a{font-size:14.5px;font-weight:500;color:var(--ink);padding:28px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+.hnav a:hover{color:var(--navy);border-color:var(--line)}
+.hnav a.active{color:var(--navy);border-color:var(--signal)}
+.hnav a .amp{color:var(--muted);font-weight:400;padding:0 4px}
+.hcta{margin-left:auto;flex:0 0 auto}
+.hbtn{display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-weight:700;font-size:14px;padding:9px 16px;border-radius:4px;background:var(--signal);color:var(--navy);line-height:1.2}
+.hbtn small{font-size:11px;font-weight:500;opacity:.82}
+@media(max-width:1340px){.hnav{gap:22px}.hnav a{font-size:14px}.hdr{gap:24px}}
+@media(max-width:1180px){.hnav{gap:17px}.hnav a{font-size:13.5px}}
+
+.hint{font-size:13.5px;color:var(--muted);display:flex;align-items:flex-start;gap:9px;max-width:72ch}
+.hint svg{width:15px;height:15px;color:var(--blue);flex:0 0 auto;margin-top:4px}
+
+/* ---------- Platzhalter für echte Produktoberflächen ---------- */
+.shot{position:relative;border:1px solid var(--line);border-radius:4px;background:var(--sand);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.shot::before{content:"";position:absolute;inset:10px;border:1px dashed rgba(1,65,91,.22);border-radius:3px;pointer-events:none}
+.shot .tagline{position:absolute;top:12px;left:12px;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--navy);background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:3px 8px}
+.shot .desc{position:relative;padding:16px 18px}
+.shot .desc b{display:block;font-family:var(--display);font-size:14.5px;color:var(--navy);letter-spacing:-.01em;line-height:1.25}
+.shot .desc span{display:block;font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+.shot.dark{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
+.shot.dark::before{border-color:rgba(127,211,240,.3)}
+.shot.dark .tagline{color:var(--navy);background:var(--sky);border-color:var(--sky)}
+.shot.dark .desc b{color:#fff}
+.shot.dark .desc span{color:var(--ftext)}
+
+/* Stufenfarben – gleichwertig, nur unterscheidbar */
+:root{ --st1:#01415B; --st2:#0B6A90; --st3:#2E6B38; }
+.statement3{font-family:var(--display);font-size:clamp(20px,2.3vw,28px);font-weight:700;color:var(--navy);letter-spacing:-.02em;padding-left:20px;border-left:3px solid var(--signal);line-height:1.34;max-width:36ch}
+
+
+
+/* ============================================================
+   /wachstum-vertrieb · Neufassung v01 (06.09.2026)
+   Layoutsystem wie Plattform-Neufassung v02: Radius 4 px (Bedienelemente) · 12 px (große Flächen),
+   Sektionsabstand 120 px, Wrap 1180 px, Hero 1.75 / 1 textdominant, Visual läuft rechts aus dem Raster,
+   Slider mit Scroll-Snap, Bento mit Mikrobewegung, Scroll-Geschichte mit klebendem Geräterahmen.
+   ============================================================ */
+:root{ --r:12px; --wrap:1180px; }
+.pwrap{max-width:var(--wrap)}
+.psec{padding:120px 0}
+@media(max-width:620px){.psec{padding:72px 0}}
+.psec h2{font-size:clamp(30px,3.6vw,48px);letter-spacing:-.03em;line-height:1.08;margin-bottom:18px;max-width:22ch}
+.psec .lead{font-size:clamp(17px,1.4vw,20px);max-width:58ch}
+.eyebrow{margin-bottom:18px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
+.reveal.on{opacity:1;transform:none}
+.reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+.arrow{width:15px;height:15px}
+
+/* ---------- 1 · Hero ---------- */
+.hero{background:linear-gradient(160deg,#012B3D 0%,#01415B 58%,#065877 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(1000px 500px at 88% -10%,rgba(127,211,240,.18),transparent 62%);pointer-events:none}
+.hero .in{position:relative;z-index:1;max-width:var(--wrap);margin:0 auto;padding:96px 40px 110px;display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:48px;align-items:center}
+.hero .eyebrow{color:var(--signal)}
+.hero .txt{padding-right:100px;min-width:0}
+.hero h1{color:#fff;font-size:clamp(34px,4.6vw,60px);font-weight:800;line-height:1.04;letter-spacing:-.035em;max-width:19ch;text-wrap:balance}
+.hero .hl{color:var(--ftext);font-size:clamp(17px,1.4vw,19.5px);margin-top:26px;max-width:50ch;line-height:1.62}
+.hero .acts{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:38px}
+.hero .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15.5px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.hero .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-size:13px;color:var(--ftext)}
+.hero .trust span{display:inline-flex;align-items:center;gap:8px}
+.hero .trust i{width:7px;height:7px;border-radius:50%;background:var(--signal);display:block}
+
+
+/* ============================================================
+   /plattform/so-arbeitet-golfnext · Neufassung v01 (07.09.2026)
+   Kern der Seite: die tatsächlichen Nachrichten. Hero mit Mail-Stapel, Sequenz-Umschalter
+   für fünf Zielgruppen (Zeitleiste + vier Mails), Übergabepunkt an den Menschen,
+   drei Regeln zur Kontrolle. Vier Sektionen statt acht.
+   ============================================================ */
+.hero .txt{min-width:0;padding-right:60px}
+@media(max-width:1180px){.hero .txt{padding-right:40px}}
+
+/* ---------- Hero: der Mail-Stapel ---------- */
+.stack{position:relative;width:128%;min-width:0;height:470px}
+.mc{position:absolute;left:0;width:min(420px,86%);background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 40px 90px -40px rgba(0,0,0,.65);padding:16px 18px;opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .65s cubic-bezier(.2,.8,.3,1)}
+.stack.on .mc{opacity:1;transform:none}
+.mc .when{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:#E9F2F7;border-radius:3px;padding:4px 9px}
+.mc b{display:block;font-family:var(--display);font-size:16px;color:var(--navy);letter-spacing:-.02em;line-height:1.25;margin:10px 0 6px}
+.mc p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}
+.mc.m1{top:0;z-index:4;transition-delay:.3s}
+.mc.m2{top:112px;left:34px;z-index:3;transition-delay:.75s}
+.mc.m3{top:224px;left:68px;z-index:2;transition-delay:1.2s}
+.mc.m4{top:336px;left:102px;z-index:1;transition-delay:1.65s}
+.mc.m4 .when{color:var(--ok);background:var(--okbg)}
+@media(max-width:1080px){
+  .hero .in{grid-template-columns:minmax(0,1fr);gap:52px;padding:70px 26px 90px}
+  .hero .txt{padding-right:0}
+  .stack{width:100%;height:440px}
+  .mc{width:min(420px,80%)}
+  .mc.m2{left:32px}.mc.m3{left:64px}.mc.m4{left:96px}
+}
+@media(max-width:620px){
+  .stack{height:400px}
+  .mc{width:88%;padding:13px 15px}
+  .mc b{font-size:14.5px}
+  .mc.m1{top:0}.mc.m2{top:100px;left:20px}.mc.m3{top:200px;left:40px}.mc.m4{top:300px;left:60px}
+}
+
+/* ---------- Sequenzen: Umschalter + Zeitleiste ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:44px}
+.tab{font-family:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:20px;padding:9px 18px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.tab:hover{border-color:var(--navy)}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.seq{margin-top:40px;position:relative}
+.seqline{position:absolute;left:0;right:0;top:15px;height:2px;background:var(--line)}
+.seqline i{display:block;height:100%;width:0;background:var(--navy);transition:width 2s cubic-bezier(.4,0,.2,1) .2s}
+.seq.on .seqline i{width:100%}
+.mails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;position:relative}
+.mails[hidden]{display:none}
+.mail{min-width:0;display:flex;flex-direction:column}
+.mail .dot{width:32px;height:32px;border-radius:50%;background:var(--paper);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:11px;font-weight:800;color:var(--muted);transition:background .4s,border-color .4s,color .4s;position:relative;z-index:1}
+.seq.on .mail .dot{background:var(--navy);border-color:var(--navy);color:var(--signal)}
+.seq.on .mail:nth-child(2) .dot{transition-delay:.5s}.seq.on .mail:nth-child(3) .dot{transition-delay:1s}.seq.on .mail:nth-child(4) .dot{transition-delay:1.5s}
+.mail .tm{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin:18px 0 12px}
+.mail .env{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;flex:1;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.3,1),box-shadow .35s,border-color .35s}
+.mail .env:hover{transform:translateY(-6px);box-shadow:0 40px 70px -40px rgba(1,65,91,.4);border-color:rgba(1,65,91,.3)}
+.mail .env .eh{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--mist);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+.mail .env .eb{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+.mail .env .eb b{display:block;font-family:var(--display);font-size:16.5px;color:var(--navy);letter-spacing:-.02em;line-height:1.28;margin-bottom:10px}
+.mail .env .eb p{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 14px}
+.mail .env .eb .att{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--blue);background:#E9F2F7;border-radius:4px;padding:7px 11px;line-height:1.3}
+.mail .env .eb .att svg{width:13px;height:13px;flex:0 0 auto}
+.mail .env .eb .cta{margin-top:auto;display:inline-block;font-size:12.5px;font-weight:700;color:var(--navy);background:var(--signal);border-radius:4px;padding:8px 13px;align-self:flex-start}
+.seqnote{margin-top:30px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--muted)}
+.seqfoot{margin-top:14px;font-size:13.5px;color:var(--muted);max-width:78ch}
+@media(max-width:1000px){
+  .mails{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+  .seqline{display:none}
+  .seq .mail .dot{background:var(--navy);border-color:var(--navy);color:var(--signal)}
+}
+@media(max-width:620px){.mails{grid-template-columns:minmax(0,1fr)}.tab{font-size:13px;padding:8px 14px}}
+
+/* ---------- Übergabe ---------- */
+.hand{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);gap:0;align-items:center;margin-top:56px}
+.hcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;min-width:0;box-shadow:0 40px 80px -50px rgba(1,65,91,.5)}
+.hcard .hh{height:42px;border-bottom:1px solid var(--line);background:var(--mist);display:flex;align-items:center;gap:10px;padding:0 18px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.hcard .hh i{width:9px;height:9px;border-radius:50%;background:#D5CFC3;display:block}
+.hcard .hb{padding:22px 24px 24px}
+.hcard .prof{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:center;margin-bottom:16px}
+.hcard .prof .av{width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--display);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.hcard .prof b{display:block;font-size:16px;color:var(--ink)}
+.hcard .prof span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.hcard .tl div{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--ink);padding:9px 0;border-top:1px solid var(--line)}
+.hcard .tl i{width:9px;height:9px;border-radius:50%;background:var(--signal);flex:0 0 auto}
+.hcard .tl i.hot{background:var(--navy);box-shadow:0 0 0 4px rgba(1,65,91,.14)}
+.hcard .tl span{margin-left:auto;font-size:12px;color:var(--muted)}
+.hcard.task{border-color:var(--navy)}
+.hcard.task .hh{background:var(--navy);color:var(--signal);border-color:var(--navy)}
+.hcard.task .hh i{background:var(--signal)}
+.hcard .job{font-family:var(--display);font-size:clamp(19px,1.9vw,23px);color:var(--navy);letter-spacing:-.025em;line-height:1.25;margin-bottom:10px}
+.hcard .why{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 18px}
+.hcard .act{display:flex;gap:10px;flex-wrap:wrap}
+.hcard .act span{font-size:12.5px;font-weight:700;color:var(--navy);background:var(--signal);border-radius:4px;padding:9px 14px}
+.hcard .act span.g{color:var(--muted);background:var(--mist);border:1px solid var(--line)}
+.harrow{display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.harrow svg{width:26px;height:26px}
+.handnote{margin-top:30px;font-size:15px;color:var(--ink);max-width:62ch;line-height:1.6}
+@media(max-width:900px){.hand{grid-template-columns:minmax(0,1fr);gap:18px}.harrow{transform:rotate(90deg);height:34px}}
+
+/* ---------- Drei Regeln ---------- */
+.rules{background:linear-gradient(150deg,var(--navy-deep) 0%,var(--navy) 70%,#065877 100%);color:#fff;position:relative;overflow:hidden}
+.rules::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 400px at 88% 120%,rgba(127,211,240,.16),transparent 62%);pointer-events:none}
+.rules .pwrap{position:relative;z-index:1}
+.rules .eyebrow{color:var(--signal)}
+.rules h2{color:#fff}
+.rules .lead{color:var(--ftext)}
+.rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:52px}
+.rule{border:1px solid rgba(255,255,255,.16);border-radius:var(--r);background:rgba(255,255,255,.05);padding:32px 30px 30px;min-width:0;transition:background .35s,border-color .35s,transform .35s cubic-bezier(.2,.8,.3,1)}
+.rule:hover{background:rgba(255,255,255,.09);border-color:rgba(127,211,240,.5);transform:translateY(-6px)}
+.rule .rn{font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--signal)}
+.rule b{display:block;font-family:var(--display);font-size:clamp(20px,1.9vw,24px);color:#fff;letter-spacing:-.025em;line-height:1.18;margin:16px 0 12px}
+.rule p{font-size:15px;color:var(--ftext);line-height:1.6;margin:0}
+.rules .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15.5px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px;margin-top:40px}
+@media(max-width:900px){.rgrid{grid-template-columns:minmax(0,1fr);gap:16px}}
+
+
+/* ohne JavaScript stehen alle fuenf Strecken untereinander */
+.seq:not(.js) .seqblock+.seqblock{margin-top:34px}
+.seq:not(.js) .seqline{display:none}
+.seq:not(.js) .mail .dot{background:var(--navy);border-color:var(--navy);color:var(--signal)}
+.seq:not(.js) .tabs{display:none}
+
+/* ---------- Persönlicher Abschluss – oberer Teil der Footer-Systemkarte ---------- */
+.f-close{background:linear-gradient(150deg,var(--navy-deep) 0%,var(--navy) 70%,#065877 100%);padding:76px 40px 68px;position:relative;overflow:hidden;border-bottom:1px solid var(--fline)}
+.f-close::after{content:"";position:absolute;inset:0;background:radial-gradient(760px 340px at 50% 128%,rgba(127,211,240,.18),transparent 64%);pointer-events:none}
+.f-close .inner{position:relative;z-index:1;max-width:680px;margin:0 auto;text-align:center}
+.f-close .ce{text-transform:uppercase;letter-spacing:.18em;font-size:11.5px;font-weight:700;color:var(--signal);display:block;margin-bottom:16px}
+.f-close h2{color:#fff;font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1.1;text-wrap:balance}
+.f-close p{color:var(--ftext);margin:18px auto 0;max-width:52ch;font-size:16px;line-height:1.62}
+.f-close .acts{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:32px}
+.f-close .cbtn{display:inline-flex;background:var(--signal);color:var(--navy);font-weight:700;font-size:16.5px;border-radius:4px;padding:15px 32px;line-height:1.2}
+.f-close .cwhen{font-size:13.5px;color:var(--ftext)}
+.f-close .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15px;margin-top:12px;border-bottom:1px solid rgba(255,255,255,.32);padding-bottom:3px}
+.f-close .b2 svg{width:15px;height:15px}
+.f-person{margin-top:44px;padding-top:28px;border-top:1px solid var(--fline);display:flex;align-items:center;justify-content:center;gap:15px;text-align:left}
+.f-person .ph{width:46px;height:46px;border-radius:50%;background:linear-gradient(150deg,#2A4C5C,#1B3A48);border:1px solid rgba(255,255,255,.18);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.f-person .ph svg{width:22px;height:22px;color:rgba(127,211,240,.55)}
+.f-person .pt{font-size:14px;color:var(--ftext);line-height:1.45}
+.f-person .pt b{display:block;color:#fff;font-weight:600;font-size:15px}
+@media(max-width:620px){
+  .f-close{padding:56px 22px 48px}
+  .f-close .cbtn{width:100%;justify-content:center;text-align:center}
+  .f-person{flex-direction:column;text-align:center;gap:12px}
+}
+
+/* ---------- Footer ---------- */
+.pfoot{background:var(--navy-deep);color:#fff}
+.f-cta{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:52px 40px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--fline)}
+.f-cta::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 280px at 88% 120%,rgba(127,211,240,.2),transparent 60%);pointer-events:none}
+.f-cta>*{position:relative;z-index:1}
+.f-cta .ce{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;color:var(--signal);display:block;margin-bottom:12px}
+.f-cta h3{color:#fff;font-size:clamp(23px,2.4vw,32px);max-width:20ch;font-weight:800}
+.f-cta p{color:var(--ftext);margin:12px 0 0;max-width:46ch;font-size:15px}
+.f-cta .acts{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.f-cta .b2{display:inline-flex;align-items:center;gap:9px;color:#DCEBF6;font-weight:600;font-size:15px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.f-map{padding:42px 40px 38px;border-bottom:1px solid var(--fline)}
+.f-map .mh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.f-map .mh b{font-family:var(--display);font-size:18px;color:#fff;font-weight:700;letter-spacing:-.02em}
+.f-map .mh span{font-size:13px;color:var(--ftext)}
+.f-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.f-col>b{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-bottom:12px}
+.f-col.ops>b{color:var(--sky)}
+.f-mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.f-mod{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--fline);min-width:0}
+.f-mod .dot{flex:0 0 auto;width:7px;height:7px;border-radius:50%}
+.f-mod .dot.live{background:var(--signal)}
+.f-mod .dot.pilot{background:#E8C55A}
+.f-mod .dot.dev{background:rgba(255,255,255,.35)}
+.f-mod b{font-size:14.5px;color:#fff;font-weight:600}
+.f-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;font-size:12.5px;color:var(--ftext)}
+.f-legend .li{display:flex;align-items:center;gap:8px}
+.f-legend .dot{width:7px;height:7px;border-radius:50%}
+.f-contact{padding:34px 40px 32px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:30px;border-bottom:1px solid var(--fline)}
+.f-contact .cl{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ftext);font-weight:700;margin-bottom:12px;display:block}
+.f-contact .big{font-family:var(--display);font-size:clamp(20px,2vw,25px);color:#fff;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.f-contact p{font-size:15px;margin:0 0 7px;color:#fff}
+.f-contact p.sm{font-size:13.5px;color:var(--ftext)}
+.f-contact a{color:#fff}
+.soc{display:flex;gap:14px;margin-top:4px}
+.soc a{color:var(--ftext)}
+.soc svg{width:21px;height:21px}
+.f-bar{display:flex;gap:20px;flex-wrap:wrap;align-items:center;padding:22px 40px 26px;font-size:13px;color:var(--ftext)}
+.f-bar .jslogo{color:#fff;display:inline-flex}
+.f-bar .jslogo svg{height:17px;width:auto}
+.f-bar a{color:var(--ftext)}
+.f-bar .sp{margin-left:auto}
+
+@media(max-width:1024px){
+  .hnav{display:none}
+  .hdr{gap:16px}
+}
+@media(max-width:960px){
+  .f-cols{grid-template-columns:minmax(0,1fr)}
+  .f-contact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pwrap,.hero .in{padding-left:26px;padding-right:26px}
+  .hdr,.f-close,.f-map,.f-bar,.f-contact{padding-left:26px;padding-right:26px}
+}
+@media(max-width:620px){
+  .psec{padding:58px 0}
+  .f-mods,.f-contact{grid-template-columns:minmax(0,1fr)}
+  .hdr{height:auto;padding:14px 20px;gap:12px;flex-wrap:wrap}
+  .hdr .jslogo svg{height:16px}
+  .hcta{margin-left:0;width:100%}
+  .hbtn{width:100%;text-align:center;font-size:13px;padding:10px 14px}
+  .pwrap,.hero .in{padding-left:20px;padding-right:20px}
+  .f-close{padding-left:22px;padding-right:22px}
+  .faqa{padding-right:0}
+}
+
+
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}.mc{opacity:1;transform:none}
+  .seqline i{width:100%}.mail .dot{background:var(--navy);border-color:var(--navy);color:var(--signal)}
+}
+
+</style>
+</head>
+<body>
+<header class="hdr">
+  <span class="jslogo" aria-label="GolfNext"></span>
+  <nav class="hnav">
+    <a class="active">Plattform</a>
+    <a>Wachstum<span class="amp">&amp;</span>Vertrieb</a>
+    <a>Clubprozesse</a>
+    <a>Praxis</a>
+    <a>Pakete</a>
+    <a>Über GolfNext</a>
+  </nav>
+  <span class="hcta">
+    <a class="hbtn">Online-Erstgespräch vereinbaren<small>30 Minuten per Zoom oder Teams</small></a>
+  </span>
+</header>
+
+
+
+<!-- ============ 1 · HERO ============ -->
+<section class="hero">
+  <div class="in">
+    <div class="txt">
+      <span class="eyebrow">So arbeitet GolfNext</span>
+      <h1>Nach der Anmeldung hört Ihr Club nicht auf zu reden.</h1>
+      <p class="hl">Bei den meisten Clubs passiert nach der Anmeldung nichts mehr – bis zum Termin, und danach gar nichts. GolfNext schickt vier Nachrichten: die Bestätigung, die Vorbereitung, das Danke und das nächste Angebot. Geschrieben für Ihren Club, verschickt in seinem Namen, ohne dass jemand im Büro etwas tippt.</p>
+      <div class="acts">
+        <a class="btn-cta">Live-Demo ansehen<small>ohne Anmeldung</small></a>
+        <a class="b2">Online-Erstgespräch vereinbaren <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="trust">
+        <span><i></i>Kein Newsletter an alle</span>
+        <span><i></i>Sie geben jeden Text frei</span>
+        <span><i></i>Abmeldung mit einem Klick</span>
+      </div>
+    </div>
+
+    <div class="stack" id="stack">
+      <div class="mc m1"><span class="when">Sofort</span><b>Ihr Platz am Samstag ist reserviert</b><p>Samstag, 10 Uhr, Treffpunkt Clubhaus. Schläger und Bälle stellen wir.</p></div>
+      <div class="mc m2"><span class="when">Zwei Tage vorher</span><b>Was Sie am Samstag erwartet</b><p>Bequeme Kleidung reicht. Ihr Trainer ist Fred Hoffmann. Bei Regen verschieben wir.</p></div>
+      <div class="mc m3"><span class="when">Am Abend danach</span><b>Hat es Spaß gemacht?</b><p>So geht es weiter: die Platzreife in vier Terminen. Nächster Start in zwei Wochen.</p></div>
+      <div class="mc m4"><span class="when">Zwei Wochen später</span><b>Noch zwei Plätze im nächsten Kurs</b><p>Die Erinnerung, bevor der Kurs voll ist. Danach übernimmt ein Mensch.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · DIE SEQUENZEN ============ -->
+<section class="psec">
+  <div class="pwrap">
+    <span class="eyebrow">Was tatsächlich verschickt wird</span>
+    <h2>Fünf Zielgruppen, fünf eigene Strecken.</h2>
+    <p class="lead">Ein Anfänger hat andere Fragen als ein Greenfee-Gast oder ein Unternehmen. Deshalb bekommt jede Zielgruppe ihre eigenen vier Nachrichten – hier zum Nachlesen, so wie Ihre Interessenten sie bekommen.</p>
+
+    <div class="tabs" id="tabs">
+      <button type="button" class="tab on" data-s="sg">Schnuppergolf</button>
+      <button type="button" class="tab" data-s="pr">Platzreife</button>
+      <button type="button" class="tab" data-s="mg">Mitgliedschaft</button>
+      <button type="button" class="tab" data-s="gf">Greenfee &amp; Gäste</button>
+      <button type="button" class="tab" data-s="fe">Firmen-Event</button>
+    </div>
+
+    <div class="seq" id="seq">
+      <div class="seqline"><i></i></div>
+
+      <div class="mails seqblock" data-s="sg">
+        <div class="mail"><span class="dot">01</span><div class="tm">Sofort</div><div class="env"><div class="eh"><span>An: anna.berger@…</span><span>Sa 20:16</span></div><div class="eb"><b>Ihr Platz am Samstag ist reserviert</b><p>Samstag, 10 Uhr, Treffpunkt Clubhaus. Zwei Stunden auf Range und Kurzplatz. Schläger und Bälle stellen wir.</p><span class="cta">Termin im Kalender speichern</span></div></div></div>
+        <div class="mail"><span class="dot">02</span><div class="tm">Zwei Tage vorher</div><div class="env"><div class="eh"><span>An: anna.berger@…</span><span>Do 09:00</span></div><div class="eb"><b>Was Sie am Samstag erwartet</b><p>Bequeme Kleidung und feste Schuhe reichen. Ihr Trainer ist Fred Hoffmann. Bei Regen verschieben wir – Sie bekommen rechtzeitig Bescheid.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Ratgeber: Der erste Golfversuch</span></div></div></div>
+        <div class="mail"><span class="dot">03</span><div class="tm">Am Abend danach</div><div class="env"><div class="eh"><span>An: anna.berger@…</span><span>Sa 18:00</span></div><div class="eb"><b>Hat es Spaß gemacht?</b><p>Schön, dass Sie da waren. Wenn Sie weitermachen möchten: Die Platzreife dauert vier Termine, danach dürfen Sie auf den Platz.</p><span class="cta">Termine ansehen</span></div></div></div>
+        <div class="mail"><span class="dot">04</span><div class="tm">Zwei Wochen später</div><div class="env"><div class="eh"><span>An: anna.berger@…</span><span>Mo 10:00</span></div><div class="eb"><b>Noch zwei Plätze im nächsten Kurs</b><p>Der Platzreifekurs startet am Samstag in zwei Wochen. Falls Sie Fragen haben: einfach auf diese Mail antworten.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Ratgeber: So läuft ein Platzreifekurs ab</span></div></div></div>
+      </div>
+
+      <div class="mails seqblock" data-s="pr">
+        <div class="mail"><span class="dot">01</span><div class="tm">Sofort</div><div class="env"><div class="eh"><span>An: jens.kraft@…</span><span>Di 21:40</span></div><div class="eb"><b>Ihre Platzreife: vier Termine, alle Daten</b><p>Samstags, jeweils 10 bis 12 Uhr. Was Sie mitbringen, was der Club stellt – und wer Sie unterrichtet.</p><span class="cta">Termine im Kalender speichern</span></div></div></div>
+        <div class="mail"><span class="dot">02</span><div class="tm">Vor dem ersten Termin</div><div class="env"><div class="eh"><span>An: jens.kraft@…</span><span>Do 09:00</span></div><div class="eb"><b>Was in den vier Terminen passiert</b><p>Von den ersten Schlägen bis zur Platzerlaubnis: Ablauf, Regeln, Etikette. Kein Prüfungsstress – wir gehen das gemeinsam durch.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Ratgeber: Platzreife ohne Prüfungsangst</span></div></div></div>
+        <div class="mail"><span class="dot">03</span><div class="tm">Nach dem letzten Termin</div><div class="env"><div class="eh"><span>An: jens.kraft@…</span><span>Sa 17:30</span></div><div class="eb"><b>Glückwunsch – Sie dürfen auf den Platz</b><p>Ihre Platzreife ist eingetragen. So kommen Sie an eine Startzeit, und das sind Ihre Möglichkeiten, bei uns zu spielen.</p><span class="cta">Startzeit reservieren</span></div></div></div>
+        <div class="mail"><span class="dot">04</span><div class="tm">Drei Wochen später</div><div class="env"><div class="eh"><span>An: jens.kraft@…</span><span>Mi 10:00</span></div><div class="eb"><b>Wie wäre es mit einer Saison bei uns?</b><p>Was eine Mitgliedschaft kostet, was Spielrecht und Probemitgliedschaft bedeuten – und wann Sie mit dem Clubmanager sprechen können.</p><span class="cta">Gespräch vereinbaren</span></div></div></div>
+      </div>
+
+      <div class="mails seqblock" data-s="mg">
+        <div class="mail"><span class="dot">01</span><div class="tm">Sofort</div><div class="env"><div class="eh"><span>An: familie.meier@…</span><span>Mi 19:12</span></div><div class="eb"><b>Ihr Termin steht: Donnerstag, 17 Uhr</b><p>Wir treffen uns im Clubhaus. Wenn Sie mögen, gehen wir vorher eine Runde über die Anlage.</p><span class="cta">Termin bestätigen</span></div></div></div>
+        <div class="mail"><span class="dot">02</span><div class="tm">Am Tag davor</div><div class="env"><div class="eh"><span>An: familie.meier@…</span><span>Mi 09:00</span></div><div class="eb"><b>Damit Sie vorbereitet sind</b><p>Beiträge, Spielrecht, Familientarife und die Probemitgliedschaft – in einer Übersicht, damit im Gespräch Zeit für Ihre Fragen bleibt.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Übersicht: Mitgliedschaften im Club</span></div></div></div>
+        <div class="mail"><span class="dot">03</span><div class="tm">Am Tag danach</div><div class="env"><div class="eh"><span>An: familie.meier@…</span><span>Fr 11:00</span></div><div class="eb"><b>Schön, dass Sie da waren</b><p>Hier ist alles noch einmal schriftlich, so wie wir es besprochen haben. Der Aufnahmeantrag liegt bei – ohne Frist, ohne Druck.</p><span class="cta">Antrag ansehen</span></div></div></div>
+        <div class="mail"><span class="dot">04</span><div class="tm">Zehn Tage später</div><div class="env"><div class="eh"><span>An: familie.meier@…</span><span>Mo 10:00</span></div><div class="eb"><b>Noch Fragen offen?</b><p>Falls etwas unklar geblieben ist, rufe ich Sie gern an. Antworten Sie einfach auf diese Mail.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Danach übernimmt der Clubmanager persönlich</span></div></div></div>
+      </div>
+
+      <div class="mails seqblock" data-s="gf">
+        <div class="mail"><span class="dot">01</span><div class="tm">Sofort</div><div class="env"><div class="eh"><span>An: tom.schulz@…</span><span>Do 21:03</span></div><div class="eb"><b>Ihre Startzeit am Samstag, 9:30 Uhr</b><p>Gastfee bezahlt, Startzeit reserviert. Anfahrt, Parkplatz und wo Sie sich melden – alles in dieser Mail.</p><span class="cta">Zur Anfahrt</span></div></div></div>
+        <div class="mail"><span class="dot">02</span><div class="tm">Am Vortag</div><div class="env"><div class="eh"><span>An: tom.schulz@…</span><span>Fr 17:00</span></div><div class="eb"><b>Der Platz morgen: bespielbar, Sommergrüns</b><p>Aktueller Platzstatus, Wetter und was das Clubhaus geöffnet hat. Falls sich etwas ändert, melden wir uns.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Platzstatus live auf der Website</span></div></div></div>
+        <div class="mail"><span class="dot">03</span><div class="tm">Am Abend danach</div><div class="env"><div class="eh"><span>An: tom.schulz@…</span><span>Sa 19:00</span></div><div class="eb"><b>Wie war die Runde?</b><p>Danke für Ihren Besuch. Wenn etwas nicht gepasst hat, schreiben Sie uns – das liest ein Mensch, kein Formular.</p><span class="cta">Kurz Rückmeldung geben</span></div></div></div>
+        <div class="mail"><span class="dot">04</span><div class="tm">Vier Wochen später</div><div class="env"><div class="eh"><span>An: tom.schulz@…</span><span>Mi 10:00</span></div><div class="eb"><b>Wieder Lust auf eine Runde?</b><p>Aktuelle Greenfee-Zeiten und, falls Sie öfter kommen: was eine Gästekarte oder Zweitmitgliedschaft kostet.</p><span class="cta">Startzeit reservieren</span></div></div></div>
+      </div>
+
+      <div class="mails seqblock" data-s="fe">
+        <div class="mail"><span class="dot">01</span><div class="tm">Sofort</div><div class="env"><div class="eh"><span>An: k.wagner@…</span><span>Di 14:22</span></div><div class="eb"><b>Ihre Anfrage ist angekommen</b><p>28 Teilnehmer, Freitag im Juni. Fred Hoffmann meldet sich innerhalb eines Werktags persönlich bei Ihnen.</p><span class="cta">Termin für ein Gespräch wählen</span></div></div></div>
+        <div class="mail"><span class="dot">02</span><div class="tm">Am nächsten Tag</div><div class="env"><div class="eh"><span>An: k.wagner@…</span><span>Mi 09:30</span></div><div class="eb"><b>Wie ein Firmentag bei uns abläuft</b><p>Drei Formate vom Schnuppertag bis zum Turnier, mit Zeitplan, Gastronomie und dem, was der Club übernimmt.</p><span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Beispiele: Firmentage im Club</span></div></div></div>
+        <div class="mail"><span class="dot">03</span><div class="tm">Nach dem Gespräch</div><div class="env"><div class="eh"><span>An: k.wagner@…</span><span>Fr 16:00</span></div><div class="eb"><b>Ihr Angebot für den 12. Juni</b><p>Zusammengefasst, was wir besprochen haben: Ablauf, Leistungen, Preis pro Teilnehmer und die Option für schlechtes Wetter.</p><span class="cta">Angebot ansehen</span></div></div></div>
+        <div class="mail"><span class="dot">04</span><div class="tm">Nach dem Event</div><div class="env"><div class="eh"><span>An: k.wagner@…</span><span>Mo 10:00</span></div><div class="eb"><b>Danke für den Tag bei uns</b><p>Die Bilder zum Herunterladen – und falls es Ihren Leuten gefallen hat: Für nächstes Jahr halten wir Ihnen einen Termin frei.</p><span class="cta">Termin 2027 vormerken</span></div></div></div>
+      </div>
+    </div>
+
+    <p class="seqnote"><a class="tlink">Wachstum &amp; Vertrieb: wie die Kontakte entstehen <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="tlink">Alle Sequenzen in der Live-Demo <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+    <p class="seqfoot">Beispielstrecken. Texte, Zeitpunkte und Artikel werden für Ihren Club geschrieben und mit Ihnen abgestimmt – Anzahl und Abstände der Nachrichten bestimmen Sie.</p>
+  </div>
+</section>
+
+<!-- ============ 3 · ÜBERGABE ============ -->
+<section class="psec mist">
+  <div class="pwrap">
+    <span class="eyebrow">Wenn es persönlich wird</span>
+    <h2>Die letzte Nachricht schreibt kein System.</h2>
+    <p class="lead">Automatische Nachrichten bringen einen Menschen bis vor die Tür. Hineingehen lassen ihn Sie. Sobald jemand echtes Interesse zeigt, hört GolfNext auf zu schicken und legt dem Clubteam eine Aufgabe hin – mit allem, was bis dahin passiert ist.</p>
+
+    <div class="hand">
+      <div class="hcard reveal">
+        <div class="hh"><i></i>Marketing-CRM · Anna Berger</div>
+        <div class="hb">
+          <div class="prof"><span class="av">AB</span><div><b>Anna Berger</b><span>Über Instagram · Schnuppergolf · seit vier Wochen im Kontakt</span></div></div>
+          <div class="tl">
+            <div><i></i>Schnuppergolf besucht<span>vor 4 Wochen</span></div>
+            <div><i></i>Vier Nachrichten erhalten<span>alle geöffnet</span></div>
+            <div><i class="hot"></i>Ratgeber Platzreife gelesen<span>gestern</span></div>
+            <div><i class="hot"></i>Termine angeklickt<span>heute, 20:14</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="harrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></div>
+      <div class="hcard task reveal d1">
+        <div class="hh"><i></i>Aufgabe für das Clubteam</div>
+        <div class="hb">
+          <div class="job">Anna Berger anrufen – sie sucht einen Platzreifetermin.</div>
+          <p class="why">Zwei Signale an einem Tag. Der Anruf kommt jetzt nicht aus dem Nichts: Sie wissen, woher sie kommt, was sie bekommen hat und wofür sie sich interessiert.</p>
+          <div class="act"><span>Anrufen</span><span class="g">Verlauf ansehen</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="handnote">Ab hier läuft nichts mehr automatisch. Das Gespräch führt ein Mensch aus Ihrem Club – nur eben vorbereitet.</p>
+  </div>
+</section>
+
+<!-- ============ 4 · DREI REGELN ============ -->
+<section class="psec rules">
+  <div class="pwrap">
+    <span class="eyebrow">Ihre Kontrolle</span>
+    <h2>Drei Regeln für alles, was in Ihrem Namen rausgeht.</h2>
+    <p class="lead">Es sind Ihre Mitglieder, Ihre Gäste und Ihr Ruf. Deshalb behalten Sie die Hand darauf.</p>
+    <div class="rgrid">
+      <div class="rule reveal"><div class="rn">/ 01</div><b>Kein Newsletter an alle.</b><p>Jede Nachricht geht an genau die Menschen, für die sie geschrieben wurde – ausgelöst von dem, was sie selbst getan haben. Niemand bekommt Post, weil gerade Dienstag ist.</p></div>
+      <div class="rule reveal d1"><div class="rn">/ 02</div><b>Sie geben jeden Text frei.</b><p>Bevor eine Strecke zum ersten Mal läuft, lesen Sie jede Nachricht und ändern, was nicht nach Ihrem Club klingt. Später jederzeit anpassbar.</p></div>
+      <div class="rule reveal d2"><div class="rn">/ 03</div><b>Abmeldung mit einem Klick.</b><p>In jeder Nachricht, ohne Rückfrage. Die Einwilligung wird dokumentiert, die Daten bleiben in Deutschland und gehören Ihrem Club.</p></div>
+    </div>
+    <a class="b2">Technik, Datenschutz und Schnittstellen <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<footer class="pfoot">
+  <div class="f-close">
+    <div class="inner">
+      <span class="ce">Die passende Strecke für Ihren Club</span>
+      <h2>Welche Zielgruppe soll bei Ihnen als Erstes begleitet werden?</h2>
+      <p>In 30 Minuten gehen wir Ihre wichtigsten Zielgruppen durch und schauen, wo heute nach der Anmeldung nichts mehr passiert. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.</p>
+      <div class="acts">
+        <a class="cbtn">Online-Erstgespräch vereinbaren</a>
+        <span class="cwhen">30 Minuten persönlich per Zoom oder Teams</span>
+        <a class="b2">Oder zuerst die Live-Demo ansehen <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="f-person">
+        <span class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.4"/><path d="M4.8 20c1.5-3.4 4.2-5.1 7.2-5.1s5.7 1.7 7.2 5.1"/></svg></span>
+        <span class="pt"><b>Fred Hoffmann</b>Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-map">
+    <div class="mh">
+      <b>Plattform auf einen Blick</b>
+      <span>Zwölf Module. Zwei Richtungen. Eine Plattform.</span>
+    </div>
+    <div class="f-cols">
+      <div class="f-col">
+        <b>Wachstum nach außen</b>
+        <div class="f-mods">
+          <a class="f-mod"><span class="dot live"></span><b>Reach</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Search</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Landingpages</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Marketing-CRM</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Lifecycle</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Content</b></a>
+        </div>
+      </div>
+      <div class="f-col ops">
+        <b>Entlastung nach innen</b>
+        <div class="f-mods">
+          <a class="f-mod"><span class="dot pilot"></span><b>Concierge</b></a>
+          <a class="f-mod"><span class="dot live"></span><b>Platzstatus</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Gastfee</b></a>
+          <a class="f-mod"><span class="dot dev"></span><b>Firmen-Events</b></a>
+          <a class="f-mod"><span class="dot pilot"></span><b>Turnier-News</b></a>
+          <a class="f-mod"><span class="dot dev"></span><b>Captains App</b></a>
+        </div>
+      </div>
+    </div>
+    <div class="f-legend">
+      <span class="li"><span class="dot" style="background:#00E805"></span>Im Einsatz</span>
+      <span class="li"><span class="dot" style="background:#E8C55A"></span>Pilot</span>
+      <span class="li"><span class="dot" style="background:rgba(255,255,255,.35)"></span>In Entwicklung</span>
+    </div>
+  </div>
+  <div class="f-contact">
+    <div>
+      <span class="cl">Persönlicher Kontakt</span>
+      <div class="big">Fragen beantwortet<br>ein Mensch.</div>
+    </div>
+    <div>
+      <span class="cl">Ansprechpartner</span>
+      <p style="font-weight:600">Fred Hoffmann</p>
+      <p class="sm">Gründer von GolfNext,<br>PGA Golfprofessional</p>
+    </div>
+    <div>
+      <span class="cl">Direkt erreichbar</span>
+      <p><a>0175 5951839</a></p>
+      <p><a>info@golfnext.de</a></p>
+      <p class="sm">Rückmeldung innerhalb eines Werktags</p>
+    </div>
+    <div>
+      <span class="cl">Folgen</span>
+      <div class="soc">
+        <a aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7.5 10v7M7.5 7.2v.01M11.5 17v-4a2.5 2.5 0 0 1 5 0v4"/></svg></a>
+        <a aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="f-bar">
+    <span class="jslogo" aria-label="GolfNext"></span>
+    <span>© 2026 GolfNext</span>
+    <a>Impressum</a>
+    <a>Datenschutz</a>
+    <a>Cookie-Einstellungen</a>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  var LOGO='<svg viewBox="0 0 200.32 24.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GolfNext"><g fill="currentColor"><path d="m9.97,24.2c-6.64,0-9.97-2.21-9.97-6.67V6.98C0,2.76,3.27.65,9.8.65h4.66c1.16,0,1.74.48,1.74,1.4s-.58,1.4-1.74,1.4h-4.6c-4.12,0-6.2,1.23-6.2,3.61v10.38c0,2.66,2.11,3.98,6.47,3.98h7.35c4.29,0,6.47-1.33,6.47-3.98v-6.43c0-.95.61-1.43,1.84-1.43s1.84.48,1.84,1.43v6.54c0,4.46-3.37,6.67-9.97,6.67h-7.69Z"/><path d="m42.79,24.2c-5.89,0-8.82-1.8-8.82-5.38v-5.75c0-3.61,2.93-5.41,8.82-5.41h6.57c5.89,0,8.82,1.8,8.82,5.41v5.75c0,3.57-2.93,5.38-8.82,5.38h-6.57Zm11.74-11.17c0-1.74-1.7-2.59-5.07-2.59h-6.81c-3.34,0-5.04.85-5.04,2.59v5.82c0,1.7,1.7,2.59,5.04,2.59h6.81c3.37,0,5.07-.89,5.07-2.59v-5.82Z"/><path d="m64.55,1.43c0-.92.61-1.43,1.8-1.43s1.8.51,1.8,1.43v21.51c0,.95-.61,1.43-1.8,1.43s-1.8-.48-1.8-1.43V1.43Z"/><path d="m78.3,10.45v12.49c0,.95-.58,1.43-1.74,1.43-1.26,0-1.87-.48-1.87-1.43V5.17c0-3.4,2.72-5.11,8.31-5.11h2.89c1.12,0,1.7.48,1.7,1.33s-.58,1.36-1.7,1.36h-2.89c-3.13,0-4.7.78-4.7,2.38v2.66h7.59c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-7.59Z"/><path d="m96.62,1.23l20.53,18.11V1.87c0-.92.61-1.4,1.84-1.4s1.84.48,1.84,1.4v21.07c0,.95-.65,1.43-1.94,1.43-.75,0-1.23-.27-1.8-.78l-20.49-18.11v17.46c0,.95-.65,1.43-1.87,1.43s-1.8-.48-1.8-1.43V1.94c0-.99.65-1.46,1.91-1.46.72,0,1.23.24,1.8.75Z"/><path d="m130.9,17.06v2.08c0,1.6,1.57,2.42,4.73,2.42h5.04c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.04c-5.51,0-8.31-1.67-8.31-5.04v-6.67c0-3.2,2.49-4.83,7.42-4.83h9.84c4.83,0,7.25,1.46,7.25,4.36v3.81c0,.82-.54,1.23-1.57,1.23h-19.37Zm0-2.35h17.09c.2,0,.27-.1.27-.24v-1.77c0-1.57-1.29-2.35-3.95-2.35h-9.36c-2.72,0-4.05.78-4.05,2.35v2.01Z"/><path d="m169.13,17.74l-9.06,6.16c-.51.37-.92.51-1.43.48-1.16,0-1.77-.48-1.77-1.36,0-.34.17-.78.82-1.23l8.71-5.96-8.2-5.69c-.68-.44-.85-.92-.85-1.29,0-.92.61-1.36,1.84-1.36.65,0,.99.17,1.5.51l8.68,6.03,8.82-6.03c.51-.34.88-.51,1.43-.51,1.19,0,1.77.48,1.77,1.4-.03.31-.1.75-.82,1.23l-8.48,5.79,8.44,5.82c.65.48.85.92.85,1.29,0,.92-.61,1.36-1.84,1.36-.54,0-1.06-.1-1.53-.51l-8.88-6.13Z"/><path d="m192.76,10.45v12.49c0,.95-.61,1.43-1.77,1.43-1.23,0-1.84-.48-1.84-1.43v-12.49h-1.4c-1.09,0-1.67-.44-1.67-1.33s.58-1.33,1.67-1.33h1.4v-3.13c0-.92.58-1.43,1.77-1.43s1.84.51,1.84,1.43v3.13h5.86c1.12,0,1.7.44,1.7,1.33s-.58,1.33-1.7,1.33h-5.86Z"/></g></svg>';
+  document.querySelectorAll('.jslogo').forEach(function(el){ el.innerHTML=LOGO; });
+})();
+
+</script>
+<script>
+(function(){
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function each(n,f){ Array.prototype.forEach.call(n,f); }
+  function watch(els, cb, th){
+    if(RM || !('IntersectionObserver' in window)){ each(els, cb); return; }
+    var io=new IntersectionObserver(function(es){ each(es,function(e){ if(e.isIntersecting){ io.unobserve(e.target); cb(e.target); } }); },{threshold:th||.25});
+    each(els,function(el){ io.observe(el); });
+  }
+  var stack=document.getElementById('stack');
+  if(stack){ if(RM) stack.classList.add('on'); else setTimeout(function(){ stack.classList.add('on'); },300); }
+  watch(document.querySelectorAll('.reveal'), function(el){ el.classList.add('on'); }, .18);
+
+  /* Sequenz-Umschalter: mit JavaScript eine Strecke, ohne JavaScript alle */
+  var seq=document.getElementById('seq'), tabs=document.getElementById('tabs');
+  if(seq && tabs){
+    seq.classList.add('js');
+    var blocks=seq.querySelectorAll('.seqblock');
+    function show(key){
+      each(blocks,function(b){ b.hidden = b.getAttribute('data-s')!==key; });
+      each(tabs.querySelectorAll('.tab'),function(t){ t.classList.toggle('on', t.getAttribute('data-s')===key); });
+      seq.classList.remove('on'); void seq.offsetWidth; seq.classList.add('on');
+    }
+    show('sg');
+    tabs.addEventListener('click',function(e){ var b=e.target.closest('.tab'); if(b) show(b.getAttribute('data-s')); });
+    watch([seq], function(el){ el.classList.add('on'); }, .2);
+  }
+})();
+</script>
+
+</body>
+</html>

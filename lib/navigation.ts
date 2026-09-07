@@ -15,11 +15,12 @@ import { NAV_HAUPT, ROUTES, isLinkable } from "@/config/site-structure";
  *   nicht-live Kinder erscheinen gar nicht mehr. Bis Briefing 0022 bekamen sie
  *   `href = "#"` – ein fokussierbarer Link, der nichts tut, also ein toter
  *   Bedienpunkt für Tastatur und Screenreader.
- * - Deshalb ist heute KEIN Dropdown sichtbar: „So arbeitet GolfNext", Praxis und
- *   Kontakt sind noch nicht `live` (ein Hauptpunkt ohne `live`-Kinder hat kein
- *   Dropdown). Die Hauptnavigation zeigt vorerst fünf reine Links. Die Dropdowns
- *   erscheinen von selbst, sobald eine dieser Routen in site-structure auf `live`
- *   geht – ohne Codeänderung.
+ * - Seit Briefing 0024 („So arbeitet GolfNext" ist gebaut und `live`) hat
+ *   „Plattform" als erster und bisher einziger Hauptpunkt ein Dropdown – mit genau
+ *   diesem einen Punkt. „Über GolfNext" bleibt vorerst ohne Dropdown, weil weder
+ *   `/praxis` noch `/kontakt` `live` sind (ein Hauptpunkt ohne `live`-Kinder hat
+ *   kein Dropdown). Weitere Dropdown-Punkte erscheinen von selbst, sobald ihre Route
+ *   in site-structure auf `live` geht – ohne Codeänderung.
  * - Die Platzhalterseiten (`/praxis`, `/kontakt`) bleiben per direkter URL
  *   erreichbar – sie sind nur nicht verlinkt.
  * - Der Modulstatus wird nicht abgeleitet oder angezeigt (Briefing 0014);

@@ -1,0 +1,308 @@
+/* Portiert aus docs/design-system/mocks/3.3b-so-arbeitet-golfnext-neufassung.html
+   (Abschnitt 2 · .tabs/.tab/.seq/.seqline/.mails/.mail/.env/.seqnote/.seqfoot).
+   Farben auf --gn-* umgestellt, literale Tints kommentiert. Große Flächen:
+   --gn-radius-lg (12), Reiter als Pills (--gn-radius-pill).
+
+   Interaktion OHNE JavaScript: Der Mock schaltet die fünf Strecken per JS. Hier steuert
+   eine native Radiogruppe (fünf versteckte, aber fokussierbare `<input type="radio">`
+   plus `<label>`-Reiter) die Ansicht rein über CSS `:checked` – bedienbar ohne
+   JavaScript und per Tastatur (Pfeiltasten der nativen Radiogruppe). Alle fünf Strecken
+   stehen im Server-HTML. Gleiches Muster wie der frühere Startseiten-Umschalter
+   (Briefing 0013). Nur scoped Klassen-Selektoren (CSS-Modules-sicher). */
+
+.switchWrap {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Legende visuell versteckt, aber für Screenreader lesbar. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Radios versteckt, aber fokussierbar (kein display:none). */
+.radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* ---- Reiterleiste ---- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 44px;
+}
+.tab {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gn-ink);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-pill);
+  padding: 9px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+.tab:hover {
+  border-color: var(--gn-navy);
+}
+
+/* Aktiver Reiter (Navy-Fläche) je nach gewähltem Radio. */
+.r1:checked ~ .tabs .t1,
+.r2:checked ~ .tabs .t2,
+.r3:checked ~ .tabs .t3,
+.r4:checked ~ .tabs .t4,
+.r5:checked ~ .tabs .t5 {
+  background: var(--gn-navy);
+  color: #fff;
+  border-color: var(--gn-navy);
+}
+/* Sichtbarer Fokusring auf dem aktiven Reiter, wenn das Radio Tastaturfokus hat. */
+.r1:focus-visible ~ .tabs .t1,
+.r2:focus-visible ~ .tabs .t2,
+.r3:focus-visible ~ .tabs .t3,
+.r4:focus-visible ~ .tabs .t4,
+.r5:focus-visible ~ .tabs .t5 {
+  outline: 2px solid var(--gn-blue);
+  outline-offset: 3px;
+}
+
+/* ---- Strecken: alle fünf gerendert, per :checked ein-/ausgeblendet ---- */
+.seq {
+  margin-top: 40px;
+  position: relative;
+}
+.seqline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 15px;
+  height: 2px;
+  background: var(--gn-line);
+}
+/* Die Füllung zieht einmalig auf (scaleX, reines transform – kein CLS). */
+.seqfill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--gn-navy);
+}
+
+.mails {
+  display: none;
+}
+.r1:checked ~ .seq .p1,
+.r2:checked ~ .seq .p2,
+.r3:checked ~ .seq .p3,
+.r4:checked ~ .seq .p4,
+.r5:checked ~ .seq .p5 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  position: relative;
+}
+
+.mail {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s var(--gn-ease);
+}
+/* Ausgangszustand (nur mit JS, kurz): die vier Nachrichten blenden gestaffelt auf. */
+.start .mail {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.mail:nth-child(2) {
+  transition-delay: 0.14s;
+}
+.mail:nth-child(3) {
+  transition-delay: 0.28s;
+}
+.mail:nth-child(4) {
+  transition-delay: 0.42s;
+}
+
+/* Nummerierter Knoten auf der Zeitleiste – steht dauerhaft im Endzustand (Navy-Fläche,
+   Signalgrün-Ziffer, Grün-Regel: Text auf Navy erlaubt), damit sichtbare Ziffern nie
+   kontrastschwach liegen (gleiche Entscheidung wie bei der Startseiten-Strecke). */
+.dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  border: 2px solid var(--gn-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--gn-font-display);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gn-signal);
+  position: relative;
+  z-index: 1;
+}
+.tm {
+  font-family: var(--gn-font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  margin: 18px 0 12px;
+}
+
+/* ---- Ein Mail-Fenster (schematische Illustration, kein Screenshot) ---- */
+.env {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+.env:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.4); /* Navy-Schatten, 1:1 aus Mock */
+  border-color: rgba(1, 65, 91, 0.3);
+}
+.eh {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  font-size: 11px;
+  color: var(--gn-muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.eb {
+  padding: 18px 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.eb b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 16.5px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  line-height: 1.28;
+  margin-bottom: 10px;
+}
+.eb p {
+  font-size: 14px;
+  color: var(--gn-muted);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+/* Verweis im Mail-Fuß (Ratgeber, Übersicht, persönliche Übergabe). */
+.att {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gn-blue);
+  background: #e9f2f7; /* zarter Blau-Tint, Mock-Wert */
+  border-radius: var(--gn-radius);
+  padding: 7px 11px;
+  line-height: 1.3;
+}
+.att svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+/* Beispiel-Knopf im Mail-Fuß (Signalgrün-Fläche mit Navy-Text – Grün-Regel ok). */
+.cta {
+  margin-top: auto;
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal);
+  border-radius: var(--gn-radius);
+  padding: 8px 13px;
+  align-self: flex-start;
+}
+
+.seqnote {
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 14px;
+  color: var(--gn-muted);
+}
+.seqfoot {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--gn-muted);
+  max-width: 78ch;
+}
+
+@media (max-width: 1000px) {
+  .r1:checked ~ .seq .p1,
+  .r2:checked ~ .seq .p2,
+  .r3:checked ~ .seq .p3,
+  .r4:checked ~ .seq .p4,
+  .r5:checked ~ .seq .p5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .seqline {
+    display: none;
+  }
+}
+@media (max-width: 620px) {
+  .r1:checked ~ .seq .p1,
+  .r2:checked ~ .seq .p2,
+  .r3:checked ~ .seq .p3,
+  .r4:checked ~ .seq .p4,
+  .r5:checked ~ .seq .p5 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tab {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .mail,
+  .env {
+    transition: none;
+  }
+}

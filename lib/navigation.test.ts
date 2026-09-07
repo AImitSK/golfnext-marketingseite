@@ -13,6 +13,9 @@ import { getNavModel } from "./navigation";
  * Seit Briefing 0022 gibt es keine Platzhalter-Einträge (`href="#"`) mehr: nicht-live
  * Hauptpunkte und Kinder werden gar nicht erst gerendert. Der Modulstatus wird nicht
  * abgeleitet (Briefing 0014).
+ *
+ * Seit Briefing 0024 ist `/plattform/so-arbeitet-golfnext` gebaut und `live` – damit
+ * trägt „Plattform" das erste Dropdown, mit genau diesem einen Punkt.
  */
 describe("getNavModel", () => {
   const model = getNavModel();
@@ -42,8 +45,21 @@ describe("getNavModel", () => {
     }
   });
 
-  it("zeigt aktuell kein Dropdown – kein Kind ist live", () => {
-    expect(model.filter((i) => i.children.length > 0)).toEqual([]);
+  it("zeigt genau ein Dropdown: Plattform mit „So arbeitet GolfNext“", () => {
+    const mitDropdown = model.filter((i) => i.children.length > 0);
+    expect(mitDropdown.map((i) => i.path)).toEqual(["/plattform"]);
+    expect(mitDropdown[0]!.children).toEqual([
+      {
+        path: "/plattform/so-arbeitet-golfnext",
+        label: "So arbeitet GolfNext",
+        href: "/plattform/so-arbeitet-golfnext",
+      },
+    ]);
+  });
+
+  it("gibt „Über GolfNext“ noch kein Dropdown – Ratgeber und Kontakt sind nicht live", () => {
+    const ueber = model.find((i) => i.path === "/ueber-golfnext");
+    expect(ueber?.children).toEqual([]);
   });
 });
 
@@ -75,14 +91,13 @@ describe("Struktur v2 in site-structure", () => {
   });
 
   it("liefert nicht-live Kinder gar nicht erst aus", () => {
-    // Alle drei Kinder sind heute nicht `live` – deshalb steht in keinem
-    // Hauptpunkt ein Dropdown, und keines taucht im Modell auf.
-    const kinder = ROUTES.filter((r) => r.parent);
-    expect(kinder.length).toBeGreaterThan(0);
-    expect(kinder.every((r) => !isLinkable(r.path))).toBe(true);
+    // `/praxis` und `/kontakt` sind nicht `live` – sie tauchen im Modell nicht auf.
+    // Nur das gebaute Kind „So arbeitet GolfNext" steht im Dropdown.
+    const nichtLiveKinder = ROUTES.filter((r) => r.parent && !isLinkable(r.path));
+    expect(nichtLiveKinder.map((r) => r.path)).toEqual(["/praxis", "/kontakt"]);
 
     const imModell = getNavModel().flatMap((i) => i.children.map((c) => c.path));
-    expect(imModell).toEqual([]);
+    expect(imModell).toEqual(["/plattform/so-arbeitet-golfnext"]);
   });
 
   it("behält die zwölf Modulnamen als reine Datenliste", () => {

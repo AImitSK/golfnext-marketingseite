@@ -36,8 +36,9 @@ Live gehen mit dem, was vollständig ist, und den Rest ehrlich weglassen statt z
 
 - **Navigation:** siehe § Navigation v2 unten – der frühere Abschnitt „Navigation v1" ist überholt.
 - **Screenshot-Sektionen:** Jede Sektion, deren Kern ein `Shot`-Platzhalter ist, wird in v1 ausgeblendet (`hidden` per Feature-Flag in
-  `site-structure.ts`), nicht mit Platzhalter veröffentlicht. Betroffen vor allem Wachstum & Vertrieb (Hero-Komposition, Systemabschnitt) und
-  So arbeitet GolfNext (CRM-Board, Sequenz). Die Seiten bleiben inhaltlich stimmig, weil Text und Struktur tragen; die Bilder kommen als v1.1 dazu.
+  `site-structure.ts`), nicht mit Platzhalter veröffentlicht. Die Neufassungen haben das erledigt: Wachstum & Vertrieb (3.4b) und
+  So arbeitet GolfNext (3.3b) brauchen **keine Screenshots** mehr – ihre Oberflächen sind schematische Illustrationen. Es bleibt
+  nichts auszublenden; die Regel gilt weiter für künftige `Shot`-Sektionen.
 - **Über GolfNext:** Partnerlogo-Abschnitt ausgeblendet, bis Logos und Freigaben da sind; Porträts als kleine Platzhalter sind vertretbar, große nicht.
 - **Praxis (der Blog):** erst in Navigation und Sitemap, wenn Artikel veröffentlicht sind.
 - **Kontakt:** bis zum Formular führt der Footer auf Telefon/E-Mail; die Seite entsteht in Masterplan 4.3.
@@ -70,9 +71,10 @@ Pakete
 - **Die zwölf `/module/<slug>` entfallen.** Die Modulnamen stehen weiterhin in der Footer-Systemkarte,
   dort als Text ohne Link. Keine Anker-Ersatzlösung, keine Weiterleitungen: die Seite war nie unter
   `www.golfnext.de` erreichbar.
-- **Nicht-`live` Punkte werden nicht gerendert.** Weil „So arbeitet GolfNext", Praxis und Kontakt noch
-  nicht live sind, zeigt die Hauptnavigation vorerst **fünf reine Links ohne jedes Dropdown**. Die
-  Dropdowns erscheinen von selbst, sobald eine dieser Routen auf `live` geht.
+- **Nicht-`live` Punkte werden nicht gerendert.** Seit Briefing 0024 ist „So arbeitet GolfNext" gebaut
+  und `live` – **Plattform trägt damit das erste und bisher einzige Dropdown**, mit genau diesem einen
+  Punkt. Über GolfNext bleibt vorerst ohne Dropdown, weil weder Ratgeber (`/praxis`) noch Kontakt live
+  sind. Weitere Punkte erscheinen von selbst, sobald ihre Route auf `live` geht.
 - **Die Mock-Köpfe unter `docs/design-system/mocks/` zeigen die alte Navigation.** Das ist kein Fehler
   und wird nicht korrigiert; die Mocks bleiben nur für die Seiteninhalte verbindlich.
 

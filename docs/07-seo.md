@@ -6,7 +6,7 @@
 |---|---|---|
 | `/` | GolfNext – Marketing und Automation für Golfclubs | aus Startseiten-Briefing übernehmen |
 | `/plattform` | Root-Default „GolfNext" (Phase 6) | Briefing 0016 liefert keinen Meta-Titel/-Text → aktuell Root-Default + Canonical (title/description in site-structure.ts = null). Endgültiger Titel/Beschreibung im Feinschliff festlegen **[S]** |
-| `/plattform/so-arbeitet-golfnext` | So arbeitet GolfNext | aus Briefing |
+| `/plattform/so-arbeitet-golfnext` | Root-Default „GolfNext" (Phase 6) | Briefing 0024 liefert keinen Meta-Titel/-Text → aktuell Root-Default + Canonical (title/description in site-structure.ts = null). Endgültiger Titel/Beschreibung im Feinschliff festlegen **[S]** |
 | `/wachstum-vertrieb` | Wachstum & Vertrieb für Golfclubs | aus Briefing |
 | `/clubprozesse` | Clubprozesse digital – GolfNext | aus Briefing |
 | `/pakete` | GolfNext Pakete und Preise für Golfclubs | „GolfNext bietet drei Ausbaustufen für Golfclubs: digitale Grundlage, systematisches Wachstum und eine vollständige digitale Clubzentrale." – **an Fassung 2 anpassen** (Sockel + drei Stufen) **[S]** |

@@ -1,32 +1,96 @@
 import type { Metadata } from "next";
-import { PlatzhalterSeite } from "@/components/site/PlatzhalterSeite";
-import { ROUTES } from "@/config/site-structure";
-import { routeMetadata } from "@/lib/metadata";
-import { uiMessages } from "@/lib/ui/messages";
+import { Anschrift } from "@/components/pages/kontakt/Anschrift";
+import { Formular } from "@/components/pages/kontakt/Formular";
+import { Hero } from "@/components/pages/kontakt/Hero";
+import { Wege } from "@/components/pages/kontakt/Wege";
+import { Footer } from "@/components/site/Footer";
+import {
+  kontakt,
+  kontaktAnschrift,
+  kontaktFormular,
+  kontaktHero,
+  kontaktSeitenspalte,
+  kontaktWege,
+} from "@/content/kontakt";
+import { signTimestamp } from "@/lib/forms/spam";
+import { internalHref } from "@/lib/links";
 
 /**
- * `/kontakt` – ausdrücklich ein Zwischenstand (Masterplan 2.8, Briefing 0022).
+ * Kontakt `/kontakt` – gebaut aus Mock `3.10-kontakt.html` (Briefing 0025,
+ * Masterplan 4.3). Vier Abschnitte: Hero, Formular mit Seitenspalte, „Nicht jeder
+ * schreibt gern ein Formular." und die Anschrift, danach der geteilte Footer.
+ * Alle Texte kommen wortgleich aus `content/kontakt.ts`, alle Meldungen aus
+ * `lib/forms/messages.ts`. Genau eine `<h1>` (im Hero).
  *
- * Die Route existiert vor allem, damit der Fallback aus `lib/links.ts`
- * (`FALLBACK = "/kontakt"`, greift solange `NEXT_PUBLIC_BOOKING_URL` leer ist) nicht
- * ins 404 läuft: ohne sie zeigen ALLE „Online-Erstgespräch vereinbaren"-Buttons auf
- * eine Seite, die es nicht gibt.
+ * Ersetzt die Platzhalterseite aus Briefing 0022. Mit dem Statuswechsel auf `live`
+ * in `config/site-structure.ts` erscheint „Kontakt" erstmals im Über-GolfNext-
+ * Dropdown, und der CTA-Fallback aus `lib/links.ts` führt auf eine echte Seite.
  *
- * TODO 4.3: Hier entsteht die echte Kontaktseite mit dem Kontaktformular
- * (Masterplan 4.3). Sie ist beschlossen (Stefan, 07.09.2026) und braucht KEIN
- * Fred-Briefing und keinen Mock – `docs/10-launch-umfang.md` §40 legt sie als
- * „schlichte Seite mit dem UI-Kit-Formular" fest. Dann Status in
- * `config/site-structure.ts` auf `live` und `noindex` entfernen; Navigation und
- * Teaser ziehen automatisch nach. Bis dahin wird hier KEIN Formular gebaut, auch
- * kein Markup davon.
+ * **Warum die Route dynamisch rendert:** Das Formular trägt einen signierten
+ * Zeitstempel (Spam-Stufe A, docs/06). Er gilt zwischen 4 Sekunden und 2 Stunden.
+ * Ein zur Bauzeit erzeugter Wert wäre beim Abruf fast immer älter als zwei Stunden –
+ * jede echte Anfrage würde still verworfen. Deshalb wird die Seite je Abruf
+ * gerendert; sie ist reines Server-HTML ohne Datenabruf und damit trotzdem schnell.
  *
- * Statt eines Rücklinks steht hier der Kontakt-Hinweis: Telefon und E-Mail stehen
- * ohnehin im Footer jeder Seite (`KONTAKT` in `config/site-structure.ts`).
+ * KEIN persönlicher Abschluss (`FooterClose`): Der Mock führt keinen – der Footer
+ * beginnt hier mit der Modul-Landkarte. Nicht dazuerfinden (Briefing 0025).
  */
-export const metadata: Metadata = routeMetadata("/kontakt");
+export const dynamic = "force-dynamic";
 
-const ROUTE = ROUTES.find((r) => r.path === "/kontakt")!;
+export const metadata: Metadata = {
+  ...(kontakt.meta.title ? { title: { absolute: kontakt.meta.title } } : {}),
+  ...(kontakt.meta.description ? { description: kontakt.meta.description } : {}),
+  alternates: { canonical: kontakt.route },
+};
+
+/** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
+function section(id: string) {
+  const found = kontakt.sections.find((s) => s.id === id);
+  if (!found) throw new Error(`Sektion "${id}" fehlt in content/kontakt.ts`);
+  return found;
+}
 
 export default function KontaktPage() {
-  return <PlatzhalterSeite titel={ROUTE.label} hinweis={uiMessages.platzhalter.kontaktHinweis} />;
+  const hero = section("hero");
+  const formular = section("formular");
+  const wege = section("wege");
+  const anschrift = section("anschrift");
+
+  return (
+    <main>
+      <Hero
+        eyebrow={hero.eyebrow!}
+        headline={hero.headline!}
+        lead={hero.text![0]!}
+        data={kontaktHero}
+      />
+
+      <Formular
+        headline={formular.headline!}
+        lead={formular.text![0]!}
+        formular={kontaktFormular}
+        seitenspalte={kontaktSeitenspalte}
+        ts={signTimestamp()}
+        // `/datenschutz` entsteht erst mit Masterplan 5.2; bis dahin liefert
+        // internalHref `#`. Der Wortlaut der Einwilligung bleibt unverändert stehen
+        // (Briefing 0025).
+        datenschutzHref={internalHref("/datenschutz")}
+      />
+
+      <Wege
+        eyebrow={wege.eyebrow!}
+        headline={wege.headline!}
+        lead={wege.text![0]!}
+        data={kontaktWege}
+      />
+
+      <Anschrift
+        eyebrow={anschrift.eyebrow!}
+        headline={anschrift.headline!}
+        data={kontaktAnschrift}
+      />
+
+      <Footer footerClose={kontakt.footerClose} />
+    </main>
+  );
 }

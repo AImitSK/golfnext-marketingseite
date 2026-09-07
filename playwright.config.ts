@@ -30,5 +30,16 @@ export default defineConfig({
     url: "http://localhost:3000",
     reuseExistingServer: !isCI,
     timeout: 120_000,
+    env: {
+      // Riegel für den Formular-Test (Briefing 0025): Der Testserver verschickt
+      // NIEMALS echte Mails und schreibt NIEMALS in die gemeinsame Redis-Datenbank –
+      // auch dann nicht, wenn in `.env.local` gültige Schlüssel stehen. Ohne diese
+      // beiden Werte würde ein Testlauf echte Anfragen an info@golfnext.de senden.
+      MAIL_TRANSPORT: "mock",
+      RATELIMIT_STORE: "memory",
+      // Der Spam-Schutz wird nicht abgeschaltet, nur der Schlüssel festgelegt.
+      FORM_SIGNING_SECRET:
+        process.env.FORM_SIGNING_SECRET ?? "playwright-only-signing-secret-not-for-production",
+    },
   },
 });

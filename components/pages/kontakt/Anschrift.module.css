@@ -1,0 +1,77 @@
+/* Portiert aus docs/design-system/mocks/3.10-kontakt.html (.addr, Z.248–254).
+   Tokens auf --gn-*. Drei Spalten: Anschrift, Erreichbarkeit, Rechtliches. */
+
+.section {
+  padding: var(--gn-section-y-lg) 0; /* 120px */
+}
+.wrap {
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.h2 {
+  font-size: var(--gn-h2-lg);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0;
+  max-width: 22ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 44px;
+}
+.col {
+  min-width: 0;
+}
+.label {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin: 0 0 10px;
+}
+.lines {
+  font-size: 15.5px;
+  color: var(--gn-ink);
+  line-height: 1.6;
+  margin: 0;
+}
+/* Zeilen, die im Mock kleiner und gedämpft stehen (offene Angaben, Zusatzhinweise). */
+.muted {
+  color: var(--gn-muted);
+  font-size: 14px;
+}
+/* Rechtliches: zwei Textlinks untereinander. */
+.legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 15.5px;
+}
+
+@media (max-width: 960px) {
+  .wrap {
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+}
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+}
+@media (max-width: 620px) {
+  .section {
+    padding: 72px 0;
+  }
+  .wrap {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

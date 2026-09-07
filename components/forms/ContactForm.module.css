@@ -1,0 +1,158 @@
+/* Kontaktformular · Layout portiert aus docs/design-system/mocks/3.10-kontakt.html
+   (.frow/.fld/.fld.role/.check/.fsub, Z.150–200). Tokens auf --gn-*.
+
+   Aufteilung bewusst: Aus dem Mock kommen **Raster und Maße** (Zweispaltigkeit,
+   Feldhöhe 50 px, Rollen-Kasten, Abstände, Absendezeile). Das **Aussehen der
+   Zustände** (Rahmen, Fehler, Erfolg, Fokusring) bleibt beim Design-System
+   (`components/forms/forms.module.css`, UI-Kit 2.5) – deshalb setzen die Regeln hier
+   keine Rahmen- oder Fokusfarben und treten nicht in einen Spezifitätskampf mit den
+   Zustandsklassen. Ein Feld mit Fehler sieht auf jeder Seite gleich aus. */
+
+.form {
+  min-width: 0;
+}
+
+/* Zwei Felder nebeneinander (.frow) – ab 620 px untereinander. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* Feld-Hülle (.fld). Doppelte Klasse, um die Breitenbegrenzung des Bausteins
+   (`.field{max-width:380px;flex:1 1 300px}`) im Raster sicher zu lösen. */
+.fld.fld {
+  max-width: none;
+  flex: none;
+  margin-bottom: 20px;
+  min-width: 0;
+}
+.fld label {
+  font-size: 13.5px;
+}
+/* „· optional" hinter dem Label (.fld .opt) */
+.opt {
+  color: var(--gn-muted);
+  font-weight: 500;
+}
+/* Hilfetext unter dem Feld (.fld .hint) – die Feldmeldung selbst kommt aus FieldMessage. */
+.hint {
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin: 7px 0 0;
+  line-height: 1.45;
+}
+
+/* Feldhöhe und Innenabstand aus dem Mock. Doppelte Klasse schlägt `.control`,
+   setzt aber weder Rahmen- noch Fokusfarbe (die bleiben beim Design-System). */
+.inp.inp {
+  height: 50px;
+  padding: 0 14px;
+}
+.ta.ta {
+  min-height: 140px;
+  padding: 13px 14px;
+  line-height: 1.6;
+}
+
+/* Rollen-Kasten (.fld.role): abgesetzter Block um „Ich bin …". */
+.role.role {
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: 8px; /* Mock-Wert (3.10 .fld.role), zwischen 4 und 12 px */
+  padding: 20px 22px 18px;
+  margin-bottom: 24px;
+}
+.role label {
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+/* Einwilligung (.check) – Baustein `Checkbox`, hier nur Abstand und Satzbreite. */
+.check.check {
+  margin-bottom: 26px;
+  max-width: none;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.check.check a {
+  color: var(--gn-blue);
+  border-bottom: 1px solid rgba(11, 106, 144, 0.35); /* Mock-Wert (3.10 .check span.t a) */
+}
+
+/* Absendezeile (.fsub): Button und die ruhige Zusage daneben. */
+.submit {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.note {
+  font-size: 13px;
+  color: var(--gn-muted);
+  max-width: 34ch;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Formular-Alert über dem Button (docs/08 §3) bzw. Erfolgsalert statt des Formulars. */
+.alert {
+  margin-bottom: 22px;
+  max-width: none;
+}
+/* Feldmeldung unter der Einwilligung (die Checkbox hat keine eigene Hülle). */
+.checkMessage {
+  margin: -18px 0 22px;
+}
+
+.successBox {
+  min-width: 0;
+}
+/* Der Erfolgsalert bekommt beim programmatischen Fokus keinen zweiten Rahmen. */
+.successBox:focus {
+  outline: none;
+}
+.successBox:focus-visible {
+  outline: 2px solid var(--gn-blue);
+  outline-offset: 3px;
+}
+.success {
+  max-width: none;
+}
+.successTitle {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.successLink {
+  margin-top: 18px;
+}
+
+/* Honigtopf: sichtbar versteckt, aber NICHT display:none – manche Bots erkennen das
+   und lassen das Feld dann leer (docs/06, Stufe A, Punkt 1). */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (max-width: 620px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .submit {
+    gap: 14px;
+  }
+  .submit > button {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -74,7 +74,7 @@ export function PlatzhalterSeite({
   titel: string;
   /** Rücklink in den thematisch passenden, bereits gebauten Bereich. */
   zurueck?: { href: string; label: string };
-  /** Nur `/kontakt`: `uiMessages.platzhalter.kontaktHinweis`. */
+  /** Optionaler Zusatzsatz aus `lib/ui/messages.ts`; derzeit nutzt ihn keine Route. */
   hinweis?: string;
 }) {
   const { eyebrow, body, actionHome } = uiMessages.platzhalter;

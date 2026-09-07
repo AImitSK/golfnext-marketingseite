@@ -11,9 +11,10 @@ import { expect, test } from "@playwright/test";
  *
  * Die Navigation rendert NUR `live`-Routen (Briefing 0022): keine `href="#"`-
  * Platzhalter mehr. Seit Briefing 0024 ist „So arbeitet GolfNext" gebaut und `live` –
- * damit trägt „Plattform" das erste und bisher einzige Dropdown, mit genau diesem
- * einen Punkt. „Über GolfNext" bleibt ohne Dropdown (Ratgeber/`/praxis` und Kontakt
- * sind nicht live).
+ * damit trägt „Plattform" ein Dropdown mit genau diesem einen Punkt. Seit Briefing
+ * 0025 ist `/kontakt` gebaut und `live` – damit hat auch „Über GolfNext" ein
+ * Dropdown, das bisher nur „Kontakt" enthält. Ratgeber (`/praxis`) bleibt außen vor,
+ * bis der Blog in Phase 3 aus Sanity kommt.
  */
 function desktopOnly(page: import("@playwright/test").Page) {
   const vp = page.viewportSize();
@@ -29,11 +30,13 @@ const LIVE_HAUPT = [
   "/ueber-golfnext",
 ];
 
-/** Live geschaltete Dropdown-Punkte (Briefing 0024: das erste Untermenü). */
-const LIVE_KINDER = ["/plattform/so-arbeitet-golfnext"];
+/** Live geschaltete Dropdown-Punkte (0024: „So arbeitet GolfNext", 0025: „Kontakt"). */
+const LIVE_KINDER = ["/plattform/so-arbeitet-golfnext", "/kontakt"];
 
 test.describe("Header · Struktur und Daten", () => {
-  test("Wortmarke ist Home-Link mit aria-label; nur live-Routen sind verlinkt", async ({ page }) => {
+  test("Wortmarke ist Home-Link mit aria-label; nur live-Routen sind verlinkt", async ({
+    page,
+  }) => {
     await page.goto("/_bausteine");
 
     // Wortmarke als Startseiten-Link. Auf die Kopfzeile begrenzt, da der Footer
@@ -61,29 +64,30 @@ test.describe("Header · Struktur und Daten", () => {
     }
   });
 
-  test("Plattform trägt das einzige Dropdown; Ratgeber und Kontakt fehlen weiter", async ({
-    page,
-  }) => {
+  test("Plattform und Über GolfNext tragen Dropdowns; Ratgeber fehlt weiter", async ({ page }) => {
     await page.goto("/_bausteine");
 
     const nav = page.locator("header nav");
-    // `/praxis` (Menü-Label „Ratgeber") und `/kontakt` sind Kinder von „Über GolfNext"
-    // und nicht live – weder als Hauptpunkt noch im Dropdown.
+    // `/praxis` (Menü-Label „Ratgeber") ist Kind von „Über GolfNext" und nicht live –
+    // weder als Hauptpunkt noch im Dropdown.
     await expect(nav.locator('a:text-is("Praxis")')).toHaveCount(0);
     await expect(nav.locator('a:text-is("Ratgeber")')).toHaveCount(0);
-    await expect(nav.locator('a:text-is("Kontakt")')).toHaveCount(0);
 
-    // Genau ein Dropdown-Öffner: „Plattform" (Desktop; mobil klappt <details> auf).
+    // Zwei Dropdown-Öffner: „Plattform" und „Über GolfNext" (Desktop; mobil klappt
+    // <details> auf).
     if (desktopOnly(page)) {
       const oeffner = page.getByRole("button", { name: /Untermenü/ });
-      await expect(oeffner).toHaveCount(1);
-      await expect(oeffner).toHaveAccessibleName(/Untermenü Plattform/);
+      await expect(oeffner).toHaveCount(2);
+      await expect(oeffner.first()).toHaveAccessibleName(/Untermenü Plattform/);
+      await expect(oeffner.last()).toHaveAccessibleName(/Untermenü Über GolfNext/);
     }
-    // Der eine Dropdown-Punkt ist im Server-HTML vorhanden und echt verlinkt.
+    // Beide Dropdown-Punkte stehen im Server-HTML und sind echt verlinkt.
     await expect(nav.locator('a[href="/plattform/so-arbeitet-golfnext"]').first()).toHaveAttribute(
       "href",
       "/plattform/so-arbeitet-golfnext",
     );
+    // „Kontakt" erscheint mit Briefing 0025 zum ersten Mal im Menü.
+    await expect(nav.locator('a[href="/kontakt"]').first()).toHaveAttribute("href", "/kontakt");
 
     // Die Modulseiten sind entfallen; ihre Namen stehen nur noch im Footer.
     for (const modul of ["Reach", "Gastfee", "Captains App"]) {

@@ -49,5 +49,11 @@ export interface PageContent {
   route: string;
   meta: PageMeta;
   sections: Section[];
-  footerClose: FooterClose;
+  /**
+   * Persönlicher Abschluss über dem Footer. Optional seit Briefing 0025: Mock
+   * `3.10-kontakt.html` führt keinen `.f-close`-Block – die Kontaktseite endet mit
+   * der Anschrift, danach beginnt der Footer mit der Modul-Landkarte. `Footer`
+   * nimmt die Prop ohnehin optional entgegen.
+   */
+  footerClose?: FooterClose;
 }

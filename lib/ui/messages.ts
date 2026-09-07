@@ -39,7 +39,7 @@ export const uiMessages = {
 
   /**
    * Platzhalterseite für Routen, die es schon gibt, aber noch keinen Inhalt haben
-   * (`/praxis`, `/kontakt` – Briefing 0022, gekürzt mit 0023). Bewusst ohne
+   * (nur noch `/praxis` – Briefing 0022, gekürzt mit 0023 und 0025). Bewusst ohne
    * Zeitangabe und ohne Marketing-Zeile: die Seite sagt nur, dass hier noch nichts
    * steht, und zeigt den Weg zurück. Die `<h1>` ist das `label` der Route aus
    * `config/site-structure.ts` und steht deshalb nicht in diesem Katalog.
@@ -48,9 +48,6 @@ export const uiMessages = {
     eyebrow: "In Arbeit",
     body: "Dieser Bereich entsteht gerade. Sobald die Inhalte stehen, finden Sie sie hier.",
     actionHome: "Zur Startseite",
-    /** Nur auf /kontakt: die Kontaktdaten stehen im Fußbereich jeder Seite. */
-    kontaktHinweis:
-      "Bis dahin erreichen Sie uns direkt – Telefon und E-Mail stehen unten im Fußbereich.",
   },
 
   /** Segment-Fehlerseite, wenn Inhalte nicht geladen werden können (error.tsx, Phase 3). */

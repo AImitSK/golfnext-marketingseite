@@ -2,33 +2,37 @@
 
 ## Anforderungen
 
-- Kontakt- bzw. Erstgespräch-Anfrage (Seite `/kontakt`, nach Briefing; bis dahin auf einer noindex-Testroute).
+- Kontakt- bzw. Erstgespräch-Anfrage auf `/kontakt` – seit Briefing 0025 gebaut und `live` (keine noindex-Testroute nötig gewesen).
 - Der CTA „Online-Erstgespräch vereinbaren" führt auf den **bestehenden Buchungsweg** (`NEXT_PUBLIC_BOOKING_URL`). Das Formular ist der zweite Weg für alle, die lieber schreiben – kein eigenes Terminformular.
 - Kein Newsletter zum Launch → kein Double-Opt-in nötig.
 - Visuelle Zustände sind im UI-Kit definiert: `docs/design-system/mocks/2.5-ui-kit.html`, Abschnitt 3 (Eingabefelder Default · Fokus · Fehler · Erfolg · Deaktiviert, Feldmeldungen `.fmsg e/s/h`, Pflichtstern, Einwilligung) und Abschnitt 7 (Inline-Alerts info/ok/err, Toast, Leerzustand, Skeleton, Button-Ladezustand `.btn.loading`).
 
-## Felder (nach UI-Kit: „genau das, was für ein qualifiziertes Gespräch nötig ist – und keinen Buchstaben mehr")
+## Felder (verbindlich: Mock `3.10-kontakt.html`, Briefing 0025)
+
+Die frühere Liste (Golfanlage, Ihr Name, Rolle, **Wunschzeit**, Interesse) stammte aus dem UI-Kit und ist **überholt**. Termine laufen über cal.com, nicht über dieses Formular (Entscheidung Stefan, 07.09.2026). Es gibt **kein Newsletter-Feld** – der Hero verspricht ausdrücklich „Keine Anmeldung zu irgendeinem Newsletter".
 
 | Feld | Pflicht | Typ | Validierung |
 |---|---|---|---|
-| Golfanlage | ja | text | 2–120 Zeichen |
-| Ihr Name | ja | text | 2–80 Zeichen |
+| Vorname | ja | text | 2–80 Zeichen |
+| Nachname | ja | text | 2–80 Zeichen |
+| „Ich bin …" | nein | select | Ehrenamtlicher Vorstand eines e.V. · Betreiber einer Golfanlage · Clubmanager · Mitarbeiter Clubsekretariat · etwas anderes |
+| Golfclub oder Anlage | nein | text | ≤ 120 Zeichen |
+| „Worum geht es?" | nein | select | Erstgespräch vereinbaren · Frage zu den Paketen und Preisen · Frage zu einem einzelnen Modul · Bestehende Website übernehmen · Presse oder Kooperation · Etwas anderes |
 | E-Mail | ja | email | RFC-konform, kleingeschrieben, max 254 |
-| Telefon | nein | tel | 6–30 Zeichen aus Ziffern, `+`, Leerzeichen, `/`, `-` |
-| Ihre Rolle im Club | nein | select | Vorstand / Präsidium · Geschäftsführung / Clubmanagement · Sekretariat / Clubbüro · Marketing · Pro / Golfschule · Sonstiges |
-| Wunschzeit für das Gespräch | nein | select | Vormittags Mo–Fr · Nachmittags Mo–Fr · Abends · Flexibel |
-| Interesse | nein | radio | Neue Mitglieder gewinnen · Clubbüro entlasten · Beides |
-| Was beschäftigt Sie aktuell am meisten? | nein | textarea | ≤ 3000 Zeichen; Hilfetext „Optional – hilft uns, den Termin auf Ihre Situation vorzubereiten." |
-| Einwilligung | ja | checkbox | „Ich habe die Datenschutzerklärung gelesen und bin mit der Verarbeitung meiner Daten zur Bearbeitung meiner Anfrage einverstanden." |
+| Telefon | nein | tel | 6–30 Zeichen aus Ziffern, `+`, Leerzeichen, `/`, `-`, Klammern; Hilfetext „Wenn Sie lieber angerufen werden." |
+| Ihre Nachricht | ja | textarea | 1–3000 Zeichen |
+| Einwilligung | ja | checkbox | „Ich habe die Datenschutzerklärung gelesen und bin damit einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert werden. Die Einwilligung kann ich jederzeit widerrufen." |
 | `website` (Honeypot) | – | text, versteckt | muss leer sein |
 | `ts` (signierter Zeitstempel) | – | hidden | siehe Spam-Schutz |
 
-Unter dem Button: „Rückmeldung innerhalb eines Werktags · Zoom oder Teams · kein Newsletter, keine Weitergabe" (Wortlaut UI-Kit).
+Beide Auswahlfelder haben **keine leere Vorauswahl** (so steht es im Mock): Der erste Eintrag ist vorbelegt. Neben dem Button steht „Wir melden uns innerhalb eines Werktags. Ihre Daten gehen an niemanden sonst." (Wortlaut Mock 3.10).
+
+**Die Route rendert dynamisch** (`export const dynamic = "force-dynamic"`), weil der signierte Zeitstempel sonst zur Bauzeit entstünde und beim Abruf fast immer älter als zwei Stunden wäre – jede echte Anfrage würde still verworfen.
 
 ## Ablauf
 
 ```
-ContactForm (Client, useActionState + useFormStatus)
+ContactForm (Client, useActionState – `isPending` statt useFormStatus)
    → Server Action submitContact(formData)
    → 1 zod-Schema (Felder, Längen, Format)
    → 2 Spam-Stufe A: Honeypot, signierter Zeitstempel, Origin
@@ -51,7 +55,7 @@ Grundsatz: Kein reCAPTCHA (einwilligungspflichtig, Datentransfer, Barriere für 
 4. **Payload-Anomalien**: unbekannte Felder, Feldlängen weit über dem Maximum, Steuerzeichen, mehr als 2 URLs in der Nachricht, Nachricht ausschließlich aus URLs/Zeichenketten ohne Leerzeichen.
 
 **Stufe B – Bewertung (Score), Zustellung mit Markierung:**
-5. **Rate-Limit**: 5 Sendungen pro IP-Hash pro Stunde, 20 pro Tag; 3 pro E-Mail-Hash pro Tag. Speicher: Upstash Redis (Vercel Marketplace) mit `@upstash/ratelimit`; lokal/Preview In-Memory-Fallback. IP nur als SHA-256-Hash mit Tagesschlüssel speichern, nie im Klartext.
+5. **Rate-Limit**: 5 Sendungen pro IP-Hash pro Stunde, 20 pro Tag; 3 pro E-Mail-Hash pro Tag. Speicher: Upstash Redis (Vercel Marketplace) über die REST-Schnittstelle (`INCR`/`EXPIRE`, `SET NX EX` per `fetch`, ohne `@upstash/ratelimit` – zwei Befehle rechtfertigen keine Abhängigkeit); lokal/Preview In-Memory-Fallback. **Jeder Speicherfehler führt zu „zustellen", nie zum Verwerfen.** IP nur als SHA-256-Hash mit Tagesschlüssel speichern, nie im Klartext.
 6. **Duplikat**: Hash aus E-Mail + Nachricht innerhalb von 10 Minuten bereits gesendet → keine zweite Mail, aber Erfolgsantwort (Doppelklick, Zurück-Taste).
 7. **Inhaltsheuristik** (jeweils Punkte): Nachricht enthält 1–2 URLs, Wegwerf-Domain (kleine Liste in `lib/forms/disposable-domains.ts`), Name gleich E-Mail-Localpart, Mischung aus lateinischen und kyrillischen Zeichen, Golfanlage aus nur einem Wort ohne Vokal, Absendezeit unter 8 Sekunden. Ab Schwelle: Betreff-Präfix `[Prüfen]`, Score in der Mail-Fußzeile, damit Fred es erkennt. Nichts wird deswegen verworfen.
 8. **Logging** ohne personenbezogene Daten: `contact.accepted | contact.flagged(score, gründe) | contact.rejected(grund)`. Nach zwei Wochen Live-Betrieb die Gründe auswerten und Schwellen nachziehen.
@@ -62,7 +66,8 @@ Grundsatz: Kein reCAPTCHA (einwilligungspflichtig, Datentransfer, Barriere für 
 - Alle Nutzerwerte im HTML-Teil der Mail **escapen** (kein HTML aus dem Formular übernehmen).
 - `replyTo` nur setzen, wenn die E-Mail das zod-Schema besteht (kein Header-Injection).
 - Kein Nutzerinhalt im Betreff außer Name und Anlage, beide auf 60 Zeichen gekürzt und von Zeilenumbrüchen befreit.
-- `SENDGRID_API_KEY` nur serverseitig; im Client-Bundle darf der Name nicht auftauchen (Build-Check greppt `dist`).
+- `SENDGRID_API_KEY` nur serverseitig; im Client-Bundle darf der Name nicht auftauchen (Build-Check greppt `dist`). Gelesen wird er ausschließlich in `lib/mail/sendgrid.ts`.
+- Steuerzeichen: Zeilenumbrüche sind **nur in der Nachricht** erlaubt. In einem einzeiligen Feld sind sie das klassische Header-Injection-Signal und führen zum stillen Verwerfen.
 
 ## Zustände und Rückmeldungen (einheitlich, aus dem UI-Kit)
 
@@ -81,6 +86,10 @@ Grundsatz: Kein reCAPTCHA (einwilligungspflichtig, Datentransfer, Barriere für 
 | `phone.invalid` | Bitte prüfen Sie die Telefonnummer – nur Ziffern, Leerzeichen, + und /. |
 | `message.long` | Ihre Nachricht ist etwas zu lang – bitte kürzen Sie sie auf 3000 Zeichen. |
 | `consent.required` | Bitte bestätigen Sie die Datenschutzerklärung, damit wir Ihre Anfrage bearbeiten dürfen. |
+| `vorname` *(0025)* | Bitte geben Sie Ihren Vornamen an. |
+| `nachname` *(0025)* | Bitte geben Sie Ihren Nachnamen an. |
+| `message` *(0025)* | Bitte schreiben Sie uns kurz, worum es geht. |
+| `tooLong` *(0025)* | Diese Angabe ist zu lang – bitte kürzen Sie sie. |
 | `form.invalid` | Das Formular konnte nicht gesendet werden. Bitte prüfen Sie die markierten Felder – oder rufen Sie uns direkt an. |
 | `form.network` | Die Verbindung wurde unterbrochen. Ihre Eingaben sind noch da – bitte versuchen Sie es noch einmal. |
 | `form.server` | Das hat leider nicht geklappt. Schreiben Sie uns direkt an info@golfnext.de oder rufen Sie an: 0175 5951839. |
@@ -118,8 +127,11 @@ Unter dem Button, 13.5 px, `muted`: „Mit dem Absenden stimmen Sie zu, dass wir
 
 `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL`, `SENDGRID_FROM_NAME`, `CONTACT_TO_EMAIL`, **`FORM_SIGNING_SECRET`** (32+ Zufallszeichen, pro Umgebung verschieden), `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (optional, sonst In-Memory).
 
+Nur für Testläufe, **nie in Production**: `MAIL_TRANSPORT=mock` (erzwingt den Mock-Transport) und `RATELIMIT_STORE=memory` (erzwingt den In-Memory-Speicher). `playwright.config.ts` setzt beide selbst.
+
 ## Tests
 
 - **Unit**: zod-Schema gültig/ungültig je Feld; Honeypot gefüllt → `{ok:true}` ohne Mail; Zeitstempel fehlt / falsch signiert / 2 s alt / 3 h alt → verworfen; Duplikat → eine Mail; Heuristik-Score-Fälle → Betreff-Tag; Rate-Limit-Überschreitung → `form.ratelimit`.
 - **E2E** (Mock-Transport): gültige Sendung → Erfolgsalert sichtbar, Fokus darauf, JSON in `test-results/mail/` mit escaped Inhalt; ungültige E-Mail → Inline-Fehler mit `aria-invalid`, Fokus auf dem Feld, Eingaben erhalten; Absenden ohne JS (`javaScriptEnabled:false`) → Ergebnis auf derselben Seite; Button während Versand `aria-busy`, kein Doppelversand bei zwei schnellen Klicks.
+- **Riegel gegen echte Mails aus Testläufen** (0025): `playwright.config.ts` startet den Server mit `MAIL_TRANSPORT=mock` und `RATELIMIT_STORE=memory`. Ohne diese beiden Werte verschickt ein Testlauf auf einem Rechner mit gefüllter `.env.local` **echte Mails an `info@golfnext.de`** und schreibt Zähler in die gemeinsame Redis-Datenbank. In Production dürfen sie nie gesetzt sein.
 - **Manuell vor Launch**: echte Testmail von Production an `info@golfnext.de`, Antwort per Reply-To, Spam-Ordner-Check (SPF/DKIM über Domain Authentication), Bestätigungsmail beim Absender.

@@ -27,12 +27,11 @@
  * Mock-Köpfe unter docs/design-system/mocks/ zeigen noch die alte Navigation – das ist
  * kein Fehler, die Mocks bleiben nur für Seiteninhalte verbindlich.
  *
- * Platzhalterseiten (Briefing 0022): `/praxis` (geplant) und `/kontakt`
- * (wartet-auf-briefing) rendern seit Schritt 2.8 dieselbe leere Platzhalterseite –
- * beide Status also, nicht nur „wartet-auf-briefing". Sie bleiben trotzdem UNVERLINKT,
- * erreichbar per direkter URL (Lesezeichen, alte Links, der CTA-Fallback aus
- * `lib/links.ts`). Sobald eine Seite gebaut ist, wechselt ihr Status auf `live`,
- * `noindex` fällt weg, und Navigation wie Teaser ziehen automatisch nach.
+ * Platzhalterseiten (Briefing 0022): Übrig ist nur noch `/praxis` (geplant, noindex) –
+ * der Blog entsteht in Phase 3 aus Sanity. Die Seite bleibt UNVERLINKT, ist aber per
+ * direkter URL erreichbar. Sobald eine Seite gebaut ist, wechselt ihr Status auf
+ * `live`, `noindex` fällt weg, und Navigation wie Teaser ziehen automatisch nach –
+ * so geschehen mit `/kontakt` (Briefing 0025, Masterplan 4.3).
  *
  * Titel und Beschreibung stammen aus den „Technischen Seitenangaben" der Fred-Briefings.
  * Fehlt dort eine Angabe, steht hier `null` – nicht erfinden, sondern nachfragen.
@@ -195,15 +194,19 @@ export const ROUTES: Route[] = [
     redirectsFrom: ["/ueber-golfnext/"],
   },
   {
-    // Kind von „Über GolfNext" (Briefing 0023). Erscheint im Dropdown erst, wenn die
-    // Seite mit dem Formular gebaut ist (Masterplan 4.3) und der Status auf `live` geht.
+    // Kind von „Über GolfNext" (Briefing 0023).
     path: "/kontakt",
     label: "Kontakt",
-    status: "wartet-auf-briefing",
+    // Seit Briefing 0025 gebaut (Masterplan 4.3): Layout aus Mock 3.10,
+    // Formularmechanik aus docs/06. Damit `live` und ohne `noindex` – der Menüpunkt
+    // „Kontakt" erscheint erstmals im Über-GolfNext-Dropdown, und der CTA-Fallback
+    // aus `lib/links.ts` führt endlich auf eine echte Seite.
+    status: "live",
     parent: "/ueber-golfnext",
+    mock: "mocks/3.10-kontakt.html",
+    briefing: "briefings/0025-kontakt.md",
     title: null,
     description: null,
-    noindex: true,
   },
   { path: "/impressum", label: "Impressum", status: "geplant", title: "Impressum – GolfNext", description: null, noindex: false, redirectsFrom: ["/impressum/"] },
   { path: "/datenschutz", label: "Datenschutz", status: "geplant", title: "Datenschutzerklärung – GolfNext", description: null },

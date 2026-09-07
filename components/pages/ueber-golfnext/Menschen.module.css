@@ -146,3 +146,10 @@
     min-height: 160px;
   }
 }
+
+/* Echtes Porträt statt Platzhalterfläche (seit 07.09.2026). `.pt` ist bereits
+   `position: relative` mit fester Mindesthöhe – kein CLS. */
+.foto {
+  object-fit: cover;
+  object-position: 50% 25%;
+}

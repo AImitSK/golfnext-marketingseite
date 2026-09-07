@@ -121,3 +121,12 @@
     padding: 38px 26px;
   }
 }
+
+/* Echtes Porträt im runden Rahmen (seit 07.09.2026). Die Fläche behält Größe und
+   Rundung aus dem Mock; das Bild füllt sie formatfüllend. */
+.personFoto {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { PERSONEN } from "@/lib/people";
 import { Rise, RiseItem } from "@/components/motion/Rise";
 import { PlattformSection } from "@/components/pages/plattform/PlattformSection";
 import type { MenschenData } from "@/content/ueber-golfnext";
@@ -25,24 +27,18 @@ export function Menschen({
   return (
     <PlattformSection eyebrow={eyebrow} headline={headline} lead={lead}>
       <Rise className={styles.team}>
-        {data.personen.map((p) => (
+        {data.personen.map((p, i) => (
           <RiseItem key={p.name} className={styles.tcard}>
+            {/* Echtes Porträt (seit 07.09.2026). `aria-hidden`, weil Name und Rolle
+                direkt daneben stehen – das Bild trägt keine eigene Information. */}
             <div className={styles.pt} aria-hidden="true">
-              <span className={styles.tag}>{data.portraitTag}</span>
-              <svg
-                width="44"
-                height="44"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                focusable="false"
-              >
-                <circle cx="12" cy="9" r="4" />
-                <path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6" />
-              </svg>
+              <Image
+                src={PERSONEN[i].hoch}
+                alt=""
+                fill
+                sizes="(max-width: 900px) 100vw, 380px"
+                className={styles.foto}
+              />
             </div>
             <div className={styles.tb}>
               <div className={styles.rl}>{p.rolle}</div>

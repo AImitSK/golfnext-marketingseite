@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { FRED } from "@/lib/people";
 import { Button } from "@/components/ui/Button";
 import type { FooterClose as FooterCloseType } from "@/content/types";
 import styles from "./FooterClose.module.css";
@@ -28,22 +30,16 @@ export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
               Fallback auf die einzeilige `persoenlicheZeile` (Legacy). */}
           {person ? (
             <div className={styles.person}>
+              {/* Echtes Porträt (seit 07.09.2026). `aria-hidden`, weil Name und
+                  Rolle direkt daneben stehen. */}
               <span className={styles.personPh} aria-hidden="true">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <circle cx="12" cy="9" r="3.4" />
-                  <path d="M4.8 20c1.5-3.4 4.2-5.1 7.2-5.1s5.7 1.7 7.2 5.1" />
-                </svg>
+                <Image
+                  src={FRED.quadrat}
+                  alt=""
+                  width={46}
+                  height={46}
+                  className={styles.personFoto}
+                />
               </span>
               <span className={styles.personText}>
                 <b>{person.name}</b>

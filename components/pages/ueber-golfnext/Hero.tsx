@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import { PERSONEN } from "@/lib/people";
 import { useStagedInView } from "@/components/motion/useStagedInView";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -72,23 +74,18 @@ export function Hero({
         <div ref={ref} className={peopleClass} aria-hidden="true">
           {data.people.map((p, i) => (
             <div key={p.name} className={`${styles.pcard} ${i === 0 ? styles.fred : styles.stefan}`}>
+              {/* Echtes Porträt (seit 07.09.2026). Die Karte trägt `aria-hidden`,
+                  weil Name und Rolle direkt darunter im Text stehen – das Bild
+                  wiederholt nur, was ohnehin lesbar ist. Deshalb leeres `alt`. */}
               <div className={styles.ph}>
-                <span className={styles.tag}>{p.tag}</span>
-                <svg
-                  width="64"
-                  height="64"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <circle cx="12" cy="9" r="4" />
-                  <path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6" />
-                </svg>
+                <Image
+                  src={PERSONEN[i].hoch}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1080px) 50vw, 320px"
+                  className={styles.foto}
+                  priority={i === 0}
+                />
               </div>
               <div className={styles.cap}>
                 <b>{p.name}</b>

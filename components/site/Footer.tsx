@@ -12,8 +12,12 @@ import styles from "./Footer.module.css";
  * persönlicher Kontakt und Rechtszeile.
  *
  * Datengetrieben aus config/site-structure.ts: Modulnamen aus MODULE, Kontakt aus
- * KONTAKT. Modul-/Impressum-/Datenschutz-Links laufen über isLinkable – nicht-live
- * Ziele bleiben `#` und werden automatisch aktiv, sobald ihr Status auf `live` geht.
+ * KONTAKT. Modul-/Impressum-/Datenschutz-Einträge laufen über isLinkable: nicht-live
+ * Ziele stehen als reiner Text da statt als `href="#"` (Briefing 0022 – ein Link, der
+ * nichts tut, ist für Tastatur und Screenreader ein toter Bedienpunkt). Sie werden
+ * automatisch zu Links, sobald ihr Status in site-structure auf `live` geht.
+ * `footerClose` ist optional: fehlt es, entfällt der Abschluss-CTA und der Footer
+ * beginnt mit der Modul-Landkarte (leere Seiten, Briefing 0022).
  * Der Modulstatus (im-einsatz/pilot/in-entwicklung) wird bewusst NICHT mehr angezeigt
  * (Briefing 0014): keine Status-Punkte, keine Legende. Reine Server-Komponente; nur
  * „Cookie-Einstellungen" ist ein kleiner Client-Button. Enthält bewusst KEINE <h1>.
@@ -25,21 +29,22 @@ const GRUPPEN = [
   { key: "clubprozesse", label: "Entlastung nach innen", ops: true },
 ] as const;
 
-function moduleHref(slug: string): string {
-  const path = `/module/${slug}`;
-  return isLinkable(path) ? path : "#";
+/**
+ * Eintrag der Bodenleiste: Link, solange die Route `live` ist – sonst derselbe Text
+ * ohne Link (kein `href="#"`, kein toter Fokuspunkt).
+ */
+function BarEntry({ path, label }: { path: string; label: string }) {
+  return isLinkable(path) ? <a href={path}>{label}</a> : <span>{label}</span>;
 }
 
-function routeHref(path: string): string {
-  return isLinkable(path) ? path : "#";
-}
-
-export function Footer({ footerClose }: { footerClose: FooterCloseType }) {
+export function Footer({ footerClose }: { footerClose?: FooterCloseType }) {
   const telHref = `tel:${KONTAKT.telefon.replace(/\s+/g, "")}`;
 
   return (
     <footer className={styles.footer}>
-      <FooterClose footerClose={footerClose} />
+      {/* Ohne `footerClose` bleibt der Abschluss-CTA weg – über einer leeren Seite
+          (Platzhalter, 404, Fehlerseite) steht kein Verkaufsblock (Briefing 0022). */}
+      {footerClose ? <FooterClose footerClose={footerClose} /> : null}
 
       {/* Zone 2 · Modul-Landkarte aus MODULE */}
       <section className={styles.map} aria-label="Module im Überblick">
@@ -56,11 +61,20 @@ export function Footer({ footerClose }: { footerClose: FooterCloseType }) {
               >
                 <b>{gruppe.label}</b>
                 <div className={styles.mods}>
-                  {MODULE.filter((m) => m.gruppe === gruppe.key).map((m) => (
-                    <a key={m.slug} href={moduleHref(m.slug)} className={styles.mod}>
-                      <b>{m.name}</b>
-                    </a>
-                  ))}
+                  {MODULE.filter((m) => m.gruppe === gruppe.key).map((m) => {
+                    const path = `/module/${m.slug}`;
+                    // Die Landkarte zeigt alle zwölf Module; verlinkt wird nur, was
+                    // schon existiert. Nicht-live Module stehen als Name da.
+                    return isLinkable(path) ? (
+                      <a key={m.slug} href={path} className={styles.mod}>
+                        <b>{m.name}</b>
+                      </a>
+                    ) : (
+                      <span key={m.slug} className={styles.mod}>
+                        <b>{m.name}</b>
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -98,8 +112,8 @@ export function Footer({ footerClose }: { footerClose: FooterCloseType }) {
           <Wortmarke />
         </Link>
         <span>© 2026 GolfNext</span>
-        <a href={routeHref("/impressum")}>Impressum</a>
-        <a href={routeHref("/datenschutz")}>Datenschutz</a>
+        <BarEntry path="/impressum" label="Impressum" />
+        <BarEntry path="/datenschutz" label="Datenschutz" />
         <CookieSettingsButton className={styles.cookieBtn} />
         {/* Die Zeile „Ein Produkt von SK Online Marketing und Fred Hoffmann" gehört laut
             Umsetzungsbriefing 3.1 (Tabelle 6) nicht in den sichtbaren Footer, sondern ins

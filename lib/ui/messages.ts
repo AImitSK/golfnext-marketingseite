@@ -7,8 +7,10 @@
  *
  * Tonalität (docs/08 §4): Sie-Form, ein Satz, benennt den nächsten Schritt, keine
  * Technik, keine Ausrufezeichen, kein „Oops". Das sind System-Texte (kein
- * Fred-Marketing) – bewusst knapp gehalten; die echten Seiten (error.tsx,
- * not-found.tsx, Empty-Einsatz) folgen in Phase 2/3.
+ * Fred-Marketing) – bewusst knapp gehalten. `notFound`, `error` und `platzhalter`
+ * tragen seit Briefing 0022 die echten Seiten (`app/not-found.tsx`,
+ * `app/(site)/error.tsx`, `components/site/PlatzhalterSeite.tsx`); der
+ * `Empty`-Einsatz folgt mit dem Ratgeber-Filter in Phase 3.
  */
 export const uiMessages = {
   /** sr-only-Ansage am ladenden Container (Skeleton, docs/08 §5). */
@@ -33,6 +35,22 @@ export const uiMessages = {
     title: "Für diesen Filter gibt es noch keine Artikel",
     body: "Sie sehen sich am besten alle Artikel an und grenzen danach neu ein.",
     action: "Alle Artikel ansehen",
+  },
+
+  /**
+   * Platzhalterseite für Routen, die es schon gibt, aber noch keinen Inhalt haben
+   * (`/praxis`, `/team`, `/kontakt`, `/module/<slug>` – Briefing 0022). Bewusst ohne
+   * Zeitangabe und ohne Marketing-Zeile: die Seite sagt nur, dass hier noch nichts
+   * steht, und zeigt den Weg zurück. Die `<h1>` ist das `label` der Route aus
+   * `config/site-structure.ts` und steht deshalb nicht in diesem Katalog.
+   */
+  platzhalter: {
+    eyebrow: "In Arbeit",
+    body: "Dieser Bereich entsteht gerade. Sobald die Inhalte stehen, finden Sie sie hier.",
+    actionHome: "Zur Startseite",
+    /** Nur auf /kontakt: die Kontaktdaten stehen im Fußbereich jeder Seite. */
+    kontaktHinweis:
+      "Bis dahin erreichen Sie uns direkt – Telefon und E-Mail stehen unten im Fußbereich.",
   },
 
   /** Segment-Fehlerseite, wenn Inhalte nicht geladen werden können (error.tsx, Phase 3). */

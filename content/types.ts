@@ -8,7 +8,7 @@ export interface Cta {
   label: string;
   hint?: string;
   /** Zieltyp; die URL kommt aus lib/links.ts (.env), nie hart kodiert */
-  target: "erstgespraech" | "livedemo" | "pakete" | "team" | "kontakt" | "intern";
+  target: "erstgespraech" | "livedemo" | "pakete" | "kontakt" | "intern";
   href?: string; // nur bei target "intern"
 }
 

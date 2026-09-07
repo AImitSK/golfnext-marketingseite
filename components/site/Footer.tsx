@@ -12,10 +12,11 @@ import styles from "./Footer.module.css";
  * persönlicher Kontakt und Rechtszeile.
  *
  * Datengetrieben aus config/site-structure.ts: Modulnamen aus MODULE, Kontakt aus
- * KONTAKT. Modul-/Impressum-/Datenschutz-Einträge laufen über isLinkable: nicht-live
- * Ziele stehen als reiner Text da statt als `href="#"` (Briefing 0022 – ein Link, der
- * nichts tut, ist für Tastatur und Screenreader ein toter Bedienpunkt). Sie werden
- * automatisch zu Links, sobald ihr Status in site-structure auf `live` geht.
+ * KONTAKT. Impressum und Datenschutz laufen über isLinkable: nicht-live Ziele stehen
+ * als reiner Text da statt als `href="#"` (Briefing 0022 – ein Link, der nichts tut,
+ * ist für Tastatur und Screenreader ein toter Bedienpunkt). Sie werden automatisch zu
+ * Links, sobald ihr Status in site-structure auf `live` geht. Die zwölf Modulnamen
+ * sind seit Briefing 0023 dauerhaft Text: Modulseiten gibt es nicht mehr.
  * `footerClose` ist optional: fehlt es, entfällt der Abschluss-CTA und der Footer
  * beginnt mit der Modul-Landkarte (leere Seiten, Briefing 0022).
  * Der Modulstatus (im-einsatz/pilot/in-entwicklung) wird bewusst NICHT mehr angezeigt
@@ -61,20 +62,13 @@ export function Footer({ footerClose }: { footerClose?: FooterCloseType }) {
               >
                 <b>{gruppe.label}</b>
                 <div className={styles.mods}>
-                  {MODULE.filter((m) => m.gruppe === gruppe.key).map((m) => {
-                    const path = `/module/${m.slug}`;
-                    // Die Landkarte zeigt alle zwölf Module; verlinkt wird nur, was
-                    // schon existiert. Nicht-live Module stehen als Name da.
-                    return isLinkable(path) ? (
-                      <a key={m.slug} href={path} className={styles.mod}>
-                        <b>{m.name}</b>
-                      </a>
-                    ) : (
-                      <span key={m.slug} className={styles.mod}>
-                        <b>{m.name}</b>
-                      </span>
-                    );
-                  })}
+                  {/* Die Landkarte nennt alle zwölf Module – als Namen, nicht als
+                      Links: Modulseiten gibt es seit Briefing 0023 nicht mehr. */}
+                  {MODULE.filter((m) => m.gruppe === gruppe.key).map((m) => (
+                    <span key={m.slug} className={styles.mod}>
+                      <b>{m.name}</b>
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}

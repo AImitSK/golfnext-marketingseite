@@ -16,12 +16,17 @@ import { uiMessages } from "@/lib/ui/messages";
  * in der Seite selbst gerendert (den Footer bringt `MeldungsSeite` mit), so verlangt
  * es docs/08 („error.tsx und not-found.tsx rendern Header und Footer").
  *
- * Zweiter Fall: `notFound()` aus einer Segment-Route (unbekannter Modul-Slug). Next
- * 16 rendert dafür ebenfalls diese Wurzel-404 – ein `not-found.tsx` in `(site)` oder
- * im Slug-Segment wird nicht herangezogen (nachgemessen, Briefing 0022) –, dann aber
- * INNERHALB der Shell, deren Header schon steht. Für diesen Fall trägt der Header
- * hier `fallback`: `app/globals.css` blendet ihn aus, wenn ihm bereits ein Header
- * vorausgeht. So bleibt es in beiden Fällen bei genau einer Kopfzeile.
+ * Zweiter Fall: `notFound()` aus einer Segment-Route. Next 16 rendert dafür ebenfalls
+ * diese Wurzel-404 – ein `not-found.tsx` in `(site)` oder im Slug-Segment wird nicht
+ * herangezogen (nachgemessen, Briefing 0022) –, dann aber INNERHALB der Shell, deren
+ * Header schon steht. Für diesen Fall trägt der Header hier `fallback`:
+ * `app/globals.css` blendet ihn aus, wenn ihm bereits ein Header vorausgeht. So bleibt
+ * es in beiden Fällen bei genau einer Kopfzeile.
+ *
+ * Dieser zweite Fall tritt seit Briefing 0023 nirgends mehr auf: `/module/[slug]` war
+ * die einzige Route der Shell mit `notFound()` und ist gelöscht. Er kommt in Phase 3
+ * mit `/praxis/[slug]` zurück – zusammen mit dem offenen Punkt, dass die Seite in
+ * dieser Variante ohne JavaScript leer bleibt (docs/entscheidungen.md).
  *
  * Der Statuscode 404 kommt von Next selbst.
  */

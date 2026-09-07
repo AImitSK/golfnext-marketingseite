@@ -16,7 +16,7 @@ import styles from "./PlatzhalterSeite.module.css";
  *   Platzhalterseite auch `app/not-found.tsx` und `app/(site)/error.tsx`, damit die
  *   drei leeren Seiten identisch aussehen und nur einmal gepflegt werden.
  * - `PlatzhalterSeite` – der Fall „Route existiert, Inhalt fehlt noch"
- *   (`/praxis`, `/team`, `/kontakt`, `/module/<slug>`).
+ *   (`/praxis` und `/kontakt`; `/team` und `/module/<slug>` sind mit Briefing 0023 entfallen).
  *
  * Es gibt für diese Seiten keinen Mock; die Schale entsteht aus den vorhandenen
  * Tokens und Bausteinen. **Keine freien Texte in der Komponente:** alle sichtbaren

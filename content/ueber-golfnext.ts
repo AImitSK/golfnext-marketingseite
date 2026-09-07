@@ -269,7 +269,11 @@ export const ueberGolfnextWissen: WissenData = {
       lesezeit: "Lesezeit folgt",
     },
   ],
-  alleArtikel: { label: "Alle Artikel", path: "/ratgeber" },
+  // Ziel des „Alle Artikel"-Links: seit 07.09.2026 heißt der Blog `/praxis`;
+  // `/ratgeber` gibt es nicht mehr (Briefing 0023). Nur der Pfad ändert sich,
+  // das Label bleibt wortgleich. Der Link aktiviert sich über `internalHref`,
+  // sobald `/praxis` live ist.
+  alleArtikel: { label: "Alle Artikel", path: "/praxis" },
 };
 
 export const ueberGolfnext: PageContent = {

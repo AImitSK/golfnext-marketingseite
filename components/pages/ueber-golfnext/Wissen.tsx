@@ -8,8 +8,8 @@ import styles from "./Wissen.module.css";
 /**
  * 6 · „Wissen“ – geteilte Sektions-Schale (paper, overflowHidden für den Slider-Bleed)
  * mit dem horizontalen Artikel-Slider (Client-Teilkomponente) und dem „Alle
- * Artikel“-Link darunter (Ziel /ratgeber, solange live – sonst `#` via resolveCta/
- * intern). Texte wortgleich aus `content/ueber-golfnext.ts`.
+ * Artikel“-Link darunter (Ziel /praxis, solange live – sonst `#` via internalHref).
+ * Texte wortgleich aus `content/ueber-golfnext.ts`.
  */
 export function Wissen({
   eyebrow,

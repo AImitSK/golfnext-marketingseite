@@ -87,7 +87,7 @@ export function Formular({
           <div className={styles.person}>
             <span className={styles.avatar}>
               {/* Echtes Porträt (seit 07.09.2026); Name und Rolle stehen darunter. */}
-              <Image src={FRED.quadrat} alt="" width={64} height={64} className={styles.avatarFoto} />
+              <Image src={FRED.quadrat} alt="" width={64} height={64} className={styles.avatarFoto} unoptimized />
             </span>
             <b className={styles.personName}>{KONTAKT.name}</b>
             <p className={styles.personRole}>{seitenspalte.rolleLang}</p>

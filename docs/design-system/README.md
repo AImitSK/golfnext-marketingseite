@@ -36,15 +36,16 @@ Mocks öffnen: einfach im Browser. Sie laden Archivo und Inter von Google Fonts 
 | 3.7 | Pakete, Fassung 2 | `/pakete` | `3.7-pakete.html` | `3.6-pakete-briefing.md` + `../02-preislogik.md` | **gültig**, von Stefan freigegeben |
 | 3.8 | Über GolfNext, Fassung 1 | – | `3.8-ueber-golfnext.html` | `3.8-ueber-golfnext-briefing.md` | **Archiv, nicht bauen** (ersetzt durch 3.8b) |
 | 3.8b | Über GolfNext, Neufassung v01 | `/ueber-golfnext` | `3.8b-ueber-golfnext-neufassung.html` | `../briefings/0019-ueber-golfnext.md` | **gültig**, Stefan (06.09.2026). Layout wie 3.2c. **Modulstatus-Inhalte (Abschnitt 3/„Grundsätze" mit Im Einsatz/Pilot/In Entwicklung) NICHT übernehmen** (Entscheidung Stefan) |
-| 3.9a | Praxis, Übersicht | `/praxis` | `3.9a-praxis-uebersicht.html` | `../briefings/0020-praxis.md` | **gültig**, Stefan (06.09.2026). Layout wie 3.2c. **Kein Modulstatus** |
-| 3.9b | Praxis, Artikel | `/praxis/[slug]` | `3.9b-praxis-artikel.html` | `../briefings/0020-praxis.md` | **gültig**, Stefan (06.09.2026). Artikel-Layout. **Kein Modulstatus** |
-| – | Team | `/team` | – | fehlt | wartet auf Briefing (CTA „Unser Team kennenlernen" zeigt hierhin) |
+| 3.9a | Praxis, Übersicht (zugleich der Blog) | `/praxis` | `3.9a-praxis-uebersicht.html` | Content aus Sanity (Phase 3) | **gültig**, Stefan (06.09.2026). Layout wie 3.2c. **Kein Modulstatus.** Die neun Artikel im Mock sind Beispieltexte ohne Freigabe |
+| 3.9b | Praxis, Artikel | `/praxis/[slug]` | `3.9b-praxis-artikel.html` | Content aus Sanity (Phase 3) | **gültig**, Stefan (06.09.2026). Artikel-Layout. **Kein Modulstatus** |
 | – | Kontakt | `/kontakt` | – | **kein Briefing nötig** | **beschlossen** (Stefan, 07.09.2026): schlichte Seite mit dem UI-Kit-Formular nach `docs/10` §40, entsteht in Masterplan 4.3. Bis dahin Platzhalter (0022); Ziel des CTA-Fallbacks aus `lib/links.ts` |
-| – | Modulseiten | `/module/<slug>` | – | fehlt | wartet auf Briefing; Footer-Systemkarte verlinkt dorthin |
-| – | Ratgeber | `/ratgeber`, `/ratgeber/[slug]` | – | Content aus Sanity | Layout aus Bausteinen ableiten (Karten 2.5, Artikel-Typografie 2.2) |
 | – | Impressum, Datenschutz | `/impressum`, `/datenschutz` | – | `../legal/` | Texte vorhanden |
 
-Navigation (Kapitel 2.4, von Fred festgelegt): Plattform · Wachstum & Vertrieb · Clubprozesse · Praxis · Pakete · Über GolfNext · CTA „Online-Erstgespräch vereinbaren". Plattform und Clubprozesse erhalten Modul-Dropdowns. Footer-Systemkarte: Abschluss-CTA, Modulkarte (zwölf Module, Status-Punkte), Kontakt, Rechtliches.
+Entfallen am 07.09.2026 (Fred/Stefan, Briefing 0023): **Team** (`/team` – der Inhalt steckt im Abschnitt „Die Menschen dahinter" auf `/ueber-golfnext`), **Ratgeber** (`/ratgeber` – der Blog heißt `/praxis`) und die zwölf **Modulseiten** (`/module/<slug>` – die Namen bleiben in der Footer-Systemkarte, dort ohne Link).
+
+Navigation (Struktur v2, Fred/Stefan 07.09.2026 – ersetzt Kapitel 2.4): Plattform ▾ (So arbeitet GolfNext) · Wachstum & Vertrieb · Clubprozesse · Pakete · Über GolfNext ▾ (Praxis, Kontakt) · CTA „Online-Erstgespräch vereinbaren". Clubprozesse hat kein Dropdown mehr. Nicht-`live` Punkte werden nicht gerendert, deshalb zeigt die Navigation aktuell fünf reine Links ohne Dropdown. Footer-Systemkarte: Abschluss-CTA, Modulkarte (zwölf Modulnamen als Text, ohne Status-Punkte), Kontakt, Rechtliches.
+
+> **Die Kopfzeilen in allen Mocks unter `mocks/` zeigen die alte Navigation** (Praxis als Hauptpunkt, Modul-Dropdowns). Das ist kein Fehler und wird nicht korrigiert: die Mocks bleiben verbindlich für die **Seiteninhalte**, für die Navigation gilt die Entscheidung vom 07.09.2026. Den gebauten Header nicht an die Mock-Köpfe zurückanpassen.
 
 ## Gemeinsame Bausteine
 

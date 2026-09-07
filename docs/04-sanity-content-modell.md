@@ -5,14 +5,17 @@ Studio eingebettet unter `/studio`. Zugang für Fred als Redakteur (Rolle Editor
 
 ## Was in Sanity liegt – und was nicht
 
-**In Sanity:** Ratgeberartikel, Rubriken, Autoren, FAQs, Site-Einstellungen (Kontakt, Links, Default-SEO).
+**In Sanity:** Praxis-Artikel, Rubriken, Autoren, FAQs, Site-Einstellungen (Kontakt, Links, Default-SEO).
+
+> **Struktur v2 (07.09.2026, Briefing 0023):** Der Blog liegt unter `/praxis`; die Route `/ratgeber` gibt
+> es nicht mehr. Der Dokumenttyp heißt weiterhin `post` – nur die öffentlichen Adressen ändern sich.
 **Nicht in Sanity:** die statischen Marketingseiten (Startseite, Plattform, Pakete …). Ihre Texte sind von Fred
 freigegeben und ändern sich selten; sie leben im Code, damit Layout und Text zusammenbleiben. Sollte Fred später
 Texte selbst pflegen wollen, ist das eine eigene Entscheidung (dann Sektions-Dokumente pro Seite).
 
 ## Dokumenttypen
 
-### `post` – Ratgeberartikel
+### `post` – Praxis-Artikel
 | Feld | Typ | Regeln |
 |---|---|---|
 | `title` | string | Pflicht, ≤ 90 Zeichen |
@@ -47,7 +50,7 @@ Im Studio als einzelnes Dokument in der Struktur (kein „Neu anlegen").
 ## Studio-Struktur
 
 ```
-Ratgeber
+Praxis
   Artikel (nach Datum)
   Rubriken
   Autoren
@@ -62,12 +65,12 @@ Deutsche Beschriftungen (`title` in `defineField`). Vision-Tool nur für Adminis
 - Listen: `ArticleCard` (Bild 16/10, Rubrik-Chip, Titel, Excerpt, Datum, Autor).
 - Artikel: max 70ch, 17–18 px, H2 `clamp(22px,2.2vw,28px)`, Bild mit Caption, `callout` als `Hint`-Variante mit Fläche, `cta` als `Button`/`TextLink`.
 - Autorenbox unter dem Artikel; „Weitere Artikel aus <Rubrik>" (3 Karten); Abschluss-CTA zum Erstgespräch (kein Newsletter).
-- Rubrikseite: Beschreibung + Liste; Filter auf `/ratgeber` per Searchparam `?rubrik=<slug>` (serverseitig).
+- Rubrikseite: Beschreibung + Liste; Filter auf `/praxis` per Searchparam `?rubrik=<slug>` (serverseitig).
 
 ## Caching und Revalidierung
 
 - `fetch` mit `next: { tags: ['post'] }` etc., `revalidate: 3600` als Sicherheitsnetz.
-- Webhook (Sanity → `POST https://www.golfnext.de/api/revalidate`), Secret in `SANITY_REVALIDATE_SECRET`, Signaturprüfung mit `@sanity/webhook` `isValidSignature`. Payload-Projektion: `{_type, "slug": slug.current}` → `revalidateTag(_type)` und bei `post` zusätzlich `revalidatePath('/ratgeber/'+slug)`.
+- Webhook (Sanity → `POST https://www.golfnext.de/api/revalidate`), Secret in `SANITY_REVALIDATE_SECRET`, Signaturprüfung mit `@sanity/webhook` `isValidSignature`. Payload-Projektion: `{_type, "slug": slug.current}` → `revalidateTag(_type)` und bei `post` zusätzlich `revalidatePath('/praxis/'+slug)`.
 - Draft-Mode: `/api/draft?secret=…&slug=…` setzt `draftMode().enable()`, Client liest mit Token und `perspective: 'previewDrafts'`.
 
 ## Zugriff und Sicherheit

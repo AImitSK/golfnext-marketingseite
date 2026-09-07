@@ -11,26 +11,27 @@
 | `/clubprozesse` | Clubprozesse digital – GolfNext | aus Briefing |
 | `/pakete` | GolfNext Pakete und Preise für Golfclubs | „GolfNext bietet drei Ausbaustufen für Golfclubs: digitale Grundlage, systematisches Wachstum und eine vollständige digitale Clubzentrale." – **an Fassung 2 anpassen** (Sockel + drei Stufen) **[S]** |
 | `/ueber-golfnext` | Über GolfNext \| Wir hängen am Golf. Nicht am Gestern. | „Von imageGolf zur GolfNext-Plattform: unsere Geschichte, die Menschen dahinter und unser Antrieb für mehr Mitglieder und mehr Zeit fürs Clubleben." |
-| `/ratgeber/*` | `<Artikeltitel> – GolfNext Ratgeber` | Excerpt |
+| `/praxis/*` | `<Artikeltitel> – GolfNext Praxis` | Excerpt |
 
 Titel-Suffix „ – GolfNext" über `title.template` in `app/layout.tsx`, außer wo der Titel schon die Marke enthält. `metadataBase = NEXT_PUBLIC_SITE_URL`, `alternates.canonical` je Route, `openGraph.locale = 'de_DE'`.
 
 ## OG-Bilder
 
-`app/opengraph-image.tsx` (und je Route bei Bedarf): 1200×630, Navy-Verlauf wie Hero, Wortmarke weiß oben links, Seitentitel Archivo 800 weiß, unten Domain in `on-dark-text`. Für Ratgeber: Artikeltitel + Rubrik. Fonts via `next/font` im Edge-Runtime laden (Archivo als Buffer).
+`app/opengraph-image.tsx` (und je Route bei Bedarf): 1200×630, Navy-Verlauf wie Hero, Wortmarke weiß oben links, Seitentitel Archivo 800 weiß, unten Domain in `on-dark-text`. Für Praxis-Artikel: Artikeltitel + Rubrik. Fonts via `next/font` im Edge-Runtime laden (Archivo als Buffer).
 
 ## Sitemap, robots, Indexierung
 
 - `app/sitemap.ts`: alle statischen Routen + Sanity-Artikel/Rubriken mit `lastModified`.
 - `app/robots.ts`: `Disallow: /studio, /api, /_bausteine`, Sitemap-URL.
 - Preview-Deployments: `X-Robots-Tag: noindex, nofollow`.
-- Platzhalter-Routen (Praxis, Team, Kontakt, Module) mit `robots: { index: false }` bis Inhalte vorliegen.
+- Platzhalter-Routen (Praxis, Kontakt) mit `robots: { index: false }` bis Inhalte vorliegen.
+- Entfallene Routen (`/team`, `/ratgeber`, `/module/<slug>` – Briefing 0023) liefern 404 **ohne Weiterleitung**: sie waren nie öffentlich erreichbar. Nichts verlinkt mehr darauf.
 
 ## Strukturierte Daten (JSON-LD)
 
 - `Organization` global: name GolfNext, url, logo (Signet 512), contactPoint (Telefon, E-Mail), founder Fred Hoffmann, address aus Impressum.
 - `FAQPage` auf `/pakete` aus den Sanity-FAQs.
-- `Article` auf Ratgeber-Artikeln (headline, datePublished, author, image, publisher).
+- `Article` auf Praxis-Artikeln (headline, datePublished, author, image, publisher).
 - `BreadcrumbList` auf Unterseiten.
 
 ## Weiterleitungen
@@ -38,7 +39,7 @@ Titel-Suffix „ – GolfNext" über `title.template` in `app/layout.tsx`, auße
 Alte Website golfnext.de: URL-Liste erheben **[S]** (Search Console → Seiten, oder Crawl mit Screaming Frog). Mindestens:
 - `/impressum/` → `/impressum` (301)
 - `/ueber-golfnext/` → `/ueber-golfnext` (Next ohne Trailing Slash; `trailingSlash: false`)
-- Blogartikel der alten Seite → passende Ratgeberartikel oder `/ratgeber`
+- Blogartikel der alten Seite → passende Praxis-Artikel oder `/praxis`
 
 Eintragen in `next.config.ts` `redirects()`; nach Launch 404-Log in Vercel prüfen.
 

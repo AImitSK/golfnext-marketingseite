@@ -1,0 +1,176 @@
+/* Portiert aus docs/design-system/mocks/3.3b-so-arbeitet-golfnext-neufassung.html
+   (Abschnitt 3 · .hand/.hcard/.harrow/.handnote). Farben auf --gn-* umgestellt,
+   literale Tints kommentiert. Große Flächen: --gn-radius-lg (12), Bedienelemente 4 px.
+   Beide Karten sind SCHEMATISCHE ILLUSTRATIONEN (aria-hidden), kein Screenshot. */
+
+.hand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+  gap: 0;
+  align-items: center;
+  margin-top: 56px;
+}
+.hcard {
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  min-width: 0;
+  box-shadow: 0 40px 80px -50px rgba(1, 65, 91, 0.5); /* Navy-Schatten, 1:1 aus Mock */
+}
+.hh {
+  height: 42px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-mist);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+}
+.hh i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d5cfc3; /* ruhiger Fensterpunkt, Mock-Wert */
+  display: block;
+  flex: 0 0 auto;
+}
+.hb {
+  padding: 22px 24px 24px;
+}
+.prof {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.av {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gn-navy);
+  color: #fff;
+  font-family: var(--gn-font-display);
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prof b {
+  display: block;
+  font-size: 16px;
+  color: var(--gn-ink);
+}
+.prof span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin-top: 2px;
+}
+.tl div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--gn-ink);
+  padding: 9px 0;
+  border-top: 1px solid var(--gn-line);
+}
+.tl i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  flex: 0 0 auto;
+}
+.tl i.hot {
+  background: var(--gn-navy);
+  box-shadow: 0 0 0 4px rgba(1, 65, 91, 0.14); /* weicher Navy-Ring, Mock-Wert */
+}
+.tl span {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--gn-muted);
+}
+
+/* Rechte Karte: die Aufgabe für das Clubteam. */
+.task {
+  border-color: var(--gn-navy);
+}
+.task .hh {
+  background: var(--gn-navy);
+  color: var(--gn-signal); /* Signalgrün als Text auf Navy (Grün-Regel: erlaubt) */
+  border-color: var(--gn-navy);
+}
+.task .hh i {
+  background: var(--gn-signal);
+}
+.job {
+  font-family: var(--gn-font-display);
+  font-size: clamp(19px, 1.9vw, 23px);
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.why {
+  font-size: 14px;
+  color: var(--gn-muted);
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+.act {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.act span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gn-navy);
+  background: var(--gn-signal); /* Signalgrün-Fläche mit Navy-Text (Grün-Regel ok) */
+  border-radius: var(--gn-radius);
+  padding: 9px 14px;
+}
+.act span.g {
+  color: var(--gn-muted);
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+}
+
+.harrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gn-muted);
+}
+.harrow svg {
+  width: 26px;
+  height: 26px;
+}
+
+.handnote {
+  margin-top: 30px;
+  font-size: 15px;
+  color: var(--gn-ink);
+  max-width: 62ch;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .hand {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .harrow {
+    transform: rotate(90deg);
+    height: 34px;
+  }
+}

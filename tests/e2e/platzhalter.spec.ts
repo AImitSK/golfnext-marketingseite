@@ -11,7 +11,9 @@ import { uiMessages } from "../../lib/ui/messages";
  * Praxis-Artikel aus den Mocks 3.9a/3.9b, tote `#`-Links.
  */
 const PLATZHALTER = [
-  { path: "/praxis", titel: "Praxis", zurueck: "/ueber-golfnext" },
+  // `/praxis` trägt seit 07.09.2026 das Menü-Label „Ratgeber" (Entscheidung Stefan);
+  // die Adresse bleibt `/praxis`. Die Platzhalterseite betitelt sich mit dem Label.
+  { path: "/praxis", titel: "Ratgeber", zurueck: "/ueber-golfnext" },
   { path: "/kontakt", titel: "Kontakt", zurueck: null },
 ];
 
@@ -145,7 +147,7 @@ test.describe("Platzhalter ohne JavaScript", () => {
 
   test("/praxis ist ohne JS vollständig lesbar", async ({ page }) => {
     await page.goto("/praxis");
-    await expect(page.locator("h1")).toHaveText("Praxis");
+    await expect(page.locator("h1")).toHaveText("Ratgeber");
     await expect(page.getByText(uiMessages.platzhalter.body, { exact: true })).toBeVisible();
     await expect(
       page.getByRole("link", { name: uiMessages.platzhalter.actionHome, exact: true }),

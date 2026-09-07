@@ -114,10 +114,12 @@ export const ROUTES: Route[] = [
   {
     path: "/plattform/so-arbeitet-golfnext",
     label: "So arbeitet GolfNext",
-    status: "geplant",
+    // Seit Briefing 0024 gebaut → `live`. Damit erscheint das Plattform-Dropdown
+    // zum ersten Mal (es hat genau diesen einen Punkt).
+    status: "live",
     parent: "/plattform",
-    mock: "mocks/3.3-so-arbeitet-golfnext.html",
-    briefing: "briefings/3.3-so-arbeitet-golfnext-briefing.md",
+    mock: "mocks/3.3b-so-arbeitet-golfnext-neufassung.html",
+    briefing: "briefings/0024-so-arbeitet-golfnext.md",
     title: null,
     description: null,
   },
@@ -150,7 +152,11 @@ export const ROUTES: Route[] = [
     // Die Adresse bleibt `/praxis` (Entscheidung Stefan) – nur die Menüposition wandert,
     // deshalb keine Weiterleitung. `/praxis` ist zugleich der Blog (früher `/ratgeber`).
     path: "/praxis",
-    label: "Praxis",
+    // Menü-Label „Ratgeber", Adresse `/praxis` (Entscheidung Stefan, 07.09.2026).
+    // Beides ist gewollt und kein Versehen: die URL war schon entschieden, im Menü
+    // liest sich „Ratgeber" besser. Der Seiteninhalt selbst spricht weiter von
+    // „Praxis" (Freds freigegebener Wortlaut in Mock 3.9a) – nicht angleichen.
+    label: "Ratgeber",
     status: "geplant",
     parent: "/ueber-golfnext",
     mock: "mocks/3.9a-praxis-uebersicht.html",

@@ -1,0 +1,255 @@
+/* Portiert aus docs/design-system/mocks/3.3b-so-arbeitet-golfnext-neufassung.html
+   (.hero aus dem geteilten Neufassungs-Layout + .stack/.mc dieser Seite). Farben auf
+   --gn-* umgestellt, literale Tints kommentiert. Große Flächen: --gn-radius-lg (12).
+   Bewegung: Der Endzustand (alle vier Karten sichtbar) steht im Server-HTML; nur mit
+   JS und ohne reduzierte Bewegung setzt die Komponente kurz `.start` und löst es beim
+   Sichtbarwerden gestaffelt auf. Bewegt nur opacity/transform (kein CLS – die Höhe
+   des Stapels ist fest reserviert). */
+
+.hero {
+  background: linear-gradient(
+    160deg,
+    var(--gn-navy-deep) 0%,
+    var(--gn-navy) 58%,
+    #065877 100%
+  ); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  color: #fff;
+  position: relative;
+  overflow: hidden; /* fängt den Bleed des Mail-Stapels (width > 100%) ab → kein Seiten-Overflow */
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    1000px 500px at 88% -10%,
+    rgba(127, 211, 240, 0.18),
+    transparent 62%
+  ); /* --gn-sky als Schein */
+  pointer-events: none;
+}
+.in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  padding: 96px 40px 110px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+.txt {
+  min-width: 0;
+  padding-right: 60px;
+}
+.h1 {
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 60px); /* 1:1 aus Mock (.hero h1) */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 19ch;
+  text-wrap: balance;
+  margin: 0;
+}
+.lead {
+  color: var(--gn-on-dark-text);
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  margin: 26px 0 0;
+  max-width: 50ch;
+  line-height: 1.62;
+}
+.acts {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 38px;
+}
+.b2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gn-on-dark-link);
+  font-weight: 600;
+  font-size: 15.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 3px;
+}
+.b2 svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+.trust {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  font-size: 13px;
+  color: var(--gn-on-dark-text);
+}
+.trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+  display: block;
+  flex: 0 0 auto;
+}
+
+/* ---- Der Mail-Stapel (illustrativ, kein Screenshot) ---- */
+.stack {
+  position: relative;
+  width: 128%; /* läuft rechts über den Rand hinaus (Bleed) */
+  min-width: 0;
+  height: 470px; /* Höhe vorab reserviert → kein CLS */
+}
+.mc {
+  position: absolute;
+  left: 0;
+  width: min(420px, 86%);
+  background: #fff;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.65); /* Tiefen-Schatten, 1:1 aus Mock */
+  padding: 16px 18px;
+  transition:
+    opacity 0.55s ease,
+    transform 0.65s var(--gn-ease);
+}
+/* Ausgangszustand (nur mit JS, kurz): die Karten laufen von unten nacheinander ein. */
+.start .mc {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.when {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  background: #e9f2f7; /* zarter Blau-Tint, Mock-Wert */
+  border-radius: 3px;
+  padding: 4px 9px;
+}
+.mc b {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 10px 0 6px;
+}
+.mc p {
+  font-size: 13px;
+  color: var(--gn-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.m1 {
+  top: 0;
+  z-index: 4;
+  transition-delay: 0.3s;
+}
+.m2 {
+  top: 112px;
+  left: 34px;
+  z-index: 3;
+  transition-delay: 0.75s;
+}
+.m3 {
+  top: 224px;
+  left: 68px;
+  z-index: 2;
+  transition-delay: 1.2s;
+}
+.m4 {
+  top: 336px;
+  left: 102px;
+  z-index: 1;
+  transition-delay: 1.65s;
+}
+/* Letzte Karte: die Übergabe an den Menschen – grüner Status statt blau. */
+.m4 .when {
+  color: var(--gn-ok);
+  background: var(--gn-ok-bg);
+}
+
+@media (max-width: 1180px) {
+  .txt {
+    padding-right: 40px;
+  }
+}
+@media (max-width: 1080px) {
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 52px;
+    padding: 70px 26px 90px;
+  }
+  .txt {
+    padding-right: 0;
+  }
+  .stack {
+    width: 100%;
+    height: 440px;
+  }
+  .mc {
+    width: min(420px, 80%);
+  }
+  .m2 {
+    left: 32px;
+  }
+  .m3 {
+    left: 64px;
+  }
+  .m4 {
+    left: 96px;
+  }
+}
+@media (max-width: 620px) {
+  .in {
+    padding: 70px 20px 90px;
+  }
+  .stack {
+    height: 400px;
+  }
+  .mc {
+    width: 88%;
+    padding: 13px 15px;
+  }
+  .mc b {
+    font-size: 14.5px;
+  }
+  .m1 {
+    top: 0;
+  }
+  .m2 {
+    top: 100px;
+    left: 20px;
+  }
+  .m3 {
+    top: 200px;
+    left: 40px;
+  }
+  .m4 {
+    top: 300px;
+    left: 60px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc {
+    transition: none;
+  }
+}

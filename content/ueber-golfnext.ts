@@ -100,13 +100,28 @@ export interface MenschenData {
 
 /* ────────────────────────── 5 · Gemeinsame Projekte (Logos) ────────────────────────── */
 
+/** Ein freigegebenes Clublogo im Raster „Gemeinsame Projekte“. */
+export interface ClubLogo {
+  /** Vollständiger Clubname – wird zum Alt-Text der Grafik. */
+  name: string;
+  /** Pfad der Datei unter `public/clubs`. */
+  datei: string;
+  /** Originalmaße der Datei – reservieren den Platz und verhindern CLS. */
+  breite: number;
+  hoehe: number;
+  /**
+   * Optischer Ausgleich: Höhe im Raster in Pixeln. Eine breite Wortmarke wirkt
+   * bei gleicher Höhe viel größer als ein rundes Wappen, deshalb bekommt jedes
+   * Logo seinen eigenen Wert statt einer gemeinsamen Deckelung.
+   */
+  rasterHoehe: number;
+}
+
 export interface ProjekteData {
-  /** Club-Namen bzw. „Logo folgt“ – beschriftete Platzhalter-Kacheln. */
-  logos: string[];
+  /** Clubs mit freigegebenem Logo. Keine Platzhalter-Kacheln mehr. */
+  logos: ClubLogo[];
   /** Text-Link „…Praxis“ (Ziel /praxis, bis live → #). */
   praxisLink: string;
-  /** Interner Vermerk zu Logos/Freigaben (bleibt wortgleich aus dem Mock). */
-  note: string;
 }
 
 /* ────────────────────────── 6 · Wissen (Artikel-Slider) ────────────────────────── */
@@ -212,21 +227,57 @@ export const ueberGolfnextMenschen: MenschenData = {
     "Ein gutes Gespräch lässt sich nicht automatisieren. Die Arbeit davor oft schon. Deshalb bauen wir Software, die dem Clubteam die Wiederholung abnimmt – nicht die Beziehung.",
 };
 
+/**
+ * Freigegebene Clublogos (Stefan, 07.09.2026). Damit entfallen die fünf
+ * „Logo folgt“-Platzhalter und der Vermerk „Logos und Freigaben: Fred liefert
+ * die endgültige Liste.“. „Münchner GC Eschenried“ ist entfallen – für diesen
+ * Club liegt kein Logo vor, und Platzhalter soll es hier nicht mehr geben.
+ */
 export const ueberGolfnextProjekte: ProjekteData = {
   logos: [
-    "Golfclub Rehburg-Loccum",
-    "GC Hainmühlen-Bremerhaven",
-    "Golfclub Widukind-Land",
-    "Golfclub Sittensen",
-    "Münchner GC Eschenried",
-    "Logo folgt",
-    "Logo folgt",
-    "Logo folgt",
-    "Logo folgt",
-    "Logo folgt",
+    // Breite Wortmarke – bleibt bewusst flacher, sonst dominiert sie die Reihe.
+    {
+      name: "Golfclub Rehburg-Loccum",
+      datei: "/clubs/rehburg-loccum.svg",
+      breite: 300,
+      hoehe: 83,
+      rasterHoehe: 46,
+    },
+    // Rundes Wappen – braucht Höhe, sonst wird die Umschrift unleserlich.
+    {
+      name: "GC Hainmühlen-Bremerhaven",
+      datei: "/clubs/hainmuehlen-bremerhaven.svg",
+      breite: 403,
+      hoehe: 403,
+      rasterHoehe: 62,
+    },
+    {
+      name: "Golfclub Widukind-Land",
+      datei: "/clubs/widukind-land.svg",
+      breite: 335,
+      hoehe: 210,
+      rasterHoehe: 54,
+    },
+    // Wortmarke lautet vollständig „Golfclub Königshof Sittensen“ – der Alt-Text
+    // benennt den Club so, wie er im Logo steht (die frühere Platzhalter-Kachel
+    // sagte verkürzt „Golfclub Sittensen“).
+    {
+      name: "Golfclub Königshof Sittensen",
+      datei: "/clubs/sittensen.svg",
+      breite: 113,
+      hoehe: 113,
+      rasterHoehe: 62,
+    },
+    // Hochformat mit Schriftzug unter der Marke – der höchste Wert der Reihe.
+    {
+      name: "Golfpark Gut Häusern",
+      datei: "/clubs/gut-haeusern.png",
+      breite: 150,
+      hoehe: 172,
+      rasterHoehe: 68,
+    },
   ],
   praxisLink: "Was diese Clubs mit GolfNext machen – Praxis",
-  note: "Logos und Freigaben: Fred liefert die endgültige Liste.",
 };
 
 export const ueberGolfnextWissen: WissenData = {

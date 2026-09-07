@@ -76,8 +76,10 @@ test.describe("/ueber-golfnext ohne JavaScript", () => {
       page.getByRole("heading", { level: 3, name: "Clubwebsites, Social Media, Kampagnen." }),
     ).toBeVisible();
 
-    // Club-Kacheln und Artikelkarten (Platzhalter) stehen im Server-HTML.
-    await expect(page.getByText("Golfclub Rehburg-Loccum", { exact: true })).toBeVisible();
+    // Clublogos und Artikelkarten stehen im Server-HTML. Die Logos sind seit
+    // 07.09.2026 echte Grafiken – der Clubname steht im Alt-Text, nicht mehr
+    // als Text in einer Platzhalter-Kachel.
+    await expect(page.getByRole("img", { name: "Golfclub Rehburg-Loccum" })).toBeVisible();
     await expect(page.getByText("Titel folgt: Mitgliedergewinnung", { exact: true })).toBeVisible();
 
     // Ohne JS keine toten Steuerelemente (Slider ist nativ scrollbar, Pfeile erst mit JS).

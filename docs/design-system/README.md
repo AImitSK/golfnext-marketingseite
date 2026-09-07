@@ -39,7 +39,7 @@ Mocks öffnen: einfach im Browser. Sie laden Archivo und Inter von Google Fonts 
 | 3.9a | Praxis, Übersicht | `/praxis` | `3.9a-praxis-uebersicht.html` | `../briefings/0020-praxis.md` | **gültig**, Stefan (06.09.2026). Layout wie 3.2c. **Kein Modulstatus** |
 | 3.9b | Praxis, Artikel | `/praxis/[slug]` | `3.9b-praxis-artikel.html` | `../briefings/0020-praxis.md` | **gültig**, Stefan (06.09.2026). Artikel-Layout. **Kein Modulstatus** |
 | – | Team | `/team` | – | fehlt | wartet auf Briefing (CTA „Unser Team kennenlernen" zeigt hierhin) |
-| – | Kontakt | `/kontakt` | – | fehlt | wartet auf Briefing |
+| – | Kontakt | `/kontakt` | – | **kein Briefing nötig** | **beschlossen** (Stefan, 07.09.2026): schlichte Seite mit dem UI-Kit-Formular nach `docs/10` §40, entsteht in Masterplan 4.3. Bis dahin Platzhalter (0022); Ziel des CTA-Fallbacks aus `lib/links.ts` |
 | – | Modulseiten | `/module/<slug>` | – | fehlt | wartet auf Briefing; Footer-Systemkarte verlinkt dorthin |
 | – | Ratgeber | `/ratgeber`, `/ratgeber/[slug]` | – | Content aus Sanity | Layout aus Bausteinen ableiten (Karten 2.5, Artikel-Typografie 2.2) |
 | – | Impressum, Datenschutz | `/impressum`, `/datenschutz` | – | `../legal/` | Texte vorhanden |

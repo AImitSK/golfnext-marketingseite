@@ -19,7 +19,7 @@ Voraussetzungen **[F]**, mit Frist:
 - rund 30 Produktoberflächen als Screenshots (Liste in `03-seiten-und-routen.md`), ohne personenbezogene Daten
 - Porträts Fred und Stefan
 - Partnerlogos mit Freigabe und Beschriftung
-- Briefings für Praxis, Team, Kontakt und die zwölf Modulseiten (oder Entscheidung, dass Modul-Dropdowns auf Anker zeigen)
+- Briefings für Praxis, Team und die zwölf Modulseiten (oder Entscheidung, dass Modul-Dropdowns auf Anker zeigen). **Kontakt braucht keins mehr** – Stefan hat die Seite am 07.09.2026 beschlossen, sie entsteht nach §40 als schlichte Seite mit dem UI-Kit-Formular (Masterplan 4.3)
 - mindestens drei Ratgeberartikel, sonst bleibt `/ratgeber` aus der Navigation
 - Zieladressen: Buchung, Live-Demo
 

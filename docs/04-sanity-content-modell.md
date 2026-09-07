@@ -9,6 +9,13 @@ Studio eingebettet unter `/studio`. Zugang für Fred als Redakteur (Rolle Editor
 
 > **Struktur v2 (07.09.2026, Briefing 0023):** Der Blog liegt unter `/praxis`; die Route `/ratgeber` gibt
 > es nicht mehr. Der Dokumenttyp heißt weiterhin `post` – nur die öffentlichen Adressen ändern sich.
+
+> **Keine Startinhalte im Code (07.09.2026, Entscheidung Stefan, Briefing 0026):** Rubriken und Autoren
+> sind eigene Dokumenttypen, also Formulare im Studio. **Fred legt sie selbst an**, benennt um und löscht;
+> beim Anlegen eines Artikels wählt er Rubrik und Autor aus Klapplisten. Der Code legt **keine** Inhalte an –
+> keine Beispielrubriken, keine Autoren, keine Artikel, keine `initialValue` mit echten Werten. Ein leeres
+> Studio nach dem Deploy ist das erwartete Ergebnis. Die fünf Zielgruppen leben als Auswahlliste im Feld
+> `category.audience` und sind ein Vorschlag für Freds Rubriken, keine Vorgabe.
 **Nicht in Sanity:** die statischen Marketingseiten (Startseite, Plattform, Pakete …). Ihre Texte sind von Fred
 freigegeben und ändern sich selten; sie leben im Code, damit Layout und Text zusammenbleiben. Sollte Fred später
 Texte selbst pflegen wollen, ist das eine eigene Entscheidung (dann Sektions-Dokumente pro Seite).
@@ -32,33 +39,73 @@ Texte selbst pflegen wollen, ist das eine eigene Entscheidung (dann Sektions-Dok
 Vorschau im Studio: Titel, Rubrik, Datum, Bild.
 
 ### `category` – Rubrik
-`title`, `slug`, `description` (≤ 200), `audience` (Liste: Einsteiger · Mitgliedschaft · Gäste · Unternehmen · Clubbetrieb), `order` (number).
-Die fünf Rubriken entsprechen den Zielgruppen der Content-Basis aus dem Pakete-Briefing.
+`title` (Pflicht), `slug` (Pflicht), `description` (text, Pflicht, ≤ 200), `audience` (Pflicht, Liste: Einsteiger · Mitgliedschaft · Gäste · Unternehmen · Clubbetrieb), `order` (number, optional).
+Die fünf Zielgruppen sind die **Auswahlliste des Feldes `audience`**, keine vorangelegten Rubriken – Fred legt Rubriken im Studio an (siehe Kasten oben). Vorschau: Titel + Reihenfolge.
 
 ### `author` – Autor
-`name`, `slug`, `role` (z. B. „Gründer von GolfNext, PGA Golfprofessional"), `image` + `alt`, `bio` (text ≤ 300), `linkedin` (url, optional).
-Startbestand: Fred Hoffmann, Stefan Kühne. Keine weiteren Personen ohne Freigabe.
+`name` (Pflicht), `slug` (Pflicht), `role` (Pflicht, z. B. „Gründer von GolfNext, PGA Golfprofessional"), `image` + Pflicht-`alt`, `bio` (text, Pflicht, ≤ 300), `linkedin` (url, optional).
+Kein Startbestand im Code. Fred trägt Fred Hoffmann und Stefan Kühne selbst ein; keine weiteren Personen ohne Freigabe. Vorschau: Name + Rolle + Porträt.
 
 ### `faq` – Frage und Antwort
-`question` (string, Pflicht), `answer` (Portable Text, nur normal/strong/link), `topic` (Liste: pakete · plattform · clubprozesse · wachstum · allgemein), `order` (number).
-Startbestand: die sieben Pakete-FAQs aus `design-system/mocks/3.7-pakete.html`, Wortlaut unverändert.
+`question` (string, Pflicht), `answer` (Portable Text `simpleBlockContent`, Pflicht: nur Absätze, strong/em, Link), `topic` (Pflicht, Liste: pakete · plattform · clubprozesse · wachstum · allgemein), `order` (number, optional).
+Kein Startbestand im Code. Die sieben Pakete-FAQs aus `design-system/mocks/3.7-pakete.html` legt Masterplan 3.6 an, Wortlaut unverändert. Vorschau: Frage + Thema.
 
 ### `siteSettings` – Singleton
-`phone` („0175 5951839"), `email` („info@golfnext.de"), `responseNote` („Rückmeldung innerhalb eines Werktags"), `bookingUrl`, `liveDemoUrl`, `linkedin`, `instagram`, `defaultSeo {title, description, ogImage}`.
-Im Studio als einzelnes Dokument in der Struktur (kein „Neu anlegen").
+`phone` (Pflicht), `email` (Pflicht, E-Mail-Format), `responseNote`, `bookingUrl`, `liveDemoUrl`, `linkedin`, `instagram`, `defaultSeo {title, description ≤ 160, ogImage + Pflicht-alt}`.
+**Nur `phone` und `email` sind Pflicht.** Die Adressen (Buchungslink, Live-Demo, Social) stehen noch nicht fest und werden nicht erfunden; die Werte trägt Fred im Studio ein („0175 5951839", „info@golfnext.de", „Rückmeldung innerhalb eines Werktags" – nicht als `initialValue` im Code).
+Im Studio als einzelnes Dokument in der Struktur (kein „Neu anlegen"), feste Dokument-ID `siteSettings`.
+
+### Objekttypen
+
+| Typ | Verwendung | Felder |
+|---|---|---|
+| `blockContent` | `post.body` | Blöcke normal/h2/h3/blockquote, Listen bullet/number, Marks strong/em, Annotation `link` (`href`, `openInNewTab`), Objekte `inlineImage`, `callout`, `cta`. **Kein h1** (kommt aus dem Titel), kein h4–h6. |
+| `simpleBlockContent` | `faq.answer`, `callout.text` | nur Absätze, Marks strong/em, Annotation `link` |
+| `inlineImage` | Bild im Fließtext | `alt` (Pflicht), `caption` |
+| `callout` | Hinweiskasten | `tone` (hinweis/tipp, Vorbelegung „hinweis"), `text` |
+| `cta` | Button im Fließtext | `label`, `target` (erstgespraech/livedemo/pakete/url), `url` (nur bei `target = url`) |
+| `seo` | `post.seo` | `title`, `description`, `noindex` |
+
+`link.href` und `cta.url` erlauben neben `http/https/mailto/tel` auch **relative Pfade** (`/pakete`), damit interne Links ohne absolute Adresse gesetzt werden können.
 
 ## Studio-Struktur
 
 ```
-Praxis
-  Artikel (nach Datum)
-  Rubriken
-  Autoren
-FAQs (gruppiert nach topic)
-Einstellungen (Singleton)
+Ratgeber              ← die Artikel (Typ post), nach Datum absteigend
+Ratgeber-Rubriken     ← Rubriken (Typ category)
+Autoren               ← Autoren (Typ author)
+FAQs                  ← „Alle Fragen" plus fünf Themenlisten
+Einstellungen         ← das eine siteSettings-Dokument
 ```
 
-Deutsche Beschriftungen (`title` in `defineField`). Vision-Tool nur für Administratoren.
+Zur Benennung: Der Menüpunkt der Website heißt seit 07.09.2026 **„Ratgeber"**, die Adresse bleibt `/praxis`,
+der Dokumenttyp heißt technisch weiterhin `post`. Im Studio steht „Ratgeber", weil Fred dort arbeitet.
+Neue FAQs werden unter „Alle Fragen" angelegt; die Themenlisten darunter sind gefilterte Ansichten.
+
+Deutsche Beschriftungen und Beschreibungen (`title`/`description` in `defineField`), Sie-Form.
+**Abweichung:** Das Vision-Tool lässt sich in der Studio-Konfiguration nicht auf Administratoren beschränken –
+Rollen sind dort nicht abfragbar. Vision führt nur lesende GROQ-Abfragen mit den Rechten der angemeldeten
+Person aus; ein Editor sieht damit nichts, was er nicht ohnehin sehen darf.
+
+## Umsetzung (Briefing 0026, 07.09.2026)
+
+- Schema code-first in `sanity/schemaTypes/` (ein Dokumenttyp je Datei, Objekte unter `objects/`,
+  geteilte Slug-Logik in `lib/slug.ts`). `sanity.config.ts` und `sanity.cli.ts` im Projektstamm,
+  Studio-Struktur in `sanity/structure.ts`.
+- `sanity.config.ts` trägt `"use client"` – ohne die Direktive zieht Next das `sanity`-Paket in den
+  Server-Komponenten-Graphen und der Build bricht an `swr` ab.
+- **Slug-Eindeutigkeit gilt je Dokumenttyp**, nicht global: Artikel, Rubriken und Autoren haben getrennte
+  Adressräume, ein Artikel „Mitgliedschaft" neben der Rubrik „Mitgliedschaft" ist erlaubt.
+- Typen: `pnpm sanity:typegen` (`sanity schema extract --force --enforce-required-fields --path sanity/schema.json`
+  plus `sanity typegen generate`) erzeugt `sanity.types.ts`. Beide Dateien sind **eingecheckt** – so braucht die
+  CI keinen Sanity-Zugriff. `--enforce-required-fields` ist vertretbar, weil der Client mit
+  `perspective: "published"` liest; Entwürfe (3.8) brauchen später eine eigene, lockerere Betrachtung.
+- CSP: `next.config.ts` führt eine **zweite, weitere Fassung nur für `/studio`**. Die öffentlichen Seiten
+  behalten die strenge Fassung (negatives Lookahead im `source`). Zusätzlich erlaubt sind dort
+  `core.sanity-cdn.com` (Skript `bridge.js`), Sanity-Bild- und Avatar-Hosts, `worker-src blob:`,
+  `frame-src *.sanity.io` und **`font-src *.sanity.io`** – das Studio lädt seine Oberflächenschrift von
+  `design-system-static.sanity.io`. Das betrifft nur die Redaktionsoberfläche hinter dem Login; die Website
+  hostet ihre Schriften weiterhin selbst.
 
 ## Rendering
 
@@ -83,3 +130,9 @@ Deutsche Beschriftungen (`title` in `defineField`). Vision-Tool nur für Adminis
 ## Änderungen am Schema
 
 Ablauf im Skill `sanity-content-model`. Jede Änderung hier dokumentieren (Datum, Feld, Grund).
+
+- **07.09.2026 · Erstfassung des Schemas** (Briefing 0026). Alle fünf Dokumenttypen plus die Objekttypen
+  oben. Gegenüber dem ursprünglichen Text dieser Datei geändert: kein Startbestand im Code (Autoren, FAQs);
+  `siteSettings` nur mit `phone`/`email` als Pflicht; Studio-Bereich heißt „Ratgeber" statt „Praxis";
+  Slug-Eindeutigkeit je Dokumenttyp; relative Pfade in `link.href` und `cta.url` erlaubt;
+  `simpleBlockContent` erlaubt neben `strong` auch `em`; Vision-Tool nicht auf Administratoren begrenzbar.

@@ -14,3 +14,7 @@ Template/
 # Verbatim-Inhalte (wortgleich aus Briefings) und Projektinstruktionen nicht umformatieren
 content/
 CLAUDE.md
+
+# Von `pnpm sanity:typegen` erzeugt – nicht von Hand anfassen, nicht formatieren
+sanity.types.ts
+sanity/schema.json

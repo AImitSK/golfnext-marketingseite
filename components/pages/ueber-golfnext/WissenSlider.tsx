@@ -36,7 +36,7 @@ export function WissenSlider({ children }: { children: ReactNode }) {
   const [atEnd, setAtEnd] = useState(false);
   const [dragging, setDragging] = useState(false);
 
-  const drag = useRef({ down: false, startX: 0, startLeft: 0, strecke: 0 });
+  const drag = useRef({ down: false, startX: 0, startLeft: 0, strecke: 0, gefangen: false });
 
   const update = useCallback(() => {
     const rail = railRef.current;
@@ -71,18 +71,30 @@ export function WissenSlider({ children }: { children: ReactNode }) {
       startX: e.clientX,
       startLeft: railRef.current?.scrollLeft ?? 0,
       strecke: 0,
+      gefangen: false,
     };
     setDragging(true);
-    railRef.current?.setPointerCapture(e.pointerId);
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!drag.current.down || !railRef.current) return;
     const weg = e.clientX - drag.current.startX;
     drag.current.strecke = Math.abs(weg);
+
+    // Den Zeiger **erst beim tatsächlichen Ziehen** einfangen, nicht schon beim
+    // Drücken: Ein gefangener Zeiger leitet auch das Klick-Ereignis auf den Rail um,
+    // und dann öffnete ein normaler Klick auf eine Karte keinen Artikel mehr. Beim
+    // echten Ziehen ist das Einfangen dagegen nötig, damit die Bewegung nicht
+    // abreißt, sobald der Zeiger den Rail verlässt.
+    if (!drag.current.gefangen && drag.current.strecke > ZIEH_SCHWELLE) {
+      drag.current.gefangen = true;
+      railRef.current.setPointerCapture(e.pointerId);
+    }
+
     railRef.current.scrollLeft = drag.current.startLeft - weg;
   };
   const endDrag = () => {
     drag.current.down = false;
+    drag.current.gefangen = false;
     setDragging(false);
   };
 

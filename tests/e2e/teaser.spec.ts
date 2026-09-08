@@ -153,7 +153,14 @@ test.describe("Teaser ohne Artikel", () => {
     ).toBeVisible();
   });
 
-  test("kein horizontaler Overflow ohne Artikel", async ({ page }) => {
+  test("kein horizontaler Overflow und keine Konsolenfehler ohne Artikel", async ({ page }) => {
+    // Der Leerzustand ist neuer Code (`return null` in beiden Abschnitten) – ein
+    // Fehler dort fiele sonst nirgends auf.
+    const konsolenFehler: string[] = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") konsolenFehler.push(msg.text());
+    });
+
     for (const pfad of ["/", "/ueber-golfnext"]) {
       for (const width of [390, 768, 1024, 1180, 1440]) {
         await page.setViewportSize({ width, height: 900 });
@@ -164,6 +171,8 @@ test.describe("Teaser ohne Artikel", () => {
         expect(overflow, `horizontaler Overflow auf ${pfad} bei ${width}px`).toBe(false);
       }
     }
+
+    expect(konsolenFehler).toEqual([]);
   });
 });
 
@@ -193,6 +202,56 @@ test.describe("Teaser mit Artikeln · ohne JavaScript", () => {
     await page.goto("/ueber-golfnext");
     // Der Slider ist ohne JS nativ scrollbar; alle vier Karten stehen im HTML.
     await expect(wissenAbschnitt(page).locator('a[href^="/praxis/"]')).toHaveCount(4);
+  });
+});
+
+
+test.describe("Teaser mit Artikeln · Slider bedienen", () => {
+  test("Ziehen im Slider öffnet keinen Artikel, ein Klick schon", async ({ page }) => {
+    await page.goto("/ueber-golfnext");
+    const karte = wissenAbschnitt(page).locator('a[href^="/praxis/"]').first();
+    await karte.scrollIntoViewIfNeeded();
+    const kasten = await karte.boundingBox();
+    if (!kasten) throw new Error("Karte nicht sichtbar");
+    const x = kasten.x + kasten.width / 2;
+    const y = kasten.y + kasten.height / 2;
+
+    // Wischen mit der Maus: weit über die Zieh-Schwelle hinaus, Loslassen über der
+    // Karte. Ohne die Sperre in `WissenSlider` landete das als Klick im Artikel.
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    for (let i = 1; i <= 6; i++) await page.mouse.move(x - i * 25, y);
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    await expect(page).toHaveURL(/\/ueber-golfnext$/);
+
+    // Ein echter Klick (ohne Bewegung) führt weiterhin auf den Artikel.
+    await page.goto("/ueber-golfnext");
+    const erste = wissenAbschnitt(page).locator('a[href^="/praxis/"]').first();
+    await erste.scrollIntoViewIfNeeded();
+    await erste.click();
+    await expect(page).toHaveURL(/\/praxis\/beispielartikel-\d+$/);
+  });
+});
+
+test.describe("Teaser mit Artikeln · reduzierte Bewegung", () => {
+  test.use({ reducedMotion: "reduce" });
+
+  test("beide Kartenblöcke stehen sofort im Endzustand", async ({ page }) => {
+    await page.goto("/");
+    const karte = praxisAbschnitt(page).locator('a[href^="/praxis/"]').first();
+    await karte.scrollIntoViewIfNeeded();
+    // Der `Rise`-Wrapper um die Karte trägt die Variante – bei reduzierter Bewegung
+    // bleibt er im Endzustand (opacity 1, keine Verschiebung).
+    const wrapper = karte.locator("xpath=..");
+    expect(Number(await wrapper.evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
+    await expect(karte).toBeVisible();
+
+    await page.goto("/ueber-golfnext");
+    const sliderKarte = wissenAbschnitt(page).locator('a[href^="/praxis/"]').first();
+    await sliderKarte.scrollIntoViewIfNeeded();
+    expect(Number(await sliderKarte.evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
+    await expect(sliderKarte).toBeVisible();
   });
 });
 

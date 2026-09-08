@@ -10,7 +10,7 @@ Die statischen Marketingseiten laden ohne Wartezustand – sie sind vorgerendert
 
 Heute üblich und für uns richtig: **Skeleton-Platzhalter in der Form des späteren Inhalts**, damit sich nichts verschiebt, wenn die Daten kommen.
 
-- `app/(site)/praxis/loading.tsx` und `praxis/[slug]/loading.tsx` rendern `Skeleton`-Komponenten, die Maße und Raster der echten Karten bzw. des Artikels haben (Bild 16/10, Rubrik-Zeile, zwei Titelzeilen, eine Textzeile – wie `.skel .b1–.b4` im UI-Kit).
+- **Überholt am 08.09.2026 (Masterplan 3.4, Briefing 0027):** Die Praxis-Routen haben **kein** `loading.tsx`. Ein `loading.tsx` erzeugt eine Suspense-Grenze, Next streamt daraufhin, und der nachgereichte Teil wird nur per JavaScript eingesetzt – ohne JS blieben von `/praxis` 158 statt 1.902 Zeichen lesbar. „Ohne JavaScript vollständig lesbar" (CLAUDE.md) ist nicht verhandelbar und gewinnt; die Routen sind ISR-Inhalt, es gibt kaum Wartezeit zu überbrücken. Messung und Begründung in `docs/entscheidungen.md`. Der `Skeleton`-Baustein bleibt für künftige Fälle bestehen, in denen eine echte Wartezeit **ohne** Suspense-Grenze überbrückt wird.
 - Shimmer aus dem UI-Kit (`@keyframes shimmer`, 1.4 s, Sand-Töne). Bei `prefers-reduced-motion` steht der Shimmer still (einfarbige Fläche).
 - `Suspense`-Grenzen nur um wirklich dynamische Bereiche (z. B. „Weitere Artikel" unter einem Artikel), damit der Rest sofort steht (Streaming). Der Hauptinhalt eines Artikels wird nicht hinter einem Skeleton versteckt – er ist statisch/ISR und kommt mit dem ersten Byte.
 - Skeleton nie länger als nötig; maximale sichtbare Dauer ist durch ISR/CDN ohnehin kurz. Kein künstliches Delay.
@@ -55,7 +55,7 @@ Toasts sind bewusst selten: Sie verschwinden, Screenreader verpassen sie leicht,
 
 ## 6 · Prüfen (Skill `golfnext-qa`)
 
-- `loading.tsx` existiert für jede Sanity-Route und hat dieselben Rastermaße wie der Inhalt (Screenshot-Vergleich Skeleton ↔ geladen, kein CLS > 0.02).
+- **Kein** `loading.tsx` auf den Sanity-Routen (Entscheidung 08.09.2026, siehe oben). Stattdessen wird geprüft: Die Route ist **ohne JavaScript** vollständig lesbar, und der Inhalt steht im ersten Server-HTML (kein CLS > 0.02).
 - Formular: Doppelklick sendet einmal; `aria-busy` während Versand; Fehlerfokus; Erfolgsfokus; ohne JS funktionsfähig.
 - `error.tsx` und `not-found.tsx` rendern Header und Footer.
 - Kein Meldungstext außerhalb der `messages.ts`-Dateien (Grep in `components/`).

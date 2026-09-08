@@ -122,7 +122,7 @@ Details `docs/07-seo.md`.
 - [ ] **6.3 Sitemap und robots** (`app/sitemap.ts`, `app/robots.ts`); Studio, `/_bausteine`, Platzhalter-Routen ausgeschlossen.
 - [ ] **6.4 Strukturierte Daten.** `Organization` (Name, Logo, Kontakt), `FAQPage` auf `/pakete`, `Article` auf Ratgeber-Artikeln, `BreadcrumbList`.
 - [ ] **6.5 Weiterleitungen** von der bestehenden golfnext.de: `/impressum/` → `/impressum`, `/ueber-golfnext/` bleibt (Briefing), Trailing-Slash-Politik festlegen (Next: ohne). Alte URLs der aktuellen Website erheben **[S]** und in `next.config.ts` `redirects()` eintragen.
-- [ ] **6.6 Performance.** Bilder über `next/image` (Sanity-Loader), `priority` nur für Hero-Text-nahe Bilder, kein CLS durch Platzhalter (feste `aspect-ratio`).
+- [ ] **6.6 Performance.** Bilder über `next/image` (Sanity-Loader), `priority` nur für Hero-Text-nahe Bilder, kein CLS durch Platzhalter (feste `aspect-ratio`). **Befund vom 08.09.2026 (Briefing 0027):** Lighthouse mobil liegt site-weit unter der Vorgabe ≥ 95 – `/praxis` misst **72**, `/ueber-golfnext` **70**. Das ist kein Mangel einzelner Seiten, sondern ein Thema der ganzen Website und gehört hierher, nicht in den PR einer Seite. Vor dem Launch: Ursachen messen (Bundle, Schriften, Bilder, Hydration), beheben, alle Routen neu messen. Ein SEO-Abzug auf `noindex`-Routen ist erwartet und kein Befund.
 
 ---
 

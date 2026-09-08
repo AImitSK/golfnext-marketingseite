@@ -78,11 +78,12 @@ test.describe("/ · Struktur und Overflow", () => {
 
   test("Karten-Hover-Lift ist spürbar (translateY)", async ({ page }) => {
     await page.goto("/");
-    // Erste Praxis-Artikelkarte: Hover hebt die Karte an (transform ≠ none).
+    // Erste Praxis-Artikelkarte: Hover hebt die Karte an (transform ≠ none). Die
+    // Karten sind seit Briefing 0029 echte Artikel aus Sanity und damit Links.
     const praxis = page
       .locator("section")
       .filter({ has: page.getByRole("heading", { name: "Was in Golfclubs wirklich funktioniert." }) });
-    const card = praxis.locator("article").first();
+    const card = praxis.locator('a[href^="/praxis/"]').first();
     await card.scrollIntoViewIfNeeded();
     await card.hover();
     await expect

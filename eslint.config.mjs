@@ -8,6 +8,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Standard-Ignores von eslint-config-next
     ".next/**",
+    // Zweiter Testbuild (Briefing 0029, scripts/build-e2e.mjs) – erzeugter Code
+    ".next-leer/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

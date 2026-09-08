@@ -86,6 +86,13 @@ const isPreview = process.env.VERCEL_ENV === "preview";
 
 const nextConfig: NextConfig = {
   /**
+   * Zielordner des Builds. Normalerweise `.next`; `NEXT_DIST_DIR` lenkt ihn um, damit
+   * `scripts/build-e2e.mjs` zwei Testfassungen nebeneinander bauen kann (mit und ohne
+   * Artikel, Briefing 0029). In Produktion ist die Variable nicht gesetzt.
+   */
+  distDir: process.env.NEXT_DIST_DIR ?? ".next",
+
+  /**
    * Bilder aus Sanity (Briefing 0027). Nur der eine Host – `next/image` lädt sonst
    * nichts von außen. Die CSP erlaubt `cdn.sanity.io` bereits als `img-src`.
    */

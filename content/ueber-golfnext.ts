@@ -126,20 +126,24 @@ export interface ProjekteData {
 
 /* ────────────────────────── 6 · Wissen (Artikel-Slider) ────────────────────────── */
 
-/** Eine Artikel-Platzhalterkarte im Wissen-Slider. */
-export interface WissenCard {
-  /** Bild-Platzhalter-Label (bleibt „Bild folgt“). */
-  bild: string;
-  /** Rubrik/Quelle (z. B. „golfmanager · Fachartikel“). */
-  quelle: string;
-  titel: string;
-  text: string;
-  autor: string;
-  lesezeit: string;
-}
-
+/**
+ * Der Wissen-Slider zeigt seit Briefing 0029 die **vier neuesten Artikel aus Sanity**
+ * (`NEUESTE_POSTS_QUERY`) und verlinkt auf `/praxis/<slug>`. Hier stehen deshalb nur
+ * noch die Texte, die zur Seite gehören – keine Karten mehr.
+ *
+ * Entfallen sind die vier Platzhalterkarten („Titel folgt: …") **samt dem Feld
+ * `quelle`**: Die Sonderrolle der beiden Karten „golfmanager · Fachartikel" ist mit
+ * der Rubrik **„Fachartikel"** hinfällig, die Stefan am 08.09.2026 im Studio angelegt
+ * hat. Freds Fachzeitschriften-Beiträge sind damit ganz normale Artikel; an Stelle der
+ * Quelle steht auf der Karte die Rubrik. **Kein Rubrik-Filter** – Auswahl und
+ * Reihenfolge steuert Fred über das Veröffentlichungsdatum.
+ */
 export interface WissenData {
-  cards: WissenCard[];
+  /**
+   * Beschriftung der Bildfläche, solange ein Artikel im Studio kein Titelbild hat
+   * (Mock 3.8b `.kcard .kp span`) – wortgleich „Bild folgt".
+   */
+  bildPlatzhalter: string;
   /** „Alle Artikel“-Link: zeigt auf `path`, solange die Route live ist (sonst `#`). */
   alleArtikel: { label: string; path: string };
 }
@@ -281,40 +285,7 @@ export const ueberGolfnextProjekte: ProjekteData = {
 };
 
 export const ueberGolfnextWissen: WissenData = {
-  cards: [
-    {
-      bild: "Bild folgt",
-      quelle: "golfmanager · Fachartikel",
-      titel: "Titel folgt: Mitgliedergewinnung",
-      text: "Freds Beitrag aus dem golfmanager – Titel, Teaser und Ausgabe liefert Fred.",
-      autor: "Fred Hoffmann",
-      lesezeit: "Lesezeit folgt",
-    },
-    {
-      bild: "Bild folgt",
-      quelle: "golfmanager · Fachartikel",
-      titel: "Titel folgt: Das Clubbüro entlasten",
-      text: "Freds Beitrag aus dem golfmanager – Titel, Teaser und Ausgabe liefert Fred.",
-      autor: "Fred Hoffmann",
-      lesezeit: "Lesezeit folgt",
-    },
-    {
-      bild: "Bild folgt",
-      quelle: "GolfNext · Blog",
-      titel: "Titel folgt: KI im Golfclub",
-      text: "Beitrag aus der Arbeit mit Pilotclubs – Titel und Teaser folgen.",
-      autor: "GolfNext",
-      lesezeit: "Lesezeit folgt",
-    },
-    {
-      bild: "Bild folgt",
-      quelle: "GolfNext · Blog",
-      titel: "Titel folgt: Schnupperkurse füllen",
-      text: "Beitrag aus der Arbeit mit Pilotclubs – Titel und Teaser folgen.",
-      autor: "GolfNext",
-      lesezeit: "Lesezeit folgt",
-    },
-  ],
+  bildPlatzhalter: "Bild folgt",
   // Ziel des „Alle Artikel"-Links: seit 07.09.2026 heißt der Blog `/praxis`;
   // `/ratgeber` gibt es nicht mehr (Briefing 0023). Nur der Pfad ändert sich,
   // das Label bleibt wortgleich. Der Link aktiviert sich über `internalHref`,

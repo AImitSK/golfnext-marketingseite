@@ -1,6 +1,6 @@
 import { defineQuery } from "next-sanity";
 import { client } from "@/lib/sanity/client";
-import { FIXTURE_SLUGS, fixturesAktiv } from "./fixtures";
+import { fixtureSlugs, fixturesAktiv } from "./fixtures";
 
 /**
  * Die veröffentlichten Slugs von Artikeln und Rubriken – für den Proxy
@@ -43,7 +43,7 @@ let laufend: Promise<PraxisSlugs> | null = null;
  */
 export async function praxisSlugs(): Promise<PraxisSlugs | null> {
   // Test-Fetch für Playwright (siehe lib/sanity/fixtures.ts) – auf Vercel nie aktiv.
-  if (fixturesAktiv()) return FIXTURE_SLUGS;
+  if (fixturesAktiv()) return fixtureSlugs();
 
   const jetzt = Date.now();
   if (zwischenspeicher && jetzt - zwischenspeicher.stand < TTL_MS) {

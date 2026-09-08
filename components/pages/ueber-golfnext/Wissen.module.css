@@ -2,19 +2,32 @@
    .kp/.kb/.km/.rnav). Farben auf --gn-* umgestellt, literale Tints kommentiert.
    Karten-Radius --gn-radius-lg (12). Bleed nach rechts über calc(50% - 50vw); der
    Abschnitt kappt mit overflow:hidden (PlattformSection overflowHidden) → kein
-   Seiten-Overflow. Die Bild-Platzhalter (.kp „Bild folgt“) sind beschriftete Flächen
-   – kein Stock/KI. */
+   Seiten-Overflow.
+
+   Die Karten sind seit Briefing 0029 echte Artikel aus Sanity und damit Links auf
+   /praxis/<slug> (im Mock war .kcard ein <div> ohne Ziel). Fehlt das Titelbild, tritt
+   der beschriftete Shot-Platzhalter („Bild folgt“) an die Stelle der Bildfläche –
+   kein Stock/KI. */
 
 .know {
   position: relative;
-  margin-top: 56px;
+  /* 56 px aus dem Mock, minus die 12 px Luft, die `.rail` oben für den Hover-Lift
+     bekommt – die Karten stehen damit exakt wie zuvor. */
+  margin-top: 44px;
 }
+/* `overflow-x:auto` macht den Rail zum Scroll-Container – und der kappt auch **oben und
+   unten**. Ohne Luft schnitt er den Hover-Schatten der Karten ab (gemeldet 08.09.2026).
+   Oben sind die 12 px am Abschnitt und an den Pfeilen abgezogen, unten holt der
+   negative Außenabstand die zusätzlichen 32 px wieder herein – die Abstände des Mocks
+   bleiben damit unverändert. */
 .rail {
   display: flex;
   gap: 22px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 16px;
+  padding-top: 12px;
+  padding-bottom: 48px;
+  margin-bottom: -32px;
   margin-right: calc(50% - 50vw); /* Bleed: Rail läuft bis zum rechten Viewport-Rand */
   padding-right: calc(50vw - 50%); /* Platz, damit die letzte Karte einrasten kann */
   scrollbar-width: none;
@@ -30,6 +43,7 @@
 .kcard {
   flex: 0 0 380px;
   scroll-snap-align: start;
+  position: relative; /* für den z-index beim Hover – siehe unten */
   background: #fff;
   border: 1px solid var(--gn-line);
   border-radius: var(--gn-radius-lg);
@@ -41,29 +55,45 @@
     box-shadow 0.35s ease,
     border-color 0.35s;
 }
-.kcard:hover {
+/* `z-index` beim Hover und beim Tastaturfokus: Ohne ihn malte die **nachfolgende**
+   Karte den Schatten der angehobenen Karte zu (spätere Geschwister liegen oben). */
+.kcard:hover,
+.kcard:focus-visible {
   transform: translateY(-6px);
   box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
   border-color: rgba(1, 65, 91, 0.35);
+  z-index: 1;
 }
+/* Bildfläche des Mocks: feste Höhe, damit die Karte beim Laden nicht springt (kein CLS). */
 .kp {
   height: 170px;
-  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  background: var(--gn-mist);
   position: relative;
+  overflow: hidden;
+  flex: none;
 }
-.kp span {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--gn-navy);
-  background: var(--gn-paper);
-  border: 1px solid var(--gn-line);
-  border-radius: 2px;
-  padding: 3px 8px;
+.kp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Der Shot-Platzhalter tritt an die Stelle der Bildfläche, wenn ein Artikel kein
+   Titelbild hat. Er bekommt deren feste Höhe aus dem Mock – die `ratio`-Angabe der
+   Komponente bleibt damit wirkungslos (sind Breite und Höhe beide bestimmt, greift
+   `aspect-ratio` nicht) und beide Fassungen sind exakt gleich hoch.
+
+   `.kcard .shot` statt `.shot`: `Shot.module.css` setzt `.shot` mit derselben
+   Spezifität (0,1,0); wer gewinnt, hinge sonst an der Reihenfolge im Bündel
+   (docs/design-system/README.md). Ohne Rahmen und ohne eigenen Radius – die Karte hat
+   beides schon. */
+.kcard .shot {
+  height: 170px;
+  flex: none;
+  border: 0;
+  border-bottom: 1px solid var(--gn-line);
+  border-radius: 0;
 }
 .kb {
   padding: 24px 26px 26px;
@@ -108,7 +138,8 @@
   gap: 10px;
   position: absolute;
   right: 0;
-  top: -72px;
+  /* −72 px aus dem Mock, um die 12 px Rail-Luft nachgezogen (siehe `.know`). */
+  top: -60px;
 }
 .rnav button {
   width: 44px;
@@ -146,7 +177,8 @@
   .kcard {
     flex-basis: 290px;
   }
-  .kp {
+  .kp,
+  .kcard .shot {
     height: 140px;
   }
   .rnav {

@@ -433,54 +433,26 @@ export const startseiteZusagen: ZusagenData = {
 
 /* ────────────────────────── 8 · Praxis ────────────────────────── */
 
-/** Ein Praxis-Artikel als beschrifteter Platzhalter („Bild folgt" wortgleich). */
-export interface PraxisArtikel {
-  /** Rubrik-Farbe: default (blau), pr (grün), td (navy/mist). */
-  catVariant: "default" | "pr" | "td";
-  cat: string;
-  title: string;
-  text: string;
-  autor: { initialen: string; name: string };
-  datum: string;
-  lesezeit: string;
-}
-
+/**
+ * Der Abschnitt „Praxis" zeigt seit Briefing 0029 die **drei neuesten Artikel aus
+ * Sanity** (`NEUESTE_POSTS_QUERY`) und verlinkt auf `/praxis/<slug>`. Hier stehen
+ * deshalb nur noch die Texte, die zur Seite gehören – keine Artikel mehr.
+ *
+ * Entfallen sind die drei ausformulierten Teaser aus dem Mock 3.1b: Sie beschrieben
+ * Artikel, die es nicht gibt (Titel, Autoren, Daten, Lesezeiten). Erfundene Inhalte
+ * bleiben nicht im Repo stehen, sobald es echte gibt (CLAUDE.md).
+ */
 export interface PraxisData {
-  artikel: PraxisArtikel[];
+  /**
+   * Beschriftung der Bildfläche, solange ein Artikel im Studio kein Titelbild hat
+   * (Mock 3.1b `.acard .ap span`) – wortgleich „Bild folgt".
+   */
+  bildPlatzhalter: string;
   link: { label: string; path: string };
 }
 
 export const startseitePraxis: PraxisData = {
-  artikel: [
-    {
-      catVariant: "default",
-      cat: "Mitgliedergewinnung",
-      title:
-        "Warum Ihr Schnupperkurs im Netz nicht gefunden wird – und was stattdessen funktioniert",
-      text: "Wer „Golf lernen“ googelt, landet bei Portalen. Wer abends bei Instagram scrollt, hat noch gar nicht gesucht.",
-      autor: { initialen: "FH", name: "Fred Hoffmann" },
-      datum: "5. September 2026",
-      lesezeit: "6 Min.",
-    },
-    {
-      catVariant: "pr",
-      cat: "Praxisbericht",
-      title: "Rehburg-Loccum: Ein Concierge zieht ins Clubbüro",
-      text: "Wie ein Pilotclub die häufigsten Fragen aus dem Telefon geholt hat – und was das Sekretariat dazu sagt.",
-      autor: { initialen: "FH", name: "Fred Hoffmann" },
-      datum: "28. August 2026",
-      lesezeit: "5 Min.",
-    },
-    {
-      catVariant: "td",
-      cat: "Technik & Datenschutz",
-      title: "Wem gehören die Daten Ihres Clubs? Vier Fragen an jeden Anbieter",
-      text: "Domain, Inhalte, Kontakte, Export: Was ein Vorstand vor der Unterschrift klären sollte.",
-      autor: { initialen: "SK", name: "Stefan Kühne" },
-      datum: "7. August 2026",
-      lesezeit: "7 Min.",
-    },
-  ],
+  bildPlatzhalter: "Bild folgt",
   link: { label: "Alle Beiträge", path: "/praxis" },
 };
 

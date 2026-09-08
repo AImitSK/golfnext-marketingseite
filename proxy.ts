@@ -35,7 +35,15 @@ const RUBRIK = /^\/praxis\/thema\/([^/]+)\/?$/;
 const ARTIKEL = /^\/praxis\/([^/]+)\/?$/;
 
 export async function proxy(request: NextRequest) {
-  const pfad = decodeURIComponent(request.nextUrl.pathname);
+  // `decodeURIComponent` wirft bei einem einzelnen `%` im Pfad (`/praxis/100%`).
+  // Ein solcher Pfad ist ohnehin kein Slug – er wird direkt zum 404, statt den
+  // Proxy mit einem Serverfehler abstürzen zu lassen.
+  let pfad: string;
+  try {
+    pfad = decodeURIComponent(request.nextUrl.pathname);
+  } catch {
+    return NextResponse.rewrite(new URL(KEINE_ROUTE, request.url));
+  }
 
   const rubrik = RUBRIK.exec(pfad);
   const artikel = rubrik ? null : ARTIKEL.exec(pfad);

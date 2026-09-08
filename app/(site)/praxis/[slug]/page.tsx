@@ -10,6 +10,7 @@ import { Wrap } from "@/components/ui/Wrap";
 import { praxis } from "@/content/praxis";
 import { lesezeitMinuten } from "@/lib/praxis/lesezeit";
 import { tocAusBody } from "@/lib/praxis/toc";
+import { routeNoindex } from "@/lib/metadata";
 import { sanityFetch } from "@/lib/sanity/client";
 import { POST_BY_SLUG_QUERY, POSTS_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
 import styles from "@/components/pages/praxis/Artikel.module.css";
@@ -51,9 +52,13 @@ export async function generateMetadata({
     title: { absolute: artikel.seo?.title ?? artikel.title },
     description: artikel.seo?.description ?? artikel.excerpt,
     alternates: { canonical: `/praxis/${artikel.slug}` },
-    // `seo.noindex` schließt einen einzelnen Artikel aus. Solange `/praxis` selbst auf
-    // `geplant`/`noindex` steht (Briefing 0027 Frage 2), gilt das ohnehin für alle.
-    robots: { index: false, follow: false },
+    // Zwei Gründe, einen Artikel auszuschließen: die Elternroute steht noch nicht live
+    // (`config/site-structure.ts`, Briefing 0027 Frage 2) – oder die Redaktion hat für
+    // diesen Artikel `seo.noindex` gesetzt. Sobald `/praxis` live geht, greift also
+    // weiterhin die Einzelentscheidung aus dem Studio.
+    ...(routeNoindex("/praxis") || artikel.seo?.noindex === true
+      ? { robots: { index: false, follow: false } }
+      : {}),
   };
 }
 

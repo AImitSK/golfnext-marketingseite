@@ -5,6 +5,7 @@ import { Hero } from "@/components/pages/praxis/Hero";
 import { Footer } from "@/components/site/Footer";
 import { praxis } from "@/content/praxis";
 import { seiteAusParameter, SEITEN_PARAMETER } from "@/lib/praxis/blaettern";
+import { routeNoindex } from "@/lib/metadata";
 import { sanityFetch } from "@/lib/sanity/client";
 import { CATEGORIES_WITH_COUNT_QUERY, POSTS_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
 import { uiMessages } from "@/lib/ui/messages";
@@ -41,9 +42,9 @@ export async function generateMetadata({
     title: { absolute: rubrik.title },
     description: rubrik.description,
     alternates: { canonical: `/praxis/thema/${rubrik.slug}` },
-    // Solange `/praxis` auf `geplant`/`noindex` steht, gilt das auch für die Rubriken
-    // (config/site-structure.ts, Briefing 0027 Frage 2).
-    robots: { index: false, follow: false },
+    // Die Rubriken teilen den Indexierungs-Status ihrer Elternroute (Briefing 0027,
+    // Frage 2) – gelesen aus `config/site-structure.ts`, nicht hier wiederholt.
+    ...(routeNoindex("/praxis") ? { robots: { index: false, follow: false } } : {}),
   };
 }
 

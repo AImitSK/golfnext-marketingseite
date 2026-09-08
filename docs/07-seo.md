@@ -11,9 +11,12 @@
 | `/clubprozesse` | Clubprozesse digital – GolfNext | aus Briefing |
 | `/pakete` | GolfNext Pakete und Preise für Golfclubs | „GolfNext bietet drei Ausbaustufen für Golfclubs: digitale Grundlage, systematisches Wachstum und eine vollständige digitale Clubzentrale." – **an Fassung 2 anpassen** (Sockel + drei Stufen) **[S]** |
 | `/ueber-golfnext` | Über GolfNext \| Wir hängen am Golf. Nicht am Gestern. | „Von imageGolf zur GolfNext-Plattform: unsere Geschichte, die Menschen dahinter und unser Antrieb für mehr Mitglieder und mehr Zeit fürs Clubleben." |
-| `/praxis/*` | `<Artikeltitel> – GolfNext Praxis` | Excerpt |
+| `/praxis` | Praxis. Was in Golfclubs wirklich funktioniert. | erster Satz des Hero-Absatzes aus Mock 3.9a (157 Zeichen) |
+| `/praxis/thema/*` | Rubriktitel aus Sanity | `category.description` |
+| `/praxis/*` | `seo.title`, sonst der Artikeltitel | `seo.description`, sonst der Teaser |
 
-Titel-Suffix „ – GolfNext" über `title.template` in `app/layout.tsx`, außer wo der Titel schon die Marke enthält. `metadataBase = NEXT_PUBLIC_SITE_URL`, `alternates.canonical` je Route, `openGraph.locale = 'de_DE'`.
+Titel-Suffix „ – GolfNext" über `title.template` in `app/layout.tsx`, außer wo der Titel schon die Marke enthält.
+Die Praxis-Routen setzen ihren Titel bewusst als `title: { absolute: … }`, also **ohne** Suffix: Ein Artikeltitel darf bis zu 90 Zeichen lang sein (Schema-Validierung), ein angehängtes Suffix würde ihn in der Suche regelmäßig abschneiden. Die frühere Vorgabe `<Artikeltitel> – GolfNext Praxis` ist damit überholt (Briefing 0027, Aufgabe 5). **Vor dem Live-Schalten von `/praxis` zu klären [S]:** wohin die Canonical der Blätterseiten `?seite=n` zeigt – derzeit auf Seite 1, solange die Route `noindex` ist, spielt es keine Rolle. `metadataBase = NEXT_PUBLIC_SITE_URL`, `alternates.canonical` je Route, `openGraph.locale = 'de_DE'`.
 
 ## OG-Bilder
 

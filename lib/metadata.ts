@@ -15,6 +15,18 @@ import { ROUTES } from "@/config/site-structure";
  * Gedacht für die Platzhalter-Routen; die gebauten Seiten setzen ihre Metadata
  * weiterhin selbst (dort steckt sie in `content/<seite>.ts`).
  */
+/**
+ * Trägt eine Route `noindex`? Eine Wahrheit für die Seiten, die ihre Metadata selbst
+ * bauen (die Praxis-Routen aus Sanity, Briefing 0027): Sie fragen hier nach, statt
+ * `noindex` zu wiederholen. So schaltet der Statuswechsel in
+ * `config/site-structure.ts` die Indexierung wirklich mit einer Zeile frei.
+ */
+export function routeNoindex(path: string): boolean {
+  const route = ROUTES.find((r) => r.path === path);
+  if (!route) throw new Error(`Route "${path}" fehlt in config/site-structure.ts`);
+  return route.noindex === true;
+}
+
 export function routeMetadata(path: string): Metadata {
   const route = ROUTES.find((r) => r.path === path);
   if (!route) throw new Error(`Route "${path}" fehlt in config/site-structure.ts`);

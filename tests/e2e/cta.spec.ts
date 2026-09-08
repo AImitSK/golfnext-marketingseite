@@ -74,29 +74,35 @@ test.describe("Keine Seite verweist mehr auf eine Demo", () => {
   }
 });
 
-test("Kontaktseite: zwei Wege, kein Loch im Raster", async ({ page }) => {
+const WEGE_H2 = "Nicht jeder schreibt gern ein Formular.";
+
+test("Kontaktseite: zwei Wege, kein Loch im Raster", async ({ page }, testInfo) => {
   await page.goto("/kontakt");
   expect(kontaktWege).toHaveLength(2);
 
-  // Der freigegebene Abschnittstext bleibt wortgleich, auch wenn er auf drei Wege
-  // anspielt – eine Neufassung müsste freigegeben werden (Briefing 0031).
-  await expect(
-    page.getByRole("heading", { name: "Nicht jeder schreibt gern ein Formular." }),
-  ).toBeVisible();
+  // Der Satz darüber bleibt bis auf das Zahlwort wortgleich (Entscheidung Stefan,
+  // 08.09.2026); die Headline ist unverändert freigegebener Text.
+  await expect(page.getByRole("heading", { name: WEGE_H2 })).toBeVisible();
 
   const karten = page
     .locator("section")
-    .filter({ has: page.getByRole("heading", { name: "Nicht jeder schreibt gern ein Formular." }) })
+    .filter({ has: page.getByRole("heading", { name: WEGE_H2 }) })
     .getByRole("link");
   await expect(karten).toHaveCount(kontaktWege.length);
 
-  // Die beiden Karten stehen nebeneinander in einer Zeile (kein leerer dritter Platz).
+  // Kein leerer dritter Platz: Das Raster steht ab 900 px auf zwei Spalten (beide
+  // Karten auf einer Höhe, gleich breit), darunter gestapelt auf voller Breite.
   const boxen = await karten.evaluateAll((els) =>
     els.map((el) => {
       const karte = el.closest("div");
       const r = (karte ?? el).getBoundingClientRect();
-      return { top: Math.round(r.top), right: Math.round(r.right) };
+      return { top: Math.round(r.top), breite: Math.round(r.width) };
     }),
   );
-  expect(new Set(boxen.map((b) => b.top)).size, "beide Wege auf einer Höhe").toBe(1);
+  const breite = testInfo.project.use.viewport!.width;
+  const zeilen = new Set(boxen.map((b) => b.top)).size;
+  expect(zeilen, breite > 900 ? "beide Wege auf einer Höhe" : "beide Wege gestapelt").toBe(
+    breite > 900 ? 1 : kontaktWege.length,
+  );
+  expect(new Set(boxen.map((b) => b.breite)).size, "beide Wege gleich breit").toBe(1);
 });

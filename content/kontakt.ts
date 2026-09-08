@@ -254,7 +254,9 @@ export const kontakt: PageContent = {
       id: "wege",
       eyebrow: "Andere Wege zu uns",
       headline: "Nicht jeder schreibt gern ein Formular.",
-      text: ["Drei weitere Möglichkeiten, mit uns ins Gespräch zu kommen – jede ohne Verpflichtung."],
+      // Nur das Zahlwort ist angepasst (Entscheidung Stefan, 08.09.2026): Seit Briefing 0031
+      // stehen darunter zwei Wege statt drei. Der übrige Satz bleibt wortgleich.
+      text: ["Zwei weitere Möglichkeiten, mit uns ins Gespräch zu kommen – jede ohne Verpflichtung."],
     },
     {
       id: "anschrift",

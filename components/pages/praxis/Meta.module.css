@@ -1,5 +1,6 @@
-/* Portiert aus docs/design-system/mocks/3.9a-praxis-uebersicht.html (.meta Z.117–119).
-   Die Zeile aus Autor, Datum und Lesezeit – auf Karte und Artikelkopf.
+/* Portiert aus docs/design-system/mocks/3.9a-praxis-uebersicht.html (.meta Z.117–119)
+   und 3.9b (.ahead .meta, größerer Avatar). Die Zeile aus Autor, Datum und Lesezeit –
+   auf der Karte und im Artikelkopf.
 
    Die Lesezeit ist berechnet (lib/praxis/lesezeit.ts), kein Schemafeld und keine
    erfundene Zahl. Auf der Karte steht sie nicht: dafür müsste die Liste den kompletten
@@ -20,22 +21,45 @@
   color: var(--gn-ink);
   font-weight: 600;
 }
-/* Initialenkreis. Fixe Maße – skaliert nie mit dem Container. */
-.initialen {
+
+/* Avatar – Porträt oder Initialenkreis. Beide tragen dieselben festen Maße, damit der
+   Wechsel zwischen Bild und Rückfall nichts verschiebt (kein CLS). Fixe Größen: der
+   Avatar skaliert nie mit dem Container. */
+.avatar {
   width: 26px;
   height: 26px;
   border-radius: 50%;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* Im Artikelkopf etwas größer (Mock 3.9b `.ahead .meta .au i`). */
+.avatarGross {
+  width: 34px;
+  height: 34px;
+}
+
+.initialen {
   background: var(--gn-navy);
   color: #fff; /* Weiß auf Navy = Mock-Wert, kein Token */
   font-family: var(--gn-font-display);
   font-size: 10px;
   font-weight: 800;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   font-style: normal;
-  flex: 0 0 auto;
 }
+.avatarGross.initialen {
+  font-size: 12px;
+}
+
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 /* Auf der Karte etwas enger (Mock: .acard .ab .meta). */
 .aufKarte {
   margin-top: auto;
@@ -44,6 +68,7 @@
   font-size: 12.5px;
   gap: 6px 14px;
 }
+
 /* Rolle des Autors unter dem Namen (nur im Artikelkopf, Mock 3.9b `.ahead .meta .au span`). */
 .rolle {
   display: block;

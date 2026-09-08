@@ -28,6 +28,10 @@ import type {
  *   Liste, Zitat, Hinweiskasten und CTA; Artikel 2 hat **zwei `h2`** (Kasten entfällt).
  * - **Kein Artikel hat ein Titelbild** – so prüft der Testlauf immer den
  *   beschrifteten `Shot`-Platzhalter statt eines Bildes von cdn.sanity.io.
+ * - **Zwei Autoren, einer mit Porträt und einer ohne** – damit sind beide Zweige der
+ *   Meta-Zeile abgedeckt: das Foto und der Initialenkreis als Rückfall. Welcher
+ *   Artikel welchen Autor hat, sagen `FIXTURE_ARTIKEL_AUTOR_MIT_BILD` und
+ *   `FIXTURE_ARTIKEL_AUTOR_OHNE_BILD`.
  */
 
 /** Ist der Test-Fetch aktiv? Niemals auf Vercel, egal was in der Umgebung steht. */
@@ -47,10 +51,42 @@ export const FIXTURE_ARTIKEL_SLUG = "beispielartikel-1";
 /** Slug des Artikels mit nur zwei Überschriften (kein Inhaltsverzeichnis). */
 export const FIXTURE_ARTIKEL_KURZ_SLUG = "beispielartikel-2";
 
+/**
+ * Ein Porträt, wie es aus Sanity käme. Die Kennung ist erfunden – in der Testumgebung
+ * liefert `urlForImage` ohnehin eine Datei aus `public/` statt `cdn.sanity.io`
+ * (siehe `lib/sanity/image.ts`).
+ */
+const PORTRAIT = {
+  alt: "Porträt des Autors",
+  asset: {
+    _id: "image-fixture-portrait-400x400-webp",
+    url: "https://cdn.sanity.io/images/fixture/portrait.webp",
+    // `dimensions` holt nur POST_BY_SLUG_QUERY; die Kartenabfrage kommt ohne aus.
+    // Dasselbe Objekt bedient beide, deshalb steht das Feld hier mit.
+    metadata: { lqip: null, dimensions: null },
+  },
+};
+
+/**
+ * Zwei Autoren, **einer mit Porträt und einer ohne** – so prüft der Testlauf beide
+ * Zweige der Meta-Zeile: das Bild und den Initialenkreis als Rückfall.
+ */
 const AUTOREN = [
-  { name: "Vorname Nachname", slug: "vorname-nachname", role: "Rolle des Autors" },
-  { name: "Zweite Person", slug: "zweite-person", role: "Zweite Rolle" },
+  {
+    name: "Vorname Nachname",
+    slug: "vorname-nachname",
+    role: "Rolle des Autors",
+    image: PORTRAIT,
+  },
+  { name: "Zweite Person", slug: "zweite-person", role: "Zweite Rolle", image: null },
 ];
+
+/**
+ * Welcher Artikel welchen Autor trägt – die Zuordnung läuft über `nummer % 2`, das
+ * wollen Tests nicht nachrechnen müssen.
+ */
+export const FIXTURE_ARTIKEL_AUTOR_MIT_BILD = "beispielartikel-2";
+export const FIXTURE_ARTIKEL_AUTOR_OHNE_BILD = "beispielartikel-1";
 
 function karte(nummer: number): POSTS_QUERY_RESULT[number] {
   const rubrik = nummer === 12 ? FIXTURE_RUBRIKEN[1] : FIXTURE_RUBRIKEN[0];
@@ -64,7 +100,7 @@ function karte(nummer: number): POSTS_QUERY_RESULT[number] {
     publishedAt: `2026-0${nummer < 10 ? "9" : "8"}-${String(28 - nummer).padStart(2, "0")}T09:00:00.000Z`,
     mainImage: null,
     category: { title: rubrik.title, slug: rubrik.slug, audience: "clubbetrieb" },
-    author: { name: autor.name, slug: autor.slug },
+    author: { name: autor.name, slug: autor.slug, image: autor.image },
   };
 }
 
@@ -149,7 +185,7 @@ function artikel(nummer: number, body: BlockContent): NonNullable<POST_BY_SLUG_Q
       role: autor.role,
       bio: "Platzhaltertext für die Kurzbiografie des Autors.",
       linkedin: null,
-      image: null,
+      image: autor.image,
     },
     related: null,
     seo: null,

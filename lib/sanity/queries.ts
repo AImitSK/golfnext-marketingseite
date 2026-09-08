@@ -13,7 +13,13 @@ import type { SanityTag } from "@/lib/sanity/client";
  * überschreiben sich in der Typerzeugung stillschweigend.
  */
 
-/** Felder einer Artikelkarte – Liste, Rubrikseite, „Weitere Artikel“. */
+/**
+ * Felder einer Artikelkarte – Liste, Rubrikseite, „Weitere Artikel“.
+ *
+ * Das Autorenbild kommt mit (Briefing 0027, Nachbesserung 08.09.2026): Ohne es zeigte
+ * die Meta-Zeile jeder Karte den Initialenkreis, obwohl im Studio ein Porträt liegt.
+ * `dimensions` braucht es hier nicht – der Avatar ist quadratisch und fest 26 px.
+ */
 const KARTE = /* groq */ `
   _id,
   title,
@@ -22,7 +28,7 @@ const KARTE = /* groq */ `
   publishedAt,
   mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},
   category->{title, "slug": slug.current, audience},
-  author->{name, "slug": slug.current}
+  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}
 `;
 
 /**

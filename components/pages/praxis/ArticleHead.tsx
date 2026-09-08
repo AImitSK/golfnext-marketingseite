@@ -50,7 +50,11 @@ export function ArticleHead({ artikel, lesezeit }: { artikel: Artikel; lesezeit:
           <p className={styles.lead}>{artikel.excerpt}</p>
           <ArticleMeta
             className={styles.kopfMeta}
-            autor={{ name: artikel.author.name, rolle: artikel.author.role }}
+            autor={{
+              name: artikel.author.name,
+              rolle: artikel.author.role,
+              bild: artikel.author.image,
+            }}
             datum={artikel.publishedAt}
             lesezeit={lesezeit}
           />

@@ -71,7 +71,11 @@ export function ArticleCard({
         <CategoryChip>{artikel.category.title}</CategoryChip>
         <Ueberschrift className={styles.titel}>{artikel.title}</Ueberschrift>
         <p className={styles.excerpt}>{artikel.excerpt}</p>
-        <ArticleMeta autor={{ name: artikel.author.name }} datum={artikel.publishedAt} aufKarte />
+        <ArticleMeta
+          autor={{ name: artikel.author.name, bild: artikel.author.image }}
+          datum={artikel.publishedAt}
+          aufKarte
+        />
       </div>
     </Link>
   );

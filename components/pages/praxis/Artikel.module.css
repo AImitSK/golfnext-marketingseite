@@ -1,6 +1,6 @@
 /* Portiert aus docs/design-system/mocks/3.9b-praxis-artikel.html
-   (.crumb/.ahead/.cover/.art/.body/.pull/.fig/.box/.toc/.abox/.cta2/.author/.related,
-   Z.196–246). Farben auf --gn-*, literale Tints kommentiert.
+   (.crumb/.ahead/.cover/.art/.body/.pull/.fig/.box/.toc/.author/.related, Z.196–246).
+   Farben auf --gn-*, literale Tints kommentiert.
 
    Bewusst NICHT übernommen (Briefing 0027):
    - `.prog` (Lesefortschrittsbalken): eine fixierte Linie, die bei jedem Scrollen
@@ -10,6 +10,10 @@
      JavaScript und wäre ohne JS ein toter Zustand. Die Sprungmarken selbst
      funktionieren ohne JS.
    - `.author .tlink` „Alle Beiträge von …": es gibt keine Autorenseite.
+   - `.cta2` (Kasten in der Seitenspalte): seine Texte sind nicht freigegeben.
+   - `.abox` (Autorenzeile in der Seitenspalte): Der Autor stand damit dreimal auf
+     einer Seite – Kopfzeile, Seitenspalte, Kasten „Über den Autor" (Entscheidung
+     Stefan, 08.09.2026).
 
    `.body` steht auf max 70ch (docs/04 „Rendering", Briefing 0027) statt der 68ch des
    Mocks – der einzige Zahlenunterschied, und er steht so in der Doku. */
@@ -60,18 +64,6 @@
 .kopfMeta {
   font-size: 14px;
 }
-.autorName {
-  display: block;
-  color: var(--gn-ink);
-  font-weight: 600;
-  font-size: 14px;
-}
-.autorRolle {
-  display: block;
-  font-size: 12px;
-  color: var(--gn-muted);
-  font-weight: 500;
-}
 
 /* ---------- Titelbild ---------- */
 .cover {
@@ -105,15 +97,29 @@
 
 /* ---------- Text + Seitenleiste ---------- */
 /* Liegt auf dem `Wrap`-Baustein: der bringt Satzspiegel und Gutter mit, hier kommen
-   nur Raster und vertikale Luft dazu (kein `padding`-Kurzschreibweise – sonst fiele
-   der seitliche Gutter des Wraps weg). */
-.art {
+   nur Raster und vertikale Luft dazu.
+
+   **`.art.art` statt `.art` ist Absicht.** `Wrap.module.css` setzt beide
+   Kurzschreibweisen – `padding: 0 var(--gn-gutter)` UND `margin: 0 auto` – und nullt
+   damit oben und unten sowohl Innen- als auch Außenabstand. Beide Klassen sitzen auf
+   demselben Element und haben dieselbe Spezifität (0,1,0); `.wrap` gewinnt über die
+   Reihenfolge. Der Abstand über und unter dem Text fiel dadurch ersatzlos weg – erst
+   als `padding`, nach dem ersten Reparaturversuch genauso als `margin`. Der doppelte
+   Klassenselektor hebt die Regel auf (0,2,0) und gewinnt, ohne `Wrap.module.css`
+   anzufassen (der Baustein trägt zwölf weitere Verwendungen). */
+.art.art {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
   gap: 72px;
   align-items: start;
-  padding-top: 56px;
-  padding-bottom: 40px;
+  margin-top: 56px;
+  margin-bottom: 40px;
+}
+
+/* Ohne Seitenspalte (kein Inhaltsverzeichnis, siehe ArticleAside) nimmt der Text die
+   volle Breite – statt einer leeren 300-px-Spalte daneben. */
+.art.artOhneSpalte {
+  grid-template-columns: minmax(0, 1fr);
 }
 .body {
   max-width: 70ch; /* docs/04 „Rendering" (Mock: 68ch) */
@@ -321,45 +327,6 @@
   border-color: var(--gn-signal); /* Signalgrün als Linie */
 }
 
-/* Autorenkarte in der Seitenleiste (Mock .abox) */
-.abox {
-  border: 1px solid var(--gn-line);
-  border-radius: var(--gn-radius-lg);
-  background: #fff; /* Weiß = Mock-Wert (.abox), kein Token */
-  padding: 22px 24px;
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
-  gap: 14px;
-  align-items: center;
-}
-.aboxFoto {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex: 0 0 auto;
-}
-.aboxFoto img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.aboxName {
-  display: block;
-  font-family: var(--gn-font-display);
-  font-size: 16px;
-  color: var(--gn-navy);
-  letter-spacing: -0.02em;
-  font-weight: 700;
-}
-.aboxRolle {
-  display: block;
-  font-size: 12.5px;
-  color: var(--gn-muted);
-  margin-top: 2px;
-  line-height: 1.4;
-}
 
 /* Abschluss-CTA in der Seitenleiste (Mock .cta2) */
 .cta2 {
@@ -447,7 +414,9 @@
 }
 
 @media (max-width: 1000px) {
-  .art {
+  /* Doppelter Klassenselektor wie in der Grundregel oben – sonst gewinnt diese
+     Medienabfrage nicht gegen `.art.art` und die 300-px-Spalte bliebe stehen. */
+  .art.art {
     grid-template-columns: minmax(0, 1fr);
     gap: 40px;
   }
@@ -465,8 +434,8 @@
   .ahead {
     padding: 36px 0 28px;
   }
-  .art {
-    padding-top: 36px;
+  .art.art {
+    margin-top: 36px;
   }
   .body p {
     font-size: 17px;

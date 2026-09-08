@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 import { praxisLabels } from "../../content/praxis";
 import {
+  FIXTURE_ARTIKEL_AUTOR_MIT_BILD,
+  FIXTURE_ARTIKEL_AUTOR_OHNE_BILD,
   FIXTURE_ARTIKEL_KURZ_SLUG,
   FIXTURE_ARTIKEL_SLUG,
   FIXTURE_RUBRIKEN,
@@ -89,8 +91,162 @@ test.describe("Praxis – Aufbau", () => {
   }) => {
     await page.goto(ARTIKEL);
     await expect(page.getByText("Titelbild folgt")).toBeVisible();
-    // Kein Stock-, KI- oder erfundenes Bild an dieser Stelle (CLAUDE.md).
-    await expect(page.locator("main img")).toHaveCount(0);
+    // Kein Stock-, KI- oder erfundenes Bild an dieser Stelle (CLAUDE.md). Geprüft wird
+    // der Titelbild- und Textbereich (die direkten <div>-Kinder von <main>); der
+    // Empfehlungsblock darunter ist ein <section> und bringt eigene Kartenbilder mit.
+    await expect(page.locator("main > div img")).toHaveCount(0);
+  });
+});
+
+test.describe("Praxis – Nachbesserungen aus Stefans Preview-Durchgang (08.09.2026)", () => {
+  test("Kartentitel bleiben 20 px, auch wenn sie auf der Liste h2 sind", async ({ page }) => {
+    // Regression: `.section :global(h2)` aus Section.module.css hat (0,1,1) und schlug
+    // `.titel` (0,1,0) – die Titel kamen mit 40 px und 22ch Breite heraus.
+    await page.goto(LISTE);
+    const titel = page.locator("main a[href^='/praxis/beispielartikel-'] h2").first();
+    const stil = await titel.evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { fontSize: s.fontSize, maxWidth: s.maxWidth };
+    });
+    expect(stil.fontSize).toBe("20px");
+    expect(stil.maxWidth).toBe("none");
+  });
+
+  test("„Passt dazu“ nutzt dieselbe Kartenoptik wie die Liste", async ({ page }) => {
+    // Gegenprobe: dort sind die Karten h3 und waren nie betroffen.
+    await page.goto(ARTIKEL);
+    const titel = page.locator("main section a[href^='/praxis/beispielartikel-'] h3").first();
+    await expect(titel).toHaveCSS("font-size", "20px");
+  });
+
+  test("über und unter dem Textbereich steht Abstand", async ({ page }) => {
+    // Regression: `.art` lag als `padding` auf demselben Element wie `.wrap`, dessen
+    // `padding: 0 var(--gn-gutter)` es auf 0 zurücksetzte.
+    await page.goto(ARTIKEL);
+    const abstand = await page
+      .locator("main > div")
+      .nth(1)
+      .evaluate((el) => {
+        const s = getComputedStyle(el);
+        return {
+          oben: Number.parseFloat(s.marginTop) + Number.parseFloat(s.paddingTop),
+          unten: Number.parseFloat(s.marginBottom) + Number.parseFloat(s.paddingBottom),
+          links: Number.parseFloat(s.paddingLeft),
+        };
+      });
+    expect(abstand.oben, "Abstand über dem Text").toBeGreaterThan(20);
+    expect(abstand.unten, "Abstand unter dem Text").toBeGreaterThan(20);
+    // Der seitliche Gutter des Wraps darf dabei nicht verloren gehen.
+    expect(abstand.links, "seitlicher Gutter").toBeGreaterThan(0);
+  });
+
+  test("der Autor steht nur noch zweimal auf der Artikelseite", async ({ page }) => {
+    // Vorher dreimal: Kopfzeile, Kasten in der Seitenspalte, „Über den Autor".
+    // Die Zeile in der Seitenspalte ist entfallen (Entscheidung Stefan).
+    await page.goto(ARTIKEL);
+    // Über den sichtbaren Text gezählt, nicht über Elemente: In der Kopfzeile steht der
+    // Name mit der Rolle in einem gemeinsamen `span`, in der Autorenbox allein in `b`.
+    // Der Empfehlungsblock bleibt außen vor – dort gehören Autorennamen auf die Karten.
+    const treffer = await page.evaluate(() => {
+      const name = "Zweite Person";
+      const zaehle = (el: Element | null) =>
+        el ? (el as HTMLElement).innerText.split(name).length - 1 : 0;
+      return {
+        kopf: zaehle(document.querySelector("main > section")),
+        artikel: zaehle(document.querySelector("main article")),
+        seitenspalte: zaehle(document.querySelector("main aside")),
+      };
+    });
+    expect(treffer.kopf, "Autorenzeile im Kopf").toBe(1);
+    expect(treffer.artikel, "Kasten unter dem Text").toBe(1);
+    expect(treffer.seitenspalte, "Seitenspalte nennt den Autor nicht mehr").toBe(0);
+  });
+
+  test("ohne Inhaltsverzeichnis entfällt die Seitenspalte und der Text wird breiter", async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "w1440", "Nur ab 1024 px hat die Seite zwei Spalten");
+
+    await page.goto(ARTIKEL);
+    const mitSpalte = await page.locator("main > div").nth(1).evaluate((el) => ({
+      spalten: getComputedStyle(el).gridTemplateColumns.split(" ").length,
+      breite: el.querySelector("article")!.getBoundingClientRect().width,
+    }));
+    expect(mitSpalte.spalten, "Artikel mit Inhaltsverzeichnis ist zweispaltig").toBe(2);
+
+    await page.goto(`/praxis/${FIXTURE_ARTIKEL_KURZ_SLUG}`);
+    await expect(page.locator("aside")).toHaveCount(0);
+    const ohneSpalte = await page.locator("main > div").nth(1).evaluate((el) => ({
+      spalten: getComputedStyle(el).gridTemplateColumns.split(" ").length,
+      breite: el.querySelector("article")!.getBoundingClientRect().width,
+    }));
+    expect(ohneSpalte.spalten, "ohne Inhaltsverzeichnis einspaltig").toBe(1);
+    expect(ohneSpalte.breite, "Text nimmt die frei gewordene Breite").toBeGreaterThan(
+      mitSpalte.breite,
+    );
+  });
+
+  test("„Passt dazu“ scrollt unter 1000 px im eigenen Container", async ({ page }, testInfo) => {
+    const breite = Number(testInfo.project.name.replace("w", ""));
+    await page.goto(ARTIKEL);
+
+    const raster = page.locator("main section a[href^='/praxis/beispielartikel-']").first();
+    const container = raster.locator("xpath=../..");
+    const mass = await container.evaluate((el) => ({
+      scrollWidth: el.scrollWidth,
+      clientWidth: el.clientWidth,
+      overflowX: getComputedStyle(el).overflowX,
+    }));
+
+    if (breite <= 1000) {
+      expect(mass.overflowX, "Querscroller unter 1000 px").toBe("auto");
+      expect(mass.scrollWidth, "scrollt im eigenen Container").toBeGreaterThan(mass.clientWidth);
+    } else {
+      expect(mass.overflowX, "ab drei Karten nebeneinander bleibt das Raster").toBe("visible");
+    }
+
+    // In keinem Fall darf der Seitenkörper waagerecht überlaufen.
+    const seitenUeberlauf = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth + 1,
+    );
+    expect(seitenUeberlauf, "kein horizontaler Überlauf der Seite").toBe(false);
+  });
+
+  test("der Querscroller ist mit der Tastatur erreichbar (Karten sind Links)", async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "w390", "Der Scroller greift erst unter 1000 px");
+    await page.goto(ARTIKEL);
+    const karten = page.locator("main section a[href^='/praxis/beispielartikel-']");
+    await expect(karten.first()).toBeVisible();
+    // Fokussierbare Kinder machen den Scrollbereich per Tastatur bedienbar; der Browser
+    // schiebt die jeweils fokussierte Karte selbst in den sichtbaren Bereich.
+    await karten.nth(2).focus();
+    await expect(karten.nth(2)).toBeFocused();
+  });
+
+  test("Autoren mit Porträt zeigen das Foto, Autoren ohne die Initialen", async ({ page }) => {
+    // Vorher stand überall der Initialenkreis, obwohl die Abfrage das Bild mitbrachte.
+    await page.goto(`/praxis/${FIXTURE_ARTIKEL_AUTOR_MIT_BILD}`);
+    const kopfMitBild = page.locator("main > section").first();
+    await expect(kopfMitBild.locator("img")).toHaveCount(1);
+    // Das Foto ist dekorativ – der Name steht daneben.
+    await expect(kopfMitBild.locator("img")).toHaveAttribute("alt", "");
+
+    await page.goto(`/praxis/${FIXTURE_ARTIKEL_AUTOR_OHNE_BILD}`);
+    const kopfOhneBild = page.locator("main > section").first();
+    await expect(kopfOhneBild.locator("img")).toHaveCount(0);
+    await expect(kopfOhneBild.getByText("ZP", { exact: true })).toBeVisible();
+  });
+
+  test("auch die Karten zeigen das Autorenfoto, wenn es gepflegt ist", async ({ page }) => {
+    await page.goto(LISTE);
+    const karten = page.locator("main a[href^='/praxis/beispielartikel-']");
+    // Die Testdaten wechseln sich ab: mindestens eine Karte mit Foto, eine ohne.
+    expect(await karten.locator("img").count()).toBeGreaterThan(0);
+    expect(await page.locator("main a[href^='/praxis/beispielartikel-'] i").count()).toBeGreaterThan(
+      0,
+    );
   });
 });
 

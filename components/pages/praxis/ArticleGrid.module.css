@@ -70,11 +70,21 @@
   flex-direction: column;
   flex: 1;
 }
-.titel {
+/* Kartentitel.
+   `.card .titel` statt `.titel` ist Absicht, keine Schludrigkeit: Die Liste steht in
+   der `Section`-Schale, und deren `.section :global(h2)` (Section.module.css) hat mit
+   (0,1,1) die höhere Spezifität als ein einzelner Klassenselektor (0,1,0). Ein
+   Kartentitel auf Ebene h2 – auf der Liste ist die Karte der oberste Abschnitt unter
+   der H1 – bekäme sonst die Sektions-H2-Optik: 40 px statt 20 px und 22ch Breite, also
+   ein Umbruch nach wenigen Wörtern. Im Block „Passt dazu" fiel es nicht auf, weil die
+   Karten dort h3 sind. Mit (0,2,0) gewinnt diese Regel; `max-width` und
+   `margin-bottom` der Sektions-Regel werden ausdrücklich zurückgenommen. */
+.card .titel {
   font-size: 20px;
   letter-spacing: -0.025em;
   line-height: 1.22;
   margin: 12px 0 10px;
+  max-width: none;
 }
 .excerpt {
   font-size: 14px;
@@ -114,5 +124,42 @@
 @media (max-width: 620px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Querscroller für „Passt dazu" (Entscheidung Stefan, 08.09.2026) ----------
+
+   Nur dort, nicht auf der Liste: Der Empfehlungsblock ist ein Nachklapp am Ende des
+   Artikels; drei gestapelte Karten schoben auf dem Telefon den Abschluss-CTA weit nach
+   unten. Als Querscroller bleibt er eine Zeile hoch.
+
+   Reines CSS: `overflow-x` plus `scroll-snap`, **kein** Karussell in JavaScript, keine
+   Automatik. Ohne JavaScript funktioniert er unverändert (der Browser scrollt selbst),
+   und mit der Tastatur ebenso: Die Karten sind Links – wer durchtabbt, bekommt die
+   nächste Karte vom Browser in den sichtbaren Bereich geschoben.
+
+   Der Scroll passiert **im Container**; der Seitenkörper bekommt keinen horizontalen
+   Überlauf (der Container liegt im `Wrap` und ist so breit wie dieser).
+
+   Ab drei Karten nebeneinander – also über 1000 px – bleibt das Raster, wie es ist. */
+@media (max-width: 1000px) {
+  .scroller {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    /* Platz für den Schatten der angehobenen Karte beim Überfahren. */
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+  .scroller > * {
+    flex: 0 0 46%;
+    scroll-snap-align: start;
+  }
+}
+@media (max-width: 620px) {
+  .scroller > * {
+    /* Die nächste Karte schaut hervor – sichtbarer Hinweis, dass es weitergeht. */
+    flex: 0 0 82%;
   }
 }

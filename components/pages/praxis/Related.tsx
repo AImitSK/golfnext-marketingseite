@@ -23,7 +23,7 @@ export function Related({ artikel }: { artikel: Artikel[] }) {
       <Wrap>
         <Eyebrow>{praxisLabels.weiterlesen}</Eyebrow>
         <h2 className={styles.relatedH2}>{praxisLabels.passtDazu}</h2>
-        <ArticleGrid artikel={artikel} ueberschrift="h3" />
+        <ArticleGrid artikel={artikel} ueberschrift="h3" scrollerMobil />
       </Wrap>
     </section>
   );

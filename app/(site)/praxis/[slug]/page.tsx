@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArticleAside } from "@/components/pages/praxis/ArticleAside";
+import { ArticleAside, hatSeitenspalte } from "@/components/pages/praxis/ArticleAside";
 import { ArticleHead } from "@/components/pages/praxis/ArticleHead";
 import { AuthorBox } from "@/components/pages/praxis/AuthorBox";
 import { PortableTextRenderer } from "@/components/pages/praxis/PortableTextRenderer";
@@ -74,6 +74,9 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
 
   const lesezeit = lesezeitMinuten(artikel.body);
   const toc = tocAusBody(artikel.body);
+  // Ohne Inhaltsverzeichnis gibt es keine Seitenspalte – dann setzt der Text einspaltig
+  // über die volle Breite, statt eine leere 300-px-Spalte offen zu lassen.
+  const mitSpalte = hatSeitenspalte(toc);
 
   // Sind keine Empfehlungen gepflegt, kommen bis zu drei weitere aus derselben Rubrik
   // (ohne den aktuellen Artikel). Gibt es auch die nicht, entfällt der Block.
@@ -95,13 +98,13 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
     <main>
       <ArticleHead artikel={artikel} lesezeit={lesezeit} />
 
-      <Wrap className={styles.art}>
+      <Wrap className={mitSpalte ? styles.art : `${styles.art} ${styles.artOhneSpalte}`}>
         <article>
           <PortableTextRenderer body={artikel.body} />
           <AuthorBox autor={artikel.author} />
         </article>
 
-        <ArticleAside eintraege={toc} autor={artikel.author} lesezeit={lesezeit} />
+        <ArticleAside eintraege={toc} />
       </Wrap>
 
       <Related artikel={weiterlesen} />

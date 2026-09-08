@@ -113,7 +113,9 @@ Gebaut mit Briefing 0027 (Masterplan 3.4). Bausteine unter `components/pages/pra
 Hilfsfunktionen unter `lib/praxis/`.
 
 - **Listen** (`/praxis`, `/praxis/thema/<slug>`): `ArticleCard` (Bild 16/10 mit `aspect-ratio`,
-  Rubrik-Chip, Titel, Excerpt, Datum, Autor). Ohne `mainImage` tritt der beschriftete
+  Rubrik-Chip, Titel, Excerpt, Datum, Autor mit Porträt). Die Kartenabfrage `KARTE` holt das
+  Autorenbild seit dem 08.09.2026 mit; ohne gepflegtes Porträt tritt der Initialenkreis an
+  seine Stelle. Ohne `mainImage` tritt der beschriftete
   `Shot`-Platzhalter „Bild folgt" an die Stelle des Bildes – nie Stock, nie KI, nie eine leere
   Fläche. `ArticleGrid` staffelt die Karten einmalig ein (`viewport={{ once: true }}`).
 - **Artikel** (`/praxis/<slug>`): max **70ch**, 18 px, H2 `clamp(22px,2.2vw,28px)`, Titelbild mit
@@ -128,6 +130,11 @@ Hilfsfunktionen unter `lib/praxis/`.
 - Autorenbox unter dem Artikel („Über den Autor", LinkedIn nur wenn gesetzt); „Weiterlesen /
   Passt dazu" aus `related`, ersatzweise bis zu drei weitere aus derselben Rubrik, sonst entfällt
   der Block; Abschluss-CTA zum Erstgespräch (**kein Newsletter**).
+- **Seitenspalte:** nur das Inhaltsverzeichnis. Die Autorenzeile des Mocks entfällt (der Autor
+  stand sonst dreimal auf einer Seite); gibt es kein Inhaltsverzeichnis, entfällt die Spalte ganz
+  und der Fließtext nimmt die volle Breite.
+- **„Passt dazu" unter 1000 px als Querscroller** – reines CSS (`overflow-x` + `scroll-snap`),
+  kein Karussell in JavaScript, ohne JS bedienbar, Scroll im eigenen Container.
 - **Rubrikseite**: H1 = Rubriktitel, darunter `category.description`, Filterleiste mit aktivem Chip.
 
 ### Abweichungen von der ursprünglichen Fassung dieses Abschnitts

@@ -17,13 +17,24 @@ import styles from "./ArticleGrid.module.css";
 export function ArticleGrid({
   artikel,
   ueberschrift = "h2",
+  scrollerMobil = false,
 }: {
   artikel: Artikel[];
   /** Ebene der Kartentitel – siehe ArticleCard. */
   ueberschrift?: "h2" | "h3";
+  /**
+   * Unter 1000 px als Querscroller statt gestapelt – nur für „Passt dazu"
+   * (Entscheidung Stefan, 08.09.2026). Reines CSS: kein Karussell, keine Automatik,
+   * ohne JavaScript bedienbar.
+   */
+  scrollerMobil?: boolean;
 }) {
+  const klassen = [styles.grid, scrollerMobil ? styles.scroller : undefined]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <Rise className={styles.grid}>
+    <Rise className={klassen}>
       {artikel.map((a, i) => (
         <RiseItem key={a._id}>
           <ArticleCard artikel={a} ueberschrift={ueberschrift} prioritaet={i === 0} />

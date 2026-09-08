@@ -109,12 +109,12 @@ Medienabfragen derselben Klasse anheben – sonst greifen die responsiven Übers
 nicht mehr (genau das ist beim ersten Versuch passiert: die 300-px-Seitenspalte blieb
 auf dem Telefon stehen und erzeugte einen waagerechten Überlauf).
 
-**3. Dasselbe gilt für .**  setzt  mit Radius und Rahmen.
-Eine Seiten-Klasse daneben (, -Override in der Karte) hat dieselbe
-Spezifität (0,1,0) – wer gewinnt, hinge an der Reihenfolge im Bündel. Auf der
-Artikelseite kam der Titelbild-Platzhalter deshalb mit 4 px und Rahmen heraus, während
-das echte Bild daneben 12 px und randlos ist. Auch hier: mit zwei Klassen selektieren
-(, ).
+**3. Dasselbe gilt für `Shot`.** `Shot.module.css` setzt `.shot` mit eigenem Radius
+(4 px) und Rahmen. Eine Seiten-Klasse daneben – `.coverShot` auf der Artikelseite, der
+`.shot`-Override in der Karte – hat dieselbe Spezifität (0,1,0); wer gewinnt, hinge an
+der Reihenfolge im Bündel. Auf der Artikelseite kam der Titelbild-Platzhalter deshalb
+mit 4 px und Rahmen heraus, während das echte Titelbild daneben 12 px und randlos ist.
+Auch hier hilft nur, mit zwei Klassen zu selektieren: `.cover .coverShot`, `.card .shot`.
 
 **Merksatz:** Wer eine eigene Klasse auf einen geteilten Baustein legt, prüft vorher
 dessen Modul-CSS auf Nachfahren-Selektoren und Kurzschreibweisen – und danach das

@@ -16,7 +16,7 @@ kommt Art. 6 DSGVO für die anschließende Verarbeitung. Konkret für diese Webs
 | Kontaktformular | nein (Vertragsanbahnung, Art. 6 Abs. 1 b) | aber Hinweis am Formular, Datenschutzerklärung |
 | **Google Tag Manager / Google Ads Conversion / GA4** | **ja** | Cookies, Profiling |
 | **Meta Pixel** | **ja** | Cookies, Datentransfer an Meta |
-| YouTube/Vimeo-Embeds (Live-Demo-Video) | ja, oder Zwei-Klick-Lösung mit Vorschaubild | Embeds setzen Cookies/laden Dritt-Scripts |
+| YouTube/Vimeo-Embeds | ja, oder Zwei-Klick-Lösung mit Vorschaubild | Embeds setzen Cookies/laden Dritt-Scripts. **Aktuell gibt es kein Embed** – die Live-Demo ist mit Masterplan 2.11 ersatzlos entfallen (08.09.2026). Die Zeile bleibt als Regel für den Fall stehen, dass später ein Video dazukommt. |
 | Buchungstool für das Erstgespräch (extern verlinkt) | nein, wenn nur verlinkt; ja, wenn eingebettet | Embed lädt Dritt-Script |
 
 Da GolfNext selbst Reach (Meta + Google Ads) verkauft, wird die eigene Website mit hoher Wahrscheinlichkeit

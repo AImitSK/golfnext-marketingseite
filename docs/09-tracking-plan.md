@@ -14,13 +14,15 @@ Anfrage. Dafür braucht es wenige, saubere Ereignisse, die in Google Ads und Met
 | Ereignis | Wann | Parameter | Conversion? |
 |---|---|---|---|
 | `cta_erstgespraech_click` | Klick auf „Online-Erstgespräch vereinbaren" (Header, Sektionen, Footer) | `position` (header · hero · footer · pakete · …), `page` | ja (Micro) |
-| `cta_livedemo_click` | Klick auf Live-Demo | `position`, `page` | nein |
 | `contact_submitted` | Formular erfolgreich gesendet (Server-Antwort ok) | `form` (kontakt), `interesse` (Auswahl, keine Freitexte) | **ja (Haupt)** |
 | `paket_details_open` | Leistungsliste in einer Paketkarte aufgeklappt | `paket` (wachstum · komplett · individuell) | nein |
 | `paket_vergleich_view` | Vergleichstabelle im Viewport | – | nein |
 | `faq_open` | FAQ-Frage geöffnet | `question_id`, `page` | nein |
 | `ratgeber_read` | Artikel zu 75 % gescrollt | `slug`, `rubrik` | nein |
-| `outbound_click` | Klick auf externe Links (Buchungstool, Live-Demo-Domain, Social) | `href_domain` | nein |
+| `outbound_click` | Klick auf externe Links (Buchungstool, Social) | `href_domain` | nein |
+
+> **Gestrichen am 08.09.2026 (Masterplan 2.11):** das Ereignis `cta_livedemo_click`. Die Live-Demo
+> entfällt ersatzlos; es gibt nur noch das Online-Erstgespräch als CTA-Ziel.
 
 Keine personenbezogenen Daten in Parametern (kein Name, keine E-Mail, kein Freitext, keine Club-Namen).
 

@@ -120,7 +120,6 @@ Auch hier hilft nur, mit zwei Klassen zu selektieren: `.cover .coverShot`, `.car
 dessen Modul-CSS auf Nachfahren-Selektoren und Kurzschreibweisen – und danach das
 Ergebnis in allen fünf Breakpoints, nicht nur am Schreibtisch-Monitor.
 
-
 ## Prinzipien (aus Kapitel 1.1)
 
 1. Ruhe vor Effekt – große Headlines, kurze Absätze, viel Fläche.

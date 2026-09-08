@@ -32,11 +32,32 @@ import type {
  *   Meta-Zeile abgedeckt: das Foto und der Initialenkreis als Rückfall. Welcher
  *   Artikel welchen Autor hat, sagen `FIXTURE_ARTIKEL_AUTOR_MIT_BILD` und
  *   `FIXTURE_ARTIKEL_AUTOR_OHNE_BILD`.
+ *
+ * Daneben gibt es den **leeren Bestand** `SANITY_SOURCE=fixtures-leer` (Briefing
+ * 0029): dieselben Rubriken, aber kein einziger Artikel. Er prüft die Seiten in dem
+ * Zustand, in dem sie beim Abnehmen stehen – und damit, dass die Artikel-Teaser auf
+ * `/` und `/ueber-golfnext` ohne Artikel vollständig entfallen.
  */
 
-/** Ist der Test-Fetch aktiv? Niemals auf Vercel, egal was in der Umgebung steht. */
+/**
+ * Ist der Test-Fetch aktiv? Niemals auf Vercel, egal was in der Umgebung steht.
+ *
+ * Zwei Testbestände (Briefing 0029): `fixtures` liefert die zwölf Beispielartikel,
+ * `fixtures-leer` einen Bestand **ohne einen einzigen Artikel**. Der leere Bestand
+ * prüft, was beim Abnehmen der Normalfall ist – ein Dataset, in dem Fred noch nichts
+ * veröffentlicht hat: Dann entfallen der Praxis-Abschnitt der Startseite und der
+ * Wissen-Abschnitt auf `/ueber-golfnext` vollständig.
+ */
 export function fixturesAktiv(): boolean {
-  return process.env.SANITY_SOURCE === "fixtures" && !process.env.VERCEL;
+  return (
+    (process.env.SANITY_SOURCE === "fixtures" || process.env.SANITY_SOURCE === "fixtures-leer") &&
+    !process.env.VERCEL
+  );
+}
+
+/** Testbestand ohne Artikel (`SANITY_SOURCE=fixtures-leer`). */
+function ohneArtikel(): boolean {
+  return process.env.SANITY_SOURCE === "fixtures-leer";
 }
 
 export const FIXTURE_RUBRIKEN = [
@@ -212,11 +233,16 @@ const RUBRIKEN: CATEGORIES_WITH_COUNT_QUERY_RESULT = FIXTURE_RUBRIKEN.map((r, i)
   anzahl: r.anzahl,
 }));
 
-/** Slug-Listen für den Proxy (`lib/sanity/slugs.ts`). */
-export const FIXTURE_SLUGS = {
-  artikel: Object.keys(ARTIKEL),
-  rubriken: FIXTURE_RUBRIKEN.map((r) => r.slug),
-};
+/**
+ * Slug-Listen für den Proxy (`lib/sanity/slugs.ts`). Im leeren Bestand gibt es keine
+ * Artikel – die Rubriken bleiben, sie stehen im Studio unabhängig von Artikeln.
+ */
+export function fixtureSlugs() {
+  return {
+    artikel: ohneArtikel() ? [] : Object.keys(ARTIKEL),
+    rubriken: FIXTURE_RUBRIKEN.map((r) => r.slug),
+  };
+}
 
 /**
  * Antwort auf eine Abfrage. Erkannt wird sie am Abfragetext – die Abfragen liegen als
@@ -224,18 +250,28 @@ export const FIXTURE_SLUGS = {
  * Unbekannte Abfragen liefern `null`; die Praxis-Routen stellen keine anderen.
  */
 export function fixtureFuer(query: string, params?: Record<string, unknown>): unknown {
-  if (query.includes('_type == "category"')) return RUBRIKEN;
+  const leer = ohneArtikel();
+
+  if (query.includes('_type == "category"')) {
+    return leer ? RUBRIKEN.map((r) => ({ ...r, anzahl: 0 })) : RUBRIKEN;
+  }
 
   if (query.includes("slug.current == $slug")) {
-    return ARTIKEL[String(params?.slug ?? "")] ?? null;
+    return leer ? null : (ARTIKEL[String(params?.slug ?? "")] ?? null);
   }
 
   if (query.includes('_type == "post"')) {
+    if (leer) return [];
+
     const rubrik = params?.rubrik;
-    if (typeof rubrik === "string") {
-      return ALLE_KARTEN.filter((k) => k.category.slug === rubrik);
-    }
-    return ALLE_KARTEN;
+    const karten =
+      typeof rubrik === "string"
+        ? ALLE_KARTEN.filter((k) => k.category.slug === rubrik)
+        : ALLE_KARTEN;
+
+    // `NEUESTE_POSTS_QUERY` schneidet in GROQ auf `$anzahl` zu – hier von Hand.
+    const anzahl = params?.anzahl;
+    return typeof anzahl === "number" ? karten.slice(0, anzahl) : karten;
   }
 
   return null;

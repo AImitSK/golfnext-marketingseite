@@ -5,7 +5,7 @@ description: Prüfroutine vor dem Abschluss eines Masterplan-Schritts – Playwr
 
 # QA-Routine GolfNext
 
-Ziel: dieselben Fehler, die in der Mock-Phase auffielen, automatisch fangen. Tests liegen unter `tests/e2e/`, laufen mit `pnpm test:e2e` gegen `pnpm build && pnpm start` (nicht gegen den Dev-Server).
+Ziel: dieselben Fehler, die in der Mock-Phase auffielen, automatisch fangen. Tests liegen unter `tests/e2e/`, laufen mit `pnpm test:e2e` gegen einen Produktionsbuild (nicht gegen den Dev-Server). **Vorher `pnpm build:e2e`**, nicht `pnpm build`: Das Skript baut zwei Fassungen (`.next` mit Beispielartikeln, `.next-leer` ohne einen einzigen Artikel), Playwright startet beide auf Port 3000 und 3001 – nur so lassen sich die Seiten prüfen, deren Inhalt beim Bauen entsteht (`/`, `/ueber-golfnext`). Siehe `scripts/build-e2e.mjs`.
 
 ## Pflichtchecks je Route
 

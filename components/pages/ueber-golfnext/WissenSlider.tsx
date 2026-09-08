@@ -1,16 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotion } from "motion/react";
-import type { WissenCard } from "@/content/ueber-golfnext";
 import styles from "./Wissen.module.css";
+
+/** Ab wie vielen Pixeln Mausbewegung ein Ziehen als Ziehen gilt (und nicht als Klick). */
+const ZIEH_SCHWELLE = 5;
 
 // Layout-Effekt setzt „mounted" vor dem Paint (clientseitig), serverseitig No-op.
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
  * 6 · Wissen (Slider) – portiert aus 3.8b .know/.rail/.kcard/.rnav. Horizontaler
- * Scroll-Snap-Slider mit vier Artikel-Platzhalterkarten, der rechts aus dem Raster
+ * Scroll-Snap-Slider mit bis zu vier Artikelkarten, der rechts aus dem Raster
  * läuft (Bleed über `margin-right:calc(50% - 50vw)`; der umgebende Abschnitt kappt mit
  * `overflow:hidden` → kein Seiten-Overflow).
  *
@@ -20,10 +22,13 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * scrollbar (`tabIndex`, role/aria-label). Reduzierte Bewegung: Blättern ohne
  * Smooth-Scroll. Kein CLS.
  *
- * Die Karten sind beschriftete Platzhalter („Bild folgt“, „Titel folgt: …“, „Lesezeit
- * folgt“) – kein Stock/KI-Bild, keine erfundenen Titel. Fred liefert Titel/Bilder.
+ * Die Karten selbst kommen als `children` von außen: Sie sind seit Briefing 0029
+ * echte Artikel aus Sanity und werden **serverseitig** gerendert (`WissenCard`). Der
+ * Slider kennt sie nicht – er bedient nur den Rail. Jede Karte ist ein Link auf
+ * `/praxis/<slug>`; ein Ziehen mit der Maus löst deshalb keinen Klick aus (siehe
+ * `onClickCapture`), sonst landete jeder Wischer versehentlich in einem Artikel.
  */
-export function WissenSlider({ data }: { data: WissenCard[] }) {
+export function WissenSlider({ children }: { children: ReactNode }) {
   const railRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
@@ -31,7 +36,7 @@ export function WissenSlider({ data }: { data: WissenCard[] }) {
   const [atEnd, setAtEnd] = useState(false);
   const [dragging, setDragging] = useState(false);
 
-  const drag = useRef({ down: false, startX: 0, startLeft: 0 });
+  const drag = useRef({ down: false, startX: 0, startLeft: 0, strecke: 0, gefangen: false });
 
   const update = useCallback(() => {
     const rail = railRef.current;
@@ -61,17 +66,49 @@ export function WissenSlider({ data }: { data: WissenCard[] }) {
   // Maus-Ziehen (nur Maus; Touch scrollt nativ).
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return;
-    drag.current = { down: true, startX: e.clientX, startLeft: railRef.current?.scrollLeft ?? 0 };
+    drag.current = {
+      down: true,
+      startX: e.clientX,
+      startLeft: railRef.current?.scrollLeft ?? 0,
+      strecke: 0,
+      gefangen: false,
+    };
     setDragging(true);
-    railRef.current?.setPointerCapture(e.pointerId);
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!drag.current.down || !railRef.current) return;
-    railRef.current.scrollLeft = drag.current.startLeft - (e.clientX - drag.current.startX);
+    const weg = e.clientX - drag.current.startX;
+    drag.current.strecke = Math.abs(weg);
+
+    // Den Zeiger **erst beim tatsächlichen Ziehen** einfangen, nicht schon beim
+    // Drücken: Ein gefangener Zeiger leitet auch das Klick-Ereignis auf den Rail um,
+    // und dann öffnete ein normaler Klick auf eine Karte keinen Artikel mehr. Beim
+    // echten Ziehen ist das Einfangen dagegen nötig, damit die Bewegung nicht
+    // abreißt, sobald der Zeiger den Rail verlässt.
+    if (!drag.current.gefangen && drag.current.strecke > ZIEH_SCHWELLE) {
+      drag.current.gefangen = true;
+      railRef.current.setPointerCapture(e.pointerId);
+    }
+
+    railRef.current.scrollLeft = drag.current.startLeft - weg;
   };
   const endDrag = () => {
     drag.current.down = false;
+    drag.current.gefangen = false;
     setDragging(false);
+  };
+
+  /**
+   * Ein Ziehen endet über einer Karte – und die Karte ist ein Link. Ohne diese Sperre
+   * würde jeder Wischer mit der Maus als Klick gewertet und einen Artikel öffnen.
+   * `ZIEH_SCHWELLE` lässt das übliche Wackeln beim Klicken durch.
+   */
+  const onClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (drag.current.strecke > ZIEH_SCHWELLE) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    drag.current.strecke = 0;
   };
 
   return (
@@ -125,23 +162,9 @@ export function WissenSlider({ data }: { data: WissenCard[] }) {
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
+        onClickCapture={onClickCapture}
       >
-        {data.map((c) => (
-          <article key={c.titel} className={styles.kcard}>
-            <div className={styles.kp} aria-hidden="true">
-              <span>{c.bild}</span>
-            </div>
-            <div className={styles.kb}>
-              <div className={styles.kt}>{c.quelle}</div>
-              <b>{c.titel}</b>
-              <p>{c.text}</p>
-              <div className={styles.km}>
-                <span>{c.autor}</span>
-                <span>{c.lesezeit}</span>
-              </div>
-            </div>
-          </article>
-        ))}
+        {children}
       </div>
     </div>
   );

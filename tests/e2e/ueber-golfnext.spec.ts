@@ -11,7 +11,7 @@ import { expect, test } from "@playwright/test";
  *   gebaut; die Überschrift lautet „Zwei Grundsätze …“;
  * - der „Pilotclub“-/Entwicklungspartner-Wortlaut bleibt wortgleich erhalten;
  * - OHNE JavaScript ist alles lesbar (Überschriften, Grundsätze, Zeitleiste, Club-
- *   Kacheln, Artikelkarten), keine toten Slider-Buttons;
+ *   Kacheln, Artikelkarten aus Sanity), keine toten Slider-Buttons;
  * - bei reduzierter Bewegung stehen die Reveals sofort im Endzustand.
  */
 
@@ -78,9 +78,10 @@ test.describe("/ueber-golfnext ohne JavaScript", () => {
 
     // Clublogos und Artikelkarten stehen im Server-HTML. Die Logos sind seit
     // 07.09.2026 echte Grafiken – der Clubname steht im Alt-Text, nicht mehr
-    // als Text in einer Platzhalter-Kachel.
+    // als Text in einer Platzhalter-Kachel. Die Artikelkarten sind seit
+    // Briefing 0029 echte Artikel aus Sanity (Testbestand: „Beispielartikel …").
     await expect(page.getByRole("img", { name: "Golfclub Rehburg-Loccum" })).toBeVisible();
-    await expect(page.getByText("Titel folgt: Mitgliedergewinnung", { exact: true })).toBeVisible();
+    await expect(page.getByText("Beispielartikel 1", { exact: true })).toBeVisible();
 
     // Ohne JS keine toten Steuerelemente (Slider ist nativ scrollbar, Pfeile erst mit JS).
     await expect(page.getByRole("button", { name: "Zurück" })).toHaveCount(0);

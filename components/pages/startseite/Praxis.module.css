@@ -2,11 +2,15 @@
    .ap/.ab/.cat/.meta). Farben auf --gn-* umgestellt, literale Tints kommentiert.
    Karten-Radius --gn-radius-lg (12).
 
-   Die Artikel sind beschriftete Platzhalter („Bild folgt" wortgleich) – kein Stock/
-   KI-Bild, keine erfundenen Ergebnisse. Da noch keine Artikel-/Praxis-Route live ist,
-   sind die Karten `<article>` (keine toten Links); nur „Alle Beiträge" verlinkt (auf
-   `/praxis`, per Live-Gate → `#`, solange die Route nicht live ist). Karten blenden
-   über `Rise` gestaffelt auf (Hover-Lift auf der inneren `.acard`). */
+   Die Artikel kommen seit Briefing 0029 aus Sanity; jede Karte ist – wie im Mock
+   (`<a class="acard">`) – selbst der Link auf `/praxis/<slug>`. Fehlt das Titelbild,
+   steht der beschriftete `Shot`-Platzhalter („Bild folgt") an seiner Stelle – kein
+   Stock/KI-Bild. Karten blenden über `Rise` gestaffelt auf (Hover-Lift auf `.acard`).
+
+   Die Rubrik-Farbvarianten `.cat.pr`/`.cat.td` aus dem Mock sind entfallen: In Sanity
+   gibt es kein Farbfeld an der Rubrik, und eine Farbe zu erfinden hieße, sie bei jeder
+   neuen Rubrik nachzupflegen. Die Rubrik steht jetzt einheitlich blau, wie auf
+   `/praxis`. */
 
 .section {
   padding: var(--gn-section-y-lg) 0;
@@ -42,9 +46,17 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
 }
+/* `position`/`z-index` am Wrapper, nicht an der Karte: Die Wrapper sind die
+   Rasterkinder, und ohne sie malte die nachfolgende Karte den Schatten der
+   angehobenen Karte zu (spätere Geschwister liegen oben). */
 .acardWrap {
   min-width: 0;
   display: flex;
+  position: relative;
+}
+.acardWrap:hover,
+.acardWrap:focus-within {
+  z-index: 1;
 }
 .acard {
   background: #fff;
@@ -60,15 +72,40 @@
     box-shadow 0.35s,
     border-color 0.35s;
 }
-.acard:hover {
+.acard:hover,
+.acard:focus-visible {
   transform: translateY(-6px);
   box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* weicher Navy-Schatten */
   border-color: rgba(1, 65, 91, 0.35);
 }
+/* Bildfläche des Mocks: feste Höhe, damit die Karte beim Laden nicht springt (kein CLS). */
 .ap {
   height: 190px;
-  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  background: var(--gn-mist);
   position: relative;
+  overflow: hidden;
+}
+.ap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Der Shot-Platzhalter tritt an die Stelle der Bildfläche, wenn ein Artikel kein
+   Titelbild hat. Er bekommt deren feste Höhe aus dem Mock – die `ratio`-Angabe der
+   Komponente bleibt damit wirkungslos (sind Breite und Höhe beide bestimmt, greift
+   `aspect-ratio` nicht) und beide Fassungen sind exakt gleich hoch.
+
+   `.acard .shot` statt `.shot`: `Shot.module.css` setzt `.shot` mit derselben
+   Spezifität (0,1,0); wer gewinnt, hinge sonst an der Reihenfolge im Bündel
+   (docs/design-system/README.md). Ohne Rahmen und ohne eigenen Radius – die Karte hat
+   beides schon. */
+.acard .shot {
+  height: 190px;
+  border: 0;
+  border-bottom: 1px solid var(--gn-line);
+  border-radius: 0;
 }
 .ap span {
   position: absolute;
@@ -104,14 +141,6 @@
   border-radius: 3px;
   padding: 4px 9px;
 }
-.catPr {
-  color: var(--gn-ok);
-  background: var(--gn-ok-bg);
-}
-.catTd {
-  color: var(--gn-navy);
-  background: var(--gn-mist);
-}
 .ab h3 {
   font-size: 20px;
   letter-spacing: -0.025em;
@@ -143,10 +172,15 @@
   color: var(--gn-ink);
   font-weight: 600;
 }
-.au i {
+.au i,
+.au .foto {
   width: 26px;
   height: 26px;
   border-radius: 50%;
+  flex: none;
+  overflow: hidden;
+}
+.au i {
   background: var(--gn-navy);
   color: #fff;
   font-family: var(--gn-font-display);
@@ -156,6 +190,17 @@
   align-items: center;
   justify-content: center;
   font-style: normal;
+}
+/* Liegt im Studio ein Porträt, steht es an Stelle der Initialen – gleiche Maße, also
+   kein Sprung (wie in der Meta-Zeile der Praxis-Seiten, Nachbesserung 08.09.2026). */
+.au .foto {
+  display: inline-block;
+}
+.au .foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 @media (max-width: 1000px) {

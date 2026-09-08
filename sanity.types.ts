@@ -416,6 +416,47 @@ export type POSTS_QUERY_RESULT = Array<{
 }>;
 
 // Source: lib/sanity/queries.ts
+// Variable: NEUESTE_POSTS_QUERY
+// Query: *[_type == "post" && defined(slug.current)]    | order(publishedAt desc) [0...$anzahl] {  _id,  title,  "slug": slug.current,  excerpt,  publishedAt,  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},  category->{title, "slug": slug.current, audience},  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}}
+export type NEUESTE_POSTS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  publishedAt: string;
+  mainImage: {
+    alt: string | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: SanityImageDimensions | null;
+      } | null;
+    } | null;
+  } | null;
+  category: {
+    title: string;
+    slug: string;
+    audience: "clubbetrieb" | "einsteiger" | "gaeste" | "mitgliedschaft" | "unternehmen";
+  };
+  author: {
+    name: string;
+    slug: string;
+    image: {
+      alt: string | null;
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+}>;
+
+// Source: lib/sanity/queries.ts
 // Variable: POST_BY_SLUG_QUERY
 // Query: *[_type == "post" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    excerpt,    publishedAt,    body,    mainImage{alt, caption, asset->{_id, url, metadata{lqip, dimensions}}},    category->{title, "slug": slug.current, description, audience},    author->{      name,      "slug": slug.current,      role,      bio,      linkedin,      image{alt, asset->{_id, url, metadata{lqip, dimensions}}}    },    related[]->{  _id,  title,  "slug": slug.current,  excerpt,  publishedAt,  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},  category->{title, "slug": slug.current, audience},  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}},    seo{title, description, noindex}  }
 export type POST_BY_SLUG_QUERY_RESULT = {
@@ -647,6 +688,7 @@ export type SLUGS_QUERY_RESULT = {
 declare global {
   interface SanityQueries {
     '\n  *[_type == "post" && defined(slug.current) && (!defined($rubrik) || category->slug.current == $rubrik)]\n    | order(publishedAt desc) {\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n  category->{title, "slug": slug.current, audience},\n  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}\n}\n': POSTS_QUERY_RESULT;
+    '\n  *[_type == "post" && defined(slug.current)]\n    | order(publishedAt desc) [0...$anzahl] {\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n  category->{title, "slug": slug.current, audience},\n  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}\n}\n': NEUESTE_POSTS_QUERY_RESULT;
     '\n  *[_type == "post" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    publishedAt,\n    body,\n    mainImage{alt, caption, asset->{_id, url, metadata{lqip, dimensions}}},\n    category->{title, "slug": slug.current, description, audience},\n    author->{\n      name,\n      "slug": slug.current,\n      role,\n      bio,\n      linkedin,\n      image{alt, asset->{_id, url, metadata{lqip, dimensions}}}\n    },\n    related[]->{\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n  category->{title, "slug": slug.current, audience},\n  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}\n},\n    seo{title, description, noindex}\n  }\n': POST_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "category"] | order(order asc, title asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    description,\n    audience,\n    order,\n    "anzahl": count(*[_type == "post" && defined(slug.current) && references(^._id)])\n  }\n': CATEGORIES_WITH_COUNT_QUERY_RESULT;
     '\n  *[_type == "author" && slug.current == $slug][0]{\n    _id,\n    name,\n    "slug": slug.current,\n    role,\n    bio,\n    linkedin,\n    image{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n    "artikel": *[_type == "post" && author._ref == ^._id && defined(slug.current)]\n      | order(publishedAt desc) {\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n  category->{title, "slug": slug.current, audience},\n  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}\n}\n  }\n': AUTHOR_BY_SLUG_QUERY_RESULT;

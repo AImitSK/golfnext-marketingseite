@@ -41,6 +41,20 @@ export const POSTS_QUERY = defineQuery(`
     | order(publishedAt desc) {${KARTE}}
 `);
 
+/**
+ * Die `$anzahl` neuesten Artikel, quer über alle Rubriken – für die Teaser auf der
+ * Startseite (drei) und im Wissen-Slider auf `/ueber-golfnext` (vier), Briefing 0029.
+ *
+ * Bewusst eine eigene Abfrage statt `POSTS_QUERY` mit anschließendem Beschneiden im
+ * Code: Das Limit steht in GROQ, es wandern also nur die Karten über die Leitung, die
+ * auch gezeigt werden. **Kein Rubrik-Filter** – welche Artikel oben stehen, steuert
+ * Fred über `publishedAt` im Studio, nicht der Code (Entscheidung Stefan, 08.09.2026).
+ */
+export const NEUESTE_POSTS_QUERY = defineQuery(`
+  *[_type == "post" && defined(slug.current)]
+    | order(publishedAt desc) [0...$anzahl] {${KARTE}}
+`);
+
 /** Ein Artikel samt Rubrik, Autor, Fließtext und bis zu drei Empfehlungen. */
 export const POST_BY_SLUG_QUERY = defineQuery(`
   *[_type == "post" && slug.current == $slug][0]{
@@ -128,6 +142,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
  */
 export const QUERY_TAGS = {
   POSTS_QUERY: ["post", "category", "author"],
+  NEUESTE_POSTS_QUERY: ["post", "category", "author"],
   POST_BY_SLUG_QUERY: ["post", "category", "author"],
   CATEGORIES_WITH_COUNT_QUERY: ["category", "post"],
   AUTHOR_BY_SLUG_QUERY: ["author", "post"],

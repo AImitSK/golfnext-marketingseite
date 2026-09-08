@@ -22,6 +22,7 @@
     "sanity:deploy": "sanity schema deploy"
   },
   "dependencies": {
+    "@portabletext/react": "^8.0.1",
     "@sanity/client": "^8.5.0",
     "@sanity/icons": "^5.2.1",
     "@sanity/image-url": "^2.1.1",

@@ -32,8 +32,14 @@ export function Shot({
   /** Seitenverhältnis als CSS-Wert, z. B. "16/10" – reserviert die Höhe. */
   ratio: string;
   tagline: string;
-  title: string;
-  text: string;
+  /**
+   * Titel und Text der Beschreibung unten. Beide optional seit Briefing 0027: Die
+   * Artikelbilder der Praxis-Seiten zeigen nur die Tagline („Bild folgt"), wie im
+   * Mock 3.9a/3.9b – dort steht keine Beschreibung unter der Fläche. Fehlen beide,
+   * entfällt der Beschreibungsblock ganz, statt leere Zeilen zu setzen.
+   */
+  title?: string;
+  text?: string;
   dark?: boolean;
   className?: string;
 }) {
@@ -43,10 +49,12 @@ export function Shot({
   return (
     <div className={classes} style={{ aspectRatio: ratio } as CSSProperties}>
       <span className={styles.tagline}>{tagline}</span>
-      <div className={styles.desc}>
-        <b>{title}</b>
-        <span>{text}</span>
-      </div>
+      {title || text ? (
+        <div className={styles.desc}>
+          <b>{title}</b>
+          <span>{text}</span>
+        </div>
+      ) : null}
     </div>
   );
 }

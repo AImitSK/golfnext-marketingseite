@@ -68,6 +68,58 @@ components/
     ueber/        Einstieg, Weg, Partner, Menschen
 ```
 
+### Falle: die geteilten Bausteine schlagen die Sektions-Klasse (gefunden 08.09.2026)
+
+`Section` und `Wrap` setzen ihre Werte über Selektoren, die stärker sind oder gleich
+stark und später stehen als eine einzelne Klasse aus einem Seiten-Modul. Zweimal
+hintereinander auf den Praxis-Seiten aufgelaufen, beide Male erst in der Preview
+sichtbar – deshalb hier notiert.
+
+**1. `Section` färbt jede `h2` darin ein.** `Section.module.css` trägt
+
+```css
+.section :global(h2) { font-size: var(--gn-h2); margin-bottom: 16px; max-width: 22ch; }
+```
+
+Das ist ein Nachfahren-Selektor mit der Spezifität (0,1,1) und schlägt damit jede
+einzelne Klasse (0,1,0) aus einem Seiten-Modul. Ein `h2`, das **keine**
+Sektionsüberschrift ist – ein Kartentitel zum Beispiel –, kommt sonst mit 40 px und
+22ch Breite heraus und bricht nach wenigen Wörtern um. Auf `/praxis` traf es die
+Artikelkarten; im Block „Passt dazu" fiel es nicht auf, weil die Karten dort `h3` sind.
+
+*Abhilfe:* im Seiten-Modul mit **zwei** Klassen selektieren (`.card .titel`, (0,2,0))
+und `max-width` sowie `margin-bottom` ausdrücklich zurücknehmen. `Section.module.css`
+bleibt unangetastet – der Baustein trägt jede Seite.
+
+**2. `Wrap` nullt oben und unten Innen- wie Außenabstand.** `Wrap.module.css` trägt
+
+```css
+.wrap { max-width: var(--gn-wrap); margin: 0 auto; padding: 0 var(--gn-gutter); }
+```
+
+Beides sind Kurzschreibweisen. Liegt eine eigene Klasse **auf demselben Element**
+(`<Wrap className={styles.art}>`), haben beide dieselbe Spezifität (0,1,0) und `.wrap`
+gewinnt über die Reihenfolge – `padding-top/-bottom` **und** `margin-top/-bottom` der
+eigenen Klasse fallen ersatzlos weg. Auf der Artikelseite verschwand so der Abstand
+über und unter dem Textbereich.
+
+*Abhilfe:* entweder den doppelten Klassenselektor (`.art.art`, (0,2,0)) oder ein
+eigenes Element **innerhalb** des `Wrap`. Wer die Spezifität anhebt, muss auch die
+Medienabfragen derselben Klasse anheben – sonst greifen die responsiven Überschreibungen
+nicht mehr (genau das ist beim ersten Versuch passiert: die 300-px-Seitenspalte blieb
+auf dem Telefon stehen und erzeugte einen waagerechten Überlauf).
+
+**3. Dasselbe gilt für `Shot`.** `Shot.module.css` setzt `.shot` mit eigenem Radius
+(4 px) und Rahmen. Eine Seiten-Klasse daneben – `.coverShot` auf der Artikelseite, der
+`.shot`-Override in der Karte – hat dieselbe Spezifität (0,1,0); wer gewinnt, hinge an
+der Reihenfolge im Bündel. Auf der Artikelseite kam der Titelbild-Platzhalter deshalb
+mit 4 px und Rahmen heraus, während das echte Titelbild daneben 12 px und randlos ist.
+Auch hier hilft nur, mit zwei Klassen zu selektieren: `.cover .coverShot`, `.card .shot`.
+
+**Merksatz:** Wer eine eigene Klasse auf einen geteilten Baustein legt, prüft vorher
+dessen Modul-CSS auf Nachfahren-Selektoren und Kurzschreibweisen – und danach das
+Ergebnis in allen fünf Breakpoints, nicht nur am Schreibtisch-Monitor.
+
 ## Prinzipien (aus Kapitel 1.1)
 
 1. Ruhe vor Effekt – große Headlines, kurze Absätze, viel Fläche.

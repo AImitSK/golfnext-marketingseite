@@ -1,94 +1,24 @@
 import { expect, test } from "@playwright/test";
 import { MODULE } from "../../config/site-structure";
-import { uiMessages } from "../../lib/ui/messages";
 
 /**
- * Platzhalter-Routen (Masterplan 2.8, Briefing 0022): nur noch `/praxis`.
- * `/team` und die zwölf `/module/<slug>` sind mit Briefing 0023 ersatzlos entfallen
- * und liefern jetzt 404; `/kontakt` ist mit Briefing 0025 eine echte Seite geworden
- * (siehe tests/e2e/kontakt.spec.ts). Läuft über alle Breakpoint-Projekte (390–1440).
+ * Reste der Platzhalter-Phase (Masterplan 2.8, Briefing 0022) – **es gibt keine
+ * Platzhalter-Route mehr**: `/kontakt` ist mit Briefing 0025 eine echte Seite
+ * geworden, `/praxis` mit Briefing 0027 (siehe tests/e2e/praxis.spec.ts).
+ * `/team` und die zwölf `/module/<slug>` sind mit Briefing 0023 ersatzlos entfallen.
  *
- * Geprüft wird vor allem, was NICHT da sein darf: erfundene Inhalte, Modulstatus,
- * Praxis-Artikel aus den Mocks 3.9a/3.9b, tote `#`-Links.
+ * Geblieben sind die Gegenproben, die weiterhin site-weit gelten: entfernte Routen
+ * liefern 404 ohne Weiterleitung, die Modulnamen stehen im Footer als Text ohne Link,
+ * Header und Footer führen keine toten `#`-Links, und die Teaser der Startseite
+ * zeigen nicht auf eine Route, die noch nicht `live` ist.
+ *
+ * Läuft über alle Breakpoint-Projekte (390–1440).
  */
-const PLATZHALTER = [
-  // `/praxis` trägt seit 07.09.2026 das Menü-Label „Ratgeber" (Entscheidung Stefan);
-  // die Adresse bleibt `/praxis`. Die Platzhalterseite betitelt sich mit dem Label.
-  { path: "/praxis", titel: "Ratgeber", zurueck: "/ueber-golfnext" },
-];
 
 /** Routen, die es seit Briefing 0023 nicht mehr gibt – ohne Weiterleitung. */
 const ENTFERNT = ["/team", "/ratgeber", "/module/reach", "/module/turnier-news"];
 
-test.describe("Platzhalter-Routen", () => {
-  for (const seite of PLATZHALTER) {
-    test(`${seite.path} zeigt die Platzhalterseite mit genau einer H1`, async ({ page }) => {
-      const response = await page.goto(seite.path);
-      expect(response?.status()).toBe(200);
-
-      const h1 = page.locator("h1");
-      await expect(h1).toHaveCount(1);
-      await expect(h1).toHaveText(seite.titel);
-
-      // Sichtbare Sätze wortgleich aus lib/ui/messages.ts.
-      await expect(page.getByText(uiMessages.platzhalter.eyebrow, { exact: true })).toBeVisible();
-      await expect(page.getByText(uiMessages.platzhalter.body, { exact: true })).toBeVisible();
-      await expect(
-        page.getByRole("link", { name: uiMessages.platzhalter.actionHome, exact: true }),
-      ).toHaveAttribute("href", "/");
-
-      // Header und Footer wie überall.
-      await expect(page.locator("header")).toHaveCount(1);
-      await expect(page.locator("footer")).toHaveCount(1);
-
-      // Rücklink in den passenden, bereits gebauten Bereich.
-      const main = page.locator("main");
-      await expect(main.locator(`a[href="${seite.zurueck}"]`)).toHaveCount(1);
-    });
-  }
-
-  test("kein Overflow, keine zu großen Icons, keine Konsolenfehler", async ({ page }) => {
-    const consoleErrors: string[] = [];
-    page.on("console", (msg) => {
-      if (msg.type() === "error") consoleErrors.push(msg.text());
-    });
-    page.on("pageerror", (err) => consoleErrors.push(err.message));
-
-    for (const seite of PLATZHALTER) {
-      await page.goto(seite.path);
-
-      const hasOverflow = await page.evaluate(
-        () => document.documentElement.scrollWidth > window.innerWidth + 1,
-      );
-      expect(hasOverflow, `horizontaler Overflow auf ${seite.path}`).toBe(false);
-
-      // Icon-Guard: kein SVG über 90 px außer der Wortmarke ([data-large-svg]).
-      const zuGross = await page.evaluate(
-        () =>
-          Array.from(document.querySelectorAll("svg"))
-            .filter((svg) => !svg.closest("[data-large-svg]"))
-            .map((svg) => svg.getBoundingClientRect())
-            .filter((r) => r.width > 90 || r.height > 90).length,
-      );
-      expect(zuGross, `zu großes SVG auf ${seite.path}`).toBe(0);
-    }
-
-    expect(consoleErrors, "Konsolenfehler").toEqual([]);
-  });
-
-  test("kein Modulstatus und kein Text aus den Praxis-Mocks", async ({ page }) => {
-    for (const seite of PLATZHALTER) {
-      await page.goto(seite.path);
-      for (const verboten of ["Im Einsatz", "Pilot", "In Entwicklung"]) {
-        await expect(page.getByText(verboten, { exact: true })).toHaveCount(0);
-      }
-      // Der Katalogtext für „In Entwicklung" darf ebenfalls nirgends auftauchen.
-      await expect(page.getByText(uiMessages.moduleInDevelopment)).toHaveCount(0);
-      // Keine Artikel-Vorschau, keine Themenfilter (3.9a/3.9b sind unfreigegeben).
-      await expect(page.locator("article")).toHaveCount(0);
-    }
-  });
-
+test.describe("Entfernte Routen und site-weite Gegenproben", () => {
   test("entfernte Routen liefern 404, ohne Weiterleitung", async ({ page }) => {
     // Briefing 0023: /team, /ratgeber und die zwölf Modulseiten sind ersatzlos weg.
     // Die Website war nie unter www.golfnext.de erreichbar – keine Redirects.
@@ -104,7 +34,7 @@ test.describe("Platzhalter-Routen", () => {
   });
 
   test("die zwölf Modulnamen stehen im Footer – als Text ohne Link", async ({ page }) => {
-    await page.goto("/praxis");
+    await page.goto("/");
     const footer = page.locator("footer");
     for (const m of MODULE) {
       await expect(footer.getByText(m.name, { exact: true }), m.name).toHaveCount(1);
@@ -118,8 +48,8 @@ test.describe("Platzhalter-Routen", () => {
     ).toEqual([]);
   });
 
-  test("Header und Footer führen keine toten #-Links mehr", async ({ page }) => {
-    await page.goto("/praxis");
+  test("Header und Footer führen keine toten #-Links", async ({ page }) => {
+    await page.goto("/");
     for (const bereich of ["header", "footer"]) {
       const hrefs = await page
         .locator(`${bereich} a`)
@@ -129,42 +59,16 @@ test.describe("Platzhalter-Routen", () => {
     }
   });
 
-  test("Teaser-Links auf / bleiben unverändert Platzhalter", async ({ page }) => {
-    // Gegenprobe zur Navigations-Änderung: die Seiten-Teaser laufen über
-    // internalHref und dürfen NICHT auf die neue leere Seite zeigen.
+  test("Teaser-Links auf / zeigen nicht auf die noch nicht live geschaltete Praxis", async ({
+    page,
+  }) => {
+    // `/praxis` ist gebaut, steht aber weiter auf `geplant`/`noindex` (Briefing 0027,
+    // Frage 2) – die Teaser laufen über internalHref und dürfen nicht dorthin zeigen,
+    // solange der Status nicht auf `live` steht.
     await page.goto("/");
     const teaser = await page
       .locator("main a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
     expect(teaser, "kein Teaser auf /praxis").not.toContain("/praxis");
-  });
-});
-
-test.describe("Platzhalter ohne JavaScript", () => {
-  test.use({ javaScriptEnabled: false });
-
-  test("/praxis ist ohne JS vollständig lesbar", async ({ page }) => {
-    await page.goto("/praxis");
-    await expect(page.locator("h1")).toHaveText("Ratgeber");
-    await expect(page.getByText(uiMessages.platzhalter.body, { exact: true })).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: uiMessages.platzhalter.actionHome, exact: true }),
-    ).toBeVisible();
-  });
-});
-
-test.describe("Platzhalter bei prefers-reduced-motion", () => {
-  test.use({ reducedMotion: "reduce" });
-
-  test("/praxis zeigt sofort den Endzustand", async ({ page }) => {
-    await page.goto("/praxis");
-    const stack = page.locator("main h1");
-    await expect(stack).toBeVisible();
-    // Kein Rest-Versatz aus der Reveal-Variante (opacity 1, kein translate).
-    const style = await page
-      .locator("main h1")
-      .evaluate((el) => getComputedStyle(el.parentElement!));
-    expect(style.opacity).toBe("1");
-    expect(["none", "matrix(1, 0, 0, 1, 0, 0)"]).toContain(style.transform);
   });
 });

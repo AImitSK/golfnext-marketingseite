@@ -17,6 +17,7 @@ export function Empty({
   actionLabel,
   actionHref,
   icon,
+  headingLevel: Heading = "h4",
   className,
 }: {
   title: string;
@@ -24,14 +25,20 @@ export function Empty({
   actionLabel: string;
   actionHref?: string;
   icon?: ReactNode;
+  /**
+   * Überschriftenebene des Leerzustands. Voreinstellung `h4` – der Leerzustand steht
+   * dort unterhalb einer Seiten-H2, also eine Ebene tiefer. Steht er direkt unter der
+   * `<h1>` (Praxis-Liste ohne Artikel, Briefing 0027), muss er `h2` sein, sonst
+   * springt die Gliederung von 1 auf 4.
+   */
+  headingLevel?: "h2" | "h3" | "h4";
   className?: string;
 }) {
   const classes = [styles.empty, className].filter(Boolean).join(" ");
   return (
     <div className={classes}>
       {icon ?? <SearchIcon />}
-      {/* H4: Leerzustand steht unterhalb der Seiten-H2, daher eine Ebene tiefer. */}
-      <h4 className={styles.title}>{title}</h4>
+      <Heading className={styles.title}>{title}</Heading>
       <p className={styles.body}>{body}</p>
       <Button variant="primary" size="sm" href={actionHref}>
         {actionLabel}

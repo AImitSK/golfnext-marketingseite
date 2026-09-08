@@ -156,17 +156,25 @@ export const ROUTES: Route[] = [
     // liest sich „Ratgeber" besser. Der Seiteninhalt selbst spricht weiter von
     // „Praxis" (Freds freigegebener Wortlaut in Mock 3.9a) – nicht angleichen.
     label: "Ratgeber",
+    // Seit Briefing 0027 gebaut (Masterplan 3.4): `/praxis`, `/praxis/thema/<slug>`
+    // und `/praxis/<slug>` kommen aus Sanity. Der Status bleibt trotzdem `geplant`
+    // mit `noindex` – ein Menüpunkt „Ratgeber", der auf eine leere Liste führt,
+    // schadet mehr als er nützt. Der Wechsel auf `live` ist eine Zeile und passiert,
+    // sobald Fred den ersten Artikel veröffentlicht hat (Briefing 0027, Frage 2);
+    // Navigation und Footer ziehen dann automatisch nach.
     status: "geplant",
     parent: "/ueber-golfnext",
     mock: "mocks/3.9a-praxis-uebersicht.html",
     // Es gibt kein Praxis-Briefing und wird keines geben (`0020-praxis.md` existiert
-    // nicht); die Seite entsteht mit dem Sanity-Briefing in Phase 3. Bewusst leer
-    // gelassen statt auf eine nicht existierende Datei zu zeigen.
+    // nicht); die Seite entstand mit dem Sanity-Briefing 0027. Bewusst leer gelassen
+    // statt auf eine nicht existierende Datei zu zeigen.
     briefing: undefined,
-    title: null,
-    description: null,
-    // Platzhalterseite bis der Blog in Phase 3 aus Sanity kommt: die neun Artikel in
-    // 3.9a/3.9b sind Beispieltexte ohne Fred-Freigabe (Briefing 0022).
+    // Vorschlag aus dem freigegebenen Hero von Mock 3.9a (Briefing 0027, Aufgabe 7),
+    // wortgleich übernommen und für die Beschreibung ohne neue Formulierung auf
+    // ≤ 160 Zeichen gekürzt. Ob Fred eigene Angaben nachliefert, ist Frage 3.
+    title: "Praxis. Was in Golfclubs wirklich funktioniert.",
+    description:
+      "Berichte aus Pilotclubs, Erfahrungen aus dreißig Jahren auf dem Platz und ehrliche Antworten auf die Fragen, die im Clubbüro und im Vorstand gestellt werden.",
     noindex: true,
   },
   {

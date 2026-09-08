@@ -1,0 +1,21 @@
+/* Portiert aus docs/design-system/mocks/3.9a-praxis-uebersicht.html (.cat Z.120).
+
+   Der Mock kennt fünf Farbvarianten (.pr/.cb/.tm/.td und die Grundform). Sie hingen
+   an den Rubriken der neun Beispielartikel und lassen sich auf die echten Rubriken
+   aus Sanity nicht abbilden – dort steht kein Farbfeld, und ein neues Feld ist nicht
+   Teil dieses Schritts (Briefing 0027). Deshalb tragen alle Rubriken die Grundform:
+   blau auf hellem Blauton, wie im Mock definiert. */
+
+.cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  background: #e9f2f7; /* heller Blauton, 1:1 aus Mock (.cat) */
+  border-radius: 3px; /* Mock-Wert (.cat), kein Token */
+  padding: 4px 9px;
+}

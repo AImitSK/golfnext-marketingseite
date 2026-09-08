@@ -45,6 +45,11 @@ export default defineConfig({
       // gemeinsame Redis-Datenbank – auch dann nicht, wenn in `.env.local` gültige
       // Schlüssel stehen.
       MAIL_TRANSPORT: "mock",
+      // Die Praxis-Routen lesen Testdaten statt Sanity (Briefing 0027, Aufgabe 8):
+      // serverseitige Abfragen lassen sich im Browser nicht abfangen, und im echten
+      // Dataset dürfen für Tests keine Inhalte angelegt werden. Siehe
+      // lib/sanity/fixtures.ts.
+      SANITY_SOURCE: "fixtures",
       RATELIMIT_STORE: "memory",
       // Der Spam-Schutz wird nicht abgeschaltet, nur der Schlüssel festgelegt.
       FORM_SIGNING_SECRET:

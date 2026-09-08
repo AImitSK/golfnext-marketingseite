@@ -1,5 +1,6 @@
 import { createClient, type QueryParams } from "next-sanity";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
+import { fixturesAktiv, fixtureFuer } from "./fixtures";
 
 /**
  * Lesender Sanity-Client für die Website.
@@ -49,7 +50,18 @@ export async function sanityFetch<const QueryString extends string>({
   tags: readonly SanityTag[];
   revalidate?: number | false;
 }) {
-  return client.fetch(query, params ?? {}, {
-    next: { revalidate, tags: [...tags] },
-  });
+  const ausSanity = () =>
+    client.fetch(query, params ?? {}, {
+      next: { revalidate, tags: [...tags] },
+    });
+
+  // Test-Fetch für Playwright (Briefing 0027, Aufgabe 8): Serverseitige Abfragen
+  // lassen sich im Browser nicht abfangen, und im echten Dataset dürfen für Tests
+  // keine Inhalte angelegt werden. `SANITY_SOURCE=fixtures` setzt ausschließlich
+  // `playwright.config.ts`; auf Vercel greift der Zweig nie (siehe `fixturesAktiv`).
+  if (fixturesAktiv()) {
+    return fixtureFuer(query, params) as Awaited<ReturnType<typeof ausSanity>>;
+  }
+
+  return ausSanity();
 }

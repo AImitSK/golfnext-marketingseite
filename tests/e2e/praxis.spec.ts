@@ -112,6 +112,35 @@ test.describe("Praxis – Nachbesserungen aus Stefans Preview-Durchgang (08.09.2
     expect(stil.maxWidth).toBe("none");
   });
 
+  test("die Bildplatzhalter rahmen wie das echte Bild, das sie ersetzen", async ({ page }) => {
+    // Regression: `Shot.module.css` setzt `.shot` mit derselben Spezifität wie die
+    // Seiten-Klasse – ohne höhere Spezifität kam der Platzhalter mit 4 px und Rahmen.
+    await page.goto(ARTIKEL);
+    const cover = await page
+      .getByText("Titelbild folgt")
+      .locator("xpath=..")
+      .evaluate((el) => {
+        const s = getComputedStyle(el);
+        return { radius: s.borderTopLeftRadius, rahmen: s.borderTopWidth };
+      });
+    // Wie `.coverFlaeche`: 12 px Radius, randlos.
+    expect(cover.radius).toBe("12px");
+    expect(cover.rahmen).toBe("0px");
+
+    await page.goto(LISTE);
+    const karte = await page
+      .getByText("Bild folgt")
+      .first()
+      .locator("xpath=..")
+      .evaluate((el) => {
+        const s = getComputedStyle(el);
+        return { radius: s.borderTopLeftRadius, oben: s.borderTopWidth };
+      });
+    // In der Karte: kein eigener Radius und kein zweiter Rahmen – die Karte hat beides.
+    expect(karte.radius).toBe("0px");
+    expect(karte.oben).toBe("0px");
+  });
+
   test("„Passt dazu“ nutzt dieselbe Kartenoptik wie die Liste", async ({ page }) => {
     // Gegenprobe: dort sind die Karten h3 und waren nie betroffen.
     await page.goto(ARTIKEL);

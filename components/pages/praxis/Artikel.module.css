@@ -84,10 +84,16 @@
   object-fit: cover;
   display: block;
 }
-.coverShot {
-  position: absolute;
-  inset: 0;
-  height: 100%;
+/* Der `Shot`-Platzhalter tritt an die Stelle des Titelbilds und muss dieselbe Fläche
+   abgeben: 12 px Radius und randlos wie `.coverFlaeche` (Mock 3.9b `.cover .cp`).
+   Ohne diese Regel käme er mit dem Standard des Bausteins – 4 px und ein Rahmen.
+
+   `.cover .coverShot` statt `.coverShot`: `Shot.module.css` setzt `.shot` mit
+   derselben Spezifität (0,1,0) und steht im Bündel später, gewinnt also. Dieselbe
+   Falle wie bei `Section`/`Wrap` – siehe docs/design-system/README.md. */
+.cover .coverShot {
+  border: 0;
+  border-radius: var(--gn-radius-lg);
 }
 .coverCaption {
   font-size: 12.5px;
@@ -327,29 +333,6 @@
   border-color: var(--gn-signal); /* Signalgrün als Linie */
 }
 
-
-/* Abschluss-CTA in der Seitenleiste (Mock .cta2) */
-.cta2 {
-  border-radius: var(--gn-radius-lg);
-  background: var(--gn-navy);
-  color: #fff; /* Weiß auf Navy = Mock-Wert */
-  padding: 26px 24px;
-}
-.cta2Titel {
-  display: block;
-  font-family: var(--gn-font-display);
-  font-size: 19px;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-.cta2Text {
-  font-size: 13.5px;
-  color: var(--gn-on-dark-text);
-  margin: 0 0 16px;
-  line-height: 1.5;
-}
 
 /* ---------- Autorenbox unter dem Text (Mock .author) ---------- */
 .author {

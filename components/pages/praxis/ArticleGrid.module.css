@@ -57,8 +57,12 @@
   display: block;
 }
 /* Der Shot-Platzhalter steht an Stelle der Bildfläche und bringt sein 16/10 selbst
-   mit. Ohne Rahmen und ohne eigenen Radius: die Karte hat beides schon. */
-.shot {
+   mit. Ohne Rahmen und ohne eigenen Radius: die Karte hat beides schon.
+
+   `.card .shot` statt `.shot`: `Shot.module.css` setzt `.shot` mit derselben
+   Spezifität (0,1,0), und wer von beiden gewinnt, hinge sonst an der Reihenfolge im
+   Bündel – dieselbe Falle wie bei `Section`/`Wrap` (docs/design-system/README.md). */
+.card .shot {
   border: 0;
   border-bottom: 1px solid var(--gn-line);
   border-radius: 0;

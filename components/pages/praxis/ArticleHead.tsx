@@ -76,7 +76,11 @@ export function ArticleHead({ artikel, lesezeit }: { artikel: Artikel; lesezeit:
             />
           </div>
         ) : (
-          <Shot ratio="16/7" tagline={praxisPlatzhalter.titelbild} />
+          <Shot
+            className={styles.coverShot}
+            ratio="16/7"
+            tagline={praxisPlatzhalter.titelbild}
+          />
         )}
         {artikel.mainImage?.caption ? (
           <p className={styles.coverCaption}>{artikel.mainImage.caption}</p>

@@ -26,7 +26,9 @@ verlinken auf sie.
 - **Die Optik der beiden Blöcke bleibt.** Es werden keine Karten neu gestaltet und keine Abschnitte
   umgebaut. Beide behalten ihr eigenes Kartenbild aus dem jeweiligen Mock – die Praxis-Karte aus 3.9a
   wird **nicht** hineinkopiert. Geteilt wird die Datenschicht, nicht das Aussehen.
-- **Keine erfundenen Artikel mehr.** Die drei ausformulierten Teaser in `content/startseite.ts`
+- **Keine erfundenen Artikel mehr.** Auch die vier Platzhalterkarten in `content/ueber-golfnext.ts`
+  (`ueberGolfnextWissen`) verschwinden mit ihren Feldern `quelle`/`titel`/`text`/`autor`/`lesezeit`.
+  Die drei ausformulierten Teaser in `content/startseite.ts`
   („Warum Ihr Schnupperkurs im Netz nicht gefunden wird", „Rehburg-Loccum: Ein Concierge zieht ins
   Clubbüro", „Wem gehören die Daten Ihres Clubs?") verschwinden ersatzlos aus dem Repo, samt Typ
   `PraxisArtikel`, wenn er sonst niemand mehr braucht.
@@ -64,16 +66,18 @@ kostet weniger und sagt, was sie tut.
 
 ### 3 · Über GolfNext, „Wissen"-Slider
 
-**Achtung, der Block ist gemischt.** Von den vier Karten sind zwei mit `quelle: "golfmanager ·
-Fachartikel"` gekennzeichnet – das sind **Freds Beiträge in einer Fachzeitschrift**, keine
-Blogartikel. Sie kommen nicht aus Sanity und bleiben beschriftete Platzhalter, bis Fred Titel,
-Teaser und Ausgabe liefert **[F]**.
+**Alle vier Karten kommen aus Sanity.** Die frühere Sonderrolle der beiden Karten „golfmanager ·
+Fachartikel" entfällt: Stefan hat am 08.09.2026 im Studio die Rubrik **„Fachartikel"**
+(`/praxis/thema/fachartikel`) angelegt. Freds Fachzeitschriften-Beiträge sind damit ganz normale
+Artikel in einer eigenen Rubrik – wie Fred sie pflegt, ist Sache der Redaktion, nicht des Codes.
 
-- Die beiden Karten mit `quelle: "GolfNext · Blog"` werden durch die **zwei neuesten Artikel** aus
-  Sanity ersetzt und verlinken auf `/praxis/<slug>`. Als Quelle steht dort künftig die Rubrik.
-- Die Reihenfolge im Slider bleibt wie im Mock; die golfmanager-Karten behalten ihren Platz.
-- Gibt es weniger als zwei Artikel, rücken die vorhandenen nach; der Slider zeigt dann entsprechend
-  weniger Karten, ohne Lücke.
+- Der Slider zeigt die **vier neuesten Artikel**, gleich welcher Rubrik, und verlinkt auf
+  `/praxis/<slug>`. **Kein Filter auf eine bestimmte Rubrik** – Auswahl und Reihenfolge steuert
+  Fred über das Veröffentlichungsdatum.
+- Das Feld `quelle` („golfmanager · Fachartikel" / „GolfNext · Blog") wird durch die **Rubrik** des
+  Artikels ersetzt.
+- Gibt es weniger als vier Artikel, zeigt der Slider entsprechend weniger Karten, ohne Lücke.
+  Gibt es gar keine, entfällt der Abschnitt wie auf der Startseite (Aufgabe 4).
 
 ### 4 · Wenn es keine Artikel gibt
 
@@ -82,7 +86,8 @@ Beide Blöcke dürfen nicht als leeres Gerüst dastehen:
 - **Startseite:** Sind keine Artikel vorhanden, entfällt der Abschnitt „Praxis" vollständig –
   Überschrift, Raster und Link. Keine Leerzustandsmeldung auf der Startseite, kein „bald mehr".
   Prüfen, dass dadurch kein Abstand doppelt steht und keine Sprungmarke ins Leere zeigt.
-- **Über GolfNext:** Der Slider bleibt, weil die golfmanager-Karten unabhängig davon existieren.
+- **Über GolfNext:** Ohne Artikel entfällt der Wissen-Abschnitt ebenfalls vollständig – seit die
+  golfmanager-Karten aus Sanity kommen, bleibt sonst nichts übrig.
 
 ### 5 · Tests und Doku
 
@@ -91,8 +96,8 @@ Beide Blöcke dürfen nicht als leeres Gerüst dastehen:
   Abschnitt nicht; kein horizontaler Überlauf bei 390/768/1024/1180/1440; ohne JS lesbar.
 - `docs/03-seiten-und-routen.md`: Die Spalte „Bilder offen" für `/` und `/ueber-golfnext` nachziehen –
   die Artikel-Platzhalter sind dort keine offenen Bilder mehr.
-- `docs/entscheidungen.md`: Eintrag mit Datum, was ersetzt wurde und was bewusst Platzhalter bleibt
-  (golfmanager-Karten).
+- `docs/entscheidungen.md`: Eintrag mit Datum, was ersetzt wurde – und dass die frühere Sonderrolle
+  der golfmanager-Karten mit der Rubrik „Fachartikel" entfallen ist (Entscheidung Stefan, 08.09.2026).
 
 ## Skills und Subagents
 
@@ -110,7 +115,7 @@ Branch `feat/teaser-aus-sanity`, Commits deutsch im Imperativ, PR nach
 - [ ] Auf der Startseite und auf `/ueber-golfnext` stehen keine erfundenen Artikeltitel, -autoren,
       -daten oder -lesezeiten mehr im Repo.
 - [ ] Beide Blöcke zeigen echte Artikel aus Sanity und verlinken auf `/praxis/<slug>`.
-- [ ] Die zwei golfmanager-Karten auf `/ueber-golfnext` sind unverändert Platzhalter.
+- [ ] Der Wissen-Slider zeigt vier echte Artikel aus Sanity, ohne Rubrik-Filter.
 - [ ] Ohne Artikel entfällt der Praxis-Abschnitt der Startseite vollständig, ohne Layoutlücke.
 - [ ] Artikel ohne Titelbild zeigen den beschrifteten `Shot`-Platzhalter.
 - [ ] Eyebrow, Überschriften und die Links „Alle Beiträge" / „Alle Artikel" sind wortgleich geblieben.
@@ -122,18 +127,15 @@ Branch `feat/teaser-aus-sanity`, Commits deutsch im Imperativ, PR nach
 ## Was du NICHT tust
 
 - Die Karten der beiden Blöcke neu gestalten oder durch die Praxis-Karte aus 3.9a ersetzen.
-- Die golfmanager-Karten mit Blogartikeln füllen oder ihre Texte erfinden.
+- Den Wissen-Slider auf eine bestimmte Rubrik filtern (auch nicht auf „Fachartikel").
 - Inhalte in Sanity anlegen – auch nicht zum Testen.
 - Ein Schemafeld ergänzen (keine Lesezeit, keine Sortiergewichtung, kein „Auf Startseite zeigen").
 - Andere Seiten, andere Abschnitte oder die Navigation anfassen.
 
 ## Offene Fragen an Stefan/Fred
 
-- **[F]** Liefert Fred Titel, Teaser und Ausgabe für die beiden golfmanager-Karten? Bis dahin bleiben
-  sie Platzhalter.
-- Soll die Startseite künftig **immer** die drei neuesten Artikel zeigen, oder möchtest du dort
-  auswählen können, welche erscheinen? Auswählen hieße ein neues Schemafeld und einen eigenen
-  Schritt – dieses Briefing baut die einfache Fassung: die drei neuesten.
+- Keine. Beide Blöcke zeigen die neuesten Artikel; gesteuert wird über das Veröffentlichungsdatum
+  im Studio, nicht über ein Schemafeld (Entscheidung Stefan, 08.09.2026).
 
 ---
 
@@ -149,9 +151,10 @@ Die Optik beider Blöcke bleibt unverändert – geteilt wird die Datenschicht, 
 Besonders wichtig:
 - Die drei ausformulierten Teaser in content/startseite.ts sind erfundene Artikel und
   verschwinden ersatzlos aus dem Repo.
-- Der Wissen-Slider ist gemischt: die zwei Karten mit quelle „golfmanager · Fachartikel"
-  sind Freds Fachzeitschriften-Beiträge und bleiben Platzhalter, bis Fred sie liefert.
-  Nur die zwei Karten mit quelle „GolfNext · Blog" kommen aus Sanity.
+- Der Wissen-Slider auf /ueber-golfnext zeigt die vier neuesten Artikel, gleich welcher
+  Rubrik – KEIN Filter. Freds Fachzeitschriften-Beiträge liegen seit 08.09.2026 in der
+  Rubrik „Fachartikel" und sind damit ganz normale Artikel. Das Feld „quelle" wird durch
+  die Rubrik ersetzt.
 - Ohne Artikel entfällt der Praxis-Abschnitt der Startseite vollständig, ohne Layoutlücke.
 - Eyebrow, Überschriften und die Links „Alle Beiträge" / „Alle Artikel" sind freigegebene
   Texte und bleiben wortgleich.

@@ -2,8 +2,8 @@
 
 | Datei | Route | Stand |
 |---|---|---|
-| `impressum.md` | `/impressum` | von golfnext.de übernommen, auf DDG aktualisiert, zwei offene Prüfpunkte (USt-IdNr./Steuernummer, Firmierung) |
-| `datenschutz.md` | `/datenschutz` | Entwurf passend zum Stack; offene Stellen in `[[…]]`; juristische Prüfung ausstehend |
+| `impressum.md` | `/impressum` | **fertig (07.09.2026)** – von golfnext.de übernommen, auf DDG aktualisiert; keine offenen Stellen. Der Umsatzsteuer-Absatz entfällt (Entscheidung Stefan): die alte Angabe war eine Steuernummer, keine USt-IdNr. |
+| `datenschutz.md` | `/datenschutz` | **fertig (07.09.2026)** – passend zum Stack, **keine offenen `[[…]]`-Stellen mehr**. Verantwortung für Inhalt und Freigabe: Stefan und Fred; eine externe juristische Prüfung findet nicht statt (Entscheidung 07.09.2026). |
 | `../05-consent-dsgvo.md` | Technik | Consent-Konzept, Consent Mode v2, AV-Verträge |
 
 Regeln für die Umsetzung:

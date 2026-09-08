@@ -145,14 +145,13 @@ export const kontaktFormular: FormularData = {
   note: "Wir melden uns innerhalb eines Werktags. Ihre Daten gehen an niemanden sonst.",
 };
 
-/** Die klebende Seitenspalte: Fred, der Rollen-Hinweis und der Verweis auf die Live-Demo. */
+/** Die klebende Seitenspalte: Fred und der Rollen-Hinweis. */
 export interface SeitenspalteData {
   /** Ausführlicher Rollen-Wortlaut aus dem Mock (Kurzform steht in KONTAKT). */
   rolleLang: string;
   /** Erreichbarkeit unter den Kontaktzeilen (`.pers .when`). */
   erreichbar: string;
   rollenhinweis: { eyebrow: string; headline: string; text: string };
-  livedemo: { headline: string; text: string; cta: Cta };
 }
 
 export const kontaktSeitenspalte: SeitenspalteData = {
@@ -163,19 +162,14 @@ export const kontaktSeitenspalte: SeitenspalteData = {
     headline: "Damit die Antwort zu Ihrem Alltag passt.",
     text: "Ein ehrenamtlicher Vorstand will wissen, ob sich das rechnet und wie er es der Versammlung erklärt. Ein Betreiber fragt nach Auslastung und Gästen. Ein Clubmanager will ein System statt fünf Werkzeugen. Und im Sekretariat geht es um das Telefon. Wir antworten nicht allen dasselbe.",
   },
-  livedemo: {
-    headline: "Lieber erst schauen?",
-    text: "Die Live-Demo läuft ohne Anmeldung und ohne dass Sie uns Ihre Adresse geben.",
-    cta: { label: "Live-Demo ansehen", target: "livedemo" },
-  },
 };
 
-/* ────────────────────────── 3 · Drei Wege ────────────────────────── */
+/* ────────────────────────── 3 · Wege ────────────────────────── */
 
 /** Ein Weg mit Icon-Kennung, Titel, Text und Verweis. */
 export interface WegData {
-  /** Wählt das Icon in der Komponente (Kalender · Bildschirm · Hörer). */
-  icon: "kalender" | "bildschirm" | "telefon";
+  /** Wählt das Icon in der Komponente (Kalender · Hörer). */
+  icon: "kalender" | "telefon";
   headline: string;
   text: string;
   /** `telefon` löst die Nummer aus KONTAKT als `tel:`-Link auf. */
@@ -188,12 +182,6 @@ export const kontaktWege: WegData[] = [
     headline: "Online-Erstgespräch",
     text: "30 Minuten per Zoom oder Teams. Wir schauen auf Ihre Ziele, Ihre größten Hebel und ob GolfNext überhaupt zu Ihrem Club passt. Termin selbst wählen.",
     cta: { label: "Termin aussuchen", target: "erstgespraech" },
-  },
-  {
-    icon: "bildschirm",
-    headline: "Live-Demo",
-    text: "GolfNext direkt ausprobieren – ohne Anmeldung, ohne Adresse, ohne dass jemand zurückruft. Sie sehen dieselbe Oberfläche wie unsere Pilotclubs.",
-    cta: { label: "Demo öffnen", target: "livedemo" },
   },
   {
     icon: "telefon",
@@ -266,7 +254,9 @@ export const kontakt: PageContent = {
       id: "wege",
       eyebrow: "Andere Wege zu uns",
       headline: "Nicht jeder schreibt gern ein Formular.",
-      text: ["Drei weitere Möglichkeiten, mit uns ins Gespräch zu kommen – jede ohne Verpflichtung."],
+      // Nur das Zahlwort ist angepasst (Entscheidung Stefan, 08.09.2026): Seit Briefing 0031
+      // stehen darunter zwei Wege statt drei. Der übrige Satz bleibt wortgleich.
+      text: ["Zwei weitere Möglichkeiten, mit uns ins Gespräch zu kommen – jede ohne Verpflichtung."],
     },
     {
       id: "anschrift",

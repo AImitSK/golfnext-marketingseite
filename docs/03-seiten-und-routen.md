@@ -31,5 +31,7 @@ Bekannt: `/impressum/` → `/impressum`. Vollständige URL-Liste der alten Websi
 ## CTA-Ziele (aus `.env`)
 
 - Online-Erstgespräch → `NEXT_PUBLIC_BOOKING_URL` (bestehender Buchungsweg **[F]**)
-- Live-Demo → `NEXT_PUBLIC_LIVE_DEMO_URL` **[F]**
+- ~~Live-Demo → `NEXT_PUBLIC_LIVE_DEMO_URL`~~ – entfallen am 08.09.2026 (Briefing 0031, Masterplan 2.11).
+  Es gibt keine Live-Demo; das Erstgespräch ist überall die einzige Aktion. Die Mocks zeigen sie
+  weiterhin und sind an diesen Stellen überholt.
 - Pakete vergleichen → `/pakete#vergleich`

@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import { KONTAKT } from "../../config/site-structure";
-import { kontakt, kontaktFormular, kontaktSeitenspalte, kontaktWege } from "../../content/kontakt";
+import { kontakt, kontaktFormular, kontaktWege } from "../../content/kontakt";
 import { formMessages } from "../../lib/forms/messages";
 
 /**
@@ -137,19 +137,17 @@ test.describe("Kontakt · Aufbau und Texte", () => {
     await expect(page.getByText(kontaktFormular.einwilligung.link, { exact: true })).toBeVisible();
   });
 
-  test("verweist auf Buchung, Live-Demo und Telefon – nichts hart kodiert", async ({ page }) => {
+  test("verweist auf Buchung und Telefon – nichts hart kodiert", async ({ page }) => {
     await page.goto("/kontakt");
     const telHref = `tel:${KONTAKT.telefon.replace(/\s+/g, "")}`;
 
     await expect(page.locator(`a[href="${telHref}"]`).first()).toBeVisible();
+    // Seit Briefing 0031 zwei Wege: Online-Erstgespräch und Anruf.
+    expect(kontaktWege).toHaveLength(2);
     for (const weg of kontaktWege) {
       await expect(page.getByText(weg.headline, { exact: true })).toBeVisible();
     }
     await expect(page.getByRole("link", { name: "Termin aussuchen" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Demo öffnen" })).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: kontaktSeitenspalte.livedemo.cta.label }),
-    ).toBeVisible();
 
     // cal.com wird nur verlinkt, nie eingebettet (sonst wäre eine Einwilligung nötig).
     await expect(page.locator('iframe, script[src*="cal.com"]')).toHaveCount(0);

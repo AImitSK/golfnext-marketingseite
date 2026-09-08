@@ -32,7 +32,7 @@ Texte selbst pflegen wollen, ist das eine eigene Entscheidung (dann Sektions-Dok
 | `author` | reference → author | Pflicht |
 | `publishedAt` | datetime | Pflicht |
 | `mainImage` | image (hotspot) + `alt` string | `alt` Pflicht, wenn Bild gesetzt |
-| `body` | Portable Text | Blöcke: normal, h2, h3, blockquote, bullet/number, Marks: strong, em, link (mit `openInNewTab`), Objekte: `image` (mit alt, caption), `callout` (Ton: hinweis/tipp), `cta` (label, target: erstgespraech/livedemo/pakete/url) |
+| `body` | Portable Text | Blöcke: normal, h2, h3, blockquote, bullet/number, Marks: strong, em, link (mit `openInNewTab`), Objekte: `image` (mit alt, caption), `callout` (Ton: hinweis/tipp), `cta` (label, target: erstgespraech/pakete/url) |
 | `related` | array<reference post> | optional, max 3 |
 | `seo` | object {title, description, noindex} | optional; Fallback title/excerpt |
 
@@ -51,8 +51,8 @@ Kein Startbestand im Code. Fred trägt Fred Hoffmann und Stefan Kühne selbst ei
 Kein Startbestand im Code. Die sieben Pakete-FAQs aus `design-system/mocks/3.7-pakete.html` legt Masterplan 3.6 an, Wortlaut unverändert. Vorschau: Frage + Thema.
 
 ### `siteSettings` – Singleton
-`phone` (Pflicht), `email` (Pflicht, E-Mail-Format), `responseNote`, `bookingUrl`, `liveDemoUrl`, `linkedin`, `instagram`, `defaultSeo {title, description ≤ 160, ogImage + Pflicht-alt}`.
-**Nur `phone` und `email` sind Pflicht.** Die Adressen (Buchungslink, Live-Demo, Social) stehen noch nicht fest und werden nicht erfunden; die Werte trägt Fred im Studio ein („0175 5951839", „info@golfnext.de", „Rückmeldung innerhalb eines Werktags" – nicht als `initialValue` im Code).
+`phone` (Pflicht), `email` (Pflicht, E-Mail-Format), `responseNote`, `bookingUrl`, `linkedin`, `instagram`, `defaultSeo {title, description ≤ 160, ogImage + Pflicht-alt}`.
+**Nur `phone` und `email` sind Pflicht.** Die Adressen (Buchungslink, Social) stehen noch nicht fest und werden nicht erfunden; die Werte trägt Fred im Studio ein („0175 5951839", „info@golfnext.de", „Rückmeldung innerhalb eines Werktags" – nicht als `initialValue` im Code).
 Im Studio als einzelnes Dokument in der Struktur (kein „Neu anlegen"), feste Dokument-ID `siteSettings`.
 
 ### Objekttypen
@@ -63,7 +63,7 @@ Im Studio als einzelnes Dokument in der Struktur (kein „Neu anlegen"), feste D
 | `simpleBlockContent` | `faq.answer`, `callout.text` | nur Absätze, Marks strong/em, Annotation `link` |
 | `inlineImage` | Bild im Fließtext | `alt` (Pflicht), `caption` |
 | `callout` | Hinweiskasten | `tone` (hinweis/tipp, Vorbelegung „hinweis"), `text` |
-| `cta` | Button im Fließtext | `label`, `target` (erstgespraech/livedemo/pakete/url), `url` (nur bei `target = url`) |
+| `cta` | Button im Fließtext | `label`, `target` (erstgespraech/pakete/url), `url` (nur bei `target = url`) |
 | `seo` | `post.seo` | `title`, `description`, `noindex` |
 
 `link.href` und `cta.url` erlauben neben `http/https/mailto/tel` auch **relative Pfade** (`/pakete`), damit interne Links ohne absolute Adresse gesetzt werden können.
@@ -175,3 +175,11 @@ Ablauf im Skill `sanity-content-model`. Jede Änderung hier dokumentieren (Datum
   `siteSettings` nur mit `phone`/`email` als Pflicht; Studio-Bereich heißt „Ratgeber" statt „Praxis";
   Slug-Eindeutigkeit je Dokumenttyp; relative Pfade in `link.href` und `cta.url` erlaubt;
   `simpleBlockContent` erlaubt neben `strong` auch `em`; Vision-Tool nicht auf Administratoren begrenzbar.
+- **08.09.2026 · Das Ziel „Live-Demo" und `siteSettings.liveDemoUrl` entfallen** (Briefing 0031,
+  Masterplan 2.11). Grund: Es gibt keine Live-Demo und wird keine geben (Entscheidung Stefan,
+  08.09.2026); der einzige Weg ist das Online-Erstgespräch. Entfernt: die Option `livedemo` aus
+  `cta.target` und das Feld `liveDemoUrl` aus `siteSettings` (samt `SITE_SETTINGS_QUERY`).
+  **Vorab gegen `production` geprüft:** kein Artikel enthält ein `cta`-Objekt, `target: "livedemo"`
+  wird nirgends verwendet, ein `siteSettings`-Dokument existiert noch nicht – die Änderung bricht
+  keinen Inhalt. `sanity/schema.json` und `sanity.types.ts` neu erzeugt; `sanity schema deploy`
+  steht noch aus (macht der Orga-Chat beim Merge).

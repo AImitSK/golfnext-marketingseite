@@ -38,12 +38,6 @@ export const siteSettings = defineType({
       validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
     }),
     defineField({
-      name: "liveDemoUrl",
-      title: "Link zur Live-Demo",
-      type: "url",
-      validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
-    }),
-    defineField({
       name: "linkedin",
       title: "LinkedIn-Profil",
       type: "url",

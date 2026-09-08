@@ -40,7 +40,8 @@ export interface StapelKarte {
 
 export interface HeroData {
   ctaPrimary: Cta;
-  ctaSecondary: Cta;
+  /** Optionale zweite Aktion auf dunkel; seit Briefing 0031 setzt sie keine Seite. */
+  ctaSecondary?: Cta;
   trust: HeroTrust[];
   /** Barrierefreies Label des schematischen Mail-Stapels (Inhalt selbst ist aria-hidden). */
   ariaLabel: string;
@@ -48,8 +49,11 @@ export interface HeroData {
 }
 
 export const soArbeitetHero: HeroData = {
-  ctaPrimary: { label: "Live-Demo ansehen", hint: "ohne Anmeldung", target: "livedemo" },
-  ctaSecondary: { label: "Online-Erstgespräch vereinbaren", target: "erstgespraech" },
+  ctaPrimary: {
+    label: "Online-Erstgespräch vereinbaren",
+    hint: "30 Minuten persönlich per Zoom oder Teams",
+    target: "erstgespraech",
+  },
   trust: [
     { text: "Kein Newsletter an alle" },
     { text: "Sie geben jeden Text frei" },
@@ -351,7 +355,6 @@ export const soArbeitetStrecken: StreckenData = {
       target: "intern",
       href: "/wachstum-vertrieb",
     },
-    { label: "Alle Sequenzen in der Live-Demo", target: "livedemo" },
   ],
   fussnote:
     "Beispielstrecken. Texte, Zeitpunkte und Artikel werden für Ihren Club geschrieben und mit Ihnen abgestimmt – Anzahl und Abstände der Nachrichten bestimmen Sie.",
@@ -509,7 +512,6 @@ export const soArbeitetGolfnext: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
-    secondary: { label: "Oder zuerst die Live-Demo ansehen", target: "livedemo" },
     // Persönlicher Abschluss mit Porträt-Platzhalter, wortgleich aus 3.3b `.f-person`.
     person: {
       name: "Fred Hoffmann",

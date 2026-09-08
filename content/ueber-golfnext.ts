@@ -42,7 +42,8 @@ export interface HeroPerson {
 
 export interface HeroData {
   ctaPrimary: Cta;
-  ctaSecondary: Cta;
+  /** Optionale zweite Aktion auf dunkel; seit Briefing 0031 setzt sie keine Seite. */
+  ctaSecondary?: Cta;
   /** Zitatzeile unter den Aktionen (Archivo, grüner linker Balken). */
   quote: string;
   people: HeroPerson[];
@@ -151,8 +152,11 @@ export interface WissenData {
 /* ────────────────────────── Sektionsdaten ────────────────────────── */
 
 export const ueberGolfnextHero: HeroData = {
-  ctaPrimary: { label: "Live-Demo ansehen", hint: "ohne Anmeldung", target: "livedemo" },
-  ctaSecondary: { label: "Online-Erstgespräch vereinbaren", target: "erstgespraech" },
+  ctaPrimary: {
+    label: "Online-Erstgespräch vereinbaren",
+    hint: "30 Minuten persönlich per Zoom oder Teams",
+    target: "erstgespraech",
+  },
   quote: "Wir machen digital. Damit mehr Zeit für das bleibt, was keinen Bildschirm braucht.",
   people: [
     {
@@ -357,7 +361,6 @@ export const ueberGolfnext: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
-    secondary: { label: "Oder zuerst die Live-Demo ansehen", target: "livedemo" },
     persoenlicheZeile: "Fred Hoffmann, Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt",
   },
 };

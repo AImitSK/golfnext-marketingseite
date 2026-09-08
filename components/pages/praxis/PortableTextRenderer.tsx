@@ -2,7 +2,7 @@ import Image from "next/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Button } from "@/components/ui/Button";
 import { praxisCalloutLabels } from "@/content/praxis";
-import { bookingUrl, liveDemoUrl } from "@/lib/links";
+import { bookingUrl } from "@/lib/links";
 import { ueberschriftId } from "@/lib/praxis/toc";
 import { urlForImage } from "@/lib/sanity/image";
 import type { BlockContent } from "@/sanity.types";
@@ -20,8 +20,6 @@ function ctaHref(target: string, url: string | undefined): string {
   switch (target) {
     case "erstgespraech":
       return bookingUrl();
-    case "livedemo":
-      return liveDemoUrl();
     case "pakete":
       return "/pakete";
     default:

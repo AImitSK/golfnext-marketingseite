@@ -17,7 +17,8 @@ import styles from "./EinWeg.module.css";
  * Der ENDZUSTAND (Linie voll, alle Schritte sichtbar) steht im Server-HTML → ohne JS
  * und bei `prefers-reduced-motion` sofort lesbar. Die nummerierten Knoten stehen
  * dauerhaft im Endzustand (Navy + Signalgrün-Ziffer), damit sichtbarer Text nie
- * kontrastschwach liegt. Darunter zwei Links (So arbeitet GolfNext · Live-Demo).
+ * kontrastschwach liegt. Darunter der Link auf „So arbeitet GolfNext“ (seit Briefing
+ * 0031 der einzige; der zweite Verweis ist entfallen).
  */
 export function EinWeg({ data }: { data: WegData }) {
   const { ref, showStart } = useStagedInView<HTMLDivElement>(0.3);

@@ -1,9 +1,10 @@
 /* Portiert aus docs/design-system/mocks/3.10-kontakt.html (.kwrap/.fcard/.kside/
-   .pers/.rolebox/.altbox, Z.147–232). Tokens auf --gn-*, literale Werte kommentiert.
+   .pers/.rolebox, Z.147–232). Tokens auf --gn-*, literale Werte kommentiert.
 
-   Zwei Spalten: links die Formularkarte, rechts eine klebende Seitenspalte mit Fred,
-   dem Rollen-Hinweis und dem Verweis auf die Live-Demo. Unter 1000 px stapeln sie
-   sich, die Seitenspalte klebt dann nicht mehr. */
+   Zwei Spalten: links die Formularkarte, rechts eine klebende Seitenspalte mit Fred
+   und dem Rollen-Hinweis. Unter 1000 px stapeln sie sich, die Seitenspalte klebt dann
+   nicht mehr. Der Kasten „Lieber erst schauen?" (.altbox) ist mit Briefing 0031
+   entfallen; der Mock zeigt ihn weiterhin. */
 
 .section {
   padding: var(--gn-section-y-lg) 0; /* 120px, Layoutsprache der Neufassung */
@@ -155,29 +156,6 @@
   color: var(--gn-muted);
   line-height: 1.55;
   margin: 0;
-}
-
-/* Lieber erst schauen? */
-.altbox {
-  border: 1px solid var(--gn-line);
-  border-radius: var(--gn-radius-lg);
-  background: var(--gn-mist);
-  padding: 22px 24px;
-}
-.altboxHeadline {
-  display: block;
-  font-family: var(--gn-font-display);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--gn-navy);
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
-}
-.altbox p {
-  font-size: 14px;
-  color: var(--gn-muted);
-  line-height: 1.55;
-  margin: 0 0 14px;
 }
 
 @media (max-width: 960px) {

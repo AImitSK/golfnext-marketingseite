@@ -26,7 +26,7 @@ Voraussetzungen **[F]**, mit Frist:
 - ~~Partnerlogos mit Freigabe und Beschriftung~~ – erledigt am 07.09.2026: fünf freigegebene Clublogos liegen in `public/clubs`
 - ~~Briefings für Praxis, Team und die zwölf Modulseiten~~ – hinfällig seit 07.09.2026: Team und die Modulseiten entfallen, Praxis entsteht mit dem Sanity-Briefing in Phase 3. **Kontakt braucht keins** – Stefan hat die Seite am 07.09.2026 beschlossen, sie entsteht nach §40 als schlichte Seite mit dem UI-Kit-Formular (Masterplan 4.3)
 - mindestens drei Praxis-Artikel, sonst bleibt `/praxis` aus der Navigation
-- Zieladressen: Buchung, Live-Demo
+- Zieladressen: Buchung (die Live-Demo ist am 08.09.2026 ersatzlos entfallen, Briefing 0031)
 
 Realistisch nur, wenn Fred die Assets parallel zu Phase 1–3 liefert. Risiko: Launch wartet auf Inhalte.
 

@@ -226,7 +226,6 @@ export const isLinkable = (path: string) => ROUTES.find((r) => r.path === path)?
 
 export const CTA = {
   erstgespraech: { label: "Online-Erstgespräch vereinbaren", hint: "30 Minuten persönlich per Zoom oder Teams" },
-  liveDemo: { label: "GolfNext in der Live-Demo ansehen" },
 } as const;
 
 export const KONTAKT = {

@@ -181,12 +181,13 @@
 }
 
 /* Sekundär auf dunkel – 2.4 .f-cta .b2 (Z.182): leise, unterstrichene Textaktion
-   neben dem grünen Button auf Navy („Alternativ: Live-Demo ansehen"). Keine .btn-
-   Basis (kein Rahmen, kein Flächen-Padding), unterstrichen über border-bottom.
+   neben dem grünen Button auf Navy. Keine .btn-Basis (kein Rahmen, kein Flächen-
+   Padding), unterstrichen über border-bottom.
    Im Footer-Kontext (Schritt 1.4) verifiziert: --gn-on-dark-link (#DCEBF6) auf dem
-   Navy-Verlauf der .f-cta ist AA-lesbar (~12:1); die Unterlinie bleibt dezent. Die
-   FooterClose-Demo (ueber-golfnext) führt kein `secondary`, daher wird die Variante
-   dort nicht gerendert – sichtbar bleibt sie im navyBlock-Muster auf /_bausteine. */
+   Navy-Verlauf der .f-cta ist AA-lesbar (~12:1); die Unterlinie bleibt dezent. Seit
+   Briefing 0031 setzt keine Seite mehr `secondary`; die Variante
+   bleibt als Baustein bestehen (Masterplan 1.2) und ist im navyBlock-Muster auf
+   /_bausteine zu sehen. */
 .secondaryOnDark {
   display: inline-flex;
   align-items: center;

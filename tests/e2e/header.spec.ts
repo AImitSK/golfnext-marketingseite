@@ -13,8 +13,8 @@ import { expect, test } from "@playwright/test";
  * Platzhalter mehr. Seit Briefing 0024 ist „So arbeitet GolfNext" gebaut und `live` –
  * damit trägt „Plattform" ein Dropdown mit genau diesem einen Punkt. Seit Briefing
  * 0025 ist `/kontakt` gebaut und `live` – damit hat auch „Über GolfNext" ein
- * Dropdown, das bisher nur „Kontakt" enthält. Ratgeber (`/praxis`) bleibt außen vor,
- * bis der Blog in Phase 3 aus Sanity kommt.
+ * Dropdown. Seit 08.09.2026 ist auch `/praxis` `live` (Masterplan 3.4) – das
+ * Dropdown „Über GolfNext" führt deshalb „Ratgeber" und „Kontakt", in dieser Reihenfolge.
  */
 function desktopOnly(page: import("@playwright/test").Page) {
   const vp = page.viewportSize();
@@ -31,7 +31,7 @@ const LIVE_HAUPT = [
 ];
 
 /** Live geschaltete Dropdown-Punkte (0024: „So arbeitet GolfNext", 0025: „Kontakt"). */
-const LIVE_KINDER = ["/plattform/so-arbeitet-golfnext", "/kontakt"];
+const LIVE_KINDER = ["/plattform/so-arbeitet-golfnext", "/praxis", "/kontakt"];
 
 test.describe("Header · Struktur und Daten", () => {
   test("Wortmarke ist Home-Link mit aria-label; nur live-Routen sind verlinkt", async ({
@@ -64,14 +64,17 @@ test.describe("Header · Struktur und Daten", () => {
     }
   });
 
-  test("Plattform und Über GolfNext tragen Dropdowns; Ratgeber fehlt weiter", async ({ page }) => {
+  test("Plattform und Über GolfNext tragen Dropdowns; Ratgeber steht im Dropdown", async ({
+    page,
+  }) => {
     await page.goto("/_bausteine");
 
     const nav = page.locator("header nav");
-    // `/praxis` (Menü-Label „Ratgeber") ist Kind von „Über GolfNext" und nicht live –
-    // weder als Hauptpunkt noch im Dropdown.
+    // `/praxis` ist seit 08.09.2026 live und Kind von „Über GolfNext" – im Menü unter
+    // dem Label „Ratgeber", nie unter „Praxis" (die Adresse und der Seiteninhalt heißen
+    // so, der Menüpunkt nicht).
     await expect(nav.locator('a:text-is("Praxis")')).toHaveCount(0);
-    await expect(nav.locator('a:text-is("Ratgeber")')).toHaveCount(0);
+    await expect(nav.locator('a:text-is("Ratgeber")').first()).toHaveAttribute("href", "/praxis");
 
     // Zwei Dropdown-Öffner: „Plattform" und „Über GolfNext" (Desktop; mobil klappt
     // <details> auf).

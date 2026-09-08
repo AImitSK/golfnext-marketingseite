@@ -157,12 +157,12 @@ export const ROUTES: Route[] = [
     // „Praxis" (Freds freigegebener Wortlaut in Mock 3.9a) – nicht angleichen.
     label: "Ratgeber",
     // Seit Briefing 0027 gebaut (Masterplan 3.4): `/praxis`, `/praxis/thema/<slug>`
-    // und `/praxis/<slug>` kommen aus Sanity. Der Status bleibt trotzdem `geplant`
-    // mit `noindex` – ein Menüpunkt „Ratgeber", der auf eine leere Liste führt,
-    // schadet mehr als er nützt. Der Wechsel auf `live` ist eine Zeile und passiert,
-    // sobald Fred den ersten Artikel veröffentlicht hat (Briefing 0027, Frage 2);
-    // Navigation und Footer ziehen dann automatisch nach.
-    status: "geplant",
+    // und `/praxis/<slug>` kommen aus Sanity. **Live seit 08.09.2026** (Entscheidung
+    // Stefan): Der Menüpunkt „Ratgeber" erscheint damit erstmals im Dropdown
+    // „Über GolfNext", und der Link „Alle Beiträge" auf der Startseite wird echt.
+    // Frage 2 des Briefings ist damit beantwortet – nicht erst nach Freds erstem
+    // Artikel, sondern jetzt.
+    status: "live",
     parent: "/ueber-golfnext",
     mock: "mocks/3.9a-praxis-uebersicht.html",
     // Es gibt kein Praxis-Briefing und wird keines geben (`0020-praxis.md` existiert
@@ -175,7 +175,6 @@ export const ROUTES: Route[] = [
     title: "Praxis. Was in Golfclubs wirklich funktioniert.",
     description:
       "Berichte aus Pilotclubs, Erfahrungen aus dreißig Jahren auf dem Platz und ehrliche Antworten auf die Fragen, die im Clubbüro und im Vorstand gestellt werden.",
-    noindex: true,
   },
   {
     path: "/pakete",

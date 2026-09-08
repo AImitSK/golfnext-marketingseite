@@ -59,9 +59,14 @@ describe("getNavModel", () => {
     ]);
   });
 
-  it("führt „Kontakt“ im Über-GolfNext-Dropdown – Ratgeber fehlt weiter", () => {
+  it("führt „Ratgeber“ und „Kontakt“ im Über-GolfNext-Dropdown", () => {
+    // Seit 08.09.2026 ist `/praxis` live (Masterplan 3.4); der Menüpunkt heißt
+    // „Ratgeber", die Adresse bleibt `/praxis`. Reihenfolge wie in ROUTES.
     const ueber = model.find((i) => i.path === "/ueber-golfnext");
-    expect(ueber?.children).toEqual([{ path: "/kontakt", label: "Kontakt", href: "/kontakt" }]);
+    expect(ueber?.children).toEqual([
+      { path: "/praxis", label: "Ratgeber", href: "/praxis" },
+      { path: "/kontakt", label: "Kontakt", href: "/kontakt" },
+    ]);
   });
 });
 
@@ -94,14 +99,19 @@ describe("Struktur v2 in site-structure", () => {
   });
 
   it("liefert nicht-live Kinder gar nicht erst aus", () => {
-    // `/praxis` ist nicht `live` (der Blog kommt in Phase 3 aus Sanity) und taucht
-    // im Modell nicht auf. Gebaut und im Dropdown sind „So arbeitet GolfNext" und
-    // seit Briefing 0025 „Kontakt".
-    const nichtLiveKinder = ROUTES.filter((r) => r.parent && !isLinkable(r.path));
-    expect(nichtLiveKinder.map((r) => r.path)).toEqual(["/praxis"]);
+    // Seit 08.09.2026 ist `/praxis` live (Masterplan 3.4) – damit ist derzeit jedes
+    // Kind live, die Liste ist leer. Die Regel bleibt trotzdem festgehalten: Was
+    // nicht `live` ist, taucht im Modell nicht auf.
+    const nichtLiveKinder = ROUTES.filter((r) => r.parent && !isLinkable(r.path)).map(
+      (r) => r.path,
+    );
+    expect(nichtLiveKinder).toEqual([]);
 
     const imModell = getNavModel().flatMap((i) => i.children.map((c) => c.path));
-    expect(imModell).toEqual(["/plattform/so-arbeitet-golfnext", "/kontakt"]);
+    expect(imModell).toEqual(["/plattform/so-arbeitet-golfnext", "/praxis", "/kontakt"]);
+    for (const pfad of nichtLiveKinder) {
+      expect(imModell).not.toContain(pfad);
+    }
   });
 
   it("behält die zwölf Modulnamen als reine Datenliste", () => {

@@ -59,16 +59,15 @@ test.describe("Entfernte Routen und site-weite Gegenproben", () => {
     }
   });
 
-  test("Teaser-Links auf / zeigen nicht auf die noch nicht live geschaltete Praxis", async ({
-    page,
-  }) => {
-    // `/praxis` ist gebaut, steht aber weiter auf `geplant`/`noindex` (Briefing 0027,
-    // Frage 2) – die Teaser laufen über internalHref und dürfen nicht dorthin zeigen,
-    // solange der Status nicht auf `live` steht.
+  test("Der Praxis-Teaser auf / führt auf die live geschaltete Praxis", async ({ page }) => {
+    // `/praxis` steht seit 08.09.2026 auf `live` (Entscheidung Stefan). Der Link
+    // „Alle Beiträge" läuft über internalHref und zeigt damit auf die echte Adresse
+    // statt auf `#`. Die Gegenprobe von vorher (kein Teaser auf /praxis) ist damit
+    // überholt.
     await page.goto("/");
     const teaser = await page
       .locator("main a")
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")));
-    expect(teaser, "kein Teaser auf /praxis").not.toContain("/praxis");
+    expect(teaser, "Teaser führt auf /praxis").toContain("/praxis");
   });
 });

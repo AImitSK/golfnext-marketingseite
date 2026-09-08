@@ -2,8 +2,8 @@ import { isLinkable } from "@/config/site-structure";
 import type { Cta } from "@/content/types";
 
 /**
- * CTA-Ziele werden nie hart kodiert. Buchungs- und Live-Demo-Link kommen aus der
- * Umgebung (NEXT_PUBLIC_*). Fehlt ein Wert, rendert der Button den Fallback /kontakt –
+ * CTA-Ziele werden nie hart kodiert. Der Buchungslink kommt aus der Umgebung
+ * (NEXT_PUBLIC_BOOKING_URL). Fehlt der Wert, rendert der Button den Fallback /kontakt –
  * nie einen leeren Link (docs/01-architektur.md, Konventionen).
  */
 const FALLBACK = "/kontakt";
@@ -11,12 +11,6 @@ const FALLBACK = "/kontakt";
 /** Buchungslink für das Online-Erstgespräch; Fallback Kontaktseite. */
 export function bookingUrl(): string {
   const url = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
-  return url ? url : FALLBACK;
-}
-
-/** Öffentliche Live-Demo; Fallback Kontaktseite. */
-export function liveDemoUrl(): string {
-  const url = process.env.NEXT_PUBLIC_LIVE_DEMO_URL?.trim();
   return url ? url : FALLBACK;
 }
 
@@ -37,8 +31,6 @@ export function resolveCta(cta: Cta): string {
   switch (cta.target) {
     case "erstgespraech":
       return bookingUrl();
-    case "livedemo":
-      return liveDemoUrl();
     case "pakete":
       return "/pakete";
     case "kontakt":

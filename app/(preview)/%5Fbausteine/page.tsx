@@ -218,7 +218,7 @@ export default function BausteinePage() {
               </Button>
               <Button variant="light">Heller Button</Button>
               <Button variant="secondaryOnDark" href="#">
-                Alternativ: Live-Demo ansehen
+                Sekundäre Aktion auf dunkel
               </Button>
               <TextLink href="#" onDark>
                 Text-Link auf dunkel
@@ -643,8 +643,16 @@ export default function BausteinePage() {
 
       {/* Footer (Baustein 0005) – hier zur Vorschau am Seitenende, NICHT im Root-Layout
           (app-weite Einbindung folgt in Phase 2). FooterClose ist prop-getrieben; die
-          Demo nutzt die echten FooterClose-Daten aus content/ueber-golfnext.ts. */}
-      <Footer footerClose={ueberGolfnext.footerClose} />
+          Demo nutzt die echten FooterClose-Daten aus content/ueber-golfnext.ts.
+          Seit Briefing 0031 setzt keine Seite mehr `secondary`. Damit der Baustein im
+          Katalog sichtbar bleibt, ergänzt die Vorschau hier ein neutrales Beispiel – es
+          steht auf keiner Website-Seite. */}
+      <Footer
+        footerClose={{
+          ...ueberGolfnext.footerClose!,
+          secondary: { label: "Beispiel: sekundäre Aktion", target: "kontakt" },
+        }}
+      />
     </>
   );
 }

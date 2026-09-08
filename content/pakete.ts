@@ -450,9 +450,5 @@ export const pakete: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
-    secondary: {
-      label: "Oder zuerst GolfNext in der Live-Demo ansehen",
-      target: "livedemo",
-    },
   },
 };

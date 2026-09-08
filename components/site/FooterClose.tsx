@@ -10,12 +10,15 @@ import styles from "./FooterClose.module.css";
  * cta.hint als eigene Zeile) und optionaler sekundärer Link auf dunkel
  * (`secondaryOnDark`, unterstrichen). CTA-Ziele löst der Button über resolveCta.
  * Reine Server-Komponente; kein FooterClose-Text wird hier erfunden.
+ *
+ * Seit Briefing 0031 setzt keine Seite mehr `secondary`. Die Prop
+ * und die Button-Variante bleiben als Baustein erhalten (Masterplan 1.4).
  */
 export function FooterClose({ footerClose }: { footerClose: FooterCloseType }) {
   const { eyebrow, headline, text, cta, secondary, persoenlicheZeile, person } = footerClose;
 
   return (
-    <section className={styles.close} aria-label="Gespräch und Demo">
+    <section className={styles.close} aria-label="Gespräch">
       <div className={styles.inner}>
         <div>
           <span className={styles.eyebrow}>{eyebrow}</span>

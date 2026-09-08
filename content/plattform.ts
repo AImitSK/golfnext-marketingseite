@@ -55,7 +55,8 @@ export interface HeroDemo {
 
 export interface HeroData {
   ctaPrimary: Cta;
-  ctaSecondary: Cta;
+  /** Optionale zweite Aktion auf dunkel; seit Briefing 0031 setzt sie keine Seite. */
+  ctaSecondary?: Cta;
   trust: HeroTrust[];
   /** Barrierefreies Label der schematischen Demo (dekorative UI-Ausschnitte sind aria-hidden). */
   ariaLabel: string;
@@ -63,8 +64,11 @@ export interface HeroData {
 }
 
 export const plattformHero: HeroData = {
-  ctaPrimary: { label: "Live-Demo ansehen", hint: "ohne Anmeldung", target: "livedemo" },
-  ctaSecondary: { label: "Online-Erstgespräch vereinbaren", target: "erstgespraech" },
+  ctaPrimary: {
+    label: "Online-Erstgespräch vereinbaren",
+    hint: "30 Minuten persönlich per Zoom oder Teams",
+    target: "erstgespraech",
+  },
   trust: [
     { text: "Entwickelt mit Golfclubs, nicht für sie" },
     { text: "Ihre Domain, Ihre Daten" },
@@ -520,7 +524,6 @@ export const plattform: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
-    secondary: { label: "Oder zuerst die Live-Demo ansehen", target: "livedemo" },
     // Persönliche Zeile: der Mock zeigt Fred als Ansprechpartner (Name + Rolle) im
     // Abschlussblock. Wortlaut aus dem Mock übernommen (Name + Rolle als eine Zeile).
     persoenlicheZeile: "Fred Hoffmann, Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt",

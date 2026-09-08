@@ -4,7 +4,6 @@ import { defineField, defineType } from "sanity";
 /** Feste Zielauswahl für den Button – „Eigene Adresse“ schaltet das URL-Feld frei. */
 const TARGET_OPTIONS = [
   { title: "Online-Erstgespräch", value: "erstgespraech" },
-  { title: "Live-Demo", value: "livedemo" },
   { title: "Pakete", value: "pakete" },
   { title: "Eigene Adresse", value: "url" },
 ];

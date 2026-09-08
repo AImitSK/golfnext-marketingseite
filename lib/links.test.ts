@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { bookingUrl, liveDemoUrl, resolveCta } from "./links";
+import type { Cta } from "@/content/types";
+import { bookingUrl, resolveCta } from "./links";
 
 const ORIGINAL = { ...process.env };
 
 beforeEach(() => {
   delete process.env.NEXT_PUBLIC_BOOKING_URL;
-  delete process.env.NEXT_PUBLIC_LIVE_DEMO_URL;
 });
 
 afterEach(() => {
@@ -20,12 +20,6 @@ describe("bookingUrl", () => {
   it("nutzt die gesetzte Buchungs-URL", () => {
     process.env.NEXT_PUBLIC_BOOKING_URL = "https://calendly.com/golfnext";
     expect(bookingUrl()).toBe("https://calendly.com/golfnext");
-  });
-});
-
-describe("liveDemoUrl", () => {
-  it("fällt auf /kontakt zurück", () => {
-    expect(liveDemoUrl()).toBe("/kontakt");
   });
 });
 
@@ -46,5 +40,12 @@ describe("resolveCta", () => {
   it("mappt feste Ziele", () => {
     expect(resolveCta({ label: "x", target: "pakete" })).toBe("/pakete");
     expect(resolveCta({ label: "x", target: "kontakt" })).toBe("/kontakt");
+  });
+
+  // Seit Briefing 0031 ist ein Ziel aus der Union verschwunden. Käme ein unbekanntes
+  // Ziel trotzdem durch (etwa aus Sanity), landet es auf /kontakt – niemals auf "#".
+  it("führt ein unbekanntes Ziel auf /kontakt, nicht auf #", () => {
+    const unbekannt = { label: "x", target: "gibt-es-nicht" } as unknown as Cta;
+    expect(resolveCta(unbekannt)).toBe("/kontakt");
   });
 });

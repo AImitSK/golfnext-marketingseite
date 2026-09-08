@@ -28,7 +28,8 @@ export interface HeroCard {
 
 export interface HeroData {
   ctaPrimary: Cta;
-  ctaSecondary: Cta;
+  /** Optionale zweite Aktion auf dunkel; seit Briefing 0031 setzt sie keine Seite. */
+  ctaSecondary?: Cta;
   trust: string[];
   /** Barrierefreies Label der gesamten Demo (die UI-Ausschnitte sind aria-hidden). */
   ariaLabel: string;
@@ -55,8 +56,11 @@ export interface HeroData {
 }
 
 export const startseiteHero: HeroData = {
-  ctaPrimary: { label: "Live-Demo ansehen", hint: "ohne Anmeldung", target: "livedemo" },
-  ctaSecondary: { label: "Online-Erstgespräch vereinbaren", target: "erstgespraech" },
+  ctaPrimary: {
+    label: "Online-Erstgespräch vereinbaren",
+    hint: "30 Minuten persönlich per Zoom oder Teams",
+    target: "erstgespraech",
+  },
   trust: ["Ihre Domain, Ihre Daten", "Keine Knebelverträge", "Ein Mensch am Telefon"],
   ariaLabel: "Beispiel einer Clubwebsite mit Anmeldung, Concierge-Chat und Platzstatus",
   demo: {
@@ -338,7 +342,6 @@ export const startseiteWeg: WegData = {
       target: "intern",
       href: "/plattform/so-arbeitet-golfnext",
     },
-    { label: "Live-Demo ansehen", target: "livedemo" },
   ],
 };
 
@@ -521,7 +524,6 @@ export const startseite: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
-    secondary: { label: "Oder zuerst die Live-Demo ansehen", target: "livedemo" },
     // Wortgleich aus Mock 3.1b `.f-person`: Name (fett) + Rolle, mit Porträt-Platzhalter.
     person: {
       name: "Fred Hoffmann",

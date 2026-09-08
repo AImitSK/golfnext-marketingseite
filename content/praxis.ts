@@ -126,9 +126,5 @@ export const praxis: PageContent = {
       hint: "30 Minuten persönlich per Zoom oder Teams",
       target: "erstgespraech",
     },
-    secondary: {
-      label: "Oder zuerst die Live-Demo ansehen",
-      target: "livedemo",
-    },
   },
 };

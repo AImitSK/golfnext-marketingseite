@@ -128,7 +128,6 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     email,
     responseNote,
     bookingUrl,
-    liveDemoUrl,
     linkedin,
     instagram,
     defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}

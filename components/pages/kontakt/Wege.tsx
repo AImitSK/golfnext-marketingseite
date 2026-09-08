@@ -7,11 +7,12 @@ import styles from "./Wege.module.css";
 
 /**
  * 3 · „Nicht jeder schreibt gern ein Formular." (portiert aus 3.10-kontakt.html,
- * `.ways3`/`.way3`). Drei gleichwertige Wege nebeneinander.
+ * `.ways3`/`.way3`). Gleichwertige Wege nebeneinander – seit Briefing 0031 zwei
+ * statt drei (der Mock zeigt weiterhin drei).
  *
  * Die Ziele stehen **nirgends hart kodiert**: „Termin aussuchen" löst über
- * `resolveCta` auf `bookingUrl()` auf (künftig cal.com), „Demo öffnen" auf
- * `liveDemoUrl()`, und der dritte Weg baut aus `KONTAKT.telefon` einen `tel:`-Link.
+ * `resolveCta` auf `bookingUrl()` auf (künftig cal.com), der zweite Weg baut aus
+ * `KONTAKT.telefon` einen `tel:`-Link.
  * cal.com wird **nur verlinkt, nie eingebettet** – ein eingebettetes Skript bräuchte
  * vorher eine Einwilligung (Briefing 0025).
  *
@@ -39,27 +40,6 @@ function KalenderIcon() {
   );
 }
 
-/** Bildschirm, fix 20 px. */
-function BildschirmIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <rect x="2" y="4" width="20" height="14" rx="2" />
-      <path d="M8 21h8M12 18v3" />
-    </svg>
-  );
-}
-
 /** Hörer, fix 20 px. */
 function TelefonIcon() {
   return (
@@ -82,7 +62,6 @@ function TelefonIcon() {
 
 const ICONS = {
   kalender: <KalenderIcon />,
-  bildschirm: <BildschirmIcon />,
   telefon: <TelefonIcon />,
 } as const;
 

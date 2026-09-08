@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { FRED } from "@/lib/people";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { TextLink } from "@/components/ui/TextLink";
 import { KONTAKT } from "@/config/site-structure";
 import type { FormularData, SeitenspalteData } from "@/content/kontakt";
 import { resolveCta } from "@/lib/links";
@@ -111,14 +110,6 @@ export function Formular({
             <p className={styles.roleboxEyebrow}>{seitenspalte.rollenhinweis.eyebrow}</p>
             <b className={styles.roleboxHeadline}>{seitenspalte.rollenhinweis.headline}</b>
             <p>{seitenspalte.rollenhinweis.text}</p>
-          </div>
-
-          <div className={styles.altbox}>
-            <b className={styles.altboxHeadline}>{seitenspalte.livedemo.headline}</b>
-            <p>{seitenspalte.livedemo.text}</p>
-            <TextLink href={resolveCta(seitenspalte.livedemo.cta)}>
-              {seitenspalte.livedemo.cta.label}
-            </TextLink>
           </div>
         </aside>
       </div>

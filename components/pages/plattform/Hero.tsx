@@ -13,7 +13,7 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
 /**
  * 1 · Hero (portiert aus 3.2c-plattform-neufassung.html, .hero/.demo/.browser/.site/
  * .pstat/.phone/.tgl). Links: Eyebrow, die einzige `<h1>` der Seite, Lead, primärer
- * grüner CTA (Live-Demo) und sekundäre on-dark-Aktion (Erstgespräch), Trust-Zeile.
+ * grüner CTA (Erstgespräch) und Trust-Zeile.
  * Rechts: die schematische Club-Website mit Platzstatus-Karte plus ein Greenkeeper-
  * Handy. Das Visual läuft rechts aus dem Raster (Bleed über `.demo{width:…%}`), der
  * Seiten-Overflow wird von `.hero{overflow:hidden}` abgefangen (kein horizontaler
@@ -26,6 +26,9 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * Endzustand. Nur mit JS und ohne reduzierte Bewegung wird nach Mount kurz der
  * Ausgangszustand gezeigt und die Meldung läuft einmalig. Bewegt nur Farbe/Transform
  * (kein CLS).
+ *
+ * Seit Briefing 0031 trägt der Hero nur noch eine Aktion; die Prop `ctaSecondary`
+ * bleibt optional erhalten und wird derzeit von keiner Seite gesetzt.
  */
 export function Hero({
   eyebrow,
@@ -75,23 +78,25 @@ export function Hero({
             <Button variant="cta" cta={data.ctaPrimary} secondLine={data.ctaPrimary.hint}>
               {data.ctaPrimary.label}
             </Button>
-            <a className={styles.b2} href={resolveCta(data.ctaSecondary)}>
-              {data.ctaSecondary.label}
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </a>
+            {data.ctaSecondary ? (
+              <a className={styles.b2} href={resolveCta(data.ctaSecondary)}>
+                {data.ctaSecondary.label}
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            ) : null}
           </div>
           <div className={styles.trust}>
             {data.trust.map((t) => (

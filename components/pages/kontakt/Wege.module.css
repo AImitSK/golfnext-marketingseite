@@ -30,7 +30,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Seit Briefing 0031 zwei Wege statt drei – das Raster füllt die Zeile,
+     damit keine leere Spalte klafft. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
   margin-top: 52px;
 }

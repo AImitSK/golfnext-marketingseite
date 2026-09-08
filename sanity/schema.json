@@ -158,10 +158,6 @@
               },
               {
                 "type": "string",
-                "value": "livedemo"
-              },
-              {
-                "type": "string",
                 "value": "pakete"
               },
               {
@@ -649,13 +645,6 @@
         "optional": true
       },
       "bookingUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "liveDemoUrl": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

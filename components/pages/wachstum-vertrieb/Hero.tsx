@@ -11,8 +11,7 @@ import styles from "./Hero.module.css";
 /**
  * 1 · Hero (portiert aus 3.4b-wachstum-vertrieb-neufassung.html, .hero/.demo/.browser/
  * .cock/.crmlist/.phone/.ig). Links: Eyebrow, die einzige `<h1>` der Seite, Lead,
- * primärer grüner CTA (Live-Demo) und sekundäre on-dark-Aktion (Erstgespräch),
- * Trust-Zeile. Rechts: das Kampagnen-Cockpit (laufende Kampagne + Anmeldungsliste)
+ * primärer grüner CTA (Erstgespräch) und Trust-Zeile. Rechts: das Kampagnen-Cockpit (laufende Kampagne + Anmeldungsliste)
  * plus ein Instagram-Handy mit der Anzeige. Das Visual läuft rechts aus dem Raster
  * (Bleed über `.demo{width:…%}`); `.hero{overflow:hidden}` fängt den Seiten-Overflow
  * ab (kein horizontaler Scroll). Illustrative Oberfläche, kein echter Screenshot.
@@ -23,6 +22,9 @@ import styles from "./Hero.module.css";
  * sofort vollständig lesbar. Nur mit JS und ohne reduzierte Bewegung wird nach Mount
  * kurz der Ausgangszustand (`.start`) gesetzt und beim Sichtbarwerden einmalig
  * aufgelöst. Bewegt nur `opacity`/`transform` (kein CLS).
+ *
+ * Seit Briefing 0031 trägt der Hero nur noch eine Aktion; die Prop `ctaSecondary`
+ * bleibt optional erhalten und wird derzeit von keiner Seite gesetzt.
  */
 export function Hero({
   eyebrow,
@@ -50,23 +52,25 @@ export function Hero({
             <Button variant="cta" cta={data.ctaPrimary} secondLine={data.ctaPrimary.hint}>
               {data.ctaPrimary.label}
             </Button>
-            <a className={styles.b2} href={resolveCta(data.ctaSecondary)}>
-              {data.ctaSecondary.label}
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </a>
+            {data.ctaSecondary ? (
+              <a className={styles.b2} href={resolveCta(data.ctaSecondary)}>
+                {data.ctaSecondary.label}
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            ) : null}
           </div>
           <div className={styles.trust}>
             {data.trust.map((t) => (

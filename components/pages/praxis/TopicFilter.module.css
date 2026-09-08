@@ -1,0 +1,68 @@
+/* Portiert aus docs/design-system/mocks/3.9a-praxis-uebersicht.html
+   (.filters und .chip Z.134–140).
+
+   Ein Unterschied zum Mock, bewusst: Der Mock filtert mit `<button>` im Browser
+   (`.acard.hide`). Hier sind es **echte Links** – „Alle" auf /praxis, jede Rubrik auf
+   /praxis/thema/<slug>. Ohne JavaScript bedienbar (Briefing 0027, harte Vorgabe), und
+   jede Rubrik hat eine eigene, teilbare Adresse. Der aktive Chip trägt
+   `aria-current="page"`; die Optik hängt deshalb an [aria-current] statt an `.on`.
+
+   Der Pill-Radius 20 px ist --gn-radius-pill (der Mock notiert 20 px direkt). */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.lab {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin-right: 8px;
+}
+.chip {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gn-ink);
+  background: #fff; /* Weiß = Mock-Wert (.chip), kein Token */
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-pill);
+  padding: 8px 16px;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+.chip:hover {
+  border-color: var(--gn-navy);
+}
+.chip[aria-current="page"] {
+  background: var(--gn-navy);
+  color: #fff; /* Weiß = Mock-Wert (.chip.on), kein Token */
+  border-color: var(--gn-navy);
+}
+.n {
+  color: var(--gn-muted);
+  font-weight: 500;
+  margin-left: 6px;
+}
+.chip[aria-current="page"] .n {
+  color: var(--gn-sky);
+}
+
+@media (max-width: 620px) {
+  .filters {
+    margin-bottom: 28px;
+  }
+  .chip {
+    font-size: 13px;
+    padding: 7px 13px;
+  }
+}

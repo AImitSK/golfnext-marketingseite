@@ -1,0 +1,5 @@
+/* Fehlergrenze der Praxis-Routen (docs/08, Briefing 0027 Aufgabe 6).
+   Nur der Abstand unter dem Alert – Alert und Button bringen ihre Optik mit. */
+.aktion {
+  margin-top: 20px;
+}

@@ -17,6 +17,10 @@ const eslintConfig = defineConfig([
     "Template/**",
     "playwright-report/**",
     "test-results/**",
+    // Agenten-Arbeitsbereich: `.claude/worktrees/<branch>` ist eine vollständige
+    // zweite Kopie des Repos (git worktree). Sie hier mitzulinten meldet dieselben
+    // Dateien doppelt und lässt `pnpm lint` an fremden Branches scheitern.
+    ".claude/**",
     // Von `pnpm sanity:typegen` erzeugt (Briefing 0026) – kein Handcode, kein Lint
     "sanity.types.ts",
     "sanity/schema.json",

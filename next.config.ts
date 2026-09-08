@@ -85,6 +85,14 @@ const studioSecurityHeaders = [
 const isPreview = process.env.VERCEL_ENV === "preview";
 
 const nextConfig: NextConfig = {
+  /**
+   * Bilder aus Sanity (Briefing 0027). Nur der eine Host – `next/image` lädt sonst
+   * nichts von außen. Die CSP erlaubt `cdn.sanity.io` bereits als `img-src`.
+   */
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" }],
+  },
+
   async headers() {
     return [
       {

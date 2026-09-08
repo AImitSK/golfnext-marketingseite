@@ -1,0 +1,488 @@
+/* Portiert aus docs/design-system/mocks/3.9b-praxis-artikel.html
+   (.crumb/.ahead/.cover/.art/.body/.pull/.fig/.box/.toc/.abox/.cta2/.author/.related,
+   Z.196–246). Farben auf --gn-*, literale Tints kommentiert.
+
+   Bewusst NICHT übernommen (Briefing 0027):
+   - `.prog` (Lesefortschrittsbalken): eine fixierte Linie, die bei jedem Scrollen
+     mitläuft – Selbstzweck, und am oberen Rand kollidiert sie mit dem Sticky-Header.
+   - `.tags` (Schlagwortzeile): dafür gibt es kein Schemafeld.
+   - `.toc a.on` (aktiver Abschnitt beim Scrollen): braucht einen ScrollSpy in
+     JavaScript und wäre ohne JS ein toter Zustand. Die Sprungmarken selbst
+     funktionieren ohne JS.
+   - `.author .tlink` „Alle Beiträge von …": es gibt keine Autorenseite.
+
+   `.body` steht auf max 70ch (docs/04 „Rendering", Briefing 0027) statt der 68ch des
+   Mocks – der einzige Zahlenunterschied, und er steht so in der Doku. */
+
+/* ---------- Brotkrumen ---------- */
+.crumb {
+  font-size: 13px;
+  color: var(--gn-muted);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.crumb a {
+  color: var(--gn-muted);
+}
+.crumb a:hover {
+  color: var(--gn-navy);
+}
+.crumb b {
+  color: var(--gn-ink);
+  font-weight: 500;
+}
+
+/* ---------- Artikelkopf ---------- */
+.ahead {
+  padding: 56px 0 40px;
+}
+.catZeile {
+  display: block;
+  margin-top: 26px;
+}
+.h1 {
+  font-size: clamp(32px, 4.2vw, 54px);
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  max-width: 20ch;
+  margin: 20px 0;
+  text-wrap: balance;
+}
+.lead {
+  font-size: clamp(17px, 1.4vw, 20px);
+  color: var(--gn-muted);
+  max-width: 62ch;
+  line-height: 1.6;
+  margin: 0 0 26px;
+}
+.kopfMeta {
+  font-size: 14px;
+}
+.autorName {
+  display: block;
+  color: var(--gn-ink);
+  font-weight: 600;
+  font-size: 14px;
+}
+.autorRolle {
+  display: block;
+  font-size: 12px;
+  color: var(--gn-muted);
+  font-weight: 500;
+}
+
+/* ---------- Titelbild ---------- */
+.cover {
+  margin: 0 auto;
+  max-width: var(--gn-wrap-wide);
+  padding: 0 40px;
+}
+.coverFlaeche {
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16 / 7; /* reserviert die Höhe vorab – kein CLS */
+  background: var(--gn-mist);
+}
+.coverFlaeche img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.coverShot {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+.coverCaption {
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin-top: 10px;
+}
+
+/* ---------- Text + Seitenleiste ---------- */
+/* Liegt auf dem `Wrap`-Baustein: der bringt Satzspiegel und Gutter mit, hier kommen
+   nur Raster und vertikale Luft dazu (kein `padding`-Kurzschreibweise – sonst fiele
+   der seitliche Gutter des Wraps weg). */
+.art {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 72px;
+  align-items: start;
+  padding-top: 56px;
+  padding-bottom: 40px;
+}
+.body {
+  max-width: 70ch; /* docs/04 „Rendering" (Mock: 68ch) */
+  min-width: 0;
+  counter-reset: abschnitt;
+}
+.body p {
+  font-size: 18px;
+  line-height: 1.72;
+  color: var(--gn-ink);
+  margin: 0 0 1.4em;
+}
+/* Der erste Absatz führt in den Text (Mock: p.intro). */
+.body > p:first-child {
+  font-size: 20px;
+}
+.body h2 {
+  font-size: clamp(22px, 2.2vw, 28px); /* docs/04 „Rendering" */
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 2.2em 0 0.7em;
+  scroll-margin-top: 110px;
+  max-width: none;
+  counter-increment: abschnitt;
+}
+/* Nummerierung „01, 02 …" per CSS-Zähler – im Studio schreibt niemand Nummern
+   in die Überschrift, und Screenreader lesen generierten Inhalt nicht als Text mit. */
+.body h2::before {
+  content: counter(abschnitt, decimal-leading-zero);
+  color: var(--gn-blue);
+  margin-right: 10px;
+}
+.body h3 {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 1.8em 0 0.6em;
+  scroll-margin-top: 110px;
+}
+.body ul,
+.body ol {
+  margin: 0 0 1.6em;
+  padding-left: 0;
+  list-style: none;
+}
+.body li {
+  font-size: 17.5px;
+  line-height: 1.65;
+  padding: 6px 0 6px 26px;
+  position: relative;
+}
+.body ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt (Grün-Regel: Punkt erlaubt) */
+}
+/* Nummerierte Liste: der Mock kennt nur Punkte, das Schema erlaubt beides. */
+.body ol {
+  counter-reset: aufzaehlung;
+}
+.body ol li {
+  counter-increment: aufzaehlung;
+}
+.body ol li::before {
+  content: counter(aufzaehlung) ".";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  font-family: var(--gn-font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gn-blue);
+}
+.body a {
+  color: var(--gn-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.body strong {
+  font-weight: 700;
+}
+
+/* Zitat (Mock .pull) */
+.pull {
+  margin: 2em 0;
+  padding: 8px 0 8px 26px;
+  border-left: 3px solid var(--gn-signal); /* Signalgrün als Linie */
+  font-family: var(--gn-font-display);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 700;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+.pull p {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+/* Bild im Fließtext (Mock .fig) */
+.fig {
+  margin: 2em 0;
+}
+.figFlaeche {
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 9; /* Höhe vorab reserviert */
+  background: var(--gn-mist);
+}
+.figFlaeche img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.fig figcaption {
+  font-size: 13px;
+  color: var(--gn-muted);
+  margin-top: 10px;
+}
+
+/* Hinweiskasten (Mock .box) – die Fläche zum `callout` aus Sanity */
+.box {
+  margin: 2em 0;
+  background: var(--gn-mist);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 26px 28px;
+}
+.boxLabel {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gn-blue);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.box p {
+  font-size: 16px;
+  margin: 0 0 0.8em;
+}
+.box p:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA-Button im Fließtext (Sanity-Objekttyp `cta`) */
+.ctaBlock {
+  margin: 2em 0;
+}
+/* Der Button bringt seine Farben selbst mit. Ohne diese Regel färbte `.body a` ihn
+   blau ein – blauer Text auf Signalgrün ergibt 1,9:1 und fällt durch AA (von axe
+   gefunden). Navy auf Grün ist die Vorgabe aus dem Design-System. */
+.body .ctaBlock a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Seitenleiste ---------- */
+.aside {
+  position: sticky;
+  top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.toc {
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  background: #fff; /* Weiß = Mock-Wert (.toc), kein Token */
+  padding: 22px 24px;
+}
+.tocLabel {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-muted);
+  margin-bottom: 12px;
+}
+.toc a {
+  display: block;
+  font-size: 14px;
+  color: var(--gn-muted);
+  padding: 7px 0 7px 14px;
+  border-left: 2px solid var(--gn-line);
+  line-height: 1.35;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.toc a:hover {
+  color: var(--gn-navy);
+  border-color: var(--gn-signal); /* Signalgrün als Linie */
+}
+
+/* Autorenkarte in der Seitenleiste (Mock .abox) */
+.abox {
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  background: #fff; /* Weiß = Mock-Wert (.abox), kein Token */
+  padding: 22px 24px;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+.aboxFoto {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.aboxFoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.aboxName {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 16px;
+  color: var(--gn-navy);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.aboxRolle {
+  display: block;
+  font-size: 12.5px;
+  color: var(--gn-muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* Abschluss-CTA in der Seitenleiste (Mock .cta2) */
+.cta2 {
+  border-radius: var(--gn-radius-lg);
+  background: var(--gn-navy);
+  color: #fff; /* Weiß auf Navy = Mock-Wert */
+  padding: 26px 24px;
+}
+.cta2Titel {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 19px;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.cta2Text {
+  font-size: 13.5px;
+  color: var(--gn-on-dark-text);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+/* ---------- Autorenbox unter dem Text (Mock .author) ---------- */
+.author {
+  margin-top: 48px;
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  background: #fff; /* Weiß = Mock-Wert (.author), kein Token */
+  padding: 28px 30px;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.authorFoto {
+  border-radius: 8px; /* Mock-Wert (.author .ph), kein Token */
+  overflow: hidden;
+  aspect-ratio: 120 / 140; /* Höhe vorab reserviert */
+}
+.authorFoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.authorLabel {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gn-blue);
+}
+.authorName {
+  display: block;
+  font-family: var(--gn-font-display);
+  font-size: 20px;
+  color: var(--gn-navy);
+  letter-spacing: -0.025em;
+  margin: 6px 0 8px;
+  font-weight: 700;
+}
+.authorBio {
+  font-size: 14.5px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+.authorLink {
+  display: inline-flex;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+/* ---------- Weiterlesen ---------- */
+.related {
+  padding: 72px 0 120px;
+  background: var(--gn-mist);
+}
+.relatedH2 {
+  font-size: clamp(26px, 3vw, 38px);
+  letter-spacing: -0.03em;
+  margin-bottom: 36px;
+}
+
+@media (max-width: 1000px) {
+  .art {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  /* Unter 1024 px steht das Inhaltsverzeichnis ausgeklappt ÜBER dem Text
+     (Briefing 0027) – im Mock verschwand es ersatzlos (`.toc{display:none}`). */
+  .aside {
+    position: static;
+    order: -1;
+  }
+}
+@media (max-width: 620px) {
+  .cover {
+    padding: 0 20px;
+  }
+  .ahead {
+    padding: 36px 0 28px;
+  }
+  .art {
+    padding-top: 36px;
+  }
+  .body p {
+    font-size: 17px;
+  }
+  .body > p:first-child {
+    font-size: 18px;
+  }
+  .author {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 22px;
+  }
+  .authorFoto {
+    width: 110px;
+    aspect-ratio: 1 / 1;
+  }
+  .related {
+    padding: 56px 0 72px;
+  }
+}

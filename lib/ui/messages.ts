@@ -57,6 +57,28 @@ export const uiMessages = {
     action: "Noch einmal versuchen",
   },
 
+  /**
+   * Praxis (Briefing 0027, Masterplan 3.4). Leerzustände der drei Sanity-Routen.
+   * Beim Bauen ist das Dataset leer – der Leerzustand ist hier der Normalfall, nicht
+   * der Ausnahmefall. Tonalität wie überall (docs/08 §4): Sie-Form, ein Satz, Ausweg
+   * benannt, keine Technik, keine Ausrufezeichen – und **keine Ankündigung** („bald
+   * mehr", „demnächst"): wann der erste Beitrag erscheint, weiß hier niemand.
+   */
+  praxis: {
+    /** `/praxis` ohne einen einzigen veröffentlichten Artikel. */
+    leer: {
+      title: "Hier steht noch kein Beitrag",
+      body: "Sehen Sie sich so lange die Plattform an oder sprechen Sie uns direkt an.",
+      action: "Plattform ansehen",
+    },
+    /** `/praxis/thema/<slug>` – die Rubrik gibt es, sie ist nur noch leer. */
+    leerRubrik: {
+      title: "In dieser Rubrik steht noch kein Beitrag",
+      body: "In der Übersicht finden Sie alle Rubriken, in denen schon etwas steht.",
+      action: "Alle Beiträge ansehen",
+    },
+  },
+
   /** 404 – Seite nicht gefunden (not-found.tsx, Phase 3). */
   notFound: {
     title: "Diese Seite gibt es nicht",

@@ -109,10 +109,42 @@ Person aus; ein Editor sieht damit nichts, was er nicht ohnehin sehen darf.
 
 ## Rendering
 
-- Listen: `ArticleCard` (Bild 16/10, Rubrik-Chip, Titel, Excerpt, Datum, Autor).
-- Artikel: max 70ch, 17–18 px, H2 `clamp(22px,2.2vw,28px)`, Bild mit Caption, `callout` als `Hint`-Variante mit Fläche, `cta` als `Button`/`TextLink`.
-- Autorenbox unter dem Artikel; „Weitere Artikel aus <Rubrik>" (3 Karten); Abschluss-CTA zum Erstgespräch (kein Newsletter).
-- Rubrikseite: Beschreibung + Liste; Filter auf `/praxis` per Searchparam `?rubrik=<slug>` (serverseitig).
+Gebaut mit Briefing 0027 (Masterplan 3.4). Bausteine unter `components/pages/praxis/`,
+Hilfsfunktionen unter `lib/praxis/`.
+
+- **Listen** (`/praxis`, `/praxis/thema/<slug>`): `ArticleCard` (Bild 16/10 mit `aspect-ratio`,
+  Rubrik-Chip, Titel, Excerpt, Datum, Autor). Ohne `mainImage` tritt der beschriftete
+  `Shot`-Platzhalter „Bild folgt" an die Stelle des Bildes – nie Stock, nie KI, nie eine leere
+  Fläche. `ArticleGrid` staffelt die Karten einmalig ein (`viewport={{ once: true }}`).
+- **Artikel** (`/praxis/<slug>`): max **70ch**, 18 px, H2 `clamp(22px,2.2vw,28px)`, Titelbild mit
+  Bildunterschrift (sonst `Shot` „Titelbild folgt"), `callout` als Kasten mit Fläche, `cta` als
+  `Button` mit Ziel aus `lib/links.ts`. Die Abschnittsnummern „01, 02 …" kommen aus einem
+  CSS-Zähler, nicht aus dem Text.
+- **Lesezeit**: kein Schemafeld, sondern **berechnet** – Wörter des Portable Text ÷ 200,
+  aufgerundet, mindestens 1 (`lib/praxis/lesezeit.ts`). Abgeleitete Größe, keine erfundene Zahl.
+- **Inhaltsverzeichnis**: aus den `h2`-Blöcken (`lib/praxis/toc.ts`), reine Ankerlinks, ab drei
+  Überschriften. Die Sprungmarken kommen aus dem Sanity-`_key`, nicht aus dem Überschriftentext –
+  zwei gleich lautende Überschriften ergäben sonst dieselbe Marke.
+- Autorenbox unter dem Artikel („Über den Autor", LinkedIn nur wenn gesetzt); „Weiterlesen /
+  Passt dazu" aus `related`, ersatzweise bis zu drei weitere aus derselben Rubrik, sonst entfällt
+  der Block; Abschluss-CTA zum Erstgespräch (**kein Newsletter**).
+- **Rubrikseite**: H1 = Rubriktitel, darunter `category.description`, Filterleiste mit aktivem Chip.
+
+### Abweichungen von der ursprünglichen Fassung dieses Abschnitts
+
+- **Der Suchparameter `?rubrik=<slug>` entfällt.** Gefiltert wird über eigene Adressen
+  `/praxis/thema/<slug>`. Zwei Wege auf dieselbe Liste wären doppelter Inhalt, und ein Link ist
+  ohne JavaScript bedienbar. `POSTS_QUERY` nimmt den Slug weiterhin als Parameter `$rubrik`.
+- **Blättern statt Nachladen**: mehr als neun Artikel ergeben einen echten Link `?seite=2`
+  („Ältere Beiträge", `lib/praxis/blaettern.ts`), serverseitig ausgewertet.
+- **Kein Newsletter-Block** „Praxis-Post" (Entscheidung Stefan, 07.09.2026).
+- **Kein `loading.tsx`.** Eine Suspense-Grenze lässt Next die Seite streamen; ohne JavaScript
+  bliebe dann dauerhaft das Skelett stehen statt des Inhalts (gemessen 08.09.2026, siehe
+  `docs/entscheidungen.md`). `error.tsx` bleibt auf allen drei Routen.
+- **Unbekannte Slugs** fängt `proxy.ts` ab und schreibt sie auf einen Pfad ohne Route um, damit
+  Nexts eigener 404 greift – der einzige Weg, der Status 404 **und** vollständiges Server-HTML
+  liefert. Die Slug-Listen hält `lib/sanity/slugs.ts` 60 Sekunden im Speicher (der Data-Cache
+  greift im Proxy nicht). Ebenfalls in `docs/entscheidungen.md` gemessen und begründet.
 
 ## Caching und Revalidierung
 

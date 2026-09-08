@@ -1,0 +1,118 @@
+/* Portiert aus docs/design-system/mocks/3.9a-praxis-uebersicht.html
+   (.grid, .acard, .more Z.141–152) und 3.9b (.related .grid).
+
+   Zwei bewusste Änderungen gegenüber dem Mock:
+   - `.acard .ap` hatte eine feste Höhe von 190 px; hier steht `aspect-ratio: 16/10`
+     (docs/04 „Rendering", Briefing 0027). Die Höhe ist damit vor dem Laden reserviert
+     – kein CLS, egal welches Bild kommt.
+   - `.acard.hide` (Browser-Filter) entfällt: gefiltert wird über eigene Adressen.
+
+   Der Kartenradius ist der Mock-Wert `--r: 12px` = --gn-radius-lg (große Fläche);
+   Bedienelemente bleiben bei --gn-radius. */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* Zwischen Raster und Karte sitzt der Bewegungs-Wrapper (RiseItem). Er muss die
+   Rasterzelle ausfüllen, sonst wären die Karten einer Reihe unterschiedlich hoch. */
+.grid > * {
+  display: flex;
+  min-width: 0;
+}
+
+.card {
+  width: 100%;
+  background: #fff; /* Weiß = Mock-Wert (.acard), kein Token */
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition:
+    transform 0.35s var(--gn-ease),
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 70px -40px rgba(1, 65, 91, 0.45); /* Navy-Schatten, 1:1 aus Mock */
+  border-color: rgba(1, 65, 91, 0.35);
+}
+
+/* Bildfläche: Höhe über aspect-ratio reserviert (kein CLS). */
+.pic {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--gn-mist);
+  overflow: hidden;
+}
+.pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Der Shot-Platzhalter steht an Stelle der Bildfläche und bringt sein 16/10 selbst
+   mit. Ohne Rahmen und ohne eigenen Radius: die Karte hat beides schon. */
+.shot {
+  border: 0;
+  border-bottom: 1px solid var(--gn-line);
+  border-radius: 0;
+}
+
+.body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.titel {
+  font-size: 20px;
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+  margin: 12px 0 10px;
+}
+.excerpt {
+  font-size: 14px;
+  color: var(--gn-muted);
+  line-height: 1.58;
+  margin: 0 0 18px;
+}
+
+/* .more – „Ältere Beiträge" als echter Link auf ?seite=n (statt „laden"). */
+.more {
+  margin-top: 44px;
+  display: flex;
+  justify-content: center;
+}
+.moreLink {
+  display: inline-flex;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--gn-navy);
+  border: 1px solid var(--gn-navy);
+  border-radius: var(--gn-radius);
+  padding: 13px 26px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.moreLink:hover {
+  background: var(--gn-navy);
+  color: #fff; /* Weiß = Mock-Wert (.more a:hover), kein Token */
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

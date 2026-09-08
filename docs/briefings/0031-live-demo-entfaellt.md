@@ -118,8 +118,8 @@ Nichtnutzung entfernt. Im `_bausteine`-Katalog bleibt sie sichtbar, mit neutrale
   `resolveCta` ein unbekanntes Ziel nicht stillschweigend auf `#` abbiegt.
 - `config/site-structure.ts:229` – der CTA-Eintrag `liveDemo` entfällt.
 - `components/pages/praxis/PortableTextRenderer.tsx:23–24` – `case "livedemo"` entfällt.
-- `.env.example` – `NEXT_PUBLIC_LIVE_DEMO_URL` entfällt. **Hinweis an Stefan:** Die Variable in
-  Vercel löschen, falls gesetzt (siehe „Offene Fragen").
+- `.env.example` – `NEXT_PUBLIC_LIVE_DEMO_URL` entfällt. **In Vercel war sie nie gesetzt** (Stefan,
+  08.09.2026 geprüft) – dort ist nichts zu tun.
 
 ### F · Sanity-Schema
 
@@ -199,8 +199,6 @@ Branch `feat/live-demo-entfaellt`, PR nach `.github/pull_request_template.md`, C
 
 ## Offene Fragen an Stefan
 
-- Ist `NEXT_PUBLIC_LIVE_DEMO_URL` in Vercel gesetzt? Falls ja, dort löschen – sonst zeigt sie ins
-  Nichts. Im Code ist sie nach diesem Schritt wirkungslos.
 - Der Abschnittstext auf `/kontakt` („Nicht jeder schreibt gern ein Formular.") bleibt wortgleich,
   obwohl darunter nur noch zwei Wege stehen. Wenn dir das schief vorkommt, brauchen wir eine
   freigegebene Neufassung – die erfindet niemand nebenbei.

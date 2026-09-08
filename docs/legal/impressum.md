@@ -4,7 +4,12 @@
 > aktuelle Rechtslage angepasst: Das TMG ist seit 14.05.2024 durch das Digitale-Dienste-Gesetz (DDG) ersetzt; die
 > Haftungshinweise verweisen deshalb auf §§ 5, 7–10 DDG. Der Abschnitt „Verantwortlich für journalistisch-redaktionelle
 > Inhalte" ist neu, weil die Website mit dem Ratgeber redaktionelle Inhalte veröffentlicht (§ 18 Abs. 2 MStV).
-> Stellen in `[[…]]` bitte klären, bevor die Seite live geht.
+>
+> **Umsatzsteuer (Entscheidung Stefan, 07.09.2026):** Der Absatz entfällt. Die im alten Impressum als
+> „Umsatzsteuer-Identifikationsnummer" geführte Angabe `DE 26 / 118 / 04502` ist eine **Steuernummer** (Schema
+> Finanzamt Hannover), keine USt-IdNr. – eine USt-IdNr. hat die Form `DE` + neun Ziffern. § 5 DDG verlangt die
+> USt-IdNr. nur, **sofern vorhanden**; eine Steuernummer muss nicht genannt werden und wird bewusst nicht
+> veröffentlicht. Sollte eine echte USt-IdNr. existieren, gehört sie hier ergänzt.
 
 ---
 
@@ -19,15 +24,6 @@ Richartzstraße 10
 
 Telefon: 0175 5951839
 E-Mail: info@golfnext.de
-
-## Umsatzsteuer
-
-[[ **Prüfen:** Im bisherigen Impressum steht „Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 26 / 118 / 04502".
-Das Format `26/118/04502` ist eine **Steuernummer** (Finanzamt Hannover), keine USt-IdNr. – eine USt-IdNr. hat die Form `DE` plus neun Ziffern.
-Entweder die tatsächliche USt-IdNr. eintragen oder den Absatz auf „Steuernummer: 26/118/04502" ändern. Eine Steuernummer muss im Impressum
-nicht genannt werden; eine USt-IdNr. muss, sofern vorhanden. ]]
-
-Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [[ DE… ]]
 
 ## Verantwortlich für journalistisch-redaktionelle Inhalte (§ 18 Abs. 2 MStV)
 
@@ -63,8 +59,3 @@ Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Se
 Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet.
 Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden,
 bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
-
----
-
-> **Interner Vermerk:** Die Marke und Firmierung erscheinen auf der Website als „GolfNext" (ohne „Consulting", Entscheidung Kapitel 2.1).
-> Falls die gewerbliche Anmeldung auf „GolfNext Consulting" lautet, gehört diese Bezeichnung ins Impressum – bitte prüfen [[ Firmierung laut Gewerbeanmeldung ]].

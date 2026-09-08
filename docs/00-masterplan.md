@@ -130,7 +130,7 @@ Details `docs/07-seo.md`.
 
 - [ ] **7.1 Inhalte final.** Alle `Shot`-Platzhalter durch echte Screenshots ersetzt oder Fläche entfernt **[F]**; Porträts eingesetzt (05.09.2026); ~~Partnerlogos mit Freigabe~~ **erledigt am 07.09.2026** – fünf freigegebene Clublogos auf `/ueber-golfnext`, Platzhalter-Kacheln und der Vermerk „Logos und Freigaben…" entfallen; interne Platzhalter-Hinweise entfernt.
 - [ ] **7.2 QA komplett** über alle Routen (`qa-runner`, `text-fidelity`, `design-system-guard`, `seo-auditor` je Route), Lighthouse ≥ 95 mobil, Barrierefreiheit manuell: Tastatur durch Header, Akkordeons, Consent-Dialog; Screenreader-Labels der Icon-Links.
-- [ ] **7.3 Rechtsprüfung** Impressum/Datenschutz durch Fachpartner (im Über-GolfNext-Briefing erwähnt) **[F]**.
+- [x] ~~**7.3 Rechtsprüfung** Impressum/Datenschutz durch Fachpartner~~ **entfällt** (Entscheidung Stefan, 07.09.2026). Eine externe juristische Prüfung findet nicht statt; Verantwortung für Inhalt und Freigabe tragen Stefan und Fred. Beide Texte sind seit 07.09.2026 vollständig (`docs/legal/`, keine offenen `[[ … ]]`-Stellen); gebaut werden sie mit Briefing 0028.
 - [ ] **7.4 Domain.** `www.golfnext.de` und `golfnext.de` in Vercel, DNS umstellen, HTTPS, Redirect apex → www (oder umgekehrt, festlegen **[S]**). Alte Website erst abschalten, wenn Redirects getestet sind.
 - [ ] **7.5 Nach Launch.** Search Console (Sitemap einreichen), Vercel Analytics prüfen, Formular-Testmail, Consent-Dialog auf Smartphone testen, Monitoring der 404s in der ersten Woche.
 

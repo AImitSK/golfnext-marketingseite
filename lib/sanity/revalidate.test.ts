@@ -35,13 +35,19 @@ async function signierteAnfrage(payload: unknown, secret = SECRET): Promise<Requ
 describe("POST /api/revalidate", () => {
   const secretVorher = process.env.SANITY_REVALIDATE_SECRET;
 
+  /** Alles, was die Route geloggt hat – für die Prüfung „nichts Vertrauliches im Log". */
+  let geloggt: unknown[][] = [];
+
   beforeEach(() => {
     revalidateTag.mockClear();
     revalidatePath.mockClear();
-    // Log-Ausgaben gehören zur Route, nicht in die Testausgabe.
-    vi.spyOn(console, "info").mockImplementation(() => {});
-    vi.spyOn(console, "warn").mockImplementation(() => {});
-    vi.spyOn(console, "error").mockImplementation(() => {});
+    geloggt = [];
+    // Log-Ausgaben gehören zur Route, nicht in die Testausgabe – mitgeschrieben
+    // werden sie trotzdem, damit ihr Inhalt prüfbar bleibt.
+    const mitschreiben = (...args: unknown[]) => void geloggt.push(args);
+    vi.spyOn(console, "info").mockImplementation(mitschreiben);
+    vi.spyOn(console, "warn").mockImplementation(mitschreiben);
+    vi.spyOn(console, "error").mockImplementation(mitschreiben);
     process.env.SANITY_REVALIDATE_SECRET = SECRET;
   });
 
@@ -171,6 +177,40 @@ describe("POST /api/revalidate", () => {
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ revalidated: false });
     expect(revalidateTag).not.toHaveBeenCalled();
+  });
+
+  it("schreibt weder Secret noch Signatur noch Nutzlast ins Log", async () => {
+    const { POST } = await import("./revalidate");
+
+    // Alle vier Log-Wege durchlaufen: angenommen, übersprungen, abgelehnt (falsche
+    // Signatur) und abgelehnt (kein Secret in der Umgebung).
+    const email = "fred.hoffmann@example.org";
+    const nutzlast = { _type: "author", slug: "fred-hoffmann", email };
+    const signatur = await encodeSignatureHeader(JSON.stringify(nutzlast), Date.now(), SECRET);
+
+    await POST(await signierteAnfrage(nutzlast));
+    await POST(await signierteAnfrage({ _type: "irgendwasNeues", email }));
+    await POST(await signierteAnfrage(nutzlast, "ein-anderes-secret"));
+    delete process.env.SANITY_REVALIDATE_SECRET;
+    await POST(await signierteAnfrage(nutzlast));
+
+    expect(geloggt.length).toBe(4);
+
+    const alles = geloggt.flat().join(" | ");
+    expect(alles).not.toContain(SECRET);
+    expect(alles).not.toContain(signatur);
+    expect(alles).not.toContain(email);
+    expect(alles).not.toContain(JSON.stringify(nutzlast));
+    // Auch kein Slug: Er gehört zum Inhalt, nicht zum Betriebsstatus.
+    expect(alles).not.toContain("fred-hoffmann");
+
+    // Geloggt wird ausschließlich der Status – mit Typ und Marke, sonst nichts.
+    expect(geloggt.map(([status]) => status)).toEqual([
+      "revalidate.ok",
+      "revalidate.skipped",
+      "revalidate.rejected",
+      "revalidate.rejected",
+    ]);
   });
 
   it("gibt weder Secret noch Signatur in einer Antwort preis", async () => {

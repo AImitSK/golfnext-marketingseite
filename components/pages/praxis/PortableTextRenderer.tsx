@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import { portableLink } from "@/components/sanity/PortableLink";
 import { Button } from "@/components/ui/Button";
 import { praxisCalloutLabels } from "@/content/praxis";
 import { bookingUrl } from "@/lib/links";
@@ -61,21 +62,9 @@ const components: PortableTextComponents = {
     blockquote: ({ children }) => <blockquote className={styles.pull}>{children}</blockquote>,
   },
 
-  marks: {
-    link: ({ value, children }) => {
-      const href: string = value?.href ?? "";
-      const extern = /^https?:\/\//i.test(href);
-      return (
-        <a
-          href={href}
-          {...(extern ? { rel: "noopener noreferrer" } : {})}
-          {...(value?.openInNewTab ? { target: "_blank" } : {})}
-        >
-          {children}
-        </a>
-      );
-    },
-  },
+  // Link-Behandlung geteilt mit dem FAQ-Renderer (`components/sanity/PortableLink`),
+  // damit die `rel`-Regel nicht in zwei Fassungen auseinanderläuft (Briefing 0030).
+  marks: { link: portableLink },
 
   types: {
     inlineImage: ({ value }) => {

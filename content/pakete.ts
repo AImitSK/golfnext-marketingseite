@@ -7,6 +7,11 @@ import type { Cta, PageContent } from "./types";
  * Wortlaut NICHT ändern. Preise werden auf der Seite NIE addiert – Sockel und
  * Modulblock stehen durch ein Pluszeichen getrennt untereinander (keine Summe).
  * Änderungen nur nach neuem Briefing von Fred / Freigabe Stefan.
+ *
+ * **Die FAQ steht seit Briefing 0030 nicht mehr hier.** Fragen und Antworten liegen
+ * in Sanity (`faq`, `topic: "pakete"`, Reihenfolge über `order`); `paketeFaq` und
+ * `FaqEntryData` sind gelöscht und kommen nicht zurück – auch nicht als Rückfall.
+ * Der Sektionskopf der FAQ (Eyebrow, Überschrift) bleibt hier, er ist Seitentext.
  */
 
 /** Eine Ausbaustufe im Hero-„Rückgrat"-Stapel. */
@@ -102,11 +107,6 @@ export interface VergleichData {
   columns: string[];
   groups: CmpGroup[];
   note: string;
-}
-
-export interface FaqEntryData {
-  question: string;
-  answer: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -351,44 +351,6 @@ export const paketeVergleich: VergleichData = {
   ],
   note: "Alle Preise netto zuzüglich der gesetzlichen Umsatzsteuer. Das Werbebudget wird separat vom Club festgelegt; darauf fallen 10 % Verwaltungshonorar an.",
 };
-
-export const paketeFaq: FaqEntryData[] = [
-  {
-    question: "Können wir nur die Website buchen?",
-    answer:
-      "Ja. Die Clubwebsite ist einzeln buchbar – für 6.800 € einmalig und 238 € monatlich für Betrieb und Support. Module lassen sich später jederzeit ergänzen, ohne dass die Website neu gebaut werden muss.",
-  },
-  {
-    question: "Können wir später in eine größere Ausbaustufe wechseln?",
-    answer:
-      "Ja. Alle Stufen laufen auf derselben GolfNext-Plattform. Es kommt jeweils nur der zusätzliche Modulblock hinzu, der bestehende Auftritt bleibt bestehen.",
-  },
-  {
-    question: "Warum gibt es eine einmalige Einrichtung und eine monatliche Gebühr?",
-    answer:
-      "Die Einrichtung deckt den individuellen Aufbau ab: Strategie, Design, Website, Inhalte, Module und Go-live. Die monatliche Gebühr deckt den laufenden Betrieb: Hosting, Systempflege, Updates, Weiterentwicklung und Support.",
-  },
-  {
-    question: "Warum läuft die monatliche Gebühr ganzjährig?",
-    answer:
-      "Website, Concierge, Marketing-CRM, Lifecycle und Clubprozesse bleiben ganzjährig aktiv. Auch saisonale Kampagnen brauchen ein System, das dauerhaft verfügbar ist und in das neue Kontakte geführt werden können.",
-  },
-  {
-    question: "Ist das Werbebudget in den Preisen enthalten?",
-    answer:
-      "Nein. Das Mediabudget legt Ihr Club selbst fest und es fließt direkt in die Werbekanäle. GolfNext berechnet darauf 10 % Verwaltungshonorar für Einrichtung, Steuerung und Auswertung der Kampagnen. Dadurch bleibt transparent, welcher Betrag in die Plattform und welcher in die Medienausspielung geht.",
-  },
-  {
-    question: "Was bedeutet ein Kampagnen-Slot?",
-    answer:
-      "Ein Kampagnen-Slot ist ein vereinbarter, aktiv betreuter Kampagnenschwerpunkt – etwa Schnuppergolf, Platzreife, Mitgliedschaft, Greenfee oder Firmen-Events. Laufzeit, Kanal und Werbebudget werden passend zum jeweiligen Ziel geplant.",
-  },
-  {
-    question: "Ersetzt GolfNext unsere Clubverwaltungssoftware?",
-    answer:
-      "Nein. GolfNext ergänzt bestehende Systeme dort, wo digitales Marketing, Interessentenführung, Kommunikation und ausgewählte Clubprozesse verbunden werden sollen.",
-  },
-];
 
 /**
  * Zusammengesetzter Seiteninhalt nach PageContent. Die Sektionsdaten hängen an

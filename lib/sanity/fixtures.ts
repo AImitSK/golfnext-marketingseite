@@ -1,6 +1,7 @@
 import type {
   BlockContent,
   CATEGORIES_WITH_COUNT_QUERY_RESULT,
+  FAQS_BY_TOPIC_QUERY_RESULT,
   POSTS_QUERY_RESULT,
   POST_BY_SLUG_QUERY_RESULT,
 } from "@/sanity.types";
@@ -33,10 +34,18 @@ import type {
  *   Artikel welchen Autor hat, sagen `FIXTURE_ARTIKEL_AUTOR_MIT_BILD` und
  *   `FIXTURE_ARTIKEL_AUTOR_OHNE_BILD`.
  *
+ * - **drei FAQs zum Thema `pakete`** (Briefing 0030). Sie stehen hier **absichtlich in
+ *   falscher Reihenfolge** im Array – geordnet wird nach `order`, wie in GROQ. Die
+ *   zweite Antwort trägt `strong`, einen internen und einen externen Link sowie einen
+ *   zweiten Absatz; damit ist alles abgedeckt, was `simpleBlockContent` zulässt. **Der
+ *   Wortlaut der sieben echten Pakete-FAQs steht bewusst NICHT hier** – er liegt in
+ *   Sanity und nirgends sonst.
+ *
  * Daneben gibt es den **leeren Bestand** `SANITY_SOURCE=fixtures-leer` (Briefing
- * 0029): dieselben Rubriken, aber kein einziger Artikel. Er prüft die Seiten in dem
- * Zustand, in dem sie beim Abnehmen stehen – und damit, dass die Artikel-Teaser auf
- * `/` und `/ueber-golfnext` ohne Artikel vollständig entfallen.
+ * 0029): dieselben Rubriken, aber kein einziger Artikel und (seit Briefing 0030) auch
+ * keine FAQ. Er prüft die Seiten in dem Zustand, in dem sie beim Abnehmen stehen – und
+ * damit, dass die Artikel-Teaser auf `/` und `/ueber-golfnext` ohne Artikel und der
+ * FAQ-Abschnitt auf `/pakete` ohne FAQs vollständig entfallen.
  */
 
 /**
@@ -55,8 +64,12 @@ export function fixturesAktiv(): boolean {
   );
 }
 
-/** Testbestand ohne Artikel (`SANITY_SOURCE=fixtures-leer`). */
-function ohneArtikel(): boolean {
+/**
+ * Der leere Testbestand (`SANITY_SOURCE=fixtures-leer`): kein Artikel und **keine
+ * FAQ** – das Studio, wie es beim Abnehmen dasteht. Seit Briefing 0030 hängt auch
+ * der FAQ-Abschnitt auf `/pakete` daran; ohne FAQs muss er vollständig entfallen.
+ */
+function leererBestand(): boolean {
   return process.env.SANITY_SOURCE === "fixtures-leer";
 }
 
@@ -234,12 +247,117 @@ const RUBRIKEN: CATEGORIES_WITH_COUNT_QUERY_RESULT = FIXTURE_RUBRIKEN.map((r, i)
 }));
 
 /**
+ * FAQ-Testdaten zum Thema `pakete` (Briefing 0030, Aufgabe 5).
+ *
+ * **Absichtlich in falscher Reihenfolge** notiert (3, 1, 2): Die Seite zeigt sie nach
+ * `order` – genau das prüft `tests/e2e/pakete.spec.ts`. Käme die Reihenfolge aus dem
+ * Array, fiele der Test durch, und das soll er.
+ *
+ * Kein Websiteinhalt: erkennbare Platzhalter. Der Wortlaut der sieben echten
+ * Pakete-FAQs liegt in Sanity und wird hier nicht wiederholt – eine zweite Fassung
+ * im Repo ist genau das, was Briefing 0030 beendet.
+ */
+const FAQS: FAQS_BY_TOPIC_QUERY_RESULT = [
+  {
+    _id: "faq-fixture-3",
+    question: "Beispielfrage 3 als Platzhalter?",
+    topic: "pakete",
+    order: 3,
+    answer: [
+      {
+        _type: "block",
+        _key: "f3",
+        style: "normal",
+        markDefs: [],
+        children: [{ _type: "span", _key: "f3-s", marks: [], text: "Platzhalterantwort drei." }],
+      },
+    ],
+  },
+  {
+    _id: "faq-fixture-1",
+    question: "Beispielfrage 1 als Platzhalter?",
+    topic: "pakete",
+    order: 1,
+    answer: [
+      {
+        _type: "block",
+        _key: "f1",
+        style: "normal",
+        markDefs: [],
+        children: [{ _type: "span", _key: "f1-s", marks: [], text: "Platzhalterantwort eins." }],
+      },
+    ],
+  },
+  {
+    // Deckt alles ab, was `simpleBlockContent` zulässt: `strong`, ein interner und ein
+    // externer Link (der externe muss `rel="noopener noreferrer"` bekommen) und ein
+    // zweiter Absatz.
+    _id: "faq-fixture-2",
+    question: "Beispielfrage 2 als Platzhalter?",
+    topic: "pakete",
+    order: 2,
+    answer: [
+      {
+        _type: "block",
+        _key: "f2",
+        style: "normal",
+        markDefs: [
+          { _type: "link", _key: "f2-intern", href: "/pakete" },
+          { _type: "link", _key: "f2-extern", href: "https://example.org", openInNewTab: true },
+        ],
+        children: [
+          { _type: "span", _key: "f2-a", marks: ["strong"], text: "Fett hervorgehoben." },
+          { _type: "span", _key: "f2-b", marks: [], text: " Platzhalterantwort zwei mit " },
+          { _type: "span", _key: "f2-c", marks: ["f2-intern"], text: "internem Link" },
+          { _type: "span", _key: "f2-d", marks: [], text: " und " },
+          { _type: "span", _key: "f2-e", marks: ["f2-extern"], text: "externem Link" },
+          { _type: "span", _key: "f2-f", marks: [], text: "." },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "f2b",
+        style: "normal",
+        markDefs: [],
+        children: [
+          { _type: "span", _key: "f2b-s", marks: [], text: "Zweiter Absatz derselben Antwort." },
+        ],
+      },
+    ],
+  },
+];
+
+/** Die Test-FAQs in der Reihenfolge, in der `/pakete` sie zeigen muss (nach `order`). */
+const FAQS_NACH_ORDER = [...FAQS].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+/** Fragen des Themas `pakete`, nach `order` – die erwartete Reihenfolge auf der Seite. */
+export const FIXTURE_FAQ_FRAGEN = FAQS_NACH_ORDER.map((f) => f.question);
+
+/**
+ * Die Antworten als sichtbarer Text, ein Eintrag je Absatz, in derselben Reihenfolge
+ * wie `FIXTURE_FAQ_FRAGEN` – so, wie sie im Browser zu lesen sind.
+ */
+export const FIXTURE_FAQ_ANTWORTEN = FAQS_NACH_ORDER.map((f) =>
+  f.answer.map((block) => (block.children ?? []).map((span) => span.text ?? "").join("")),
+);
+
+/**
+ * Dieselben Antworten, aber in ihren einzelnen Textstücken (Spans). Im HTML stehen
+ * ausgezeichnete Stellen in eigenen Elementen (`<strong>`, `<a>`) – ein Absatz ist dort
+ * also kein zusammenhängender Textblock. Für die Prüfung „steht im Server-HTML" ist
+ * deshalb das Stück die richtige Einheit, nicht der Absatz.
+ */
+export const FIXTURE_FAQ_ANTWORT_TEILE = FAQS_NACH_ORDER.flatMap((f) =>
+  f.answer.flatMap((block) => (block.children ?? []).map((span) => span.text ?? "")),
+);
+
+/**
  * Slug-Listen für den Proxy (`lib/sanity/slugs.ts`). Im leeren Bestand gibt es keine
  * Artikel – die Rubriken bleiben, sie stehen im Studio unabhängig von Artikeln.
  */
 export function fixtureSlugs() {
   return {
-    artikel: ohneArtikel() ? [] : Object.keys(ARTIKEL),
+    artikel: leererBestand() ? [] : Object.keys(ARTIKEL),
     rubriken: FIXTURE_RUBRIKEN.map((r) => r.slug),
   };
 }
@@ -247,10 +365,21 @@ export function fixtureSlugs() {
 /**
  * Antwort auf eine Abfrage. Erkannt wird sie am Abfragetext – die Abfragen liegen als
  * Zeichenketten vor, ein Vergleich auf ihre kennzeichnenden Bestandteile genügt.
- * Unbekannte Abfragen liefern `null`; die Praxis-Routen stellen keine anderen.
+ * Unbekannte Abfragen liefern `null`; die Praxis-Routen und `/pakete` stellen keine
+ * anderen.
  */
 export function fixtureFuer(query: string, params?: Record<string, unknown>): unknown {
-  const leer = ohneArtikel();
+  const leer = leererBestand();
+
+  if (query.includes('_type == "faq"')) {
+    if (leer) return [];
+    // Sortierung wie in GROQ (`order asc, question asc`) – im Testbestand liegen die
+    // Fragen absichtlich unsortiert, damit die Reihenfolge geprüft wird und nicht
+    // zufällig stimmt.
+    return FAQS.filter((f) => f.topic === params?.topic).sort(
+      (a, b) => (a.order ?? 0) - (b.order ?? 0) || a.question.localeCompare(b.question),
+    );
+  }
 
   if (query.includes('_type == "category"')) {
     return leer ? RUBRIKEN.map((r) => ({ ...r, anzahl: 0 })) : RUBRIKEN;

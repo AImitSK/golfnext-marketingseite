@@ -222,6 +222,12 @@ export const ROUTES: Route[] = [
   // Rechtsseiten müssen auffindbar sein.
   { path: "/impressum", label: "Impressum", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Impressum – GolfNext", description: null, noindex: false, redirectsFrom: ["/impressum/"] },
   { path: "/datenschutz", label: "Datenschutz", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Datenschutzerklärung – GolfNext", description: null },
+  // Bestätigungsseite nach einer erfolgreichen Formularanfrage (Briefing 0033,
+  // Masterplan 5.4). `system`, weil sie nie in Navigation, Sitemap oder einen
+  // Teaser gehört: Man kommt nur über das gesendete Formular hierher. `noindex`,
+  // weil eine indexierte Danke-Seite die Conversion-Messung verfälscht und in
+  // keinem Suchergebnis etwas zu suchen hat (docs/09).
+  { path: "/danke", label: "Danke", status: "system", briefing: "briefings/0033-consent-und-tracking.md", title: null, description: null, noindex: true },
   { path: "/studio", label: "Studio", status: "system", title: null, description: null, noindex: true },
 ];
 

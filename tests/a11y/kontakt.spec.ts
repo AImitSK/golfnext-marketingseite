@@ -21,6 +21,13 @@ test("/kontakt bleibt im Fehlerzustand barrierefrei", async ({ page }) => {
   await page.getByRole("button", { name: /Nachricht senden/ }).click();
   await expect(page.getByText(formMessages.form.invalid, { exact: true })).toBeVisible();
 
+  // Erst messen, wenn der Ladezustand des Buttons wirklich vorbei ist: Die
+  // Mindestanzeige (400 ms, docs/08 §2) kann die Antwort überdauern. Im
+  // Ladezustand liegt Navy halbdurchsichtig über der grünen Fläche – axe meldet
+  // dann einen Kontrastfehler, den es im Endzustand nicht gibt.
+  const senden = page.getByRole("button", { name: /Nachricht senden/ });
+  await expect(senden).not.toHaveAttribute("aria-busy", "true");
+
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze();
   expect(results.violations).toEqual([]);
 });

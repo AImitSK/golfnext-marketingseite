@@ -8,8 +8,10 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Standard-Ignores von eslint-config-next
     ".next/**",
-    // Zweiter Testbuild (Briefing 0029, scripts/build-e2e.mjs) – erzeugter Code
+    // Zweiter und dritter Testbuild (Briefing 0029/0033, scripts/build-e2e.mjs) –
+    // erzeugter Code
     ".next-leer/**",
+    ".next-gtm/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
@@ -19,6 +21,8 @@ const eslintConfig = defineConfig([
     "Template/**",
     "playwright-report/**",
     "test-results/**",
+    // Vorentschiedener Einwilligungs-Zustand für Playwright (Briefing 0033)
+    "tests/.state/**",
     // Agenten-Arbeitsbereich: `.claude/worktrees/<branch>` ist eine vollständige
     // zweite Kopie des Repos (git worktree). Sie hier mitzulinten meldet dieselben
     // Dateien doppelt und lässt `pnpm lint` an fremden Branches scheitern.

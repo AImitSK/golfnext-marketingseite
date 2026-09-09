@@ -26,6 +26,25 @@ export function internalHref(path: string): string {
   return isLinkable(path) ? path : "#";
 }
 
+/**
+ * Props für einen CTA-Link: das aufgelöste Ziel plus die Markierung, an der das
+ * Ereignis `cta_erstgespraech_click` hängt (docs/09-tracking-plan.md).
+ *
+ * Warum eine Markierung statt eines `onClick`: Der Erstgespräch-CTA steht in
+ * Header, Heroes, Paketkarten und Footer – alles Server-Komponenten. Ein Handler
+ * an jeder Stelle würde sie alle in den Browser ziehen. Stattdessen liest ein
+ * einziger Zuhörer am Dokument die Markierung (`components/site/CtaTracking.tsx`).
+ *
+ * Auf die Seite kommt das Attribut nur bei `target: "erstgespraech"`; ohne
+ * Einwilligung passiert beim Klick trotzdem nichts (`lib/tracking/events.ts`).
+ */
+export function ctaLinkProps(cta: Cta): { href: string; "data-gn-cta"?: string } {
+  return {
+    href: resolveCta(cta),
+    ...(cta.target === "erstgespraech" ? { "data-gn-cta": "erstgespraech" } : {}),
+  };
+}
+
 /** Löst das Ziel eines CTA aus content/<seite>.ts in eine URL auf. */
 export function resolveCta(cta: Cta): string {
   switch (cta.target) {

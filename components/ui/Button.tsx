@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Cta } from "@/content/types";
-import { resolveCta } from "@/lib/links";
+import { ctaLinkProps } from "@/lib/links";
 import { uiMessages } from "@/lib/ui/messages";
 import styles from "./Button.module.css";
 
@@ -126,10 +126,12 @@ export function Button({
 
   // Ein Link kann nicht „deaktiviert" oder „ladend" sein – diese Zustände gehören
   // Aktionen (<button>). Bei href/cta rendern wir daher immer den Link ohne Zustand.
-  const resolvedHref = cta ? resolveCta(cta) : href;
-  if (resolvedHref !== undefined) {
+  // `ctaLinkProps` liefert neben dem Ziel die Markierung für das Ereignis
+  // `cta_erstgespraech_click` (docs/09); ein einfacher `href` trägt sie nicht.
+  const linkProps = cta ? ctaLinkProps(cta) : href !== undefined ? { href } : undefined;
+  if (linkProps) {
     return (
-      <a href={resolvedHref} className={classes}>
+      <a {...linkProps} className={classes}>
         {content}
       </a>
     );

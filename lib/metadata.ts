@@ -9,8 +9,14 @@ import { ROUTES, type Route } from "@/config/site-structure";
  * - `title`: der Wert aus den „Technischen Seitenangaben" des Briefings; steht dort
  *   `null`, greift das Navigations-`label` (Template `%s | GolfNext` aus
  *   `app/layout.tsx`).
- * - `description`: nur, wenn sie in site-structure steht – sonst gar keine. Eine
- *   Route ohne Angabe bekommt hier keine erfundene.
+ * - `description`: nur, wenn sie in site-structure steht. Eine Route ohne Angabe
+ *   bekommt hier **keine erfundene** – sie erbt die allgemeine Beschreibung der
+ *   Website aus `app/layout.tsx` („Marketing und Automation als Software-Layer für
+ *   Golfanlagen."). Das ist gewollt und nicht dasselbe wie „keine Beschreibung":
+ *   Ein leeres `content=""` wäre schlechter als ein wahrer, allgemeiner Satz, und
+ *   erfunden ist daran nichts. Betroffen sind heute `/impressum` und
+ *   `/datenschutz`; kommt für sie ein freigegebener Text, gehört er nach
+ *   site-structure.
  * - `alternates.canonical`: der Pfad der Route; `metadataBase` steht im Root-Layout.
  * - `openGraph`/`twitter`: aus **denselben** Feldern, damit ein geteilter Link
  *   nichts anderes behauptet als das Suchergebnis.
@@ -55,7 +61,7 @@ export function routeTitle(path: string): string {
  * entfällt, wo der Titel die Marke schon trägt („Impressum – GolfNext") – sonst
  * stünde sie zweimal im Tab und im Suchergebnis.
  */
-export function vollerTitel(titel: string): string {
+function vollerTitel(titel: string): string {
   return titel.includes(MARKE) ? titel : `${titel} | ${MARKE}`;
 }
 

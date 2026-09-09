@@ -62,15 +62,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(new URL(KEINE_ROUTE, request.url));
   }
 
-  // Metadata-Routen (das OG-Bild der Übersicht) durchlassen – sie sind kein Artikel.
-  if (artikel && METADATA_ROUTE.test(artikel[1]!)) return NextResponse.next();
-
   const slugs = await praxisSlugs();
   if (!slugs) return NextResponse.next();
 
   const gesucht = (rubrik?.[1] ?? artikel?.[1])!;
   const bekannt = rubrik ? slugs.rubriken : slugs.artikel;
   if (bekannt.includes(gesucht)) return NextResponse.next();
+
+  // Erst wenn es den Slug nicht gibt, kommt die Metadata-Route infrage. Diese
+  // Reihenfolge ist Absicht: Ein echter Artikel „icon-tricks-fuer-die-website" darf
+  // nicht deshalb durchgewinkt werden, weil sein Slug wie eine Metadata-Route beginnt.
+  if (artikel && METADATA_ROUTE.test(gesucht)) return NextResponse.next();
 
   return NextResponse.rewrite(new URL(KEINE_ROUTE, request.url));
 }

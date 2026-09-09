@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { ROUTES } from "../../config/site-structure";
+import { OHNE_ARTIKEL_URL } from "../../playwright.config";
 
 /**
  * Metadata, Sitemap, robots und strukturierte Daten (Briefing 0034,
@@ -60,13 +61,14 @@ test.describe("SEO · Metadata je Route", () => {
       // Genau eine H1 – JSON-LD ändert daran nichts.
       await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
 
-      // Beschreibung: nur dort erwartet, wo site-structure eine führt. Fehlt sie
-      // dort, ist das eine offene Angabe und kein Fehler – erfunden wird keine.
+      // Beschreibung: wo site-structure eine führt, steht genau diese. Wo nicht
+      // (`/impressum`, `/datenschutz`), erbt die Seite die allgemeine Beschreibung
+      // der Website aus dem Root-Layout – gewollt, und nichts Erfundenes. Leer darf
+      // sie in keinem Fall sein.
+      const beschreibung = await metaInhalt(page, 'meta[name="description"]');
+      expect(beschreibung, `Beschreibung von ${route.path}`).toBeTruthy();
       if (route.description) {
-        expect(
-          await metaInhalt(page, 'meta[name="description"]'),
-          `Beschreibung von ${route.path}`,
-        ).toBe(route.description);
+        expect(beschreibung, `Beschreibung von ${route.path}`).toBe(route.description);
       }
 
       // Kein `noindex` auf einer Route, die in den Index gehört.
@@ -159,21 +161,26 @@ test.describe("SEO · Sitemap und robots", () => {
 test.describe("SEO · Strukturierte Daten", () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) !== 1440, "SEO ist breitenunabhängig");
 
-  test("Organization liegt als gültiges JSON-LD auf jeder Seite", async ({ page }) => {
-    await page.goto("/");
-    const daten = await strukturierteDaten(page);
-    const organisation = daten.find((d) => d["@type"] === "Organization");
+  // Das Markup sitzt im Layout der Gruppe `(site)` und muss deshalb auf jeder Seite
+  // stehen – geprüft an drei verschiedenen Arten von Seite: der Startseite, einer
+  // Rechtsseite und einer Seite aus Sanity.
+  for (const pfad of ["/", "/impressum", "/praxis"]) {
+    test(`Organization liegt als gültiges JSON-LD auf ${pfad}`, async ({ page }) => {
+      await page.goto(pfad);
+      const daten = await strukturierteDaten(page);
+      const organisation = daten.find((d) => d["@type"] === "Organization");
 
-    expect(organisation, "Organization fehlt").toBeTruthy();
-    expect(organisation!.name).toBe("GolfNext");
-    expect(organisation!.founder).toMatchObject({ name: "Fred Hoffmann" });
-    expect(organisation!.address).toMatchObject({ addressLocality: "Hannover" });
+      expect(organisation, `Organization fehlt auf ${pfad}`).toBeTruthy();
+      expect(organisation!.name).toBe("GolfNext");
+      expect(organisation!.founder).toMatchObject({ name: "Fred Hoffmann" });
+      expect(organisation!.address).toMatchObject({ addressLocality: "Hannover" });
 
-    // Nichts Erfundenes: keine Bewertungen, keine Preise, keine Öffnungszeiten.
-    for (const verboten of ["aggregateRating", "review", "priceRange", "openingHours"]) {
-      expect(organisation, `${verboten} im Organization-Markup`).not.toHaveProperty(verboten);
-    }
-  });
+      // Nichts Erfundenes: keine Bewertungen, keine Preise, keine Öffnungszeiten.
+      for (const verboten of ["aggregateRating", "review", "priceRange", "openingHours"]) {
+        expect(organisation, `${verboten} im Organization-Markup`).not.toHaveProperty(verboten);
+      }
+    });
+  }
 
   test("FAQPage auf /pakete kommt aus denselben Fragen wie der sichtbare Abschnitt", async ({
     page,
@@ -209,12 +216,55 @@ test.describe("SEO · Strukturierte Daten", () => {
   });
 
   test("JSON-LD steht im Server-HTML – auch ohne JavaScript", async ({ request }) => {
-    const html = await (await request.get("/pakete")).text();
-    const bloecke = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    for (const [pfad, mindestens] of [
+      ["/pakete", 2],
+      ["/impressum", 1],
+    ] as const) {
+      const html = await (await request.get(pfad)).text();
+      const bloecke = [
+        ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g),
+      ];
 
-    expect(bloecke.length, "kein JSON-LD im Server-HTML").toBeGreaterThanOrEqual(2);
-    for (const [, inhalt] of bloecke) {
-      expect(() => JSON.parse(inhalt!)).not.toThrow();
+      expect(bloecke.length, `kein JSON-LD im Server-HTML von ${pfad}`).toBeGreaterThanOrEqual(
+        mindestens,
+      );
+      for (const [, inhalt] of bloecke) {
+        expect(() => JSON.parse(inhalt!)).not.toThrow();
+      }
     }
+  });
+});
+
+/**
+ * Der Zustand, in dem die Website beim Abnehmen steht: ein Dataset, in dem Fred noch
+ * nichts veröffentlicht hat (zweiter Testserver, `SANITY_SOURCE=fixtures-leer`).
+ * Sitemap und OG-Bilder dürfen dann nicht fehlschlagen, sondern nur weniger führen.
+ */
+test.describe("SEO ohne veröffentlichte Artikel", () => {
+  test.use({ baseURL: OHNE_ARTIKEL_URL });
+  test.skip(({ viewport }) => (viewport?.width ?? 0) !== 1440, "SEO ist breitenunabhängig");
+
+  test("die Sitemap führt die gebauten Seiten, aber keinen Artikel", async ({ request }) => {
+    const antwort = await request.get("/sitemap.xml");
+    expect(antwort.status()).toBe(200);
+
+    const pfade = [...(await antwort.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+      (m) => new URL(m[1]!).pathname,
+    );
+
+    for (const route of INDEXIERBAR) {
+      expect(pfade, `${route.path} fehlt in der leeren Sitemap`).toContain(route.path);
+    }
+    expect(
+      pfade.some((p) => p.startsWith("/praxis/") && !p.startsWith("/praxis/thema/")),
+      "Artikel in der Sitemap, obwohl keiner veröffentlicht ist",
+    ).toBe(false);
+  });
+
+  test("/praxis liefert weiterhin ein OG-Bild", async ({ page }) => {
+    await page.goto("/praxis");
+    const bild = await metaInhalt(page, 'meta[property="og:image"]');
+    expect(bild, "og:image auf /praxis").toBeTruthy();
+    expect((await page.request.get(bild!)).status()).toBe(200);
   });
 });

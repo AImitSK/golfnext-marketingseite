@@ -9,8 +9,10 @@ Pfad, Status, Titel, Beschreibung und `noindex` einer Route stehen dort und **nu
 Jede gebaute Seite ruft `routeMetadata(route)` aus `lib/metadata.ts` und bekommt daraus:
 
 - `title` – der Wert aus site-structure; steht dort `null`, greift das Navigations-`label`.
-- `description` – nur, wenn site-structure eine führt. Eine Route ohne Angabe bekommt keine
-  erfundene.
+- `description` – die aus site-structure, wo eine steht. Eine Route ohne Angabe bekommt
+  **keine erfundene**; sie erbt die allgemeine Beschreibung der Website aus
+  `app/layout.tsx`. Das ist gewollt: Ein leeres `content=""` wäre schlechter als ein wahrer,
+  allgemeiner Satz.
 - `alternates.canonical` – der eigene Pfad; `metadataBase` steht im Root-Layout und kommt aus
   `NEXT_PUBLIC_SITE_URL` (`lib/site-url.ts`).
 - `openGraph` und `twitter` – aus **denselben** Feldern, damit ein geteilter Link nichts
@@ -38,17 +40,18 @@ Suche regelmäßig abschneiden.
 | `/ueber-golfnext` | Über GolfNext \| Wir hängen am Golf. Nicht am Gestern. | aus Briefing 0019 |
 | `/kontakt` | Kontakt zu GolfNext | freigegeben (Stefan, 09.09.2026) |
 | `/praxis` | Praxis. Was in Golfclubs wirklich funktioniert. | erster Satz des Hero-Absatzes aus Mock 3.9a |
-| `/impressum` | Impressum – GolfNext | **offen** – keine freigegebene Beschreibung **[S]** |
-| `/datenschutz` | Datenschutzerklärung – GolfNext | **offen** – keine freigegebene Beschreibung **[S]** |
+| `/impressum` | Impressum – GolfNext | **offen** – keine eigene; erbt die Website-Beschreibung **[S]** |
+| `/datenschutz` | Datenschutzerklärung – GolfNext | **offen** – keine eigene; erbt die Website-Beschreibung **[S]** |
 | `/praxis/thema/*` | Rubriktitel aus Sanity | `category.description` |
 | `/praxis/*` | `seo.title`, sonst der Artikeltitel | `seo.description`, sonst der Teaser |
 
 Titel-Suffix „ | GolfNext“ über `title.template` in `app/layout.tsx` – **außer** wo der Titel
 die Marke schon trägt; dann steht er absolut (sonst stünde sie zweimal im Tab).
 
-Zwei Routen haben bewusst **keine** Beschreibung: Für `/impressum` und `/datenschutz` gibt es
-keine freigegebene, und erfunden wird keine. Suchmaschinen bilden für Rechtstexte ohnehin
-eigene Auszüge. Liefert Stefan später Text, gehört er nach `config/site-structure.ts`.
+Zwei Routen haben bewusst **keine eigene** Beschreibung: Für `/impressum` und
+`/datenschutz` gibt es keine freigegebene, und erfunden wird keine. Sie erben die allgemeine
+Beschreibung der Website; Suchmaschinen bilden für Rechtstexte ohnehin eigene Auszüge.
+Liefert Stefan später Text, gehört er nach `config/site-structure.ts`.
 
 Offen für `/praxis`: wohin die Canonical der Blätterseiten `?seite=n` zeigt – derzeit auf
 Seite 1 **[S]**.
@@ -83,7 +86,9 @@ OFL-Lizenz unter `assets/fonts/` und wird zur Laufzeit aus dem Dateisystem geles
   dort **nicht**: Eine per robots.txt gesperrte Seite kann ihr `noindex` nicht mehr mitteilen.
 - Preview-Deployments: `X-Robots-Tag: noindex, nofollow` in `next.config.ts`, sobald
   `VERCEL_ENV` gesetzt und nicht `production` ist. Lokale Builds und der Playwright-Lauf
-  bleiben unberührt.
+  bleiben unberührt – deshalb liegt die Entscheidung als prüfbare Funktion in
+  `lib/seo/indexierung.ts` und hat einen eigenen Unit-Test; Playwright kann den Fall
+  „Preview" nicht herstellen.
 - Entfallene Routen (`/team`, `/ratgeber`, `/module/<slug>` – Briefing 0023) liefern 404
   **ohne Weiterleitung**: sie waren nie öffentlich erreichbar.
 
@@ -113,8 +118,10 @@ keine Bibliothek, kein zusätzliches Client-Bündel, kein Layout. Gebaut wird in
 je `live`-Route Titel, genau ein Canonical auf die eigene Adresse, genau eine `<h1>`,
 Beschreibung wo vorhanden, kein `noindex`; Open-Graph- und Twitter-Felder samt erreichbarem
 OG-Bild (200, `image/png`, 1200 × 630); Sitemap vollständig und ohne `noindex`-Routen;
-robots.txt; `Organization`, `FAQPage`, `Article` und `BreadcrumbList` als gültiges JSON im
-Server-HTML.
+robots.txt; `Organization` auf drei verschiedenen Arten von Seite, `FAQPage`, `Article` und
+`BreadcrumbList` als gültiges JSON im Server-HTML. Dazu der Zustand „noch kein Artikel
+veröffentlicht" gegen den zweiten Testserver. Den `X-Robots-Tag` für Preview-Umgebungen
+prüft `lib/seo/indexierung.test.ts`.
 
 ## Weiterleitungen (6.5, offen)
 

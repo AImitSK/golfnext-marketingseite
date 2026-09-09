@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { indexierungsHeader } from "./lib/seo/indexierung";
 
 /**
  * Content-Security-Policy zunächst als Report-Only (beobachten, nicht blockieren).
@@ -86,11 +87,11 @@ const studioSecurityHeaders = [
  * `vercel dev` –, antwortet mit `X-Robots-Tag: noindex, nofollow`
  * (docs/01-architektur.md, Briefing 0034).
  *
- * `VERCEL_ENV` setzt die Plattform selbst und nur dort. Lokale Builds und der
- * Testlauf bleiben deshalb unberührt: Sie sollen die Seite so ausliefern, wie
- * Produktion sie ausliefert – sonst prüfte Playwright eine andere Website.
+ * Die Entscheidung selbst steht in `lib/seo/indexierung.ts`, damit sie prüfbar ist:
+ * `VERCEL_ENV` setzt die Plattform, lokal ist die Variable nie gesetzt – Playwright
+ * kann den Fall „Preview" also nicht herstellen, ein Unit-Test schon.
  */
-const nichtProduktion = Boolean(process.env.VERCEL_ENV) && process.env.VERCEL_ENV !== "production";
+const indexierung = indexierungsHeader(process.env.VERCEL_ENV);
 
 const nextConfig: NextConfig = {
   /**
@@ -126,7 +127,7 @@ const nextConfig: NextConfig = {
         source: "/((?!studio).*)",
         headers: [
           ...securityHeaders,
-          ...(nichtProduktion ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
+          ...indexierung,
         ],
       },
       {

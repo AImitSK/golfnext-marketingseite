@@ -84,12 +84,34 @@ for (const seite of SEITEN) {
       );
     });
 
+    test("kein Element läuft aus seinem Elternelement", async ({ page }) => {
+      await page.goto(seite.pfad);
+
+      // Innerer Overflow (Skill golfnext-qa, Punkt 2): Ein Kind darf nicht mehr als
+      // 2 px über sein Elternelement hinausragen – der Seiten-Overflow oben fängt das
+      // nicht, wenn ein Absatz nur den Textblock sprengt.
+      const ausbrecher = await page.locator("main *").evaluateAll((elemente) =>
+        elemente
+          .map((el) => {
+            const eltern = el.parentElement;
+            if (!eltern) return null;
+            const k = el.getBoundingClientRect();
+            const e = eltern.getBoundingClientRect();
+            const ueber = Math.max(e.left - k.left, k.right - e.right);
+            return ueber > 2 ? { tag: el.tagName, ueber: Math.round(ueber) } : null;
+          })
+          .filter(Boolean),
+      );
+      expect(ausbrecher, "Elemente laufen aus ihrem Elternelement").toEqual([]);
+    });
+
     test("hält die Zeilenlänge unter 70 Zeichen", async ({ page }) => {
       await page.goto(seite.pfad);
 
       // Gemessen wird die Breite von 70 Nullen in der Schrift des Absatzes – der
-      // gängige Maßstab für „ch". Kein Absatz darf breiter sein.
-      const zuBreit = await page.locator("main p").evaluateAll((absaetze) =>
+      // gängige Maßstab für „ch". Kein Absatz und kein Aufzählungspunkt darf breiter
+      // sein.
+      const zuBreit = await page.locator("main p, main li").evaluateAll((absaetze) =>
         absaetze
           .map((p) => {
             const stil = getComputedStyle(p);

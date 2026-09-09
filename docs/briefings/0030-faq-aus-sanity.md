@@ -124,3 +124,35 @@ FAILs.
 Branch feat/faq-aus-sanity, PR nach .github/pull_request_template.md, CI grün, dann pr-reviewer.
 Schließe mit der dreisätzigen Zusammenfassung: Was gebaut, was offen, welche Abweichungen vom Briefing.
 ```
+
+---
+
+## Nachtrag vom 09.09.2026 (Freigabe Stefan, im selben PR umgesetzt)
+
+Der FAQ-Abschnitt gilt nicht nur für `/pakete`. Er liegt als geteilter Baustein
+`components/site/FaqSection.tsx` vor und steht auf fünf Seiten unmittelbar vor dem
+Abschluss-CTA (`footerClose`):
+
+| Seite | `topic` |
+|---|---|
+| `/pakete` | `pakete` |
+| `/plattform` | `plattform` |
+| `/clubprozesse` | `clubprozesse` |
+| `/wachstum-vertrieb` | `wachstum` |
+| `/ueber-golfnext` | `allgemein` |
+
+Ohne FAQs zum jeweiligen Thema entfällt der Abschnitt vollständig – kein Eyebrow, keine
+Überschrift, keine Leerfläche. Zu den vier neuen Themen liegt noch keine Frage im Dataset;
+ihre Abschnitte sind daher vorerst unsichtbar. Das ist der gewünschte Zustand: Was Stefan
+oder Fred im Studio unter einem Thema anlegt, erscheint auf der zugehörigen Seite.
+
+Überschriften (Freigabe Stefan, Muster von `/pakete` übertragen), als Seitentext in der
+jeweiligen `content/<seite>.ts`. Eyebrow überall „Klarheit vor dem Gespräch":
+
+- `/plattform` – „Häufige Fragen zur Plattform."
+- `/clubprozesse` – „Häufige Fragen zu den Clubprozessen."
+- `/wachstum-vertrieb` – „Häufige Fragen zu Wachstum und Vertrieb."
+- `/ueber-golfnext` – „Häufige Fragen zu GolfNext."
+
+**Abweichung:** `/ueber-golfnext` bekommt Sand statt Mist – der „Wissen"-Abschnitt davor
+entfällt, solange kein Artikel veröffentlicht ist, sonst stünde Mist auf Mist.

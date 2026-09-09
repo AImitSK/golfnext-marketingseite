@@ -4,6 +4,7 @@ import { DreiDinge } from "@/components/pages/clubprozesse/DreiDinge";
 import { Hero } from "@/components/pages/clubprozesse/Hero";
 import { TurnierNews } from "@/components/pages/clubprozesse/TurnierNews";
 import { WasBleibt } from "@/components/pages/clubprozesse/WasBleibt";
+import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
 import {
   clubprozesse,
@@ -29,6 +30,12 @@ import {
  * Rehburg-Loccum kamen 68 % …" bleibt als Fallbeispiel wortgleich erhalten. Der
  * Modulstatus im geteilten Footer bleibt ebenfalls aus (Briefing 0014).
  *
+ * **FAQ-Abschnitt vor dem Abschluss-CTA** (Briefing 0030, Nachtrag 09.09.2026): der
+ * geteilte Baustein `components/site/FaqSection.tsx` mit `topic: "clubprozesse"`, Fragen aus
+ * Sanity, Reihenfolge über `order`. Zu diesem Thema liegt derzeit **keine** Frage im
+ * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
+ * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
+ *
  * Metadata: Briefing 0018 liefert keinen Meta-Titel/-Text → Root-Default
  * (app/layout.tsx) bleibt bestehen, nur der Canonical wird gesetzt (wie Plattform/
  * Wachstum/Startseite). Die Layout-Tokens der Neufassung (Wrap 1180, Radius 12,
@@ -51,6 +58,7 @@ export default function ClubprozessePage() {
   const turnierNews = section("turnier-news");
   const captainsApp = section("captains-app");
   const wasBleibt = section("was-bleibt");
+  const faq = section("faq");
 
   return (
     <main>
@@ -82,6 +90,16 @@ export default function ClubprozessePage() {
         headline={wasBleibt.headline!}
         lead={wasBleibt.text![0]}
         data={clubprozesseWasBleibt}
+      />
+
+      {/* „Was bleibt" davor steht auf Sand – die FAQ deshalb auf Mist. */}
+      <FaqSection
+        topic="clubprozesse"
+        id={faq.id}
+        eyebrow={faq.eyebrow!}
+        headline={faq.headline!}
+        variant="mist"
+        layout="wide"
       />
 
       <Footer footerClose={clubprozesse.footerClose} />

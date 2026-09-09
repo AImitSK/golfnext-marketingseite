@@ -6,6 +6,7 @@ import { Kampagne } from "@/components/pages/wachstum-vertrieb/Kampagne";
 import { Momente } from "@/components/pages/wachstum-vertrieb/Momente";
 import { Regeln } from "@/components/pages/wachstum-vertrieb/Regeln";
 import { Wege } from "@/components/pages/wachstum-vertrieb/Wege";
+import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
 import {
   wachstumFundament,
@@ -30,6 +31,12 @@ import {
  * angezeigt (geteilter Footer). Die Layout-Tokens der Neufassung (Wrap 1180, Radius 12,
  * Sektion 120, H2 48) sind geteilte Tokens aus `app/globals.css`.
  *
+ * **FAQ-Abschnitt vor dem Abschluss-CTA** (Briefing 0030, Nachtrag 09.09.2026): der
+ * geteilte Baustein `components/site/FaqSection.tsx` mit `topic: "wachstum"`, Fragen aus
+ * Sanity, Reihenfolge über `order`. Zu diesem Thema liegt derzeit **keine** Frage im
+ * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
+ * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
+ *
  * Metadata: Briefing 0017 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx)
  * bleibt bestehen, nur der Canonical wird gesetzt (wie Plattform/Startseite).
  */
@@ -51,6 +58,7 @@ export default function WachstumVertriebPage() {
   const kampagne = section("kampagne");
   const regeln = section("regeln");
   const fundament = section("fundament");
+  const faq = section("faq");
 
   return (
     <main>
@@ -87,6 +95,16 @@ export default function WachstumVertriebPage() {
       />
 
       <Fundament eyebrow={fundament.eyebrow!} headline={fundament.headline!} data={wachstumFundament} />
+
+      {/* Das „Fundament" davor steht auf Sand – die FAQ deshalb auf Mist. */}
+      <FaqSection
+        topic="wachstum"
+        id={faq.id}
+        eyebrow={faq.eyebrow!}
+        headline={faq.headline!}
+        variant="mist"
+        layout="wide"
+      />
 
       <Footer footerClose={wachstumVertrieb.footerClose} />
     </main>

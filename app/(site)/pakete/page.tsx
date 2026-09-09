@@ -4,14 +4,8 @@ import { Basis } from "@/components/pages/pakete/Basis";
 import { Hero } from "@/components/pages/pakete/Hero";
 import { Pakete } from "@/components/pages/pakete/Pakete";
 import { Vergleich } from "@/components/pages/pakete/Vergleich";
-import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Faq } from "@/components/ui/Faq";
-import { Section } from "@/components/ui/Section";
-import { SimpleText } from "@/components/ui/SimpleText";
-import { Wrap } from "@/components/ui/Wrap";
+import { FaqSection } from "@/components/site/FaqSection";
 import { pakete, paketeBasis, paketeHero, paketePakete, paketeVergleich } from "@/content/pakete";
-import { sanityFetch } from "@/lib/sanity/client";
-import { FAQS_BY_TOPIC_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
 
 /**
  * /pakete – die verkaufsstärkste Seite, gebaut aus dem gültigen Mock
@@ -21,11 +15,10 @@ import { FAQS_BY_TOPIC_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
  *
  * **Ausnahme: die FAQ.** Seit Briefing 0030 (Masterplan 3.6) kommen Fragen und
  * Antworten aus Sanity (`faq`, `topic: "pakete"`), nicht mehr aus `content/pakete.ts` –
- * dort ist der Wortlaut gelöscht. Es gibt bewusst **keinen Rückfall** auf die
- * Repo-Fassung: Zwei Wahrheiten für denselben Text sind genau das, was der Schritt
- * beendet. Liefert Sanity nichts, entfällt der Abschnitt vollständig.
- *
- * `FAQPage`-JSON-LD gehört zu Masterplan 6.4 und steht hier bewusst noch nicht.
+ * dort ist der Wortlaut gelöscht. Gebaut ist das im geteilten Baustein
+ * `components/site/FaqSection.tsx`, den seit dem Nachtrag vom 09.09.2026 fünf Seiten
+ * benutzen; er entfällt vollständig, wenn Sanity zum Thema nichts liefert. Der
+ * Sektionskopf (Eyebrow, Überschrift) bleibt Seitentext in `content/pakete.ts`.
  */
 export const metadata: Metadata = {
   title: { absolute: pakete.meta.title ?? "GolfNext Pakete" },
@@ -40,15 +33,7 @@ function section(id: string) {
   return found;
 }
 
-export default async function PaketePage() {
-  // Reihenfolge kommt aus dem Feld `order` – `FAQS_BY_TOPIC_QUERY` sortiert danach
-  // (`order asc, question asc`), nicht die Abfragereihenfolge und nicht das Alphabet.
-  const faqs = await sanityFetch({
-    query: FAQS_BY_TOPIC_QUERY,
-    params: { topic: "pakete" },
-    tags: QUERY_TAGS.FAQS_BY_TOPIC_QUERY,
-  });
-
+export default function PaketePage() {
   const hero = section("hero");
   const basis = section("basis");
   const paketeSec = section("pakete");
@@ -87,23 +72,14 @@ export default async function PaketePage() {
         data={paketeVergleich}
       />
 
-      {/* Kein Inhalt, kein Abschnitt: ohne FAQs in Sanity entfallen auch Eyebrow und
-          Überschrift – sonst stünde eine leere Fläche zwischen Vergleich und Footer. */}
-      {faqs.length > 0 ? (
-        <Section variant="mist" id={faq.id}>
-          <Wrap>
-            <Eyebrow>{faq.eyebrow}</Eyebrow>
-            <h2>{faq.headline}</h2>
-            <Faq
-              items={faqs.map((eintrag, i) => ({
-                question: eintrag.question,
-                answer: <SimpleText value={eintrag.answer} />,
-                defaultOpen: i === 0,
-              }))}
-            />
-          </Wrap>
-        </Section>
-      ) : null}
+      {/* Der Vergleich davor steht auf Papier – die FAQ deshalb auf Mist. */}
+      <FaqSection
+        topic="pakete"
+        id={faq.id}
+        eyebrow={faq.eyebrow!}
+        headline={faq.headline!}
+        variant="mist"
+      />
 
       <Footer footerClose={pakete.footerClose} />
     </main>

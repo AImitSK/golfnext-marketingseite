@@ -23,6 +23,9 @@ importers:
       '@sanity/vision':
         specifier: ^6.12.0
         version: 6.12.0(w4gxd3yp5uefjlzw3xfes5ws4m)
+      '@sanity/webhook':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@sendgrid/mail':
         specifier: ^8.1.6
         version: 8.1.6

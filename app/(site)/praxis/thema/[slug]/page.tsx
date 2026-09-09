@@ -5,7 +5,9 @@ import { Hero } from "@/components/pages/praxis/Hero";
 import { Footer } from "@/components/site/Footer";
 import { praxis } from "@/content/praxis";
 import { seiteAusParameter, SEITEN_PARAMETER } from "@/lib/praxis/blaettern";
-import { routeNoindex } from "@/lib/metadata";
+import { JsonLd } from "@/components/site/JsonLd";
+import { inhaltMetadata, routeNoindex } from "@/lib/metadata";
+import { breadcrumbJsonLd, routeLabel } from "@/lib/seo/jsonld";
 import { sanityFetch } from "@/lib/sanity/client";
 import { CATEGORIES_WITH_COUNT_QUERY, POSTS_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
 import { uiMessages } from "@/lib/ui/messages";
@@ -38,14 +40,14 @@ export async function generateMetadata({
   const rubrik = rubriken.find((r) => r.slug === slug);
   if (!rubrik) return { robots: { index: false, follow: false } };
 
-  return {
-    title: { absolute: rubrik.title },
+  return inhaltMetadata({
+    titel: rubrik.title,
     description: rubrik.description,
-    alternates: { canonical: `/praxis/thema/${rubrik.slug}` },
+    pfad: `/praxis/thema/${rubrik.slug}`,
     // Die Rubriken teilen den Indexierungs-Status ihrer Elternroute (Briefing 0027,
     // Frage 2) – gelesen aus `config/site-structure.ts`, nicht hier wiederholt.
-    ...(routeNoindex("/praxis") ? { robots: { index: false, follow: false } } : {}),
-  };
+    noindex: routeNoindex("/praxis"),
+  });
 }
 
 export default async function RubrikPage({
@@ -73,6 +75,16 @@ export default async function RubrikPage({
 
   return (
     <main>
+      {/* BreadcrumbList (Masterplan 6.4): Startseite / Ratgeber / Rubrik – dieselbe
+          Kette, die auch die Artikelseite sichtbar über der Überschrift führt. */}
+      <JsonLd
+        daten={breadcrumbJsonLd([
+          { name: routeLabel("/"), pfad: "/" },
+          { name: routeLabel("/praxis"), pfad: "/praxis" },
+          { name: rubrik.title, pfad: `/praxis/thema/${rubrik.slug}` },
+        ])}
+      />
+
       <Hero eyebrow={hero.eyebrow!} headline={rubrik.title} lead={rubrik.description} />
 
       <ArticleListSection

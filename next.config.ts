@@ -81,8 +81,16 @@ const studioSecurityHeaders = [
   { key: "X-Robots-Tag", value: "noindex, nofollow" },
 ];
 
-// Preview-Deployments dürfen nicht indexiert werden (docs/01-architektur.md).
-const isPreview = process.env.VERCEL_ENV === "preview";
+/**
+ * Alles auf Vercel, was nicht Produktion ist – Preview-Deployments und
+ * `vercel dev` –, antwortet mit `X-Robots-Tag: noindex, nofollow`
+ * (docs/01-architektur.md, Briefing 0034).
+ *
+ * `VERCEL_ENV` setzt die Plattform selbst und nur dort. Lokale Builds und der
+ * Testlauf bleiben deshalb unberührt: Sie sollen die Seite so ausliefern, wie
+ * Produktion sie ausliefert – sonst prüfte Playwright eine andere Website.
+ */
+const nichtProduktion = Boolean(process.env.VERCEL_ENV) && process.env.VERCEL_ENV !== "production";
 
 const nextConfig: NextConfig = {
   /**
@@ -100,6 +108,17 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" }],
   },
 
+  /**
+   * Die OG-Bilder lesen Archivo zur Laufzeit aus `assets/fonts/` (`lib/og/bild.tsx`).
+   * Die Dateispur von Next erkennt einen `readFile` mit zusammengesetztem Pfad nicht
+   * von allein; ohne diesen Eintrag fehlte die Schrift in der Vercel-Funktion und das
+   * Bild käme ohne Archivo heraus.
+   */
+  outputFileTracingIncludes: {
+    "/opengraph-image": ["./assets/fonts/*.ttf"],
+    "/**/opengraph-image": ["./assets/fonts/*.ttf"],
+  },
+
   async headers() {
     return [
       {
@@ -107,7 +126,7 @@ const nextConfig: NextConfig = {
         source: "/((?!studio).*)",
         headers: [
           ...securityHeaders,
-          ...(isPreview ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
+          ...(nichtProduktion ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
         ],
       },
       {

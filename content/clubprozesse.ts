@@ -461,7 +461,6 @@ export const clubprozesse: PageContent = {
   route: "/clubprozesse",
   // Briefing 0018 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
   // nur Canonical wird gesetzt (wie Plattform/Wachstum/Startseite). Nicht erfinden.
-  meta: { title: null, description: null },
   sections: [
     {
       id: "hero",

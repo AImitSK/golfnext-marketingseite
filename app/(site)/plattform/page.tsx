@@ -8,6 +8,7 @@ import { ScrollStory } from "@/components/pages/plattform/ScrollStory";
 import { Zusagen } from "@/components/pages/plattform/Zusagen";
 import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
+import { routeMetadata } from "@/lib/metadata";
 import {
   plattform,
   plattformBento,
@@ -35,12 +36,11 @@ import {
  * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
  * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
  *
- * Metadata: Briefing 0016 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx)
- * bleibt bestehen, nur der Canonical wird gesetzt (wie Startseite).
+ * Metadata: Titel, Beschreibung, Canonical und die OG-Felder kommen über
+ * `routeMetadata` aus `config/site-structure.ts` (Masterplan 6.1, Briefing 0034) –
+ * die eine Wahrheit. In dieser Datei steht dazu nichts mehr.
  */
-export const metadata: Metadata = {
-  alternates: { canonical: plattform.route },
-};
+export const metadata: Metadata = routeMetadata(plattform.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {

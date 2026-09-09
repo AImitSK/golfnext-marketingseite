@@ -6,13 +6,16 @@ import { AuthorBox } from "@/components/pages/praxis/AuthorBox";
 import { PortableTextRenderer } from "@/components/pages/praxis/PortableTextRenderer";
 import { Related } from "@/components/pages/praxis/Related";
 import { Footer } from "@/components/site/Footer";
+import { JsonLd } from "@/components/site/JsonLd";
 import { Wrap } from "@/components/ui/Wrap";
 import { praxis } from "@/content/praxis";
 import { lesezeitMinuten } from "@/lib/praxis/lesezeit";
 import { tocAusBody } from "@/lib/praxis/toc";
-import { routeNoindex } from "@/lib/metadata";
+import { inhaltMetadata, routeNoindex } from "@/lib/metadata";
 import { sanityFetch } from "@/lib/sanity/client";
 import { POST_BY_SLUG_QUERY, POSTS_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
+import { urlForImage } from "@/lib/sanity/image";
+import { articleJsonLd, breadcrumbJsonLd, routeLabel } from "@/lib/seo/jsonld";
 import styles from "@/components/pages/praxis/Artikel.module.css";
 
 /**
@@ -48,18 +51,17 @@ export async function generateMetadata({
   });
   if (!artikel) return { robots: { index: false, follow: false } };
 
-  return {
-    title: { absolute: artikel.seo?.title ?? artikel.title },
+  return inhaltMetadata({
+    titel: artikel.seo?.title ?? artikel.title,
     description: artikel.seo?.description ?? artikel.excerpt,
-    alternates: { canonical: `/praxis/${artikel.slug}` },
+    pfad: `/praxis/${artikel.slug}`,
+    typ: "article",
     // Zwei Gründe, einen Artikel auszuschließen: die Elternroute steht noch nicht live
     // (`config/site-structure.ts`, Briefing 0027 Frage 2) – oder die Redaktion hat für
     // diesen Artikel `seo.noindex` gesetzt. Sobald `/praxis` live geht, greift also
     // weiterhin die Einzelentscheidung aus dem Studio.
-    ...(routeNoindex("/praxis") || artikel.seo?.noindex === true
-      ? { robots: { index: false, follow: false } }
-      : {}),
-  };
+    noindex: routeNoindex("/praxis") || artikel.seo?.noindex === true,
+  });
 }
 
 export default async function ArtikelPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -94,8 +96,32 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
           .filter((a) => a.slug !== artikel.slug)
           .slice(0, 3);
 
+  // `Article` und `BreadcrumbList` (Masterplan 6.4). Jedes Feld hat eine Quelle im
+  // Sanity-Dokument; `image` steht nur, wenn es ein Titelbild gibt – ein
+  // beschrifteter Platzhalter ist kein Artikelbild.
+  const bild = urlForImage(artikel.mainImage)?.width(1200).url() ?? null;
+
   return (
     <main>
+      <JsonLd
+        daten={articleJsonLd({
+          titel: artikel.title,
+          beschreibung: artikel.excerpt,
+          pfad: `/praxis/${artikel.slug}`,
+          veroeffentlicht: artikel.publishedAt,
+          autor: artikel.author?.name,
+          bildUrl: bild,
+        })}
+      />
+      <JsonLd
+        daten={breadcrumbJsonLd([
+          { name: routeLabel("/"), pfad: "/" },
+          { name: routeLabel("/praxis"), pfad: "/praxis" },
+          { name: artikel.category.title, pfad: `/praxis/thema/${artikel.category.slug}` },
+          { name: artikel.title, pfad: `/praxis/${artikel.slug}` },
+        ])}
+      />
+
       <ArticleHead artikel={artikel} lesezeit={lesezeit} />
 
       <Wrap className={mitSpalte ? styles.art : `${styles.art} ${styles.artOhneSpalte}`}>

@@ -4,7 +4,7 @@ import { ArticleListSection } from "@/components/pages/praxis/ArticleListSection
 import { Footer } from "@/components/site/Footer";
 import { praxis } from "@/content/praxis";
 import { seiteAusParameter, SEITEN_PARAMETER } from "@/lib/praxis/blaettern";
-import { routeNoindex } from "@/lib/metadata";
+import { routeMetadata } from "@/lib/metadata";
 import { sanityFetch } from "@/lib/sanity/client";
 import {
   CATEGORIES_WITH_COUNT_QUERY,
@@ -31,15 +31,11 @@ import { uiMessages } from "@/lib/ui/messages";
  * Beiträge laden" – bewusste Abweichung vom Mock, damit die Liste ohne JavaScript
  * bedienbar bleibt (docs/03-seiten-und-routen.md, docs/entscheidungen.md).
  */
-export const metadata: Metadata = {
-  ...(praxis.meta.title ? { title: { absolute: praxis.meta.title } } : {}),
-  ...(praxis.meta.description ? { description: praxis.meta.description } : {}),
-  alternates: { canonical: praxis.route },
-  // `noindex` kommt aus `config/site-structure.ts`: `/praxis` steht bis zum ersten
-  // veröffentlichten Artikel auf `geplant`/`noindex` (Briefing 0027, Frage 2).
-  // Fällt das Flag dort weg, indexiert die Seite – ohne Änderung an dieser Datei.
-  ...(routeNoindex(praxis.route) ? { robots: { index: false, follow: false } } : {}),
-};
+/**
+ * Titel, Beschreibung, Canonical, die OG-Felder und `noindex` kommen über
+ * `routeMetadata` aus `config/site-structure.ts` (Masterplan 6.1, Briefing 0034).
+ */
+export const metadata: Metadata = routeMetadata(praxis.route);
 
 export default async function PraxisPage({
   searchParams,

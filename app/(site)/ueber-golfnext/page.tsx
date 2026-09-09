@@ -7,6 +7,7 @@ import { Weg } from "@/components/pages/ueber-golfnext/Weg";
 import { Wissen } from "@/components/pages/ueber-golfnext/Wissen";
 import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
+import { routeMetadata } from "@/lib/metadata";
 import {
   ueberGolfnext,
   ueberGolfnextGrundsaetze,
@@ -39,16 +40,13 @@ import {
  * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
  * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
  *
- * Metadata: Titel/Beschreibung sind in `config/site-structure.ts` gesetzt (Briefing
- * 0019) und liegen als `meta` in content – zusätzlich der Canonical. Die Layout-Tokens
- * der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind geteilte Tokens aus
- * `app/globals.css`.
+ * Metadata: Titel, Beschreibung, Canonical und die OG-Felder kommen über
+ * `routeMetadata` aus `config/site-structure.ts` (Masterplan 6.1, Briefing 0034) –
+ * die eine Wahrheit. In dieser Datei steht dazu nichts mehr.
+ * Die Layout-Tokens der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind
+ * geteilte Tokens aus `app/globals.css`.
  */
-export const metadata: Metadata = {
-  title: { absolute: ueberGolfnext.meta.title ?? "Über GolfNext" },
-  description: ueberGolfnext.meta.description ?? undefined,
-  alternates: { canonical: ueberGolfnext.route },
-};
+export const metadata: Metadata = routeMetadata(ueberGolfnext.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {

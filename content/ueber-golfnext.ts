@@ -299,11 +299,6 @@ export const ueberGolfnextWissen: WissenData = {
 
 export const ueberGolfnext: PageContent = {
   route: "/ueber-golfnext",
-  meta: {
-    title: "Über GolfNext | Wir hängen am Golf. Nicht am Gestern.",
-    description:
-      "Von imageGolf zur GolfNext-Plattform: unsere Geschichte, die Menschen dahinter und unser Antrieb für mehr Mitglieder und mehr Zeit fürs Clubleben.",
-  },
   sections: [
     {
       id: "hero",

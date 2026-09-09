@@ -1,4 +1,5 @@
 import { PlattformSection } from "@/components/pages/plattform/PlattformSection";
+import { JsonLd } from "@/components/site/JsonLd";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Faq } from "@/components/ui/Faq";
 import { Section } from "@/components/ui/Section";
@@ -6,6 +7,8 @@ import { SimpleText } from "@/components/ui/SimpleText";
 import { Wrap } from "@/components/ui/Wrap";
 import { sanityFetch } from "@/lib/sanity/client";
 import { FAQS_BY_TOPIC_QUERY, QUERY_TAGS } from "@/lib/sanity/queries";
+import { faqPageJsonLd } from "@/lib/seo/jsonld";
+import { klartext } from "@/lib/seo/klartext";
 import type { FAQS_BY_TOPIC_QUERY_RESULT } from "@/sanity.types";
 
 /**
@@ -34,7 +37,10 @@ export type FaqTopic = FAQS_BY_TOPIC_QUERY_RESULT[number]["topic"];
  * (`PlattformSection` mit breitem Satzspiegel, 120 px Luft und größerer H2). So sitzt
  * der Abschnitt auf jeder Seite in derselben Optik wie ihre übrigen Abschnitte.
  *
- * `FAQPage`-JSON-LD gehört zu Masterplan 6.4 und ist hier bewusst nicht gebaut.
+ * **`FAQPage`-JSON-LD** (Masterplan 6.4, Briefing 0034) über `strukturierteDaten`.
+ * Gesetzt ist es auf `/pakete` – dort steht die Fragensammlung, die Suchmaschinen
+ * meinen. Ohne Fragen entsteht kein Markup, wie der Abschnitt selbst auch entfällt.
+ * Die Antworten wandern als Klartext ins Markup; Portable Text kennt schema.org nicht.
  *
  * Reine Server-Komponente; das Akkordeon bleibt `<details>/<summary>` und ist ohne
  * JavaScript bedienbar, alle Antworten stehen im Server-HTML.
@@ -46,6 +52,7 @@ export async function FaqSection({
   id = "faq",
   variant = "mist",
   layout = "standard",
+  strukturierteDaten = false,
 }: {
   topic: FaqTopic;
   eyebrow: string;
@@ -54,6 +61,8 @@ export async function FaqSection({
   /** Flächenfarbe – je Seite so gewählt, dass kein Hintergrund zweimal aufeinanderfolgt. */
   variant?: "paper" | "sand" | "mist";
   layout?: "standard" | "wide";
+  /** `FAQPage`-Markup mit ausgeben (Masterplan 6.4) – gesetzt auf `/pakete`. */
+  strukturierteDaten?: boolean;
 }) {
   // Die Reihenfolge kommt aus dem Feld `order` – `FAQS_BY_TOPIC_QUERY` sortiert danach
   // (`order asc, question asc`), nicht die Abfragereihenfolge und nicht das Alphabet.
@@ -64,6 +73,10 @@ export async function FaqSection({
   });
 
   if (faqs.length === 0) return null;
+
+  const markup = strukturierteDaten
+    ? faqPageJsonLd(faqs.map((f) => ({ question: f.question, answer: klartext(f.answer) })))
+    : null;
 
   const akkordeon = (
     <Faq
@@ -78,19 +91,25 @@ export async function FaqSection({
 
   if (layout === "wide") {
     return (
-      <PlattformSection variant={variant} id={id} eyebrow={eyebrow} headline={headline}>
-        {akkordeon}
-      </PlattformSection>
+      <>
+        {markup ? <JsonLd daten={markup} /> : null}
+        <PlattformSection variant={variant} id={id} eyebrow={eyebrow} headline={headline}>
+          {akkordeon}
+        </PlattformSection>
+      </>
     );
   }
 
   return (
-    <Section variant={variant} id={id}>
-      <Wrap>
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h2>{headline}</h2>
-        {akkordeon}
-      </Wrap>
-    </Section>
+    <>
+      {markup ? <JsonLd daten={markup} /> : null}
+      <Section variant={variant} id={id}>
+        <Wrap>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2>{headline}</h2>
+          {akkordeon}
+        </Wrap>
+      </Section>
+    </>
   );
 }

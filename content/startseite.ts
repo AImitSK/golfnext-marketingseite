@@ -464,7 +464,6 @@ export const startseitePraxis: PraxisData = {
 export const startseite: PageContent = {
   route: "/",
   // Kein Meta-Titel/-Text im Briefing → Root-Default belassen (Feinschliff Phase 6), nicht erfinden.
-  meta: { title: null, description: null },
   sections: [
     {
       id: "hero",

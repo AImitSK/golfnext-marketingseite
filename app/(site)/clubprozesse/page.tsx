@@ -6,6 +6,7 @@ import { TurnierNews } from "@/components/pages/clubprozesse/TurnierNews";
 import { WasBleibt } from "@/components/pages/clubprozesse/WasBleibt";
 import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
+import { routeMetadata } from "@/lib/metadata";
 import {
   clubprozesse,
   clubprozesseCaptainsApp,
@@ -36,14 +37,13 @@ import {
  * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
  * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
  *
- * Metadata: Briefing 0018 liefert keinen Meta-Titel/-Text → Root-Default
- * (app/layout.tsx) bleibt bestehen, nur der Canonical wird gesetzt (wie Plattform/
- * Wachstum/Startseite). Die Layout-Tokens der Neufassung (Wrap 1180, Radius 12,
- * Sektion 120, H2 48) sind geteilte Tokens aus `app/globals.css`.
+ * Metadata: Titel, Beschreibung, Canonical und die OG-Felder kommen über
+ * `routeMetadata` aus `config/site-structure.ts` (Masterplan 6.1, Briefing 0034) –
+ * die eine Wahrheit. In dieser Datei steht dazu nichts mehr.
+ * Die Layout-Tokens der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind
+ * geteilte Tokens aus `app/globals.css`.
  */
-export const metadata: Metadata = {
-  alternates: { canonical: clubprozesse.route },
-};
+export const metadata: Metadata = routeMetadata(clubprozesse.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {

@@ -80,6 +80,9 @@ export const FIXTURE_RUBRIKEN = [
   { title: "Rubrik C", slug: "rubrik-c", anzahl: 0 },
 ] as const;
 
+/** Änderungsdatum aller Testdokumente – fest, damit die Sitemap prüfbar bleibt. */
+export const FIXTURE_STAND = "2026-09-01T10:00:00Z";
+
 /** Slug des Artikels mit vollständigem Fließtext (Inhaltsverzeichnis, Kasten, CTA). */
 export const FIXTURE_ARTIKEL_SLUG = "beispielartikel-1";
 /** Slug des Artikels mit nur zwei Überschriften (kein Inhaltsverzeichnis). */
@@ -370,6 +373,26 @@ export function fixtureSlugs() {
  */
 export function fixtureFuer(query: string, params?: Record<string, unknown>): unknown {
   const leer = leererBestand();
+
+  // Die Einstellungen (`siteSettings`) gibt es im Testbestand nicht: Die
+  // `Organization`-Daten fallen dann auf das Impressum zurück, genau wie heute im
+  // echten Dataset. Der Zweig steht hier, damit das eine Entscheidung ist und kein
+  // Durchfallen bis zum `return null` am Ende.
+  if (query.includes('_id == "siteSettings"')) return null;
+
+  // `SITEMAP_QUERY` (Briefing 0034) – steht VOR den Zweigen für `post` und
+  // `category`, sonst würde einer davon greifen und Artikelkarten ohne
+  // `_updatedAt` liefern. Das Datum ist fest: Ein wanderndes „jetzt" machte die
+  // Sitemap-Prüfung von der Uhr abhängig.
+  if (query.includes("_updatedAt")) {
+    return {
+      artikel: (leer ? [] : Object.keys(ARTIKEL)).map((slug) => ({
+        slug,
+        _updatedAt: FIXTURE_STAND,
+      })),
+      rubriken: FIXTURE_RUBRIKEN.map((r) => ({ slug: r.slug, _updatedAt: FIXTURE_STAND })),
+    };
+  }
 
   if (query.includes('_type == "faq"')) {
     if (leer) return [];

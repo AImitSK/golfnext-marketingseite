@@ -94,9 +94,11 @@ export const ROUTES: Route[] = [
     status: "live",
     mock: "mocks/3.1b-startseite-neufassung.html",
     briefing: "briefings/0021-startseite-neufassung.md",
-    // Briefing liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx), nicht erfinden (Phase 6).
-    title: null,
-    description: null,
+    // Freigegeben von Stefan am 09.09.2026 (Briefing 0034) – abgeleitet aus den
+    // freigegebenen Hero- und Vorspann-Texten, wortgleich übernommen.
+    title: "GolfNext | Mehr Golfer auf dem Platz. Weniger Arbeit im Clubbüro.",
+    description:
+      "Die Plattform für Golfclubs: Website, Kampagnen, Marketing-CRM und die Werkzeuge fürs Clubbüro – als ein System statt vieler Einzellösungen.",
   },
   {
     path: "/plattform",
@@ -105,10 +107,10 @@ export const ROUTES: Route[] = [
     nav: "haupt",
     mock: "mocks/3.2c-plattform-neufassung.html",
     briefing: "briefings/0016-plattform.md",
-    // Briefing 0016 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
-    // nur Canonical wird gesetzt (wie Startseite). Nicht erfinden (Feinschliff Phase 6).
-    title: null,
-    description: null,
+    // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
+    title: "Die GolfNext-Plattform für Golfclubs",
+    description:
+      "Ihre Website ist ein Schaufenster. Wir machen ein System daraus: neue Golfer finden, aus Interessenten Mitglieder machen, dem Clubbüro Routine abnehmen.",
   },
   {
     path: "/plattform/so-arbeitet-golfnext",
@@ -119,8 +121,10 @@ export const ROUTES: Route[] = [
     parent: "/plattform",
     mock: "mocks/3.3b-so-arbeitet-golfnext-neufassung.html",
     briefing: "briefings/0024-so-arbeitet-golfnext.md",
-    title: null,
-    description: null,
+    // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
+    title: "So arbeitet GolfNext | Vom Klick bis zum Mitglied",
+    description:
+      "Nach der Anmeldung hört Ihr Club nicht auf zu reden: Bestätigung, Vorbereitung, Erinnerung, Nachfassen – vier Nachrichten, automatisch zur richtigen Zeit.",
   },
   {
     path: "/wachstum-vertrieb",
@@ -129,10 +133,10 @@ export const ROUTES: Route[] = [
     nav: "haupt",
     mock: "mocks/3.4b-wachstum-vertrieb-neufassung.html",
     briefing: "briefings/0017-wachstum-vertrieb.md",
-    // Briefing 0017 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
-    // nur Canonical wird gesetzt (wie Plattform/Startseite). Nicht erfinden (Feinschliff Phase 6).
-    title: null,
-    description: null,
+    // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
+    title: "Wachstum und Vertrieb für Golfclubs",
+    description:
+      "Neue Golfer finden Ihren Club, bevor sie den Nachbarclub finden: Anzeigen bei Instagram, Facebook und Google, eine Seite je Angebot, danach die richtige Nachricht.",
   },
   {
     path: "/clubprozesse",
@@ -141,10 +145,10 @@ export const ROUTES: Route[] = [
     nav: "haupt",
     mock: "mocks/3.5b-clubprozesse-neufassung.html",
     briefing: "briefings/0018-clubprozesse.md",
-    // Briefing 0018 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
-    // nur Canonical wird gesetzt (wie Plattform/Wachstum/Startseite). Nicht erfinden (Feinschliff Phase 6).
-    title: null,
-    description: null,
+    // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
+    title: "Clubprozesse | Mehr Clubleben, weniger Arbeit im Clubbüro",
+    description:
+      "Greenfee-Anfragen, Platzstatus, Gastfee, Turnierbericht, Mannschaftsergebnis: fünf Dinge, die heute Zeit kosten – und künftig von selbst laufen.",
   },
   {
     // Seit 07.09.2026 Unterpunkt von „Über GolfNext" statt Hauptpunkt (Briefing 0023).
@@ -212,8 +216,10 @@ export const ROUTES: Route[] = [
     parent: "/ueber-golfnext",
     mock: "mocks/3.10-kontakt.html",
     briefing: "briefings/0025-kontakt.md",
-    title: null,
-    description: null,
+    // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
+    title: "Kontakt zu GolfNext",
+    description:
+      "Schreiben Sie uns – es antwortet ein Mensch. Ihre Nachricht landet direkt bei Fred Hoffmann, nicht in einem Ticketsystem.",
   },
   // Seit Briefing 0028 gebaut (Masterplan 5.1 und 5.2): beide Seiten rendern den
   // Wortlaut aus `docs/legal/`. Mit `live` werden die Einträge „Impressum" und

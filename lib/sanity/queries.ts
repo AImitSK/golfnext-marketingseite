@@ -119,6 +119,16 @@ export const FAQS_BY_TOPIC_QUERY = defineQuery(`
 `);
 
 /**
+ * Slug und Änderungsdatum aller Artikel und Rubriken – für `app/sitemap.ts`
+ * (Masterplan 6.3). Bewusst schmal: Die Sitemap braucht nur die Adresse und
+ * `lastModified`; Titel, Anriss und Bilder wandern hier nicht über die Leitung.
+ */
+export const SITEMAP_QUERY = defineQuery(`{
+  "artikel": *[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt},
+  "rubriken": *[_type == "category" && defined(slug.current)]{"slug": slug.current, _updatedAt}
+}`);
+
+/**
  * Die Einstellungen (Singleton, feste Dokument-ID `siteSettings` – so legt die
  * Studio-Struktur sie an, siehe `sanity/structure.ts`).
  */
@@ -146,5 +156,6 @@ export const QUERY_TAGS = {
   CATEGORIES_WITH_COUNT_QUERY: ["category", "post"],
   AUTHOR_BY_SLUG_QUERY: ["author", "post"],
   FAQS_BY_TOPIC_QUERY: ["faq"],
+  SITEMAP_QUERY: ["post", "category"],
   SITE_SETTINGS_QUERY: ["settings"],
 } as const satisfies Record<string, readonly SanityTag[]>;

@@ -1,9 +1,12 @@
-/** Websiteinhalte einer Seite – ausschließlich als „Websiteinhalt" freigegebene Texte aus Freds Briefing. */
-export interface PageMeta {
-  title: string | null;
-  description: string | null;
-}
-
+/**
+ * Websiteinhalte einer Seite – ausschließlich als „Websiteinhalt" freigegebene Texte
+ * aus Freds Briefing.
+ *
+ * **Ohne Metadaten.** Titel und Beschreibung einer Route standen bis Briefing 0034
+ * hier *und* in `config/site-structure.ts`; zwei Wahrheiten für dieselbe Angabe. Sie
+ * stehen jetzt nur noch in site-structure, die Seiten ziehen sie über
+ * `routeMetadata` (Masterplan 6.1).
+ */
 export interface Cta {
   label: string;
   hint?: string;
@@ -47,7 +50,6 @@ export interface FooterClose {
 
 export interface PageContent {
   route: string;
-  meta: PageMeta;
   sections: Section[];
   /**
    * Persönlicher Abschluss über dem Footer. Optional seit Briefing 0025: Mock

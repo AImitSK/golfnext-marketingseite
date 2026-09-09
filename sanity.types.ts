@@ -630,6 +630,20 @@ export type FAQS_BY_TOPIC_QUERY_RESULT = Array<{
 }>;
 
 // Source: lib/sanity/queries.ts
+// Variable: SITEMAP_QUERY
+// Query: {  "artikel": *[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt},  "rubriken": *[_type == "category" && defined(slug.current)]{"slug": slug.current, _updatedAt}}
+export type SITEMAP_QUERY_RESULT = {
+  artikel: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+  rubriken: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+};
+
+// Source: lib/sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_id == "siteSettings"][0]{    phone,    email,    responseNote,    bookingUrl,    linkedin,    instagram,    defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}  }
 export type SITE_SETTINGS_QUERY_RESULT =
@@ -689,6 +703,7 @@ declare global {
     '\n  *[_type == "category"] | order(order asc, title asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    description,\n    audience,\n    order,\n    "anzahl": count(*[_type == "post" && defined(slug.current) && references(^._id)])\n  }\n': CATEGORIES_WITH_COUNT_QUERY_RESULT;
     '\n  *[_type == "author" && slug.current == $slug][0]{\n    _id,\n    name,\n    "slug": slug.current,\n    role,\n    bio,\n    linkedin,\n    image{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n    "artikel": *[_type == "post" && author._ref == ^._id && defined(slug.current)]\n      | order(publishedAt desc) {\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n  category->{title, "slug": slug.current, audience},\n  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}\n}\n  }\n': AUTHOR_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "faq" && topic == $topic] | order(order asc, question asc) {\n    _id,\n    question,\n    answer,\n    topic,\n    order\n  }\n': FAQS_BY_TOPIC_QUERY_RESULT;
+    '{\n  "artikel": *[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt},\n  "rubriken": *[_type == "category" && defined(slug.current)]{"slug": slug.current, _updatedAt}\n}': SITEMAP_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    phone,\n    email,\n    responseNote,\n    bookingUrl,\n    linkedin,\n    instagram,\n    defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '{\n  "artikel": *[_type == "post" && defined(slug.current)].slug.current,\n  "rubriken": *[_type == "category" && defined(slug.current)].slug.current\n}': SLUGS_QUERY_RESULT;
   }

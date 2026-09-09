@@ -359,11 +359,6 @@ export const paketeVergleich: VergleichData = {
  */
 export const pakete: PageContent = {
   route: "/pakete",
-  meta: {
-    title: "GolfNext Pakete und Preise für Golfclubs",
-    description:
-      "GolfNext bietet drei Ausbaustufen für Golfclubs: digitale Grundlage, systematisches Wachstum und eine vollständige digitale Clubzentrale.",
-  },
   sections: [
     {
       id: "hero",

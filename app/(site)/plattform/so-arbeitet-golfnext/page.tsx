@@ -5,6 +5,9 @@ import { Regeln } from "@/components/pages/so-arbeitet-golfnext/Regeln";
 import { Strecken } from "@/components/pages/so-arbeitet-golfnext/Strecken";
 import { Uebergabe } from "@/components/pages/so-arbeitet-golfnext/Uebergabe";
 import { Footer } from "@/components/site/Footer";
+import { JsonLd } from "@/components/site/JsonLd";
+import { routeMetadata } from "@/lib/metadata";
+import { breadcrumbJsonLd, routeLabel } from "@/lib/seo/jsonld";
 import {
   soArbeitetGolfnext,
   soArbeitetHero,
@@ -32,13 +35,14 @@ import {
  * Mail-Fenster und die beiden Übergabe-Karten sind schematische Illustrationen
  * (`aria-hidden`), keine Screenshots und keine Zusagen. KEIN Modulstatus.
  *
- * Metadata: Briefing 0024 liefert keinen Meta-Titel/-Text → Root-Default
- * (app/layout.tsx) bleibt bestehen, nur der Canonical wird gesetzt (wie
- * Plattform/Wachstum/Clubprozesse).
+ * Metadata: Titel, Beschreibung, Canonical und die OG-Felder kommen über
+ * `routeMetadata` aus `config/site-structure.ts` (Masterplan 6.1, Briefing 0034) –
+ * die eine Wahrheit. In dieser Datei steht dazu nichts mehr.
+ *
+ * `BreadcrumbList` (Masterplan 6.4): die einzige gebaute Seite, die unter einer
+ * anderen Adresse liegt – Startseite / Plattform / So arbeitet GolfNext.
  */
-export const metadata: Metadata = {
-  alternates: { canonical: soArbeitetGolfnext.route },
-};
+export const metadata: Metadata = routeMetadata(soArbeitetGolfnext.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {
@@ -55,6 +59,14 @@ export default function SoArbeitetGolfnextPage() {
 
   return (
     <main>
+      <JsonLd
+        daten={breadcrumbJsonLd([
+          { name: routeLabel("/"), pfad: "/" },
+          { name: routeLabel("/plattform"), pfad: "/plattform" },
+          { name: routeLabel(soArbeitetGolfnext.route), pfad: soArbeitetGolfnext.route },
+        ])}
+      />
+
       <Hero
         eyebrow={hero.eyebrow!}
         headline={hero.headline!}

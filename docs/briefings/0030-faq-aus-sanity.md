@@ -65,7 +65,7 @@ Dieser Schritt macht also nur noch eines: `/pakete` liest die Fragen aus Sanity 
 
 ## PR und Merge
 
-Branch `feat/faq-aus-sanity`, PR nach `.github/pull_request_template.md`, CI grün, Preview ansehen,
+Branch `feat/faq-aus-sanity`, PR nach `.github/pull_request_template.md`, CI grün,
 `pr-reviewer`. Merge macht der Orga-Chat.
 
 ## Akzeptanzkriterien

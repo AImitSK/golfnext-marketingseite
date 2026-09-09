@@ -105,13 +105,15 @@ export default function UeberGolfnextPage() {
         data={ueberGolfnextWissen}
       />
 
-      {/* „Wissen" davor steht auf Papier – die FAQ deshalb auf Mist. */}
+      {/* Sand, nicht Mist: „Wissen" davor steht zwar auf Papier, entfällt aber selbst,
+          solange kein Artikel veröffentlicht ist – dann stünde die FAQ direkt hinter
+          „Gemeinsame Projekte" auf Mist. Sand bricht in beiden Fällen. */}
       <FaqSection
         topic="allgemein"
         id={faq.id}
         eyebrow={faq.eyebrow!}
         headline={faq.headline!}
-        variant="mist"
+        variant="sand"
         layout="wide"
       />
 

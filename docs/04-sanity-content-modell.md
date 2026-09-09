@@ -139,7 +139,7 @@ Hauptseiten** einen FAQ-Abschnitt, unmittelbar vor dem Abschluss-CTA. Gebaut ist
 | `/wachstum-vertrieb` | `wachstum` | Häufige Fragen zu Wachstum und Vertrieb. |
 | `/ueber-golfnext` | `allgemein` | Häufige Fragen zu GolfNext. |
 
-Der Eyebrow lautet überall „Klarheit vor dem Gespräch". Eyebrow und Überschrift sind **Seitentext**
+Die Fläche ist überall **Mist**, auf `/ueber-golfnext` **Sand** – dort entfällt der Wissen-Abschnitt davor, solange kein Artikel veröffentlicht ist, und Mist stünde dann auf Mist. Der Eyebrow lautet überall „Klarheit vor dem Gespräch". Eyebrow und Überschrift sind **Seitentext**
 und stehen in der jeweiligen `content/<seite>.ts` (Abschnitt `id: "faq"`), nicht im JSX – aus Sanity
 kommen nur die Fragen und Antworten. **Damit sind alle fünf `topic`-Werte verdrahtet:** Die
 Themenlisten der Studio-Struktur führen nicht mehr ins Leere, jede dort angelegte Frage erscheint

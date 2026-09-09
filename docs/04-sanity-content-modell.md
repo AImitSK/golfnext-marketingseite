@@ -200,9 +200,44 @@ Dokumente – die vier übrigen Abschnitte sind deshalb unsichtbar. Das ist der 
 
 ## Caching und Revalidierung
 
-- `fetch` mit `next: { tags: ['post'] }` etc., `revalidate: 3600` als Sicherheitsnetz.
-- Webhook (Sanity → `POST https://www.golfnext.de/api/revalidate`), Secret in `SANITY_REVALIDATE_SECRET`, Signaturprüfung mit `@sanity/webhook` `isValidSignature`. Payload-Projektion: `{_type, "slug": slug.current}` → `revalidateTag(_type)` und bei `post` zusätzlich `revalidatePath('/praxis/'+slug)`.
-- Draft-Mode: `/api/draft?secret=…&slug=…` setzt `draftMode().enable()`, Client liest mit Token und `perspective: 'previewDrafts'`.
+**Was die Redaktion davon merkt:** Eine Veröffentlichung im Studio steht **binnen Sekunden**
+auf der Website – vorher konnte es bis zu einer Stunde dauern, weil nur das Zeit-Netz
+(`revalidate = 3600`) griff. Ein Redeploy von Hand ist nicht mehr nötig. Nur die betroffenen
+Seiten werden neu gebaut; die übrige Website bleibt im Cache.
+
+- `fetch` mit `next: { tags: ['post'] }` etc., `revalidate: 3600` als Sicherheitsnetz. Das Netz
+  bleibt – der Webhook ersetzt es nicht, er kommt ihm nur zuvor. Fällt eine Meldung einmal aus,
+  ist die Seite spätestens nach einer Stunde wieder aktuell.
+- **Gebaut** (Masterplan 3.7, Briefing 0032): `POST /api/revalidate`
+  (`app/api/revalidate/route.ts` → Logik in `lib/sanity/revalidate.ts`, Prüfungen in
+  `lib/sanity/revalidate.test.ts`). Node-Runtime, **nur `POST`**, kein `GET`-Auslöser und keine
+  Debug-Route.
+  - **Signaturprüfung ist Pflicht:** `@sanity/webhook` `isValidSignature` über den **rohen**
+    Anfragetext gegen `SANITY_REVALIDATE_SECRET`. Fehlt das Secret, fehlt die Kopfzeile
+    `sanity-webhook-signature`, ist sie unbrauchbar geformt oder passt sie nicht: `401` mit
+    leerem Rumpf – **ohne Hinweis darauf, woran es lag**, und ohne jede Revalidierung.
+  - Payload-Projektion `{_type, "slug": slug.current}`. Zuordnung Typ → Cache-Marke:
+    `post → post`, `category → category`, `author → author`, `faq → faq`,
+    `siteSettings → settings` (die Marken stehen in `SANITY_TAGS`, `lib/sanity/client.ts`).
+  - `revalidateTag(marke, { expire: 0 })` – seit Next 16 ist das zweite Argument Pflicht;
+    `{ expire: 0 }` heißt „ab sofort abgelaufen". Bei `_type == "post"` zusätzlich
+    `revalidatePath('/praxis/' + slug)`, weil die Artikelseite auch über ihren Pfad im Cache
+    liegt. Der Slug wird vorher geprüft (nur `[a-z0-9-]`), damit nichts anderes als ein Slug in
+    einen Pfad gerät.
+  - Antwort: `{ revalidated: true, tag, path? }`. Ein **unbekannter `_type`** – oder eine
+    Nutzlast, die sich nicht lesen lässt – ergibt `200` mit `{ revalidated: false }`, bewusst
+    **kein** Fehler: Auf einen Fehler hin wiederholt Sanity den Aufruf, und eine Wiederholung
+    änderte nichts.
+  - **Log:** nur `revalidate.ok | revalidate.skipped | revalidate.rejected` mit Typ und Marke.
+    Kein Secret, keine Kopfzeile, keine Nutzlast, nichts Personenbezogenes.
+- **Webhook im Sanity-Projekt** (API → Webhooks; richtet der Orga-Chat ein, nicht der Code):
+  Ziel `https://<production-domain>/api/revalidate`, Methode `POST`, Dataset `production`,
+  Trigger Create/Update/Delete, Filter
+  `_type in ["post","category","author","faq","siteSettings"]`, Projektion
+  `{_type, "slug": slug.current}`, Secret = `SANITY_REVALIDATE_SECRET`.
+- Draft-Mode: `/api/draft?secret=…&slug=…` setzt `draftMode().enable()`, Client liest mit Token
+  und `perspective: 'previewDrafts'`. **Steht unter „Später"** (09.09.2026) und gehört nicht zu
+  3.7.
 
 ## Zugriff und Sicherheit
 

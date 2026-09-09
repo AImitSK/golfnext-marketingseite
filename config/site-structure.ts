@@ -215,8 +215,13 @@ export const ROUTES: Route[] = [
     title: null,
     description: null,
   },
-  { path: "/impressum", label: "Impressum", status: "geplant", title: "Impressum – GolfNext", description: null, noindex: false, redirectsFrom: ["/impressum/"] },
-  { path: "/datenschutz", label: "Datenschutz", status: "geplant", title: "Datenschutzerklärung – GolfNext", description: null },
+  // Seit Briefing 0028 gebaut (Masterplan 5.1 und 5.2): beide Seiten rendern den
+  // Wortlaut aus `docs/legal/`. Mit `live` werden die Einträge „Impressum" und
+  // „Datenschutz" in der Fußleiste von selbst zu echten Links (isLinkable) – und
+  // der Datenschutz-Hinweis im Kontaktformular ebenfalls. Bewusst OHNE `noindex`:
+  // Rechtsseiten müssen auffindbar sein.
+  { path: "/impressum", label: "Impressum", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Impressum – GolfNext", description: null, noindex: false, redirectsFrom: ["/impressum/"] },
+  { path: "/datenschutz", label: "Datenschutz", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Datenschutzerklärung – GolfNext", description: null },
   { path: "/studio", label: "Studio", status: "system", title: null, description: null, noindex: true },
 ];
 

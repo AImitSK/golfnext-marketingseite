@@ -1,0 +1,92 @@
+/* Typografie für lange Rechtstexte (Briefing 0028).
+   Es gibt für /impressum und /datenschutz keinen Mock; die Werte folgen deshalb dem
+   Fließtext des Ratgeberartikels (components/pages/praxis/Artikel.module.css) und
+   docs/08 – 18 px Text, max. 70 Zeichen Zeilenlänge, Aufzählungspunkt in Signalgrün
+   (Grün-Regel: Punkt erlaubt).
+
+   Bewusst NICHT übernommen: der CSS-Zähler der Artikel-H2 („01, 02 …"). Die
+   Abschnitte der Datenschutzerklärung tragen ihre Nummer bereits im freigegebenen
+   Wortlaut („1. Verantwortlicher"), eine zweite Nummer wäre eine erfundene Zutat.
+
+   Nur was diese beiden Seiten brauchen – nicht auf Vorrat verallgemeinern. */
+
+.rechtstext {
+  max-width: 70ch;
+  min-width: 0;
+}
+
+/* ---------- Kopf ---------- */
+.h1 {
+  font-size: clamp(32px, 4.2vw, 54px);
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  margin: 0 0 32px;
+  text-wrap: balance;
+}
+
+/* ---------- Abschnitte ---------- */
+/* `.rechtstext .h2` (0,2,0) statt `.rechtstext h2` (0,1,1) ist Absicht: Der Text
+   liegt in einer `Section`, und `Section.module.css` setzt `.section :global(h2)`
+   mit derselben Spezifität (0,1,1). Bei Gleichstand entschiede allein die Reihenfolge
+   im gebündelten CSS – die Überschrift bräche dann auf 40 px und 22ch um. Zwei
+   Klassen gewinnen zuverlässig (dieselbe Falle wie bei Wrap/Section, siehe
+   docs/design-system/README.md). */
+.rechtstext .h2 {
+  font-size: clamp(22px, 2.2vw, 28px);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 2.2em 0 0.7em;
+  /* Sprungziele bleiben unter dem Sticky-Header sichtbar. */
+  scroll-margin-top: 110px;
+  max-width: none;
+}
+
+/* ---------- Fließtext ---------- */
+.rechtstext p {
+  font-size: 18px;
+  line-height: 1.72;
+  color: var(--gn-ink);
+  margin: 0 0 1.4em;
+}
+.rechtstext strong {
+  font-weight: 700;
+}
+/* Technische Bezeichner im Text (z. B. der Cookie-Name) – nur Schrift und
+   Schriftgrad, keine Fläche: ein Kasten mitten im Rechtstext lenkt ab. */
+.rechtstext code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+/* ---------- Aufzählungen ---------- */
+.rechtstext ul {
+  margin: 0 0 1.6em;
+  padding-left: 0;
+  list-style: none;
+}
+.rechtstext li {
+  font-size: 17.5px;
+  line-height: 1.65;
+  color: var(--gn-ink);
+  padding: 6px 0 6px 26px;
+  position: relative;
+}
+.rechtstext li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gn-signal); /* Signalgrün als Punkt – Grün-Regel erfüllt */
+}
+
+@media (max-width: 620px) {
+  .rechtstext p {
+    font-size: 17px;
+  }
+  .rechtstext li {
+    font-size: 17px;
+  }
+}

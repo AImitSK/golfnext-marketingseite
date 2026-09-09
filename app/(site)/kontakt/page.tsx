@@ -71,9 +71,10 @@ export default function KontaktPage() {
         formular={kontaktFormular}
         seitenspalte={kontaktSeitenspalte}
         ts={signTimestamp()}
-        // `/datenschutz` entsteht erst mit Masterplan 5.2; bis dahin liefert
-        // internalHref `#`, und die Einwilligung zeigt das Wort als Text statt als
-        // toten Link (wie Anschrift und Footer). Der Wortlaut bleibt unverändert.
+        // Seit Briefing 0028 ist `/datenschutz` live, `internalHref` liefert damit
+        // den echten Pfad und die Einwilligung verlinkt ihn. Die Weiche bleibt
+        // stehen: Wäre die Route nicht live, stünde das Wort als Text da statt als
+        // toter Link (wie Anschrift und Footer). Der Wortlaut bleibt unverändert.
         datenschutzHref={internalHref("/datenschutz")}
       />
 

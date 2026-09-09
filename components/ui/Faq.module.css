@@ -84,6 +84,25 @@
   max-width: 78ch;
 }
 
+/* Die Antworten kommen als Portable Text aus Sanity (Briefing 0030) und damit als
+   `<p>`. Tailwinds Preflight nimmt Absätzen den Rand – zwischen mehreren Absätzen
+   einer Antwort braucht es deshalb wieder einen. Der erste bleibt bündig, damit die
+   Optik einzeiliger Antworten dieselbe bleibt wie im Mock. */
+.answer p + p {
+  margin-top: 0.9em;
+}
+
+.answer strong {
+  font-weight: 700;
+}
+
+/* Links in einer Antwort in Blau, wie überall im Fließtext. */
+.answer a {
+  color: var(--gn-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 @media (max-width: 620px) {
   .answer {
     padding-right: 0; /* 1:1 aus Mock (@media max-width:620px) */

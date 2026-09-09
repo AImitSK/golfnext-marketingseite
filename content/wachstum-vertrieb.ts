@@ -592,6 +592,11 @@ export const wachstumVertrieb: PageContent = {
       eyebrow: "Das Fundament",
       headline: "Jede Anzeige führt auf Ihre Website. Nicht auf ein Portal.",
     },
+    {
+      id: "faq",
+      eyebrow: "Klarheit vor dem Gespräch",
+      headline: "Häufige Fragen zu Wachstum und Vertrieb.",
+    },
   ],
   footerClose: {
     eyebrow: "Wachstum für Ihren Club",

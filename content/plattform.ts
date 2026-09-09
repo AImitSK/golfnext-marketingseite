@@ -512,6 +512,11 @@ export const plattform: PageContent = {
       eyebrow: "Woran Sie uns messen können",
       headline: "Vier Zusagen, die im Vertrag stehen.",
     },
+    {
+      id: "faq",
+      eyebrow: "Klarheit vor dem Gespräch",
+      headline: "Häufige Fragen zur Plattform.",
+    },
   ],
   footerClose: {
     eyebrow: "GolfNext persönlich kennenlernen",

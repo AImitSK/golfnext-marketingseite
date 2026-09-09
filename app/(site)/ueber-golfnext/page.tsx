@@ -5,6 +5,7 @@ import { Menschen } from "@/components/pages/ueber-golfnext/Menschen";
 import { Projekte } from "@/components/pages/ueber-golfnext/Projekte";
 import { Weg } from "@/components/pages/ueber-golfnext/Weg";
 import { Wissen } from "@/components/pages/ueber-golfnext/Wissen";
+import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
 import {
   ueberGolfnext,
@@ -32,6 +33,12 @@ import {
  * Entwicklungspartner-Wortlaut (Grundsatz /01, „Gemeinsame Projekte“, „Wissen“) bleibt
  * wortgleich – er beschreibt Entwicklungspartnerschaften, keinen Modul-Status.
  *
+ * **FAQ-Abschnitt vor dem Abschluss-CTA** (Briefing 0030, Nachtrag 09.09.2026): der
+ * geteilte Baustein `components/site/FaqSection.tsx` mit `topic: "allgemein"`, Fragen aus
+ * Sanity, Reihenfolge über `order`. Zu diesem Thema liegt derzeit **keine** Frage im
+ * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
+ * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
+ *
  * Metadata: Titel/Beschreibung sind in `config/site-structure.ts` gesetzt (Briefing
  * 0019) und liegen als `meta` in content – zusätzlich der Canonical. Die Layout-Tokens
  * der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind geteilte Tokens aus
@@ -57,6 +64,7 @@ export default function UeberGolfnextPage() {
   const menschen = section("menschen");
   const projekte = section("projekte");
   const wissen = section("wissen");
+  const faq = section("faq");
 
   return (
     <main>
@@ -95,6 +103,18 @@ export default function UeberGolfnextPage() {
         headline={wissen.headline!}
         lead={wissen.text![0]}
         data={ueberGolfnextWissen}
+      />
+
+      {/* Sand, nicht Mist: „Wissen" davor steht zwar auf Papier, entfällt aber selbst,
+          solange kein Artikel veröffentlicht ist – dann stünde die FAQ direkt hinter
+          „Gemeinsame Projekte" auf Mist. Sand bricht in beiden Fällen. */}
+      <FaqSection
+        topic="allgemein"
+        id={faq.id}
+        eyebrow={faq.eyebrow!}
+        headline={faq.headline!}
+        variant="sand"
+        layout="wide"
       />
 
       <Footer footerClose={ueberGolfnext.footerClose} />

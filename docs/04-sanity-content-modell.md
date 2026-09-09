@@ -48,7 +48,7 @@ Kein Startbestand im Code. Fred trägt Fred Hoffmann und Stefan Kühne selbst ei
 
 ### `faq` – Frage und Antwort
 `question` (string, Pflicht), `answer` (Portable Text `simpleBlockContent`, Pflicht: nur Absätze, strong/em, Link), `topic` (Pflicht, Liste: pakete · plattform · clubprozesse · wachstum · allgemein), `order` (number, optional).
-Kein Startbestand im Code. Die sieben Pakete-FAQs aus `design-system/mocks/3.7-pakete.html` legt Masterplan 3.6 an, Wortlaut unverändert. Vorschau: Frage + Thema.
+Kein Startbestand im Code. Die sieben Pakete-FAQs (`topic: "pakete"`, `order` 1–7, feste IDs `faq-pakete-1` … `faq-pakete-7`) liegen seit dem 08.09.2026 veröffentlicht im Dataset, Wortlaut unverändert aus `3.7-pakete.html`. Seit Briefing 0030 sind sie die **einzige** Quelle des Textes – im Repo steht er nicht mehr. Seit dem Nachtrag vom 09.09.2026 sind **alle fünf `topic`-Werte verdrahtet** (siehe „FAQ auf fünf Seiten" unten); zu den vier übrigen liegt bisher keine Frage im Dataset, ihre Abschnitte sind deshalb unsichtbar. Vorschau: Frage + Thema.
 
 ### `siteSettings` – Singleton
 `phone` (Pflicht), `email` (Pflicht, E-Mail-Format), `responseNote`, `bookingUrl`, `linkedin`, `instagram`, `defaultSeo {title, description ≤ 160, ogImage + Pflicht-alt}`.
@@ -111,6 +111,51 @@ Person aus; ein Editor sieht damit nichts, was er nicht ohnehin sehen darf.
 
 Gebaut mit Briefing 0027 (Masterplan 3.4). Bausteine unter `components/pages/praxis/`,
 Hilfsfunktionen unter `lib/praxis/`.
+
+### Zwei Portable-Text-Renderer
+
+| Renderer | Für | Wo |
+|---|---|---|
+| `PortableTextRenderer` | `blockContent` – Artikel-Fließtext mit Überschriften, Listen, Zitat, Bild, `callout`, `cta` | `components/pages/praxis/PortableTextRenderer.tsx` |
+| `SimpleText` | `simpleBlockContent` – FAQ-Antworten und `callout.text`: nur Absätze, `strong`, `em`, `link` | `components/ui/SimpleText.tsx` |
+
+Der große Renderer wird **nicht** für FAQ-Antworten benutzt (Briefing 0030): Er zieht `next/image`,
+`urlForImage` und den `Button`-Baustein mit sich, die eine FAQ-Antwort nie braucht. Geteilt wird nur,
+was wirklich dieselbe Regel ist – die `link`-Annotation samt `rel="noopener noreferrer"` bei externen
+Zielen: `components/sanity/PortableLink.tsx`. `SimpleText` bringt kein Wrapper-Element mit; die Fläche
+stellt die aufrufende Stelle (bei der FAQ `.answer` in `Faq.module.css`).
+
+### FAQ auf fünf Seiten
+
+Seit Briefing 0030 (Masterplan 3.6) und seinem Nachtrag vom 09.09.2026 trägt **jede der fünf
+Hauptseiten** einen FAQ-Abschnitt, unmittelbar vor dem Abschluss-CTA. Gebaut ist er **einmal** als
+`components/site/FaqSection.tsx`; die Seiten übergeben nur Thema, Sektionskopf und Flächenfarbe.
+
+| Route | `topic` | Überschrift |
+|---|---|---|
+| `/pakete` | `pakete` | Häufige Fragen zu den Paketen. |
+| `/plattform` | `plattform` | Häufige Fragen zur Plattform. |
+| `/clubprozesse` | `clubprozesse` | Häufige Fragen zu den Clubprozessen. |
+| `/wachstum-vertrieb` | `wachstum` | Häufige Fragen zu Wachstum und Vertrieb. |
+| `/ueber-golfnext` | `allgemein` | Häufige Fragen zu GolfNext. |
+
+Die Fläche ist überall **Mist**, auf `/ueber-golfnext` **Sand** – dort entfällt der Wissen-Abschnitt davor, solange kein Artikel veröffentlicht ist, und Mist stünde dann auf Mist. Der Eyebrow lautet überall „Klarheit vor dem Gespräch". Eyebrow und Überschrift sind **Seitentext**
+und stehen in der jeweiligen `content/<seite>.ts` (Abschnitt `id: "faq"`), nicht im JSX – aus Sanity
+kommen nur die Fragen und Antworten. **Damit sind alle fünf `topic`-Werte verdrahtet:** Die
+Themenlisten der Studio-Struktur führen nicht mehr ins Leere, jede dort angelegte Frage erscheint
+auf ihrer Seite.
+
+Der Baustein holt die Fragen über `FAQS_BY_TOPIC_QUERY` mit der Marke `faq`; die Reihenfolge kommt
+aus `order` (GROQ: `order asc, question asc`). Das Akkordeon bleibt `<details>/<summary>` – ohne
+JavaScript bedienbar, alle Antworten im Server-HTML. Das `topic` ist als Union aus
+`FAQS_BY_TOPIC_QUERY_RESULT` typisiert; ein Tippfehler bricht den Typecheck, statt einen Abschnitt
+stillschweigend für immer leer zu lassen.
+
+**Kein Rückfall auf das Repo:** Liefert Sanity zu einem Thema nichts, entfällt der Abschnitt samt
+Eyebrow und Überschrift, ohne Leerzustandsmeldung und ohne Layoutlücke. Zurzeit trägt nur `pakete`
+Dokumente – die vier übrigen Abschnitte sind deshalb unsichtbar. Das ist der gewünschte Zustand.
+
+`FAQPage`-JSON-LD gehört zu Masterplan 6.4 und ist noch nicht gebaut.
 
 - **Listen** (`/praxis`, `/praxis/thema/<slug>`): `ArticleCard` (Bild 16/10 mit `aspect-ratio`,
   Rubrik-Chip, Titel, Excerpt, Datum, Autor mit Porträt). Die Kartenabfrage `KARTE` holt das

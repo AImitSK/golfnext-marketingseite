@@ -6,6 +6,7 @@ import { PlattformSection } from "@/components/pages/plattform/PlattformSection"
 import { RollenSlider } from "@/components/pages/plattform/RollenSlider";
 import { ScrollStory } from "@/components/pages/plattform/ScrollStory";
 import { Zusagen } from "@/components/pages/plattform/Zusagen";
+import { FaqSection } from "@/components/site/FaqSection";
 import { Footer } from "@/components/site/Footer";
 import {
   plattform,
@@ -28,6 +29,12 @@ import {
  * der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind benannte Tokens und
  * wirken nur auf dieser Seite (PlattformSection / Modul-CSS).
  *
+ * **FAQ-Abschnitt vor dem Abschluss-CTA** (Briefing 0030, Nachtrag 09.09.2026): der
+ * geteilte Baustein `components/site/FaqSection.tsx` mit `topic: "plattform"`, Fragen aus
+ * Sanity, Reihenfolge über `order`. Zu diesem Thema liegt derzeit **keine** Frage im
+ * Dataset – der Abschnitt entfällt deshalb vollständig, samt Eyebrow und Überschrift.
+ * Das ist der gewünschte Zustand; sobald Fred im Studio eine Frage anlegt, erscheint er.
+ *
  * Metadata: Briefing 0016 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx)
  * bleibt bestehen, nur der Canonical wird gesetzt (wie Startseite).
  */
@@ -49,6 +56,7 @@ export default function PlattformPage() {
   const story = section("story");
   const grenze = section("grenze");
   const zusagen = section("zusagen");
+  const faq = section("faq");
 
   return (
     <main>
@@ -87,6 +95,16 @@ export default function PlattformPage() {
       <Grenze eyebrow={grenze.eyebrow!} headline={grenze.headline!} data={plattformGrenze} />
 
       <Zusagen eyebrow={zusagen.eyebrow!} headline={zusagen.headline!} data={plattformZusagen} />
+
+      {/* „Vier Zusagen" davor steht auf Papier – die FAQ deshalb auf Mist. */}
+      <FaqSection
+        topic="plattform"
+        id={faq.id}
+        eyebrow={faq.eyebrow!}
+        headline={faq.headline!}
+        variant="mist"
+        layout="wide"
+      />
 
       <Footer footerClose={plattform.footerClose} />
     </main>

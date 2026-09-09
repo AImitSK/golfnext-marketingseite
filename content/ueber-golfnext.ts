@@ -351,6 +351,11 @@ export const ueberGolfnext: PageContent = {
         "Fachartikel aus dem golfmanager und Beiträge aus der Arbeit mit Clubs – zum Mitnehmen, auch ohne GolfNext.",
       ],
     },
+    {
+      id: "faq",
+      eyebrow: "Klarheit vor dem Gespräch",
+      headline: "Häufige Fragen zu GolfNext.",
+    },
   ],
   footerClose: {
     eyebrow: "GolfNext persönlich",

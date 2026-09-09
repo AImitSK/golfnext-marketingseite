@@ -4,24 +4,21 @@ import { Basis } from "@/components/pages/pakete/Basis";
 import { Hero } from "@/components/pages/pakete/Hero";
 import { Pakete } from "@/components/pages/pakete/Pakete";
 import { Vergleich } from "@/components/pages/pakete/Vergleich";
-import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Faq } from "@/components/ui/Faq";
-import { Section } from "@/components/ui/Section";
-import { Wrap } from "@/components/ui/Wrap";
-import {
-  pakete,
-  paketeBasis,
-  paketeFaq,
-  paketeHero,
-  paketePakete,
-  paketeVergleich,
-} from "@/content/pakete";
+import { FaqSection } from "@/components/site/FaqSection";
+import { pakete, paketeBasis, paketeHero, paketePakete, paketeVergleich } from "@/content/pakete";
 
 /**
  * /pakete – die verkaufsstärkste Seite, gebaut aus dem gültigen Mock
  * `docs/design-system/mocks/3.7-pakete.html` (Fassung 2). Alle Texte kommen
  * wortgleich aus `content/pakete.ts`, Preise werden nie addiert. Genau eine `<h1>`
  * (im Hero). Metadata/Canonical aus `config/site-structure.ts` (via content/meta).
+ *
+ * **Ausnahme: die FAQ.** Seit Briefing 0030 (Masterplan 3.6) kommen Fragen und
+ * Antworten aus Sanity (`faq`, `topic: "pakete"`), nicht mehr aus `content/pakete.ts` –
+ * dort ist der Wortlaut gelöscht. Gebaut ist das im geteilten Baustein
+ * `components/site/FaqSection.tsx`, den seit dem Nachtrag vom 09.09.2026 fünf Seiten
+ * benutzen; er entfällt vollständig, wenn Sanity zum Thema nichts liefert. Der
+ * Sektionskopf (Eyebrow, Überschrift) bleibt Seitentext in `content/pakete.ts`.
  */
 export const metadata: Metadata = {
   title: { absolute: pakete.meta.title ?? "GolfNext Pakete" },
@@ -75,19 +72,14 @@ export default function PaketePage() {
         data={paketeVergleich}
       />
 
-      <Section variant="mist" id={faq.id}>
-        <Wrap>
-          <Eyebrow>{faq.eyebrow}</Eyebrow>
-          <h2>{faq.headline}</h2>
-          <Faq
-            items={paketeFaq.map((item, i) => ({
-              question: item.question,
-              answer: item.answer,
-              defaultOpen: i === 0,
-            }))}
-          />
-        </Wrap>
-      </Section>
+      {/* Der Vergleich davor steht auf Papier – die FAQ deshalb auf Mist. */}
+      <FaqSection
+        topic="pakete"
+        id={faq.id}
+        eyebrow={faq.eyebrow!}
+        headline={faq.headline!}
+        variant="mist"
+      />
 
       <Footer footerClose={pakete.footerClose} />
     </main>

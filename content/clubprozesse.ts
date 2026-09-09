@@ -503,6 +503,11 @@ export const clubprozesse: PageContent = {
         "GolfNext nimmt dem Clubbüro die Routine ab, nicht die Verantwortung. Alles, was rausgeht, kann der Club vorher sehen. Und alles, was ein Gespräch braucht, bekommt eins.",
       ],
     },
+    {
+      id: "faq",
+      eyebrow: "Klarheit vor dem Gespräch",
+      headline: "Häufige Fragen zu den Clubprozessen.",
+    },
   ],
   footerClose: {
     eyebrow: "Entlastung für Ihr Clubbüro",

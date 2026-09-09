@@ -49,15 +49,46 @@ GTM wird erst nach `granted` in `marketing` geladen (kein „Advanced Consent Mo
 
 **Wann eine bezahlte, zertifizierte CMP (Cookiebot, Usercentrics) nötig wird:** wenn IAB-TCF-Signale verlangt werden (Google Ad Manager/AdSense, programmatic) oder Fred eine juristisch abgesicherte Anbieterlösung mit Hosting-Vertrag will. Für eine B2B-Marketingseite mit eigenem Conversion-Tracking reicht die schlanke Lösung.
 
-## Technische Umsetzung (Masterplan Phase 5)
+## Technische Umsetzung (Masterplan Phase 5 – **gebaut am 09.09.2026, Briefing 0033**)
 
-1. `components/site/ConsentBanner.tsx` (Client): initialisiert `vanilla-cookieconsent` mit deutscher Konfiguration aus `lib/consent/config.ts`; rendert nichts Sichtbares selbst.
-2. `components/site/Analytics.tsx`: liest Consent-Status, lädt GTM (`next/script`, `strategy="afterInteractive"`) nur bei `marketing`-Einwilligung und gesetzter `NEXT_PUBLIC_GTM_ID`; Meta-Pixel analog.
-3. `gtag('consent','default')` als Inline-Script im `<head>` vor allem anderen.
-4. Vercel Analytics (`@vercel/analytics`) immer geladen, in der Datenschutzerklärung als cookielose Reichweitenmessung genannt.
-5. Embeds: eigene `<VideoEmbed />`-Komponente mit Vorschaubild und Zwei-Klick („Video laden – dabei werden Daten an YouTube übertragen"), oder per Consent-Kategorie `marketing` freischalten.
-6. Texte im Dialog: kurz, deutsch, Link auf `/datenschutz` und `/impressum`. Kategorienbeschreibungen aus `docs/legal/datenschutz.md` Abschnitt „Cookies und Einwilligung".
-7. Test (Playwright): vor Interaktion und nach „Nur notwendige" kein Request an `google*`, `facebook*`, `doubleclick*`, `googletagmanager*`; nach „Alle akzeptieren" ja. Kein Request an `fonts.g*`.
+1. `components/site/ConsentBanner.tsx` (Client): initialisiert `vanilla-cookieconsent` mit deutscher Konfiguration aus `lib/consent/config.ts`; rendert nichts Sichtbares selbst. Gestaltung über `components/site/consent.css` – nur die `--cc-*`-Variablen der Bibliothek werden auf die `--gn-*`-Tokens gezogen, die fremde CSS wird nicht umgeschrieben.
+2. `components/site/Analytics.tsx`: liest Consent-Status, lädt GTM (`next/script`, `strategy="afterInteractive"`) nur bei `marketing`-Einwilligung und gesetzter `NEXT_PUBLIC_GTM_ID`; Meta-Pixel analog. **Ohne `<noscript>`-Fallback:** Der übliche GTM-`<iframe>` und das Pixel-`<img>` feuern ohne JavaScript – also ohne jede Einwilligung, weil der Dialog JavaScript braucht.
+3. `gtag('consent','default')` als Inline-Script im `<head>`, über `next/script` mit `strategy="beforeInteractive"` (`app/layout.tsx`). Im Quelltext stehen davor nur Next.js' eigene Framework-Chunks; alles, was Google oder Meta lädt, kommt später und sieht den Standard `denied`.
+4. Vercel Analytics (`@vercel/analytics`) immer geladen, in der Datenschutzerklärung (Abschnitt 7) als cookielose Reichweitenmessung genannt.
+5. Embeds: eigene `<VideoEmbed />`-Komponente mit Vorschaubild und Zwei-Klick („Video laden – dabei werden Daten an YouTube übertragen"), oder per Consent-Kategorie `marketing` freischalten. **Noch nicht gebaut** – es gibt kein Embed.
+6. Texte im Dialog: kurz, deutsch, Link auf `/datenschutz` und `/impressum`. Kategorienbeschreibungen wortgleich aus `docs/legal/datenschutz.md` Abschnitt „Cookies und Einwilligung". Sie stehen in `lib/consent/config.ts` unter `FREIGEGEBEN`; Bedienlabels ohne freigegebene Fassung (heute nur „Auswahl speichern") stehen darunter getrennt unter `SYSTEM`.
+7. Test (Playwright): vor Interaktion und nach „Nur notwendige" kein Request an `google*`, `facebook*`, `doubleclick*`, `googletagmanager*`; nach „Alle akzeptieren" ja. Kein Request an `fonts.g*`. → `tests/e2e/consent.spec.ts`, a11y in `tests/a11y/consent.spec.ts`.
+
+### Zwei Kategorien im Dialog, drei in der Konfiguration
+
+`lib/consent/config.ts` kennt `necessary`, `analytics` und `marketing`. Im Dialog erscheinen **zwei**
+Einträge: „Notwendig" (nicht abwählbar) und „Statistik und Marketing" – genau die beiden, die Abschnitt 6
+der Datenschutzerklärung nennt und für die es freigegebene Texte gibt. Der zweite Schalter hängt an
+`marketing`. `analytics` ist angelegt, aber **noch nicht als eigener Schalter angeboten**: Es gibt derzeit
+keinen reinen Statistik-Dienst (Vercel Web Analytics ist cookielos und einwilligungsfrei) und keinen
+freigegebenen Text dafür. Kommt einer dazu, braucht es zuerst den Text in der Datenschutzerklärung, dann
+den Schalter – und `CONSENT_REVISION` steigt, damit erneut gefragt wird.
+
+### Was zu tun ist, sobald eine GTM- oder Pixel-ID eingetragen wird
+
+Beides ist heute **nicht gesetzt**, deshalb lädt nichts. Wer eine ID einträgt, muss vorher:
+
+1. den Dienst in `docs/legal/datenschutz.md` Abschnitt 6 **namentlich benennen** (der Satz „derzeit ist
+   kein Dienst dieser Kategorie im Einsatz" wird dann falsch),
+2. `CONSENT_REVISION` in `lib/consent/config.ts` erhöhen – die gespeicherten Auswahlen sind sonst zu einer
+   anderen Erklärung erteilt worden,
+3. den Auftragsverarbeitungsvertrag mit dem Anbieter prüfen.
+
+Das ist ein eigener kleiner Schritt, nicht Teil von 5.3–5.6.
+
+### Testfassungen
+
+`NEXT_PUBLIC_*` setzt Next beim Bauen in das Browser-Bündel ein – ein laufender Server kann den Fall
+„ID gesetzt" also nicht nachträglich herstellen. `scripts/build-e2e.mjs` baut deshalb eine dritte Fassung
+`.next-gtm` mit einer Test-Id (`scripts/gtm-test-id.mjs`, gehört zu keinem echten Konto); Playwright
+startet sie auf Port 3002. Der Request an googletagmanager.com wird im Test abgefangen und verlässt das
+Gerät nie. Alle übrigen Prüfungen starten als wiederkehrender Besucher mit der Auswahl „Nur notwendige"
+(`tests/setup/consent.setup.ts`) – sonst läge der Dialog über jeder geprüften Seite.
 
 ## Weitere Datenschutz-Pflichten in der Technik
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { submitContact } from "@/app/actions/contact";
 import { initialContactState, type ContactState } from "@/lib/forms/contact-state";
 import { Alert } from "@/components/feedback/Alert";
@@ -13,6 +14,7 @@ import {
   type FormularData,
 } from "@/content/kontakt";
 import { formMessages, type FieldMessageKey } from "@/lib/forms/messages";
+import { trackContactSubmitted, trackingAktiv } from "@/lib/tracking/events";
 import {
   CONFIRMABLE_FIELDS,
   FIELD_ORDER,
@@ -108,6 +110,15 @@ export function ContactForm({
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
 
+  // Conversion-Meldung (docs/09): Beim Absenden wird das gewählte Thema
+  // festgehalten – nach dem Erfolg ist das Formular aus dem Baum und der Wert
+  // nicht mehr lesbar. Es ist ein Wert aus der festen Themenliste, kein Freitext
+  // und keine Angabe zur Person. `gemeldet` sorgt dafür, dass genau einmal
+  // gemeldet wird, auch wenn React die Erfolgsansicht erneut rendert.
+  const themaRef = useRef<string | undefined>(undefined);
+  const gemeldetRef = useRef(false);
+  const router = useRouter();
+
   const serverErrors = serverErrorsOf(state);
   const values = serverValuesOf(state);
 
@@ -162,6 +173,21 @@ export function ContactForm({
     if (state.status !== "idle") clearTimeout(timeoutRef.current);
   }, [state]);
 
+  // Hauptconversion `contact_submitted` (docs/09). Ohne Einwilligung ist der Aufruf
+  // wirkungslos, nicht fehlerhaft – das entscheidet `lib/tracking/events.ts`.
+  //
+  // Zusätzlich der Weg auf `/danke?quelle=kontakt`: Google Ads und Meta brauchen
+  // eine URL-basierte Conversion, die robuster ist als ein reines Ereignis. Er wird
+  // nur gegangen, wenn überhaupt gemessen werden kann (Einwilligung erteilt UND
+  // GTM-ID gesetzt) – sonst gäbe es nichts zu messen und die Weiterleitung wäre ein
+  // Seitenwechsel ohne Zweck. Der Inline-Erfolg steht in beiden Fällen zuerst da.
+  useEffect(() => {
+    if (loading || state.status !== "ok" || gemeldetRef.current) return;
+    gemeldetRef.current = true;
+    trackContactSubmitted(themaRef.current);
+    if (trackingAktiv()) router.replace("/danke?quelle=kontakt");
+  }, [loading, state, router]);
+
   useEffect(() => {
     if (loading) return;
     if (state.status === "ok") {
@@ -205,7 +231,11 @@ export function ContactForm({
     <form
       ref={formRef}
       action={formAction}
-      onSubmit={() => {
+      onSubmit={(event) => {
+        // Thema für die Conversion-Meldung merken, solange das Formular noch steht.
+        const thema = event.currentTarget.elements.namedItem("thema");
+        themaRef.current =
+          thema instanceof HTMLSelectElement && thema.value ? thema.value : undefined;
         setZeitueberschreitung(false);
         setMindestAnzeige(true);
         setTimeout(() => setMindestAnzeige(false), MIN_PENDING_MS);

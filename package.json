@@ -14,9 +14,9 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test e2e",
-    "test:a11y": "playwright test a11y",
-    "test:visual": "playwright test visual",
+    "test:e2e": "playwright test tests/setup tests/e2e",
+    "test:a11y": "playwright test tests/setup tests/a11y",
+    "test:visual": "playwright test tests/setup tests/visual",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "sanity:typegen": "sanity schema extract --force --enforce-required-fields --path sanity/schema.json && sanity typegen generate",
@@ -30,6 +30,7 @@
     "@sanity/vision": "^6.12.0",
     "@sanity/webhook": "^4.0.4",
     "@sendgrid/mail": "^8.1.6",
+    "@vercel/analytics": "^2.0.1",
     "motion": "^13.2.0",
     "next": "16.3.4",
     "next-sanity": "^13.3.4",
@@ -37,6 +38,7 @@
     "react-dom": "19.2.8",
     "sanity": "^6.12.0",
     "sharp": "^0.35.4",
+    "vanilla-cookieconsent": "^3.1.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {

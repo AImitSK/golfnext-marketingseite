@@ -42,6 +42,13 @@ Ereignisse werden vor Einwilligung **nicht** gepuffert – was vor dem Klick auf
 
 ## Umsetzung
 
+**Stand 09.09.2026 (Briefing 0033, Masterplan 5.4):** Gebaut und **verdrahtet** sind zwei Ereignisse –
+`cta_erstgespraech_click` (über `data-gn-cta` am CTA-Link, ein Zuhörer in `components/site/CtaTracking.tsx`)
+und `contact_submitted` (im Kontaktformular, samt `router.replace('/danke?quelle=kontakt')`). Die übrigen fünf
+stehen in `lib/tracking/events.ts` typisiert bereit, werden aber noch nirgends ausgelöst: Sie hängen an FAQ,
+Paketkarten und Artikeln, deren Umbau ein eigener Schritt ist. Ohne gesetzte `NEXT_PUBLIC_GTM_ID` ist ohnehin
+jeder Aufruf wirkungslos – das ist heute der Normalfall.
+
 - `lib/tracking/events.ts`: typisierte Funktionen (`trackCtaClick(position)`, `trackContactSubmitted(interesse)` …), die nur pushen, wenn
   `consent.marketing === true` und `NEXT_PUBLIC_GTM_ID` gesetzt ist. Sonst no-op. Kein direkter `window.dataLayer`-Zugriff in Komponenten.
 - GTM-Container von Stefan **[S]**: Tags für Google Ads Conversion (`contact_submitted`, `/danke`), GA4 optional, Meta-Pixel (PageView, Lead auf `contact_submitted`).

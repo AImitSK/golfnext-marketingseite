@@ -5,6 +5,7 @@ node_modules/
 # Next.js
 .next/
 .next-leer/
+.next-gtm/
 out/
 next-env.d.ts
 *.tsbuildinfo
@@ -23,6 +24,8 @@ dist/
 
 # Tests
 test-results/
+# Vorentschiedene Einwilligung fuer die Playwright-Laeufe (tests/setup)
+tests/.state/
 playwright-report/
 playwright/.cache/
 .playwright-mcp/

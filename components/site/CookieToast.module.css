@@ -1,0 +1,42 @@
+/* Platz für den einen Toast der Website (docs/08 §3): gespeicherte
+   Cookie-Einstellungen, unten rechts, ~3 s. Der Baustein selbst ist
+   `components/feedback/Toast.tsx` – hier steht nur, wo er hängt.
+
+   `position: fixed` heißt: Er nimmt keinen Platz im Fluss ein und verschiebt
+   deshalb nichts (kein CLS). Bewegt wird nur `opacity`/`transform`. */
+
+.host {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 30;
+  animation: einblenden 0.25s var(--gn-ease) both;
+}
+
+@keyframes einblenden {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduced Motion: sofort der Endzustand. `app/globals.css` kürzt die Dauer global
+   auf ~0; hier fällt die Animation zusätzlich ganz weg, damit kein Startzustand
+   aufblitzt. */
+@media (prefers-reduced-motion: reduce) {
+  .host {
+    animation: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .host {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+  }
+}

@@ -5,7 +5,7 @@ import type { SyntheticEvent } from "react";
 import { usePathname } from "next/navigation";
 import { KONTAKT } from "@/config/site-structure";
 import type { Cta } from "@/content/types";
-import { resolveCta } from "@/lib/links";
+import { ctaLinkProps } from "@/lib/links";
 import { type NavItem } from "@/lib/navigation";
 import styles from "./MobileNav.module.css";
 
@@ -115,7 +115,7 @@ export function MobileNav({ items, cta }: { items: NavItem[]; cta: Cta }) {
 
         {/* Fixierte Aktionsleiste (2.4 .ph-bar): grüner CTA + Anruf als Nebenweg. */}
         <div className={styles.bar}>
-          <a href={resolveCta(cta)} className={styles.b1}>
+          <a {...ctaLinkProps(cta)} className={styles.b1}>
             {cta.label}
             {cta.hint ? <small>{cta.hint}</small> : null}
           </a>

@@ -62,11 +62,14 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
-      # Zwei Testbuilds statt eines Produktionsbuilds (Briefing 0029): Die Artikel-
-      # Teaser auf `/` und `/ueber-golfnext` werden beim Bauen vorgerendert, der
-      # Testbestand muss also schon beim Bauen wirken. `.next` = mit Artikeln,
-      # `.next-leer` = ohne. Beide Builds fragen Sanity nicht an, sie brauchen deshalb
-      # keinen Token. Der Produktionsbuild bleibt im Job "gates".
+      # Drei Testbuilds statt eines Produktionsbuilds (Briefing 0029, erweitert mit
+      # 0033): Die Artikel-Teaser auf `/` und `/ueber-golfnext` werden beim Bauen
+      # vorgerendert, der Testbestand muss also schon beim Bauen wirken. `.next` =
+      # mit Artikeln, `.next-leer` = ohne, `.next-gtm` = mit Test-Tracking-Id (nur
+      # so ist nachweisbar, dass GTM nach der Einwilligung wirklich geladen wird –
+      # `NEXT_PUBLIC_*` steckt beim Bauen im Browser-Bündel). Kein Build fragt Sanity
+      # an, sie brauchen deshalb keinen Token. Der Produktionsbuild bleibt im Job
+      # "gates".
       - run: pnpm build:e2e
       - run: pnpm test:e2e
       - run: pnpm test:a11y

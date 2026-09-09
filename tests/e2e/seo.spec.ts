@@ -28,6 +28,19 @@ async function metaInhalt(page: Page, wahl: string): Promise<string | null> {
   return tag.first().getAttribute("content");
 }
 
+/**
+ * Der Pfad einer Adresse aus dem Kopfbereich, zum Abrufen gegen den Testserver.
+ *
+ * `og:image` und `canonical` sind absolut und tragen die Adresse aus
+ * `NEXT_PUBLIC_SITE_URL` – in der CI ist das `https://www.golfnext.de`, also die
+ * echte Website. Wer sie unverändert abruft, prüft die Produktion statt den Build,
+ * der hier gerade entstanden ist (genau das ist der CI am 09.09.2026 passiert).
+ */
+function pfadVon(adresse: string): string {
+  const url = new URL(adresse);
+  return url.pathname + url.search;
+}
+
 /** Alle JSON-LD-Blöcke einer Seite, geparst. Wirft, wenn einer kein gültiges JSON ist. */
 async function strukturierteDaten(page: Page): Promise<Record<string, unknown>[]> {
   const roh = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -88,7 +101,7 @@ test.describe("SEO · Metadata je Route", () => {
       expect(bild, `og:image auf ${route.path}`).toBeTruthy();
 
       // Das Bild gibt es wirklich, es ist ein PNG und hat die OG-Maße.
-      const antwort = await page.request.get(bild!);
+      const antwort = await page.request.get(pfadVon(bild!));
       expect(antwort.status(), `OG-Bild von ${route.path}`).toBe(200);
       expect(antwort.headers()["content-type"]).toContain("image/png");
       expect(await metaInhalt(page, 'meta[property="og:image:width"]')).toBe("1200");
@@ -106,7 +119,7 @@ test.describe("SEO · Metadata je Route", () => {
 
       const bild = await metaInhalt(page, 'meta[property="og:image"]');
       expect(bild, `og:image auf ${pfad}`).toContain(pfad);
-      expect((await page.request.get(bild!)).status()).toBe(200);
+      expect((await page.request.get(pfadVon(bild!))).status()).toBe(200);
     }
   });
 
@@ -265,6 +278,6 @@ test.describe("SEO ohne veröffentlichte Artikel", () => {
     await page.goto("/praxis");
     const bild = await metaInhalt(page, 'meta[property="og:image"]');
     expect(bild, "og:image auf /praxis").toBeTruthy();
-    expect((await page.request.get(bild!)).status()).toBe(200);
+    expect((await page.request.get(pfadVon(bild!))).status()).toBe(200);
   });
 });

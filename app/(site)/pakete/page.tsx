@@ -6,12 +6,13 @@ import { Pakete } from "@/components/pages/pakete/Pakete";
 import { Vergleich } from "@/components/pages/pakete/Vergleich";
 import { FaqSection } from "@/components/site/FaqSection";
 import { pakete, paketeBasis, paketeHero, paketePakete, paketeVergleich } from "@/content/pakete";
+import { routeMetadata } from "@/lib/metadata";
 
 /**
  * /pakete – die verkaufsstärkste Seite, gebaut aus dem gültigen Mock
  * `docs/design-system/mocks/3.7-pakete.html` (Fassung 2). Alle Texte kommen
  * wortgleich aus `content/pakete.ts`, Preise werden nie addiert. Genau eine `<h1>`
- * (im Hero). Metadata/Canonical aus `config/site-structure.ts` (via content/meta).
+ * (im Hero). Metadata/Canonical aus `config/site-structure.ts` (`routeMetadata`).
  *
  * **Ausnahme: die FAQ.** Seit Briefing 0030 (Masterplan 3.6) kommen Fragen und
  * Antworten aus Sanity (`faq`, `topic: "pakete"`), nicht mehr aus `content/pakete.ts` –
@@ -19,12 +20,11 @@ import { pakete, paketeBasis, paketeHero, paketePakete, paketeVergleich } from "
  * `components/site/FaqSection.tsx`, den seit dem Nachtrag vom 09.09.2026 fünf Seiten
  * benutzen; er entfällt vollständig, wenn Sanity zum Thema nichts liefert. Der
  * Sektionskopf (Eyebrow, Überschrift) bleibt Seitentext in `content/pakete.ts`.
+ * Seit Briefing 0034 gibt dieser Abschnitt zusätzlich das `FAQPage`-Markup aus
+ * (`strukturierteDaten`, Masterplan 6.4) – aus denselben Sanity-Fragen, nicht aus
+ * einer zweiten Liste.
  */
-export const metadata: Metadata = {
-  title: { absolute: pakete.meta.title ?? "GolfNext Pakete" },
-  description: pakete.meta.description ?? undefined,
-  alternates: { canonical: pakete.route },
-};
+export const metadata: Metadata = routeMetadata(pakete.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {
@@ -79,6 +79,7 @@ export default function PaketePage() {
         eyebrow={faq.eyebrow!}
         headline={faq.headline!}
         variant="mist"
+        strukturierteDaten
       />
 
       <Footer footerClose={pakete.footerClose} />

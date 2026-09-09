@@ -9,6 +9,7 @@ import { Praxis } from "@/components/pages/startseite/Praxis";
 import { Vertrauensleiste } from "@/components/pages/startseite/Vertrauensleiste";
 import { Zusagen } from "@/components/pages/startseite/Zusagen";
 import { Footer } from "@/components/site/Footer";
+import { routeMetadata } from "@/lib/metadata";
 import {
   startseite,
   startseiteHero,
@@ -37,13 +38,11 @@ import {
  * geteilte Tokens aus `app/globals.css`; die Startseite spricht damit dieselbe
  * moderne Sprache wie die übrigen Seiten (Ausnahme: Pakete-Seite, separater Angleich).
  *
- * Metadata: Briefing 0021 liefert keinen Meta-Titel/-Text → Root-Default
- * (app/layout.tsx) bleibt bestehen, nur der Canonical wird gesetzt (wie die übrigen
- * Seiten). `/` bleibt `live`.
+ * Metadata: Titel, Beschreibung, Canonical und die OG-Felder kommen über
+ * `routeMetadata` aus `config/site-structure.ts` (Masterplan 6.1, Briefing 0034) –
+ * die eine Wahrheit. In dieser Datei steht dazu nichts mehr.
  */
-export const metadata: Metadata = {
-  alternates: { canonical: startseite.route },
-};
+export const metadata: Metadata = routeMetadata(startseite.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {

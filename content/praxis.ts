@@ -93,17 +93,6 @@ export const praxisPlatzhalter = {
 
 export const praxis: PageContent = {
   route: "/praxis",
-  meta: {
-    /**
-     * Vorschlag aus dem freigegebenen Hero von 3.9a (Briefing 0027, Aufgabe 7):
-     * Titel = H1, Beschreibung = der erste Satz des Hero-Absatzes, ohne neue
-     * Formulierung gekürzt (≤ 160 Zeichen). Steht so auch in
-     * `config/site-structure.ts`; ob Fred eigene Angaben nachliefert, ist Frage 3.
-     */
-    title: "Praxis. Was in Golfclubs wirklich funktioniert.",
-    description:
-      "Berichte aus Pilotclubs, Erfahrungen aus dreißig Jahren auf dem Platz und ehrliche Antworten auf die Fragen, die im Clubbüro und im Vorstand gestellt werden.",
-  },
   sections: [
     {
       id: "hero",

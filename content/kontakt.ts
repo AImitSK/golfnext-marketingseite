@@ -233,7 +233,6 @@ export const kontakt: PageContent = {
   // Mock 3.10 nennt keine technischen Seitenangaben (Titel/Beschreibung) → Root-Default
   // aus app/layout.tsx über das Navigations-Label, nur Canonical wird gesetzt. Nicht
   // erfinden (Feinschliff Phase 6), wie auf allen anderen Seiten der Neufassung.
-  meta: { title: null, description: null },
   sections: [
     {
       id: "hero",

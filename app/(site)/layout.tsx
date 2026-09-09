@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Header } from "@/components/site/Header";
+import { OrganisationJsonLd } from "@/components/site/OrganisationJsonLd";
 
 /**
  * Layout aller echten Website-Seiten (Route-Gruppe `(site)`).
@@ -13,10 +14,14 @@ import { Header } from "@/components/site/Header";
  *
  * Das Root-`app/layout.tsx` (html/body, Fonts, Metadata) bleibt unverändert.
  * `/_bausteine` liegt in `app/(preview)/` und ist damit außen vor (eigene Header-Demo).
+ *
+ * Dazu die strukturierten Daten zur Organisation (Masterplan 6.4): ein Script-Tag im
+ * Server-HTML, auf jeder öffentlichen Seite, ohne Sichtbares und ohne Layout.
  */
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
+      <OrganisationJsonLd />
       <Header />
       {children}
     </>

@@ -470,7 +470,6 @@ export const plattform: PageContent = {
   route: "/plattform",
   // Briefing 0016 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
   // nur Canonical wird gesetzt (wie Startseite). Nicht erfinden.
-  meta: { title: null, description: null },
   sections: [
     {
       id: "hero",

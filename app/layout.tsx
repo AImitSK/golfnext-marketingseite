@@ -8,6 +8,7 @@ import { ConsentBanner } from "@/components/site/ConsentBanner";
 import { CookieToast } from "@/components/site/CookieToast";
 import { CtaTracking } from "@/components/site/CtaTracking";
 import { CONSENT_DEFAULT_SNIPPET } from "@/lib/consent/consent-mode";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 /**
@@ -27,15 +28,32 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.golfnext.de";
-
+/**
+ * Site-weite Metadata (Masterplan 6.1, Briefing 0034).
+ *
+ * `metadataBase` kommt aus `NEXT_PUBLIC_SITE_URL` (`lib/site-url.ts`) und macht die
+ * relativen Canonicals der Seiten zu absoluten Adressen. Titel und Beschreibung sind
+ * der Rückfall für Routen ohne eigene Angabe; jede gebaute Seite setzt beides über
+ * `routeMetadata` aus `config/site-structure.ts`.
+ *
+ * Die `openGraph`-Vorgaben stehen hier, damit auch die Routen ohne eigene Metadata
+ * (404, `/studio`) als GolfNext-Seite geteilt werden. Das Bild hängt nicht hier: Das
+ * liefert `app/opengraph-image.tsx` bzw. die Datei der jeweiligen Route.
+ */
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteUrl()),
   title: {
     default: "GolfNext",
     template: "%s | GolfNext",
   },
   description: "Marketing und Automation als Software-Layer für Golfanlagen.",
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    siteName: "GolfNext",
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

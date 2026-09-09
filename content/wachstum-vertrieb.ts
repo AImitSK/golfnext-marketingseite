@@ -545,7 +545,6 @@ export const wachstumVertrieb: PageContent = {
   route: "/wachstum-vertrieb",
   // Briefing 0017 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
   // nur Canonical wird gesetzt (wie Plattform/Startseite). Nicht erfinden.
-  meta: { title: null, description: null },
   sections: [
     {
       id: "hero",

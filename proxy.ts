@@ -29,6 +29,14 @@ import { praxisSlugs } from "@/lib/sanity/slugs";
  */
 const KEINE_ROUTE = "/__praxis-nicht-gefunden__";
 
+/**
+ * Nexts Metadata-Routen unter `/praxis` – heute das OG-Bild der Übersichtsseite
+ * (`/praxis/opengraph-image-<hash>`). Sie sehen aus wie ein Artikel-Slug, sind aber
+ * echte Routen; ohne diese Ausnahme schriebe der Proxy sie auf einen 404 um, und die
+ * Seite hätte ein OG-Bild, das es nicht gibt (gemessen am 09.09.2026, Briefing 0034).
+ */
+const METADATA_ROUTE = /^(opengraph-image|twitter-image|icon|apple-icon)(-|$)/;
+
 /** `/praxis/thema/<slug>` – die Rubrikseite. */
 const RUBRIK = /^\/praxis\/thema\/([^/]+)\/?$/;
 /** `/praxis/<slug>` – die Artikelseite (`thema` ist die Rubrik-Ebene, kein Artikel). */
@@ -60,6 +68,11 @@ export async function proxy(request: NextRequest) {
   const gesucht = (rubrik?.[1] ?? artikel?.[1])!;
   const bekannt = rubrik ? slugs.rubriken : slugs.artikel;
   if (bekannt.includes(gesucht)) return NextResponse.next();
+
+  // Erst wenn es den Slug nicht gibt, kommt die Metadata-Route infrage. Diese
+  // Reihenfolge ist Absicht: Ein echter Artikel „icon-tricks-fuer-die-website" darf
+  // nicht deshalb durchgewinkt werden, weil sein Slug wie eine Metadata-Route beginnt.
+  if (artikel && METADATA_ROUTE.test(gesucht)) return NextResponse.next();
 
   return NextResponse.rewrite(new URL(KEINE_ROUTE, request.url));
 }

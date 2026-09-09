@@ -468,7 +468,6 @@ export const soArbeitetGolfnext: PageContent = {
   route: "/plattform/so-arbeitet-golfnext",
   // Briefing 0024 liefert keinen Meta-Titel/-Text → Root-Default (app/layout.tsx),
   // nur Canonical wird gesetzt (wie Plattform/Wachstum/Clubprozesse). Nicht erfinden.
-  meta: { title: null, description: null },
   sections: [
     {
       id: "hero",

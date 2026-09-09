@@ -13,6 +13,7 @@ import {
   kontaktWege,
 } from "@/content/kontakt";
 import { signTimestamp } from "@/lib/forms/spam";
+import { routeMetadata } from "@/lib/metadata";
 import { internalHref } from "@/lib/links";
 
 /**
@@ -37,11 +38,7 @@ import { internalHref } from "@/lib/links";
  */
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  ...(kontakt.meta.title ? { title: { absolute: kontakt.meta.title } } : {}),
-  ...(kontakt.meta.description ? { description: kontakt.meta.description } : {}),
-  alternates: { canonical: kontakt.route },
-};
+export const metadata: Metadata = routeMetadata(kontakt.route);
 
 /** Sektions-Kopftexte (eyebrow/headline/lead) aus der PageContent-Struktur holen. */
 function section(id: string) {

@@ -226,8 +226,8 @@ export const ROUTES: Route[] = [
   // „Datenschutz" in der Fußleiste von selbst zu echten Links (isLinkable) – und
   // der Datenschutz-Hinweis im Kontaktformular ebenfalls. Bewusst OHNE `noindex`:
   // Rechtsseiten müssen auffindbar sein.
-  { path: "/impressum", label: "Impressum", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Impressum – GolfNext", description: null, noindex: false, redirectsFrom: ["/impressum/"] },
-  { path: "/datenschutz", label: "Datenschutz", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Datenschutzerklärung – GolfNext", description: null },
+  { path: "/impressum", label: "Impressum", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Impressum – GolfNext", description: "Anbieterkennzeichnung und Kontaktdaten für die Website von GolfNext.", noindex: false, redirectsFrom: ["/impressum/"] },
+  { path: "/datenschutz", label: "Datenschutz", status: "live", briefing: "briefings/0028-rechtstexte.md", title: "Datenschutzerklärung – GolfNext", description: "Wie wir mit Ihren Daten umgehen: Verantwortlicher, Zwecke, Rechtsgrundlagen, Speicherdauer und Ihre Rechte." },
   // Bestätigungsseite nach einer erfolgreichen Formularanfrage (Briefing 0033,
   // Masterplan 5.4). `system`, weil sie nie in Navigation, Sitemap oder einen
   // Teaser gehört: Man kommt nur über das gesendete Formular hierher. `noindex`,

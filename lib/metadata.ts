@@ -31,8 +31,13 @@ export function routeMetadata(path: string): Metadata {
   const route = ROUTES.find((r) => r.path === path);
   if (!route) throw new Error(`Route "${path}" fehlt in config/site-structure.ts`);
 
+  // docs/07-seo.md: Das Suffix „ | GolfNext" aus `title.template` entfällt, wo der
+  // Titel die Marke schon trägt („Impressum – GolfNext"). Sonst stünde sie zweimal
+  // im Tab und im Suchergebnis.
+  const title = route.title ?? route.label;
+
   return {
-    title: route.title ?? route.label,
+    title: title.includes("GolfNext") ? { absolute: title } : title,
     ...(route.description ? { description: route.description } : {}),
     alternates: { canonical: route.path },
     ...(route.noindex ? { robots: { index: false, follow: false } } : {}),

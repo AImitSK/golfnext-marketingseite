@@ -79,15 +79,15 @@ CI grün, Preview beide Seiten lesen. **Merge übernimmt der Orga-Chat** (Squash
 
 ## Akzeptanzkriterien
 
-- [ ] `/impressum` und `/datenschutz` sind `live`, ohne `noindex`, mit genau einer `<h1>` und Canonical.
-- [ ] Der Text ist **wortgleich** mit `docs/legal/`; die internen `>`-Vermerke erscheinen **nicht**
+- [x] `/impressum` und `/datenschutz` sind `live`, ohne `noindex`, mit genau einer `<h1>` und Canonical.
+- [x] Der Text ist **wortgleich** mit `docs/legal/`; die internen `>`-Vermerke erscheinen **nicht**
       im ausgelieferten HTML.
-- [ ] Die Links **Impressum** und **Datenschutz** in der Fußleiste führen auf die Seiten – auf jeder
+- [x] Die Links **Impressum** und **Datenschutz** in der Fußleiste führen auf die Seiten – auf jeder
       Seite der Website, ohne Änderung an `Footer.tsx`.
-- [ ] `/impressum/` leitet auf `/impressum` um.
-- [ ] Zeilenlänge höchstens 70 Zeichen, kein Overflow @390/768/1024/1180/1440, ohne JS lesbar,
+- [x] `/impressum/` leitet auf `/impressum` um.
+- [x] Zeilenlänge höchstens 70 Zeichen, kein Overflow @390/768/1024/1180/1440, ohne JS lesbar,
       axe ohne Verstoß.
-- [ ] Gates und CI grün; alle vier Subagents ohne FAIL; Doku und Masterplan-Haken nachgezogen.
+- [x] Gates und CI grün; alle vier Subagents ohne FAIL; Doku und Masterplan-Haken nachgezogen.
 
 ## Was du NICHT tust
 

@@ -1,9 +1,20 @@
 /* Portiert aus docs/design-system/mocks/3.4b-wachstum-vertrieb-neufassung.html
    (.hero/.demo/.browser/.cock/.crmlist/.phone/.ig). Farben auf --gn-* umgestellt,
    literale Tints kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4 px.
-   Bewegung: Der Endzustand (alle Anmeldungen sichtbar) steht im Server-HTML; nur mit
-   JS/ohne Reduced-Motion setzt die Komponente kurz `.start` und löst es beim
-   Sichtbarwerden auf. Nur opacity/transform (kein CLS). */
+   Bewegung („Hero-Fill", Briefing 0015): Die Anmeldungen laufen nacheinander in die
+   Liste ein – als **CSS-Animation ab dem ersten gemalten Frame**, nicht über einen
+   JS-Klassenwechsel.
+
+   Warum nicht per JS: Der Hero steht immer im Sichtfeld. Das Server-HTML zeigt den
+   Endzustand und wird bei rund 250 ms gemalt, die Hydration kommt erst bei rund
+   430 ms. Ein danach gesetzter Startzustand lässt den Hero also erst **rückwärts
+   wegblinken** und neu einblenden. Gemessen am 10.09.2026; davor lief die
+   Choreografie gar nicht (Startzustand wurde 17 ms nach dem Setzen wieder
+   aufgelöst – kein Übergang). Die CSS-Fassung startet dagegen im Startzustand,
+   braucht kein JavaScript und blinkt nicht.
+
+   Reduced Motion: `animation: none` → sofort der Endzustand. Bewegt nur
+   opacity/transform (kein CLS), läuft einmal. */
 
 .hero {
   background: linear-gradient(
@@ -230,23 +241,41 @@
   grid-template-columns: 34px minmax(0, 1fr) auto;
   gap: 11px;
   align-items: center;
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+  animation: einlaufen 0.5s var(--gn-ease) both;
 }
+/* Dauern und Staffelungen stehen bewusst als feste Sekundenwerte hier und nicht als
+   `--gn-dur`: Sie sind 1:1 aus den transition-Deklarationen des Mocks übernommen und
+   bilden eine abgestimmte Erzähl-Zeitachse (Briefing 0015). Wer sie "vereinheitlicht",
+   zerschießt die Choreografie. Die Beschleunigung nutzt dagegen das Token.
+
+   Zur Zählung: Der Mock staffelt `nth-child(2)/(3)/(4)`, hier steht `(3)/(4)/(5)` –
+   kein Off-by-one. In `.crmlist` steht bei uns das Label „Neue Anmeldungen" (`.cl`)
+   als erstes Kind, im Mock nicht. Gemessen kommt beides aufs Gleiche heraus: erste
+   Anmeldung ohne Verzögerung, dann 0,45 / 0,9 / 1,35 s. */
 .crmrow:nth-child(3) {
-  transition-delay: 0.45s;
+  animation-delay: 0.45s;
 }
 .crmrow:nth-child(4) {
-  transition-delay: 0.9s;
+  animation-delay: 0.9s;
 }
 .crmrow:nth-child(5) {
-  transition-delay: 1.35s;
+  animation-delay: 1.35s;
 }
-/* Ausgangszustand (nur mit JS, kurz): Anmeldungen laufen von unten ein. */
-.start .crmrow {
-  opacity: 0;
-  transform: translateY(10px);
+/* Die Anmeldung läuft von unten ein und bleibt stehen (`both` hält den Endzustand). */
+@keyframes einlaufen {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crmrow {
+    animation: none;
+  }
 }
 /* `.crmrow .av` wie im Mock (3.4b), nicht nur `.av`: sonst überstimmt die spätere
    Regel `.crmrow span { color: muted }` die weiße Kürzelfarbe und die Kürzel

@@ -1,7 +1,4 @@
-"use client";
-
 import { Fragment } from "react";
-import { useStagedInView } from "@/components/motion/useStagedInView";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { resolveCta } from "@/lib/links";
@@ -16,12 +13,14 @@ import styles from "./Hero.module.css";
  * (Bleed über `.demo{width:…%}`); `.hero{overflow:hidden}` fängt den Seiten-Overflow
  * ab (kein horizontaler Scroll). Illustrative Oberfläche, kein echter Screenshot.
  *
- * Mikro-Animation (Motion-Infra 1.7/0015, „einmal/dezent"): Aus der Anzeige laufen die
- * Anmeldungen nacheinander in die Liste ein („Hero-Fill"). Der ENDZUSTAND (alle
- * Anmeldungen sichtbar) steht im Server-HTML → ohne JS und bei `prefers-reduced-motion`
- * sofort vollständig lesbar. Nur mit JS und ohne reduzierte Bewegung wird nach Mount
- * kurz der Ausgangszustand (`.start`) gesetzt und beim Sichtbarwerden einmalig
- * aufgelöst. Bewegt nur `opacity`/`transform` (kein CLS).
+ * Mikro-Animation „Hero-Fill" (Briefing 0015): Die Anmeldungen laufen nacheinander in
+ * die Liste ein. Sie liegt vollständig im Modul-CSS (`@keyframes einlaufen`) und läuft
+ * ab dem ersten gemalten Frame – der Hero steht immer im Sichtfeld, ein erst nach der
+ * Hydration gesetzter Startzustand ließe ihn sichtbar rückwärts wegblinken (gemessen,
+ * siehe Kommentar in Hero.module.css). Ohne JS und bei `prefers-reduced-motion` steht
+ * sofort der Endzustand. Bewegt nur `opacity`/`transform` (kein CLS), läuft einmal.
+ *
+ * Dadurch braucht der Hero **kein** JavaScript mehr: reine Server-Komponente.
  *
  * Seit Briefing 0031 trägt der Hero nur noch eine Aktion; die Prop `ctaSecondary`
  * bleibt optional erhalten und wird derzeit von keiner Seite gesetzt.
@@ -37,9 +36,7 @@ export function Hero({
   lead: string;
   data: HeroData;
 }) {
-  const { ref, showStart } = useStagedInView<HTMLDivElement>(0.3);
   const { demo } = data;
-  const demoClass = `${styles.demo}${showStart ? ` ${styles.start}` : ""}`;
 
   return (
     <section className={styles.hero}>
@@ -82,7 +79,7 @@ export function Hero({
           </div>
         </div>
 
-        <div ref={ref} className={demoClass} aria-label={data.ariaLabel} role="img">
+        <div className={styles.demo} aria-label={data.ariaLabel} role="img">
           <div className={styles.browser} aria-hidden="true">
             <div className={styles.bar}>
               <i />
@@ -118,7 +115,9 @@ export function Hero({
                         <b>{r.name}</b>
                         <span>{r.sub}</span>
                       </div>
-                      <span className={`${styles.st}${r.statusVariant === "b" ? ` ${styles.stB}` : ""}`}>
+                      <span
+                        className={`${styles.st}${r.statusVariant === "b" ? ` ${styles.stB}` : ""}`}
+                      >
                         {r.status}
                       </span>
                     </div>

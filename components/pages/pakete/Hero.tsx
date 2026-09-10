@@ -1,5 +1,3 @@
-import { RevealLine } from "@/components/motion/RevealLine";
-import { Rise, RiseItem } from "@/components/motion/Rise";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { resolveCta } from "@/lib/links";
@@ -11,10 +9,13 @@ import styles from "./Hero.module.css";
  * die einzige `<h1>` der Seite, Lead und zwei CTAs; rechts der „Rückgrat"-Stapel
  * der vier Ausbaustufen.
  *
- * Bewegung nach 1.7: Der Stapel ist ein `Rise`-Container, die Stufen sind
- * `RiseItem`-Kinder – einmaliges, gestaffeltes Aufblenden. Der Endzustand steht im
- * Server-HTML (ohne JS voll sichtbar); `useReducedMotion` zeigt sofort den
- * Endzustand (Wrapper-Logik). Die grüne CTA nutzt die `Button`-Primitive (Grün-Regel);
+ * Bewegung („Pakete Hero-Rückgrat", Briefing 0015): Die Linie baut sich von oben auf,
+ * die vier Stufen staffeln sich daran entlang herein. Sie liegt vollständig im
+ * Modul-CSS und läuft ab dem ersten gemalten Frame – der Hero steht immer im
+ * Sichtfeld, ein erst nach der Hydration gesetzter Startzustand ließe ihn sichtbar
+ * rückwärts wegblinken (gemessen am 10.09.2026). Ohne JS und bei
+ * `prefers-reduced-motion` steht sofort der Endzustand; bewegt nur
+ * `opacity`/`transform` (kein CLS), läuft einmal./ Die grüne CTA nutzt die `Button`-Primitive (Grün-Regel);
  * der sekundäre Link ist die on-dark-Textaktion `.b2` mit zweiter Zeile.
  */
 export function Hero({
@@ -49,12 +50,11 @@ export function Hero({
         </div>
 
         <div className={styles.stackwrap}>
-          <Rise className={styles.stack}>
-            {/* Rückgrat-Linie: baut sich per RevealLine (scaleY) einmalig auf, dann
-                Endzustand; dekorativ, kein Stagger-Kind. */}
-            <RevealLine orientation="vertical" className={styles.spine} />
+          <div className={styles.stack}>
+            {/* Rückgrat-Linie: dekorativ, baut sich per CSS auf. */}
+            <span className={styles.spine} aria-hidden="true" />
             {data.stack.map((row) => (
-              <RiseItem
+              <div
                 key={row.name}
                 className={row.base ? `${styles.srow} ${styles.base}` : styles.srow}
               >
@@ -67,9 +67,9 @@ export function Hero({
                     <span key={tag}>{tag}</span>
                   ))}
                 </div>
-              </RiseItem>
+              </div>
             ))}
-          </Rise>
+          </div>
           <p className={styles.stackfoot}>{data.stackFoot}</p>
         </div>
       </div>

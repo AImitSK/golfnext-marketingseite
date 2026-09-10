@@ -1,14 +1,28 @@
 /* Portiert aus docs/design-system/mocks/3.5b-clubprozesse-neufassung.html
    (.hero/.demo/.browser/.site/.snav/.pstat/.news/.nitem/.phone/.log). Farben auf
    --gn-* umgestellt, literale Tints kommentiert. Große Flächen: --gn-radius-lg (12);
-   Bedienelemente 4 px. Bewegung: Der Endzustand (Platz bespielbar, alle News- und
-   Log-Zeilen sichtbar, Zusammenfassung eingeblendet) steht im Server-HTML → ohne JS
-   und bei prefers-reduced-motion sofort vollständig lesbar. Nur mit JS/ohne
-   Reduced-Motion setzt die Komponente kurz `.start` und löst es beim Sichtbarwerden
-   einmalig auf. Nur opacity/transform/background (kein CLS). */
+   Bedienelemente 4 px.
+
+   Bewegung (Briefing 0015): Der Platz springt auf "offen", die Turnier-News laufen
+   ein, die Firmen-Events schieben sich herein, zum Schluss die Summenzeile - als
+   **CSS-Animation ab dem ersten gemalten Frame**, nicht über einen JS-Klassenwechsel.
+
+   Warum nicht per JS: Der Hero steht immer im Sichtfeld. Das Server-HTML zeigt den
+   Endzustand und wird bei rund 250 ms gemalt, die Hydration kommt erst bei rund
+   430 ms; ein danach gesetzter Startzustand ließe den Hero sichtbar rückwärts
+   wegblinken. Gemessen am 10.09.2026 - davor lief die Choreografie gar nicht, weil
+   der Startzustand 17 ms nach dem Setzen wieder aufgelöst wurde.
+
+   Reduced Motion: `animation: none` → sofort der Endzustand. Läuft einmal, bewegt
+   nur opacity/transform/Farbe (kein CLS). */
 
 .hero {
-  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  background: linear-gradient(
+    160deg,
+    var(--gn-navy-deep) 0%,
+    var(--gn-navy) 58%,
+    #065877 100%
+  ); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
   color: #fff;
   position: relative;
   overflow: hidden; /* fängt den Bleed der Demo (width > 100%) ab → kein Seiten-Overflow */
@@ -17,7 +31,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
+  background: radial-gradient(
+    1000px 500px at 88% -10%,
+    rgba(127, 211, 240, 0.18),
+    transparent 62%
+  ); /* --gn-sky als Schein */
   pointer-events: none;
 }
 .in {
@@ -174,9 +192,18 @@
   border-radius: 8px;
   padding: 14px 16px;
   background: var(--gn-ok-bg);
-  transition:
-    border-color 0.5s ease,
-    background 0.5s ease;
+  animation: platzOeffnet 0.5s var(--gn-ease) both;
+}
+/* Der Platz springt von „geschlossen" (weiß, grauer Rahmen) auf „offen". */
+@keyframes platzOeffnet {
+  from {
+    border-color: var(--gn-line);
+    background: #fff;
+  }
+  to {
+    border-color: #cfe0d2;
+    background: var(--gn-ok-bg);
+  }
 }
 .pl {
   font-size: 10.5px;
@@ -202,22 +229,53 @@
   border-radius: 50%;
   background: var(--gn-signal); /* Signalgrün-Punkt (Grün-Regel: Punkt erlaubt) */
   display: block;
-  transition: background 0.5s ease;
+  animation: punktSpringtUm 0.5s var(--gn-ease) both;
 }
+/* Gedämpftes Gold „Wintergrüns/geschlossen" (Mock-Wert) → Signalgrün „offen". */
+@keyframes punktSpringtUm {
+  from {
+    background: #c9a14a;
+  }
+  to {
+    background: var(--gn-signal);
+  }
+}
+/* Textwechsel „geschlossen" → „offen": Beide Fassungen liegen im selben
+   Rasterfeld, das Feld ist so breit wie die längere - deshalb kein CLS. */
+.wechsel {
+  display: grid;
+}
+.wechsel > span {
+  grid-area: 1 / 1;
+}
+.vorher {
+  animation: textAus 0.5s var(--gn-ease) both;
+}
+.nachher {
+  animation: textAn 0.5s var(--gn-ease) both;
+}
+@keyframes textAus {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes textAn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .pt {
   font-size: 12px;
   color: var(--gn-muted);
   margin-top: 6px;
 }
-/* Ausgangszustand (nur transient mit JS): Platz „geschlossen" (gold), vor der Öffnung. */
-.start .pstat {
-  border-color: var(--gn-line);
-  background: #fff;
-}
-.start .pstat .pv i {
-  background: #c9a14a; /* gedämpftes Gold „Wintergrüns/geschlossen", Mock-Wert */
-}
-
 .news {
   display: flex;
   flex-direction: column;
@@ -231,24 +289,37 @@
   grid-template-columns: 64px minmax(0, 1fr);
   gap: 12px;
   align-items: center;
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+  animation: nachrichtEinlaufen 0.5s var(--gn-ease) both;
 }
+/* Dauern und Staffelungen stehen bewusst als feste Sekundenwerte hier und nicht als
+   `--gn-dur`: Sie sind 1:1 aus den transition-Deklarationen des Mocks übernommen und
+   bilden eine abgestimmte Erzähl-Zeitachse (Briefing 0015). Wer sie "vereinheitlicht",
+   zerschießt die Choreografie. Die Beschleunigung nutzt dagegen das Token. */
 .nitem:nth-child(2) {
-  transition-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 .nitem:nth-child(3) {
-  transition-delay: 1s;
+  animation-delay: 1s;
 }
-.start .nitem {
-  opacity: 0;
-  transform: translateY(10px);
+/* Turnier-News laufen von unten ein. */
+@keyframes nachrichtEinlaufen {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .nitem .pic {
   height: 48px;
   border-radius: 6px;
-  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  background: linear-gradient(
+    140deg,
+    #dce5dc,
+    #c3d2c6
+  ); /* grüntoniger Bild-Platzhalter, Mock-Werte */
 }
 .nitem b {
   display: block;
@@ -310,9 +381,18 @@
   font-size: 10.5px;
   color: var(--gn-ink);
   line-height: 1.35;
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
+  animation: terminEinlaufen 0.4s var(--gn-ease) both;
+}
+/* Firmen-Events schieben sich von rechts herein. */
+@keyframes terminEinlaufen {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .ev2:first-of-type {
   margin-top: 12px;
@@ -329,20 +409,16 @@
   font-size: 9.5px;
 }
 .ev2:nth-of-type(2) {
-  transition-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 .ev2:nth-of-type(3) {
-  transition-delay: 1s;
+  animation-delay: 1s;
 }
 .ev2:nth-of-type(4) {
-  transition-delay: 1.5s;
+  animation-delay: 1.5s;
 }
 .ev2:nth-of-type(5) {
-  transition-delay: 2s;
-}
-.start .ev2 {
-  opacity: 0;
-  transform: translateX(8px);
+  animation-delay: 2s;
 }
 .sum {
   margin-top: 10px;
@@ -353,10 +429,16 @@
   border-radius: var(--gn-radius-pill);
   padding: 5px 9px;
   text-align: center;
-  transition: opacity 0.4s ease 2.5s;
+  animation: summeEinblenden 0.4s var(--gn-ease) 2.5s both;
 }
-.start .sum {
-  opacity: 0;
+/* Zum Schluss die Summenzeile. */
+@keyframes summeEinblenden {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1180px) {
@@ -409,5 +491,22 @@
   }
   .in {
     padding: 70px 20px 116px;
+  }
+}
+
+/* Reduzierte Bewegung: sofort der Endzustand, keine Choreografie. */
+@media (prefers-reduced-motion: reduce) {
+  .pstat,
+  .pv i,
+  .vorher,
+  .nachher,
+  .nitem,
+  .ev2,
+  .sum {
+    animation: none;
+  }
+  /* Ohne Animation bliebe die Ausgangsfassung sichtbar über der Endfassung liegen. */
+  .vorher {
+    display: none;
   }
 }

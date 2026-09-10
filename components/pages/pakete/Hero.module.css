@@ -6,7 +6,12 @@
    „lit"-Endzustand (Signalgrün als Punkt – Grün-Regel ok). */
 
 .hero {
-  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  background: linear-gradient(
+    160deg,
+    var(--gn-navy-deep) 0%,
+    var(--gn-navy) 58%,
+    #065877 100%
+  ); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -15,7 +20,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(900px 420px at 86% -8%, rgba(127, 211, 240, 0.16), transparent 62%); /* --gn-sky als Schein */
+  background: radial-gradient(
+    900px 420px at 86% -8%,
+    rgba(127, 211, 240, 0.16),
+    transparent 62%
+  ); /* --gn-sky als Schein */
   pointer-events: none;
 }
 .in {
@@ -83,9 +92,11 @@
   position: relative;
   padding-left: 28px;
 }
-/* Rückgrat-Linie: baut sich per RevealLine (scaleY, transform-origin oben) einmalig
-   auf; Endzustand voll sichtbar, kein wandernder Puls. */
+/* Rückgrat-Linie: baut sich von oben nach unten auf (scaleY), Endzustand voll
+   sichtbar, kein wandernder Puls. Briefing 0015: „Linie/Knoten bauen sich auf". */
 .spine {
+  transform-origin: top center;
+  animation: rueckgratAufbauen var(--gn-dur) var(--gn-ease) both;
   position: absolute;
   left: 0;
   top: 14px;
@@ -95,15 +106,50 @@
   background: rgba(255, 255, 255, 0.13);
 }
 
+@keyframes rueckgratAufbauen {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
 .srow {
   position: relative;
+  animation: stufeEinlaufen var(--gn-dur) var(--gn-ease) both;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.05);
   padding: 15px 18px;
-  /* Endzustand sichtbar (kein opacity:0 im CSS – der Rise-Wrapper blendet nach Mount ein). */
   box-shadow: inset 0 0 0 1px rgba(0, 232, 5, 0.18); /* „lit"-Endzustand: dezenter Signalgrün-Rahmen */
 }
+/* Die vier Stufen staffeln sich am Rückgrat entlang nach oben herein. */
+@keyframes stufeEinlaufen {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.srow:nth-of-type(1) {
+  animation-delay: 0.12s;
+}
+.srow:nth-of-type(2) {
+  animation-delay: 0.24s;
+}
+.srow:nth-of-type(3) {
+  animation-delay: 0.36s;
+}
+.srow:nth-of-type(4) {
+  animation-delay: 0.48s;
+}
+
 /* Knoten am Rückgrat: Signalgrün als Punkt (Grün-Regel ok). */
 .srow::before {
   content: "";
@@ -183,5 +229,13 @@
   .in {
     padding-left: 20px;
     padding-right: 20px;
+  }
+}
+
+/* Reduzierte Bewegung: sofort der Endzustand. */
+@media (prefers-reduced-motion: reduce) {
+  .spine,
+  .srow {
+    animation: none;
   }
 }

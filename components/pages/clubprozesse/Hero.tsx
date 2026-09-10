@@ -1,6 +1,3 @@
-"use client";
-
-import { useStagedInView } from "@/components/motion/useStagedInView";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { resolveCta } from "@/lib/links";
@@ -15,14 +12,18 @@ import styles from "./Hero.module.css";
  * `.demo{width:…%}`); `.hero{overflow:hidden}` fängt den Seiten-Overflow ab (kein
  * horizontaler Scroll). Illustrative Oberfläche, kein echter Screenshot.
  *
- * Mikro-Animation (Motion-Infra, „einmal/dezent"): Der Sonntag „läuft ab" – der
- * Platzstatus öffnet sich, die Log-Zeilen und News-Karten laufen nacheinander ein,
- * am Ende erscheint die Zusammenfassung. Der ENDZUSTAND (Platz bespielbar, alles
- * sichtbar) steht im Server-HTML → ohne JS und bei `prefers-reduced-motion` sofort
- * vollständig lesbar. Nur mit JS und ohne reduzierte Bewegung wird nach Mount kurz der
- * Ausgangszustand (`.start`) gesetzt und beim Sichtbarwerden einmalig aufgelöst; der
- * Platzstatus zeigt dann kurz den Ausgangswert. Bewegt nur `opacity`/`transform`/
- * `background` (kein CLS).
+ * Mikro-Animation (Briefing 0015): Der Sonntag „läuft ab" – der Platzstatus öffnet
+ * sich (Farbe, Punkt und Text wechseln), die Turnier-News laufen ein, die Log-Zeilen
+ * schieben sich herein, am Ende erscheint die Zusammenfassung.
+ *
+ * Sie liegt vollständig im Modul-CSS und läuft ab dem ersten gemalten Frame. Der Hero
+ * steht immer im Sichtfeld; ein erst nach der Hydration gesetzter Startzustand ließe
+ * ihn sichtbar rückwärts wegblinken (gemessen, siehe Kommentar in Hero.module.css).
+ * Auch der Textwechsel läuft deshalb über CSS: Beide Fassungen stehen im HTML und
+ * werden übergeblendet. Ohne JS und bei `prefers-reduced-motion` steht sofort der
+ * Endzustand. Bewegt nur `opacity`/`transform`/Farbe (kein CLS), läuft einmal.
+ *
+ * Dadurch braucht der Hero **kein** JavaScript mehr: reine Server-Komponente.
  *
  * Seit Briefing 0031 trägt der Hero nur noch eine Aktion; die Prop `ctaSecondary`
  * bleibt optional erhalten und wird derzeit von keiner Seite gesetzt.
@@ -38,14 +39,8 @@ export function Hero({
   lead: string;
   data: HeroData;
 }) {
-  const { ref, showStart } = useStagedInView<HTMLDivElement>(0.3);
   const { demo } = data;
   const { site, log } = demo;
-  const demoClass = `${styles.demo}${showStart ? ` ${styles.start}` : ""}`;
-  // Platzstatus-Text folgt demselben Signal wie die Bewegung: transient (mit JS, vor
-  // dem Sichtbarwerden) der Ausgangswert, sonst der Endwert (SSR/ohne JS/reduziert).
-  const pstatValue = showStart ? site.pstatStartValue : site.pstatValue;
-  const pstatTime = showStart ? site.pstatStartTime : site.pstatTime;
 
   return (
     <section className={styles.hero}>
@@ -88,7 +83,7 @@ export function Hero({
           </div>
         </div>
 
-        <div ref={ref} className={demoClass} aria-label={data.ariaLabel} role="img">
+        <div className={styles.demo} aria-label={data.ariaLabel} role="img">
           <div className={styles.browser} aria-hidden="true">
             <div className={styles.bar}>
               <i />
@@ -108,11 +103,23 @@ export function Hero({
                   <div className={styles.sl}>{site.platzLabel}</div>
                   <div className={styles.pstat}>
                     <div className={styles.pl}>{site.pstatLabel}</div>
+                    {/* Beide Fassungen liegen im selben Rasterfeld übereinander und
+                        werden übergeblendet – der Text kann so mitlaufen, ohne dass
+                        JavaScript ihn nach der Hydration austauscht (das ließe ihn
+                        sichtbar umspringen) und ohne Layoutverschiebung: Das Feld ist
+                        immer so breit wie die längere der beiden Zeilen. Ohne JS und
+                        bei reduzierter Bewegung steht sofort der Endwert. */}
                     <div className={styles.pv}>
                       <i />
-                      <span>{pstatValue}</span>
+                      <span className={styles.wechsel}>
+                        <span className={styles.vorher}>{site.pstatStartValue}</span>
+                        <span className={styles.nachher}>{site.pstatValue}</span>
+                      </span>
                     </div>
-                    <div className={styles.pt}>{pstatTime}</div>
+                    <div className={`${styles.pt} ${styles.wechsel}`}>
+                      <span className={styles.vorher}>{site.pstatStartTime}</span>
+                      <span className={styles.nachher}>{site.pstatTime}</span>
+                    </div>
                   </div>
                 </div>
                 <div>

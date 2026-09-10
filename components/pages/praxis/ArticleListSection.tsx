@@ -55,7 +55,20 @@ export function ArticleListSection({
           />
         ) : (
           <>
-            <ArticleGrid artikel={blaetterung.artikel} />
+            {/* `key` erzwingt eine neue Montierung, sobald sich die Liste ändert.
+                Nötig, weil „Ältere Beiträge" und der Chip „Alle" nur den
+                Suchparameter wechseln – gleicher Pfad, also behält React den
+                Rise-Container. Dessen Scroll-Reveal ist mit `viewport={{ once:
+                true }}` bereits abgelaufen und meldet seinen Beobachter ab; die
+                neu montierten Karten erben `initial="hidden"` und blieben ohne
+                den Schlüssel dauerhaft unsichtbar (gemessen: opacity 0 trotz
+                vollem Sichtfeld). Beim Rubrikwechsel fällt das nicht auf, dort
+                wechselt das dynamische Segment und der Teilbaum wird ohnehin neu
+                montiert. */}
+            <ArticleGrid
+              key={`${aktiveRubrik ?? "alle"}-${blaetterung.seite}`}
+              artikel={blaetterung.artikel}
+            />
             <Pager pfad={pfad} naechsteSeite={blaetterung.naechsteSeite} />
           </>
         )}

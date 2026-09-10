@@ -74,9 +74,9 @@ test.describe("Praxis – Aufbau", () => {
     const toc = page.getByRole("navigation", { name: praxisLabels.inhalt });
     await expect(toc).toHaveCount(1);
     // Die Sprungmarken zeigen auf Überschriften, die es gibt.
-    const ziele = await toc.locator("a").evaluateAll((els) =>
-      els.map((el) => el.getAttribute("href") ?? ""),
-    );
+    const ziele = await toc
+      .locator("a")
+      .evaluateAll((els) => els.map((el) => el.getAttribute("href") ?? ""));
     expect(ziele.length).toBe(3);
     for (const ziel of ziele) {
       await expect(page.locator(ziel)).toHaveCount(1);
@@ -197,18 +197,24 @@ test.describe("Praxis – Nachbesserungen aus Stefans Preview-Durchgang (08.09.2
     test.skip(testInfo.project.name !== "w1440", "Nur ab 1024 px hat die Seite zwei Spalten");
 
     await page.goto(ARTIKEL);
-    const mitSpalte = await page.locator("main > div").nth(1).evaluate((el) => ({
-      spalten: getComputedStyle(el).gridTemplateColumns.split(" ").length,
-      breite: el.querySelector("article")!.getBoundingClientRect().width,
-    }));
+    const mitSpalte = await page
+      .locator("main > div")
+      .nth(1)
+      .evaluate((el) => ({
+        spalten: getComputedStyle(el).gridTemplateColumns.split(" ").length,
+        breite: el.querySelector("article")!.getBoundingClientRect().width,
+      }));
     expect(mitSpalte.spalten, "Artikel mit Inhaltsverzeichnis ist zweispaltig").toBe(2);
 
     await page.goto(`/praxis/${FIXTURE_ARTIKEL_KURZ_SLUG}`);
     await expect(page.locator("aside")).toHaveCount(0);
-    const ohneSpalte = await page.locator("main > div").nth(1).evaluate((el) => ({
-      spalten: getComputedStyle(el).gridTemplateColumns.split(" ").length,
-      breite: el.querySelector("article")!.getBoundingClientRect().width,
-    }));
+    const ohneSpalte = await page
+      .locator("main > div")
+      .nth(1)
+      .evaluate((el) => ({
+        spalten: getComputedStyle(el).gridTemplateColumns.split(" ").length,
+        breite: el.querySelector("article")!.getBoundingClientRect().width,
+      }));
     expect(ohneSpalte.spalten, "ohne Inhaltsverzeichnis einspaltig").toBe(1);
     expect(ohneSpalte.breite, "Text nimmt die frei gewordene Breite").toBeGreaterThan(
       mitSpalte.breite,
@@ -273,9 +279,9 @@ test.describe("Praxis – Nachbesserungen aus Stefans Preview-Durchgang (08.09.2
     const karten = page.locator("main a[href^='/praxis/beispielartikel-']");
     // Die Testdaten wechseln sich ab: mindestens eine Karte mit Foto, eine ohne.
     expect(await karten.locator("img").count()).toBeGreaterThan(0);
-    expect(await page.locator("main a[href^='/praxis/beispielartikel-'] i").count()).toBeGreaterThan(
-      0,
-    );
+    expect(
+      await page.locator("main a[href^='/praxis/beispielartikel-'] i").count(),
+    ).toBeGreaterThan(0);
   });
 });
 
@@ -292,10 +298,9 @@ test.describe("Praxis – Themenfilter und Blättern", () => {
     await expect(alle).toHaveAttribute("aria-current", "page");
 
     // Jede gefüllte Rubrik hat einen eigenen Link, die leere erscheint nicht.
-    await expect(filter.getByRole("link", { name: new RegExp(FIXTURE_RUBRIKEN[0].title) })).toHaveAttribute(
-      "href",
-      RUBRIK_MIT,
-    );
+    await expect(
+      filter.getByRole("link", { name: new RegExp(FIXTURE_RUBRIKEN[0].title) }),
+    ).toHaveAttribute("href", RUBRIK_MIT);
     await expect(
       filter.getByRole("link", { name: new RegExp(FIXTURE_RUBRIKEN[2].title) }),
     ).toHaveCount(0);
@@ -323,6 +328,61 @@ test.describe("Praxis – Themenfilter und Blättern", () => {
     await expect(page.getByRole("link", { name: praxisLabels.aeltereBeitraege })).toHaveCount(0);
   });
 
+  /**
+   * Regression: Nach dem Blättern blieben die Karten unsichtbar (gemeldet
+   * 10.09.2026, live reproduziert). „Ältere Beiträge" und der Chip „Alle" wechseln
+   * nur den Suchparameter – gleicher Pfad, also behält React den Rise-Container.
+   * Dessen Scroll-Reveal (`viewport={{ once: true }}`) war schon abgelaufen, die neu
+   * montierten Karten erbten `initial="hidden"` und standen dauerhaft auf
+   * `opacity: 0`.
+   *
+   * Warum die vorhandenen Prüfungen das nicht gefangen haben: `toHaveCount` zählt
+   * das DOM, und Playwrights `toBeVisible` wertet `opacity: 0` als sichtbar. Geprüft
+   * wird deshalb die **tatsächliche Deckkraft** samt aller Elternelemente.
+   */
+  test("nach dem Blättern und zurück auf „Alle“ sind die Karten wirklich sichtbar", async ({
+    page,
+  }) => {
+    /** Kleinste Deckkraft aller Karten, Elternkette eingerechnet. */
+    const kleinsteDeckkraft = () =>
+      page.evaluate(() => {
+        const karten = [...document.querySelectorAll("main a[href^='/praxis/beispielartikel-']")];
+        if (karten.length === 0) return null;
+        return Math.min(
+          ...karten.map((karte) => {
+            let deckkraft = 1;
+            let knoten: Element | null = karte;
+            while (knoten && knoten !== document.body) {
+              deckkraft *= Number(getComputedStyle(knoten).opacity);
+              knoten = knoten.parentElement;
+            }
+            return deckkraft;
+          }),
+        );
+      });
+
+    await page.goto(LISTE);
+    expect(await kleinsteDeckkraft(), "Seite 1 nach dem Laden").toBeGreaterThan(0.95);
+
+    await page.getByRole("link", { name: praxisLabels.aeltereBeitraege }).click();
+    await expect(page).toHaveURL(/\?seite=2$/);
+    await expect(page.locator("main a[href^='/praxis/beispielartikel-']")).toHaveCount(3);
+    // Der Reveal darf laufen – danach muss er fertig sein, nicht bei null stehen.
+    await expect
+      .poll(kleinsteDeckkraft, { message: "Seite 2 nach Klick auf „Ältere Beiträge“" })
+      .toBeGreaterThan(0.95);
+
+    await page
+      .getByRole("navigation", { name: praxisLabels.themen })
+      .getByRole("link", { name: praxisLabels.alle, exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/praxis$/);
+    await expect(page.locator("main a[href^='/praxis/beispielartikel-']")).toHaveCount(9);
+    await expect
+      .poll(kleinsteDeckkraft, { message: "Seite 1 nach Klick auf den Chip „Alle“" })
+      .toBeGreaterThan(0.95);
+  });
+
   test("die Rubrik mit einem Artikel blättert nicht", async ({ page }) => {
     await page.goto(`/praxis/thema/${FIXTURE_RUBRIKEN[1].slug}`);
     await expect(page.locator("main a[href^='/praxis/beispielartikel-']")).toHaveCount(1);
@@ -331,7 +391,9 @@ test.describe("Praxis – Themenfilter und Blättern", () => {
 });
 
 test.describe("Praxis – Leerzustand", () => {
-  test("eine Rubrik ohne Artikel zeigt den Leerzustand aus lib/ui/messages.ts", async ({ page }) => {
+  test("eine Rubrik ohne Artikel zeigt den Leerzustand aus lib/ui/messages.ts", async ({
+    page,
+  }) => {
     // Beim Abnehmen ist das der Normalfall: Fred hat noch nichts veröffentlicht.
     const response = await page.goto(`/praxis/thema/${FIXTURE_RUBRIKEN[2].slug}`);
     expect(response?.status(), "keine Fehlerseite, kein 404").toBe(200);
@@ -471,7 +533,10 @@ test.describe("Praxis – Technik", () => {
         .evaluateAll((els) => els.map((el) => Number(el.tagName.slice(1))));
       expect(ebenen[0], `${pfad} beginnt mit h1`).toBe(1);
       for (let i = 1; i < ebenen.length; i += 1) {
-        expect(ebenen[i]! - ebenen[i - 1]!, `${pfad}: Sprung bei Überschrift ${i}`).toBeLessThanOrEqual(1);
+        expect(
+          ebenen[i]! - ebenen[i - 1]!,
+          `${pfad}: Sprung bei Überschrift ${i}`,
+        ).toBeLessThanOrEqual(1);
       }
     }
   });

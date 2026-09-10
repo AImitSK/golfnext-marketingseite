@@ -6,7 +6,12 @@
    Sichtbarwerden auf. Nur opacity/transform (kein CLS). */
 
 .hero {
-  background: linear-gradient(160deg, var(--gn-navy-deep) 0%, var(--gn-navy) 58%, #065877 100%); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
+  background: linear-gradient(
+    160deg,
+    var(--gn-navy-deep) 0%,
+    var(--gn-navy) 58%,
+    #065877 100%
+  ); /* #065877: heller Navy-Ausklang, 1:1 aus Mock */
   color: #fff;
   position: relative;
   overflow: hidden; /* fängt den Bleed der Demo (width > 100%) ab → kein Seiten-Overflow */
@@ -15,7 +20,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(1000px 500px at 88% -10%, rgba(127, 211, 240, 0.18), transparent 62%); /* --gn-sky als Schein */
+  background: radial-gradient(
+    1000px 500px at 88% -10%,
+    rgba(127, 211, 240, 0.18),
+    transparent 62%
+  ); /* --gn-sky als Schein */
   pointer-events: none;
 }
 .in {
@@ -239,7 +248,10 @@
   opacity: 0;
   transform: translateY(10px);
 }
-.av {
+/* `.crmrow .av` wie im Mock (3.4b), nicht nur `.av`: sonst überstimmt die spätere
+   Regel `.crmrow span { color: muted }` die weiße Kürzelfarbe und die Kürzel
+   verschwinden auf dem Navy-Kreis. */
+.crmrow .av {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -320,7 +332,11 @@
 .im {
   height: 118px;
   border-radius: 8px;
-  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  background: linear-gradient(
+    140deg,
+    #dce5dc,
+    #c3d2c6
+  ); /* grüntoniger Bild-Platzhalter, Mock-Werte */
   margin: 11px 0 10px;
   position: relative;
 }

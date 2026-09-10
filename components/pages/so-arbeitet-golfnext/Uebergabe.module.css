@@ -50,7 +50,10 @@
   align-items: center;
   margin-bottom: 16px;
 }
-.av {
+/* `.prof .av` wie im Mock (3.3b), nicht nur `.av`: sonst überstimmt die spätere Regel
+   `.prof span { color: muted }` die weiße Kürzelfarbe und die Kürzel verschwinden
+   auf dem Navy-Kreis. */
+.prof .av {
   width: 44px;
   height: 44px;
   border-radius: 50%;

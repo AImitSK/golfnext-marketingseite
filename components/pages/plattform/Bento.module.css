@@ -102,7 +102,10 @@
   opacity: 0;
   transform: translateY(10px);
 }
-.av {
+/* `.crmrow .av` wie im Mock (3.2c), nicht nur `.av`: sonst überstimmt die spätere
+   Regel `.crmrow span { color: muted }` die weiße Kürzelfarbe (höhere Spezifität)
+   und die Kürzel verschwinden auf dem Navy-Kreis. */
+.crmrow .av {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -182,7 +185,9 @@
 }
 .t2 {
   font-size: 11px;
-  color: var(--gn-ok); /* gedämpftes Grün (nicht Signalgrün) – Erfolgshinweis, auf hellem Grund erlaubt */
+  color: var(
+    --gn-ok
+  ); /* gedämpftes Grün (nicht Signalgrün) – Erfolgshinweis, auf hellem Grund erlaubt */
   text-align: center;
   transition: opacity 0.4s ease;
   transition-delay: 1.4s;

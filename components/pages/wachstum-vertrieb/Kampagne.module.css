@@ -102,7 +102,11 @@
 .adprev .pic {
   height: 72px;
   border-radius: 6px;
-  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  background: linear-gradient(
+    140deg,
+    #dce5dc,
+    #c3d2c6
+  ); /* grüntoniger Bild-Platzhalter, Mock-Werte */
 }
 .adprev b {
   display: block;
@@ -161,7 +165,11 @@
 .ad .pic {
   height: 96px;
   border-radius: 6px;
-  background: linear-gradient(140deg, #dce5dc, #c3d2c6); /* grüntoniger Bild-Platzhalter, Mock-Werte */
+  background: linear-gradient(
+    140deg,
+    #dce5dc,
+    #c3d2c6
+  ); /* grüntoniger Bild-Platzhalter, Mock-Werte */
   position: relative;
   margin-bottom: 8px;
 }
@@ -214,7 +222,10 @@
   gap: 14px;
   align-items: center;
 }
-.cav {
+/* `.card .cav` wie im Mock (3.4b `.dev .card .av`), nicht nur `.cav`: sonst überstimmt
+   die spätere Regel `.card span { color: muted }` die weiße Kürzelfarbe und die
+   Kürzel verschwinden auf dem Navy-Kreis. */
+.card .cav {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -291,7 +302,10 @@
   gap: 11px;
   align-items: center;
 }
-.rav {
+/* `.crmrow .rav` wie im Mock (3.4b `.crmrow .av`), nicht nur `.rav`: sonst überstimmt
+   die spätere Regel `.crmrow span { color: muted }` die weiße Kürzelfarbe und die
+   Kürzel verschwinden auf dem Navy-Kreis. */
+.crmrow .rav {
   width: 34px;
   height: 34px;
   border-radius: 50%;

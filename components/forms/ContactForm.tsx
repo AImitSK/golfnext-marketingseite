@@ -6,7 +6,6 @@ import { submitContact } from "@/app/actions/contact";
 import { initialContactState, type ContactState } from "@/lib/forms/contact-state";
 import { Alert } from "@/components/feedback/Alert";
 import { Button } from "@/components/ui/Button";
-import { TextLink } from "@/components/ui/TextLink";
 import {
   KONTAKT_AUSWAHL_LEER,
   KONTAKT_ROLLEN,
@@ -77,7 +76,6 @@ export function ContactForm({
   ts,
   texte,
   datenschutzHref,
-  buchungHref,
 }: {
   /** Signierter Zeitstempel, vom Server gerendert (Spam-Stufe A). */
   ts: string;
@@ -91,8 +89,6 @@ export function ContactForm({
    * gebaut ist – ohne Codeänderung. Der Wortlaut bleibt in beiden Fällen gleich.
    */
   datenschutzHref: string;
-  /** Buchungsweg für den Folge-Link im Erfolgsalert. */
-  buchungHref?: string;
 }) {
   const [state, formAction, isPending] = useActionState(submitContact, initialContactState);
   // Mindestanzeige: Der Ladezustand bleibt nach dem Absenden mindestens 400 ms
@@ -213,17 +209,13 @@ export function ContactForm({
           <span className={styles.successTitle}>{formMessages.form.success.title}</span>
           <span>{formMessages.form.success.text}</span>
         </Alert>
-        {buchungHref ? (
-          <p className={styles.successLink}>
-            <TextLink href={buchungHref}>{formMessages.form.success.link}</TextLink>
-          </p>
-        ) : null}
       </div>
     );
   }
 
   // Kommt eine echte Antwort, gewinnt sie über die Netzmeldung der Zeitüberschreitung.
-  const formError = state.status === "error" ? state.formError : zeitueberschreitung ? "network" : undefined;
+  const formError =
+    state.status === "error" ? state.formError : zeitueberschreitung ? "network" : undefined;
   const felder = texte.felder;
   const einwilligungFehler = errorOf("einwilligung");
 

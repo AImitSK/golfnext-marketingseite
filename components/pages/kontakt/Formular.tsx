@@ -3,7 +3,6 @@ import { FRED } from "@/lib/people";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { KONTAKT } from "@/config/site-structure";
 import type { FormularData, SeitenspalteData } from "@/content/kontakt";
-import { resolveCta } from "@/lib/links";
 import styles from "./Formular.module.css";
 
 /** Hörer, fix 17 px. */
@@ -64,7 +63,6 @@ export function Formular({
   datenschutzHref: string;
 }) {
   const telHref = `tel:${KONTAKT.telefon.replace(/\s+/g, "")}`;
-  const buchung = resolveCta({ label: "", target: "erstgespraech" });
 
   return (
     <section className={styles.section}>
@@ -78,7 +76,6 @@ export function Formular({
             datenschutzHref={datenschutzHref}
             // Der Folge-Link im Erfolgsalert nur, wenn es einen echten Buchungsweg
             // gibt – sonst zeigte er auf diese Seite zurück (Fallback aus lib/links).
-            buchungHref={buchung === "/kontakt" ? undefined : buchung}
           />
         </div>
 
@@ -86,7 +83,14 @@ export function Formular({
           <div className={styles.person}>
             <span className={styles.avatar}>
               {/* Echtes Porträt (seit 07.09.2026); Name und Rolle stehen darunter. */}
-              <Image src={FRED.quadrat} alt="" width={64} height={64} className={styles.avatarFoto} unoptimized />
+              <Image
+                src={FRED.quadrat}
+                alt=""
+                width={64}
+                height={64}
+                className={styles.avatarFoto}
+                unoptimized
+              />
             </span>
             <b className={styles.personName}>{KONTAKT.name}</b>
             <p className={styles.personRole}>{seitenspalte.rolleLang}</p>

@@ -68,7 +68,7 @@ docs/  brand/  (siehe README)
 
 - **Server Components zuerst.** `'use client'` nur für Interaktion (Akkordeon, Tabs, Dropdown, Consent, Animations-Klassen). Client-Komponenten so klein wie möglich, Inhalte per Props/Children hineinreichen.
 - **Texte** liegen in `content/<seite>.ts` (statische Seiten) oder in Sanity (Ratgeber, FAQ), nie im JSX. Keine i18n-Schicht.
-- **CTA-Ziele** kommen aus `process.env.NEXT_PUBLIC_BOOKING_URL` über `lib/links.ts`. Fehlt der Wert, rendert der Button einen sinnvollen Fallback (Kontakt), nie einen leeren Link. (`NEXT_PUBLIC_LIVE_DEMO_URL` ist mit Briefing 0031 am 08.09.2026 entfallen.)
+- **CTA-Ziele** löst `lib/links.ts` auf, nie hart kodiert im JSX. `target: "erstgespraech"` führt auf `/kontakt`. (`NEXT_PUBLIC_LIVE_DEMO_URL` ist mit Briefing 0031 am 08.09.2026 entfallen, `NEXT_PUBLIC_BOOKING_URL` am 10.09.2026 – es gibt keinen externen Buchungsweg mehr.)
 - **Bilder** über `next/image`; Sanity-Bilder mit Loader aus `lib/sanity/image.ts`. Platzhalter über `Shot`.
 - **Animationen** mit `motion/react`, nur `opacity`/`transform`, Höhen reserviert, einmalig (`viewport.once`), `useReducedMotion` respektiert; Server-HTML rendert den Endzustand, damit die Seite ohne JS vollständig lesbar bleibt.
 - **Barrierefreiheit:** semantische Landmarks, eine H1, sichtbarer Fokus, `aria-expanded`/`aria-controls` an Akkordeons, Icon-Links mit `aria-label`, Kontraste nach WCAG AA (Grün-Regel!).

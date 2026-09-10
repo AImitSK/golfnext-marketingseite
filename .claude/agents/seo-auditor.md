@@ -15,7 +15,7 @@ Prüfe je geänderte Route:
 2. **Struktur.** Genau eine H1 mit dem Briefing-Wortlaut, H2/H3 ohne Sprünge.
 3. **Interne Links (kritisch).** Nur Routen mit Status `live` in `site-structure.ts`. Links auf `wartet-auf-briefing`-Routen (Praxis, Team,
    Kontakt, Modulseiten) → FAIL, es sei denn, die Zielroute rendert eine noindex-Platzhalterseite **und** der Launch-Umfang (`docs/10-launch-umfang.md`)
-   erlaubt sie. CTA-Ziele aus `.env` (`NEXT_PUBLIC_BOOKING_URL`, `NEXT_PUBLIC_LIVE_DEMO_URL`) mit sinnvollem Fallback, kein leeres `href`.
+   erlaubt sie. CTA-Ziele über `resolveCta` (`lib/links.ts`), kein leeres `href`. Buchungs- und Live-Demo-Variablen gibt es nicht mehr.
 4. **JSON-LD.** `Organization` global; `FAQPage` auf `/pakete`; `Article` auf Ratgeber-Artikeln; `BreadcrumbList` auf Unterseiten. Valide, keine erfundenen Werte (z. B. `aggregateRating`).
 5. **Bilder.** `alt` vorhanden; `Shot`-Platzhalter tragen `aria-label` mit der Bildbeschreibung.
 6. **Sitemap/robots.** Konsistent mit `site-structure.ts`; `/studio`, `/api`, `/_bausteine`, Platzhalter-Routen ausgeschlossen; Preview `noindex`.

@@ -2,17 +2,15 @@ import { isLinkable } from "@/config/site-structure";
 import type { Cta } from "@/content/types";
 
 /**
- * CTA-Ziele werden nie hart kodiert. Der Buchungslink kommt aus der Umgebung
- * (NEXT_PUBLIC_BOOKING_URL). Fehlt der Wert, rendert der Button den Fallback /kontakt –
- * nie einen leeren Link (docs/01-architektur.md, Konventionen).
+ * CTA-Ziele werden nie hart kodiert (docs/01-architektur.md, Konventionen).
+ *
+ * **Der Buchungsweg ist am 10.09.2026 entfallen** (Entscheidung Stefan): Es gibt kein
+ * cal.com und keine `NEXT_PUBLIC_BOOKING_URL` mehr. Wer ein Erstgespräch möchte,
+ * kommt aufs Kontaktformular – ein Weg, den Fred ohne fremdes Werkzeug bedient.
+ * `target: "erstgespraech"` bleibt in `content/*` als Absicht stehen und löst hier
+ * auf `/kontakt` auf; die Beschriftungen der Schaltflächen ändern sich dadurch nicht.
  */
 const FALLBACK = "/kontakt";
-
-/** Buchungslink für das Online-Erstgespräch; Fallback Kontaktseite. */
-export function bookingUrl(): string {
-  const url = process.env.NEXT_PUBLIC_BOOKING_URL?.trim();
-  return url ? url : FALLBACK;
-}
 
 /**
  * Interner Teaser-Link mit Live-Gate: Zeigt auf `path`, solange die Ziel-Route
@@ -49,7 +47,7 @@ export function ctaLinkProps(cta: Cta): { href: string; "data-gn-cta"?: string }
 export function resolveCta(cta: Cta): string {
   switch (cta.target) {
     case "erstgespraech":
-      return bookingUrl();
+      return FALLBACK;
     case "pakete":
       return "/pakete";
     case "kontakt":

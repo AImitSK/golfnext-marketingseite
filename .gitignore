@@ -43,3 +43,6 @@ Thumbs.db
 
 # Ausgangszustand des Projektgerüsts (Neustart von null) – nicht committen
 Template/
+
+# Lokale Git-Worktrees (z. B. .claude/worktrees/) gehoeren nicht ins Repository.
+.claude/worktrees/

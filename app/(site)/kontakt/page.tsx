@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Anschrift } from "@/components/pages/kontakt/Anschrift";
 import { Formular } from "@/components/pages/kontakt/Formular";
 import { Hero } from "@/components/pages/kontakt/Hero";
-import { Wege } from "@/components/pages/kontakt/Wege";
 import { Footer } from "@/components/site/Footer";
 import {
   kontakt,
@@ -10,7 +9,6 @@ import {
   kontaktFormular,
   kontaktHero,
   kontaktSeitenspalte,
-  kontaktWege,
 } from "@/content/kontakt";
 import { signTimestamp } from "@/lib/forms/spam";
 import { routeMetadata } from "@/lib/metadata";
@@ -50,7 +48,6 @@ function section(id: string) {
 export default function KontaktPage() {
   const hero = section("hero");
   const formular = section("formular");
-  const wege = section("wege");
   const anschrift = section("anschrift");
 
   return (
@@ -73,13 +70,6 @@ export default function KontaktPage() {
         // stehen: Wäre die Route nicht live, stünde das Wort als Text da statt als
         // toter Link (wie Anschrift und Footer). Der Wortlaut bleibt unverändert.
         datenschutzHref={internalHref("/datenschutz")}
-      />
-
-      <Wege
-        eyebrow={wege.eyebrow!}
-        headline={wege.headline!}
-        lead={wege.text![0]!}
-        data={kontaktWege}
       />
 
       <Anschrift

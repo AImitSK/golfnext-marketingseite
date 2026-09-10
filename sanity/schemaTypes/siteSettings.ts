@@ -32,12 +32,6 @@ export const siteSettings = defineType({
       description: "Zum Beispiel ein Hinweis zur üblichen Reaktionszeit.",
     }),
     defineField({
-      name: "bookingUrl",
-      title: "Buchungslink (Online-Erstgespräch)",
-      type: "url",
-      validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
-    }),
-    defineField({
       name: "linkedin",
       title: "LinkedIn-Profil",
       type: "url",

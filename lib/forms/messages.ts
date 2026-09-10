@@ -59,8 +59,6 @@ export const formMessages = {
     success: {
       title: "Vielen Dank – Ihre Anfrage ist eingegangen.",
       text: "Fred Hoffmann meldet sich innerhalb eines Werktags persönlich.",
-      // Folge-Link zur Buchung (docs/06 §Zustände, „Erfolg"): Wortlaut aus derselben Zeile.
-      link: "Oder direkt einen Termin wählen",
     },
   },
 } as const;

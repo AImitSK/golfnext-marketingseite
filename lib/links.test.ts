@@ -1,32 +1,18 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import type { Cta } from "@/content/types";
-import { bookingUrl, resolveCta } from "./links";
-
-const ORIGINAL = { ...process.env };
-
-beforeEach(() => {
-  delete process.env.NEXT_PUBLIC_BOOKING_URL;
-});
-
-afterEach(() => {
-  process.env = { ...ORIGINAL };
-});
-
-describe("bookingUrl", () => {
-  it("nutzt den Fallback /kontakt, wenn keine URL gesetzt ist", () => {
-    expect(bookingUrl()).toBe("/kontakt");
-  });
-
-  it("nutzt die gesetzte Buchungs-URL", () => {
-    process.env.NEXT_PUBLIC_BOOKING_URL = "https://calendly.com/golfnext";
-    expect(bookingUrl()).toBe("https://calendly.com/golfnext");
-  });
-});
+import { resolveCta } from "./links";
 
 describe("resolveCta", () => {
-  it("löst erstgespraech über die Buchungs-URL auf", () => {
+  // Der Buchungsweg ist am 10.09.2026 entfallen (Entscheidung Stefan): kein cal.com,
+  // keine NEXT_PUBLIC_BOOKING_URL. Das Erstgespräch läuft über das Kontaktformular.
+  it("löst erstgespraech auf das Kontaktformular auf", () => {
+    expect(resolveCta({ label: "x", target: "erstgespraech" })).toBe("/kontakt");
+  });
+
+  it("ignoriert eine gesetzte NEXT_PUBLIC_BOOKING_URL", () => {
     process.env.NEXT_PUBLIC_BOOKING_URL = "https://buchung.golfnext.de";
-    expect(resolveCta({ label: "x", target: "erstgespraech" })).toBe("https://buchung.golfnext.de");
+    expect(resolveCta({ label: "x", target: "erstgespraech" })).toBe("/kontakt");
+    delete process.env.NEXT_PUBLIC_BOOKING_URL;
   });
 
   it("löst interne Ziele über href auf", () => {

@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { kontaktWege } from "../../content/kontakt";
 import { LIVE } from "../../config/site-structure";
 
 /**
@@ -49,7 +48,10 @@ test.describe("Hero: genau eine Aktion, und die führt zum Erstgespräch", () =>
       await page.goto(route);
 
       // Der Hero ist der Abschnitt mit der einzigen <h1> der Seite.
-      const hero = page.locator("main section").filter({ has: page.locator("h1") }).first();
+      const hero = page
+        .locator("main section")
+        .filter({ has: page.locator("h1") })
+        .first();
       await expect(hero.locator("h1")).toHaveCount(1);
 
       const aktionen = hero.getByRole("link");
@@ -74,35 +76,12 @@ test.describe("Keine Seite verweist mehr auf eine Demo", () => {
   }
 });
 
-const WEGE_H2 = "Nicht jeder schreibt gern ein Formular.";
-
-test("Kontaktseite: zwei Wege, kein Loch im Raster", async ({ page }, testInfo) => {
+// Der Abschnitt „Andere Wege zu uns" ist am 10.09.2026 entfallen (Entscheidung
+// Stefan): Ohne cal.com gäbe es dort nur noch den Anruf, und „Termin aussuchen"
+// hätte von der Kontaktseite auf sie selbst gezeigt. Die Nummer steht weiterhin in
+// der Anschrift; geprüft wird das in tests/e2e/kontakt.spec.ts.
+test("Kontaktseite: die Wege-Sektion ist entfallen", async ({ page }) => {
   await page.goto("/kontakt");
-  expect(kontaktWege).toHaveLength(2);
-
-  // Der Satz darüber bleibt bis auf das Zahlwort wortgleich (Entscheidung Stefan,
-  // 08.09.2026); die Headline ist unverändert freigegebener Text.
-  await expect(page.getByRole("heading", { name: WEGE_H2 })).toBeVisible();
-
-  const karten = page
-    .locator("section")
-    .filter({ has: page.getByRole("heading", { name: WEGE_H2 }) })
-    .getByRole("link");
-  await expect(karten).toHaveCount(kontaktWege.length);
-
-  // Kein leerer dritter Platz: Das Raster steht ab 900 px auf zwei Spalten (beide
-  // Karten auf einer Höhe, gleich breit), darunter gestapelt auf voller Breite.
-  const boxen = await karten.evaluateAll((els) =>
-    els.map((el) => {
-      const karte = el.closest("div");
-      const r = (karte ?? el).getBoundingClientRect();
-      return { top: Math.round(r.top), breite: Math.round(r.width) };
-    }),
-  );
-  const breite = testInfo.project.use.viewport!.width;
-  const zeilen = new Set(boxen.map((b) => b.top)).size;
-  expect(zeilen, breite > 900 ? "beide Wege auf einer Höhe" : "beide Wege gestapelt").toBe(
-    breite > 900 ? 1 : kontaktWege.length,
-  );
-  expect(new Set(boxen.map((b) => b.breite)).size, "beide Wege gleich breit").toBe(1);
+  await expect(page.getByText("Nicht jeder schreibt gern ein Formular.")).toHaveCount(0);
+  await expect(page.getByText("Andere Wege zu uns")).toHaveCount(0);
 });

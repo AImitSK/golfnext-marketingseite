@@ -66,11 +66,10 @@ test.describe("/danke · Struktur und Overflow", () => {
     await expect(zurueck).toBeVisible();
     await expect(zurueck).toHaveAttribute("href", "/");
 
-    // Der Folge-Link zur Terminwahl erscheint nur mit echtem Buchungsweg. In den
-    // Testfassungen ist NEXT_PUBLIC_BOOKING_URL nicht gesetzt, `bookingUrl()` fällt
-    // deshalb auf `/kontakt` zurück – und dann darf der Link fehlen, statt auf das
-    // gerade abgeschickte Formular zurückzuzeigen.
-    await expect(page.getByRole("link", { name: formMessages.form.success.link })).toHaveCount(0);
+    // Einen Folge-Link zur Terminwahl gibt es seit dem 10.09.2026 nicht mehr: Der
+    // Buchungsweg ist entfallen, und ein Link auf /kontakt hätte auf das gerade
+    // abgeschickte Formular zurückgezeigt.
+    await expect(page.getByRole("link", { name: /Termin/i })).toHaveCount(0);
 
     // Keine H2/H3 – die Seite hat bewusst keine weitere Gliederung, also auch
     // keine Sprünge in der Überschriftenfolge.

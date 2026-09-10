@@ -3,6 +3,12 @@
 
 .section {
   padding: var(--gn-section-y-lg) 0; /* 120px */
+  /* Bewusste Abweichung vom Mock (dort `.psec` ohne Fläche, Z. 452): Die Anschrift
+     übernimmt die Mist-Fläche, die bis zum 10.09.2026 der Abschnitt „Andere Wege zu
+     uns" trug (`.psec.mist`, Z. 423). Der Mock wechselt paper → mist → paper; ohne
+     diesen Wechsel stießen Formular und Anschrift als zwei gleich helle Flächen
+     ohne jede Zäsur aneinander. Vermerkt in docs/03-seiten-und-routen.md. */
+  background: var(--gn-mist);
 }
 .wrap {
   max-width: var(--gn-wrap-wide);

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { MeldungsSeite } from "@/components/site/PlatzhalterSeite";
 import { Button } from "@/components/ui/Button";
-import { TextLink } from "@/components/ui/TextLink";
 import { formMessages } from "@/lib/forms/messages";
-import { bookingUrl } from "@/lib/links";
 import { routeMetadata } from "@/lib/metadata";
 import { uiMessages } from "@/lib/ui/messages";
 
@@ -32,8 +30,7 @@ import { uiMessages } from "@/lib/ui/messages";
 export const metadata: Metadata = routeMetadata("/danke");
 
 export default function DankePage() {
-  const { title, text, link } = formMessages.form.success;
-  const buchung = bookingUrl();
+  const { title, text } = formMessages.form.success;
 
   return (
     <MeldungsSeite titel={title} body={text}>
@@ -42,10 +39,6 @@ export default function DankePage() {
       <Button variant="ghost" href="/">
         {uiMessages.platzhalter.actionHome}
       </Button>
-      {/* Der Folge-Link nur, wenn es einen echten Buchungsweg gibt – sonst zeigte
-          er über den Fallback auf `/kontakt` zurück, also auf das Formular, das
-          gerade abgeschickt wurde (wie im Erfolgsalert, Briefing 0025). */}
-      {buchung !== "/kontakt" ? <TextLink href={buchung}>{link}</TextLink> : null}
     </MeldungsSeite>
   );
 }

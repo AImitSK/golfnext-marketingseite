@@ -15,8 +15,9 @@ import type { FieldMessageKey } from "./messages";
  * so bleibt der Wortlaut an genau einer Stelle (CLAUDE.md: keine freien Meldungstexte).
  *
  * Es gibt bewusst KEIN Wunschzeit-Feld und KEIN Newsletter-Feld (Entscheidung
- * Stefan, 07.09.2026: Termine laufen über cal.com; der Hero verspricht ausdrücklich
- * „Keine Anmeldung zu irgendeinem Newsletter").
+ * Stefan, 07.09.2026). Den Termin stimmt Fred in seiner Antwort ab – seit dem
+ * 10.09.2026 gibt es dafür auch kein Buchungswerkzeug mehr. Und der Hero verspricht
+ * ausdrücklich „Keine Anmeldung zu irgendeinem Newsletter".
  */
 
 /** Maximale Feldlängen – auch die Grundlage der Payload-Anomalie-Prüfung (Stufe A). */

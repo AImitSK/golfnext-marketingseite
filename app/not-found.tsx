@@ -33,7 +33,7 @@ import { uiMessages } from "@/lib/ui/messages";
 export default function NotFound() {
   const { title, body, actionHome, actionContact } = uiMessages.notFound;
 
-  // CTA-Ziel nie hart kodiert: Label aus site-structure, URL über resolveCta/bookingUrl.
+  // CTA-Ziel nie hart kodiert: Label aus site-structure, URL über resolveCta.
   const cta: Cta = {
     label: actionContact,
     hint: CTA.erstgespraech.hint,

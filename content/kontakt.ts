@@ -1,4 +1,4 @@
-import type { Cta, PageContent } from "./types";
+import type { PageContent } from "./types";
 
 /**
  * Kontakt · /kontakt
@@ -164,36 +164,6 @@ export const kontaktSeitenspalte: SeitenspalteData = {
   },
 };
 
-/* ────────────────────────── 3 · Wege ────────────────────────── */
-
-/** Ein Weg mit Icon-Kennung, Titel, Text und Verweis. */
-export interface WegData {
-  /** Wählt das Icon in der Komponente (Kalender · Hörer). */
-  icon: "kalender" | "telefon";
-  headline: string;
-  text: string;
-  /** `telefon` löst die Nummer aus KONTAKT als `tel:`-Link auf. */
-  cta: Cta | { label: null; target: "telefon" };
-}
-
-export const kontaktWege: WegData[] = [
-  {
-    icon: "kalender",
-    headline: "Online-Erstgespräch",
-    text: "30 Minuten per Zoom oder Teams. Wir schauen auf Ihre Ziele, Ihre größten Hebel und ob GolfNext überhaupt zu Ihrem Club passt. Termin selbst wählen.",
-    cta: { label: "Termin aussuchen", target: "erstgespraech" },
-  },
-  {
-    icon: "telefon",
-    headline: "Einfach anrufen",
-    // Die Nummer steht im Mock im Fließtext – sie bleibt wortgleich stehen und wird
-    // NICHT durch KONTAKT.telefon ersetzt, weil sie Teil des Satzes ist.
-    text: "0175 5951839, Montag bis Freitag zwischen 9 und 18 Uhr. Wenn es klingelt und niemand rangeht, ist Fred gerade auf dem Platz – dann ruft er zurück.",
-    // Beschriftung ist die Nummer selbst → kommt aus KONTAKT, nicht hart kodiert.
-    cta: { label: null, target: "telefon" },
-  },
-];
-
 /* ────────────────────────── 4 · Anschrift ────────────────────────── */
 
 export interface AnschriftSpalte {
@@ -248,14 +218,6 @@ export const kontakt: PageContent = {
       text: [
         "Je konkreter, desto besser die Antwort. Pflichtfelder sind Name, E-Mail und Ihre Nachricht – alles andere hilft uns nur, gleich das Richtige zu sagen.",
       ],
-    },
-    {
-      id: "wege",
-      eyebrow: "Andere Wege zu uns",
-      headline: "Nicht jeder schreibt gern ein Formular.",
-      // Nur das Zahlwort ist angepasst (Entscheidung Stefan, 08.09.2026): Seit Briefing 0031
-      // stehen darunter zwei Wege statt drei. Der übrige Satz bleibt wortgleich.
-      text: ["Zwei weitere Möglichkeiten, mit uns ins Gespräch zu kommen – jede ohne Verpflichtung."],
     },
     {
       id: "anschrift",

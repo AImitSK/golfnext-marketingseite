@@ -3,7 +3,6 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { portableLink } from "@/components/sanity/PortableLink";
 import { Button } from "@/components/ui/Button";
 import { praxisCalloutLabels } from "@/content/praxis";
-import { bookingUrl } from "@/lib/links";
 import { ueberschriftId } from "@/lib/praxis/toc";
 import { urlForImage } from "@/lib/sanity/image";
 import type { BlockContent } from "@/sanity.types";
@@ -19,8 +18,9 @@ const TEXT_BREITE = 720;
  */
 function ctaHref(target: string, url: string | undefined): string {
   switch (target) {
+    // Der Buchungsweg ist entfallen (10.09.2026) – das Erstgespräch läuft übers Formular.
     case "erstgespraech":
-      return bookingUrl();
+      return "/kontakt";
     case "pakete":
       return "/pakete";
     default:

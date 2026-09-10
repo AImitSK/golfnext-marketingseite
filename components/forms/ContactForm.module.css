@@ -128,9 +128,6 @@
   letter-spacing: -0.02em;
   margin-bottom: 4px;
 }
-.successLink {
-  margin-top: 18px;
-}
 
 /* Honigtopf: sichtbar versteckt, aber NICHT display:none – manche Bots erkennen das
    und lassen das Feld dann leer (docs/06, Stufe A, Punkt 1). */

@@ -3,13 +3,13 @@
 ## Anforderungen
 
 - Kontakt- bzw. Erstgespräch-Anfrage auf `/kontakt` – seit Briefing 0025 gebaut und `live` (keine noindex-Testroute nötig gewesen).
-- Der CTA „Online-Erstgespräch vereinbaren" führt auf den **bestehenden Buchungsweg** (`NEXT_PUBLIC_BOOKING_URL`). Das Formular ist der zweite Weg für alle, die lieber schreiben – kein eigenes Terminformular.
+- Der CTA „Online-Erstgespräch vereinbaren" führt auf **dieses Formular** (`/kontakt`). Der externe Buchungsweg ist am 10.09.2026 entfallen (Entscheidung Stefan) – es gibt kein cal.com und keine `NEXT_PUBLIC_BOOKING_URL` mehr.
 - Kein Newsletter zum Launch → kein Double-Opt-in nötig.
 - Visuelle Zustände sind im UI-Kit definiert: `docs/design-system/mocks/2.5-ui-kit.html`, Abschnitt 3 (Eingabefelder Default · Fokus · Fehler · Erfolg · Deaktiviert, Feldmeldungen `.fmsg e/s/h`, Pflichtstern, Einwilligung) und Abschnitt 7 (Inline-Alerts info/ok/err, Toast, Leerzustand, Skeleton, Button-Ladezustand `.btn.loading`).
 
 ## Felder (verbindlich: Mock `3.10-kontakt.html`, Briefing 0025)
 
-Die frühere Liste (Golfanlage, Ihr Name, Rolle, **Wunschzeit**, Interesse) stammte aus dem UI-Kit und ist **überholt**. Termine laufen über cal.com, nicht über dieses Formular (Entscheidung Stefan, 07.09.2026). Es gibt **kein Newsletter-Feld** – der Hero verspricht ausdrücklich „Keine Anmeldung zu irgendeinem Newsletter".
+Die frühere Liste (Golfanlage, Ihr Name, Rolle, **Wunschzeit**, Interesse) stammte aus dem UI-Kit und ist **überholt**. Ein Wunschzeit-Feld gibt es weiterhin nicht: Fred stimmt den Termin in seiner Antwort ab (Entscheidung Stefan, 07.09.2026, Buchungsweg entfallen am 10.09.2026). Es gibt **kein Newsletter-Feld** – der Hero verspricht ausdrücklich „Keine Anmeldung zu irgendeinem Newsletter".
 
 | Feld | Pflicht | Typ | Validierung |
 |---|---|---|---|
@@ -99,7 +99,7 @@ Grundsatz: Kein reCAPTCHA (einwilligungspflichtig, Datentransfer, Barriere für 
 
 Dieselben Texte gelten für zod (serverseitig) und die Blur-Validierung (clientseitig) – eine Quelle, kein Drift.
 
-**Erfolg** – das Formular wird durch `.alert.ok` mit Titel und Text ersetzt (keine Weiterleitung, kein Toast), darunter ein `TextLink` „Oder direkt einen Termin wählen" auf die Buchung, falls `NEXT_PUBLIC_BOOKING_URL` gesetzt ist. Fokus auf den Alert (`tabindex=-1`, programmatischer Fokus), Screenreader lesen ihn über `role="status"`.
+**Erfolg** – das Formular wird durch `.alert.ok` mit Titel und Text ersetzt (keine Weiterleitung, kein Toast). Einen Folge-Link zur Terminwahl gibt es seit dem 10.09.2026 nicht mehr; er hätte auf das gerade abgeschickte Formular zurückgezeigt. Fokus auf den Alert (`tabindex=-1`, programmatischer Fokus), Screenreader lesen ihn über `role="status"`.
 
 ## Ladezustand
 

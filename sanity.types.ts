@@ -112,7 +112,6 @@ export type SiteSettings = {
   phone: string;
   email: string;
   responseNote?: string;
-  bookingUrl?: string;
   linkedin?: string;
   instagram?: string;
   defaultSeo?: {
@@ -645,13 +644,12 @@ export type SITEMAP_QUERY_RESULT = {
 
 // Source: lib/sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_id == "siteSettings"][0]{    phone,    email,    responseNote,    bookingUrl,    linkedin,    instagram,    defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}  }
+// Query: *[_id == "siteSettings"][0]{    phone,    email,    responseNote,    linkedin,    instagram,    defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}  }
 export type SITE_SETTINGS_QUERY_RESULT =
   | {
       phone: null;
       email: null;
       responseNote: null;
-      bookingUrl: null;
       linkedin: null;
       instagram: null;
       defaultSeo: null;
@@ -660,7 +658,6 @@ export type SITE_SETTINGS_QUERY_RESULT =
       phone: null;
       email: null;
       responseNote: null;
-      bookingUrl: null;
       linkedin: string | null;
       instagram: null;
       defaultSeo: null;
@@ -669,7 +666,6 @@ export type SITE_SETTINGS_QUERY_RESULT =
       phone: string;
       email: string;
       responseNote: string | null;
-      bookingUrl: string | null;
       linkedin: string | null;
       instagram: string | null;
       defaultSeo: {
@@ -704,7 +700,7 @@ declare global {
     '\n  *[_type == "author" && slug.current == $slug][0]{\n    _id,\n    name,\n    "slug": slug.current,\n    role,\n    bio,\n    linkedin,\n    image{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n    "artikel": *[_type == "post" && author._ref == ^._id && defined(slug.current)]\n      | order(publishedAt desc) {\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  mainImage{alt, asset->{_id, url, metadata{lqip, dimensions}}},\n  category->{title, "slug": slug.current, audience},\n  author->{name, "slug": slug.current, image{alt, asset->{_id, url, metadata{lqip}}}}\n}\n  }\n': AUTHOR_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "faq" && topic == $topic] | order(order asc, question asc) {\n    _id,\n    question,\n    answer,\n    topic,\n    order\n  }\n': FAQS_BY_TOPIC_QUERY_RESULT;
     '{\n  "artikel": *[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt},\n  "rubriken": *[_type == "category" && defined(slug.current)]{"slug": slug.current, _updatedAt}\n}': SITEMAP_QUERY_RESULT;
-    '\n  *[_id == "siteSettings"][0]{\n    phone,\n    email,\n    responseNote,\n    bookingUrl,\n    linkedin,\n    instagram,\n    defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0]{\n    phone,\n    email,\n    responseNote,\n    linkedin,\n    instagram,\n    defaultSeo{title, description, ogImage{alt, asset->{_id, url}}}\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '{\n  "artikel": *[_type == "post" && defined(slug.current)].slug.current,\n  "rubriken": *[_type == "category" && defined(slug.current)].slug.current\n}': SLUGS_QUERY_RESULT;
   }
 }

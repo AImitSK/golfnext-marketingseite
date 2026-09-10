@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import { KONTAKT } from "../../config/site-structure";
-import { kontakt, kontaktFormular, kontaktWege } from "../../content/kontakt";
+import { kontakt, kontaktFormular } from "../../content/kontakt";
 import { formMessages } from "../../lib/forms/messages";
 
 /**
@@ -80,7 +80,7 @@ test.describe("Kontakt · Aufbau und Texte", () => {
     await expect(h1).toHaveCount(1);
     await expect(h1).toHaveText(kontakt.sections[0]!.headline!);
 
-    for (const id of ["formular", "wege", "anschrift"]) {
+    for (const id of ["formular", "anschrift"]) {
       const abschnitt = kontakt.sections.find((s) => s.id === id)!;
       await expect(
         page.getByRole("heading", { level: 2, name: abschnitt.headline!, exact: true }),
@@ -137,19 +137,20 @@ test.describe("Kontakt · Aufbau und Texte", () => {
     await expect(page.getByText(kontaktFormular.einwilligung.link, { exact: true })).toBeVisible();
   });
 
-  test("verweist auf Buchung und Telefon – nichts hart kodiert", async ({ page }) => {
+  test("die Telefonnummer bleibt erreichbar, die Wege-Sektion ist entfallen", async ({ page }) => {
     await page.goto("/kontakt");
     const telHref = `tel:${KONTAKT.telefon.replace(/\s+/g, "")}`;
 
+    // Die Nummer steht weiterhin in der Anschrift-Spalte „Direkt erreichbar".
     await expect(page.locator(`a[href="${telHref}"]`).first()).toBeVisible();
-    // Seit Briefing 0031 zwei Wege: Online-Erstgespräch und Anruf.
-    expect(kontaktWege).toHaveLength(2);
-    for (const weg of kontaktWege) {
-      await expect(page.getByText(weg.headline, { exact: true })).toBeVisible();
-    }
-    await expect(page.getByRole("link", { name: "Termin aussuchen" })).toBeVisible();
 
-    // cal.com wird nur verlinkt, nie eingebettet (sonst wäre eine Einwilligung nötig).
+    // Der Abschnitt „Andere Wege zu uns" ist am 10.09.2026 entfallen (Entscheidung
+    // Stefan): Der Buchungsweg über cal.com gibt es nicht mehr, und „Termin
+    // aussuchen" hätte von der Kontaktseite nur auf sie selbst gezeigt.
+    await expect(page.getByText("Nicht jeder schreibt gern ein Formular.")).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Termin aussuchen" })).toHaveCount(0);
+
+    // Kein eingebettetes Buchungswerkzeug – auch kein Restbestand.
     await expect(page.locator('iframe, script[src*="cal.com"]')).toHaveCount(0);
   });
 

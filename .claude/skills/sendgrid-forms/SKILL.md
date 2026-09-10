@@ -19,7 +19,7 @@ Grundsatz: Formulare sind Server-Logik. Der Browser bekommt keinen API-Key, kein
 
 - Feldfehler bei blur und submit: `.inp.err` + `.fmsg e` + `aria-invalid` + `aria-describedby`. `.inp.ok` nur für E-Mail/Telefon.
 - Formularfehler: `Alert err` (`role="alert"`) über dem Button, Fokus auf erstes fehlerhaftes Feld, Eingaben bleiben.
-- Erfolg: `Alert ok` (`role="status"`) ersetzt das Formular, Fokus darauf, Link zur Buchung falls `NEXT_PUBLIC_BOOKING_URL`.
+- Erfolg: `Alert ok` (`role="status"`) ersetzt das Formular, Fokus darauf. Kein Folge-Link – der Buchungsweg ist entfallen (10.09.2026).
 - Laden: `.btn.loading` (Ring 16 px), `aria-busy` am Formular, Felder `disabled`, Mindestanzeige 400 ms, Timeout 10 s → `form.network`.
 - Ohne JS: normaler POST, Ergebnis auf derselben Seite.
 
@@ -29,7 +29,7 @@ Nur aus `lib/forms/messages.ts` (Katalog in `docs/06`). Sie-Form, ein Satz, mit 
 
 ## Erstgespräch
 
-CTA „Online-Erstgespräch vereinbaren" → `NEXT_PUBLIC_BOOKING_URL`; fehlt der Wert, führt der Button zum Formular. Kein eigenes Terminformular.
+CTA „Online-Erstgespräch vereinbaren" → `/kontakt` (über `resolveCta`). Es gibt keinen externen Buchungsweg mehr (10.09.2026) und kein eigenes Terminformular.
 
 ## Tests
 

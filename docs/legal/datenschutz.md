@@ -2,7 +2,8 @@
 
 > **Interner Vermerk (nicht veröffentlichen):** Dieser Text ist ein fachlich auf den tatsächlichen Stack zugeschnittener
 > Entwurf (Next.js auf Vercel, Sanity, SendGrid, Upstash, self-hosted Fonts, Consent-Tool, Vercel Web Analytics,
-> Online-Erstgespräch über Cal.com per Zoom/Teams). Verantwortlich für Inhalt und Freigabe: Stefan Kühne und Fred Hoffmann
+> Online-Erstgespräch per Zoom/Teams, Terminvereinbarung über das Kontaktformular – Cal.com ist am 10.09.2026
+> entfallen). Verantwortlich für Inhalt und Freigabe: Stefan Kühne und Fred Hoffmann
 > (Entscheidung 07.09.2026 – eine externe juristische Prüfung findet nicht statt).
 >
 > **Stand 07.09.2026:** Alle offenen Stellen sind geschlossen (Entscheidung Stefan). Entfallen sind der frühere
@@ -13,7 +14,7 @@
 
 ---
 
-Stand: 7. September 2026
+Stand: 10. September 2026
 
 ## 1. Verantwortlicher
 
@@ -80,7 +81,7 @@ Wenn Sie uns direkt per E-Mail an info@golfnext.de oder telefonisch kontaktieren
 
 ## 9. Online-Erstgespräch
 
-Sie können über unsere Website ein 30-minütiges Online-Erstgespräch vereinbaren. Der Link führt zu **Cal.com** (Cal.com, Inc., 2261 Market Street #4382, San Francisco, CA 94114, USA). Dort geben Sie Namen, E-Mail-Adresse und Wunschtermin ein; für die Verarbeitung auf der Buchungsseite gilt die Datenschutzerklärung des Anbieters (https://cal.com/privacy). Mit Cal.com besteht ein Vertrag zur Auftragsverarbeitung; für Übermittlungen in die USA gelten die EU-Standardvertragsklauseln. Auf unserer Website selbst wird das Buchungstool nicht eingebettet; es werden erst nach Ihrem Klick Daten an den Anbieter übertragen.
+Sie können über unsere Website ein 30-minütiges Online-Erstgespräch anfragen. Die Terminvereinbarung läuft über unser Kontaktformular (siehe Abschnitt 8); den Termin stimmen wir anschließend per E-Mail mit Ihnen ab. Ein Buchungstool setzen wir nicht ein.
 
 Das Gespräch findet per **Zoom** (Zoom Video Communications, Inc., 55 Almaden Blvd, San Jose, CA 95113, USA) oder **Microsoft Teams** (Microsoft Ireland Operations Ltd., One Microsoft Place, Dublin 18, Irland) statt. Dabei werden Ihr Name, ggf. Ihre E-Mail-Adresse, Ton und – sofern Sie die Kamera aktivieren – Bild verarbeitet. Gespräche werden nicht aufgezeichnet. Beide Anbieter sind unter dem EU-US Data Privacy Framework zertifiziert; mit ihnen bestehen Verträge zur Auftragsverarbeitung.
 
@@ -92,7 +93,7 @@ Im Fußbereich verlinken wir auf unsere Profile bei LinkedIn und Instagram. Es h
 
 ## 11. Übermittlung in Drittländer
 
-Einige unserer Dienstleister (Vercel, Sanity, Twilio/SendGrid, Upstash, Cal.com, Zoom) haben ihren Sitz in den USA oder verarbeiten Daten dort. Die Übermittlung stützt sich auf den Angemessenheitsbeschluss der EU-Kommission zum EU-US Data Privacy Framework, soweit der Anbieter zertifiziert ist, ergänzend auf die EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO). Kopien der Garantien stellen wir auf Anfrage zur Verfügung.
+Einige unserer Dienstleister (Vercel, Sanity, Twilio/SendGrid, Upstash, Zoom) haben ihren Sitz in den USA oder verarbeiten Daten dort. Die Übermittlung stützt sich auf den Angemessenheitsbeschluss der EU-Kommission zum EU-US Data Privacy Framework, soweit der Anbieter zertifiziert ist, ergänzend auf die EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO). Kopien der Garantien stellen wir auf Anfrage zur Verfügung.
 
 ## 12. Ihre Rechte
 
@@ -123,7 +124,7 @@ Wir passen diese Datenschutzerklärung an, wenn sich unsere Website, die eingese
 ---
 
 > **Interne Checkliste vor Veröffentlichung**
-> - [ ] AV-Verträge angenommen und abgelegt: Vercel, Sanity, Twilio (SendGrid), Upstash, Cal.com.
+> - [ ] AV-Verträge angenommen und abgelegt: Vercel, Sanity, Twilio (SendGrid), Upstash.
 > - [ ] Verarbeitungsverzeichnis nach Art. 30 DSGVO angelegt.
 > - [ ] Wird ein Marketing- oder Video-Dienst aktiviert: die entfallenen Abschnitte wieder aufnehmen,
 >       Consent-Kategorie prüfen und `revision` erhöhen.

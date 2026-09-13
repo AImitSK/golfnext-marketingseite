@@ -14,7 +14,7 @@ import { expect, test } from "@playwright/test";
  *   Cockpit sichtbar, alle Kampagnen-Schritte lesbar, Suchanfrage komplett).
  */
 
-const H1 = "Neue Golfer finden Ihren Club. Bevor sie den Nachbarclub finden.";
+const H1 = "Neue Golfer finden Ihren Club. Bevor sie woanders suchen.";
 const SEARCH_QUERY = "Platzreife-Kurs in der Nähe";
 
 test.describe("/wachstum-vertrieb · Struktur und Overflow", () => {

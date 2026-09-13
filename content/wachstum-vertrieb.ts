@@ -250,7 +250,7 @@ export const wachstumWege: WegCard[] = [
     miniButton: "Greenfee bezahlen",
     tag: "Gäste",
     title: "Greenfee & Gäste",
-    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, die Greenfee wird online bezahlt. Gefunden, gebucht, gespielt.",
+    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, das Greenfee wird online bezahlt. Gefunden, gebucht, gespielt.",
     goal: "Gastspiel angefragt oder Greenfee bezahlt.",
     mods: ["Search", "Platzstatus", "Greenfee"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
@@ -356,7 +356,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "01 · MONTAG, 09:10",
     title: "Sie geben frei.",
-    text: "Wir legen Ihnen die fertige Kampagne vor: Motive, Texte, Zielgebiet, Budget. Ein Klick von Ihnen – vorher passiert nichts.",
+    text: "Wir legen Ihnen die fertige Kampagne vor: Motive, Texte, Zielgebiet und Budget. Ein Klick von Ihnen. Vorher läuft nichts.",
     device: {
       kind: "freigabe",
       head: "GolfNext · Kampagne zur Freigabe",
@@ -379,7 +379,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "02 · MONTAG, 09:12",
     title: "Die Anzeigen laufen.",
-    text: "Bei Instagram und Facebook für Menschen, die noch nicht suchen. Bei Google für die, die es gerade tun. 30 Kilometer um den Club.",
+    text: "Bei Instagram und Facebook erreichen wir Menschen, die noch nicht gezielt suchen. Bei Google erreichen wir Menschen, die gerade bewusst suchen. Im Umkreis von 30 Kilometern rund um Ihren Club.",
     device: {
       kind: "ads",
       head: "Anzeigen · live",
@@ -406,7 +406,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "03 · DIENSTAG, 21:40",
     title: "Die erste Anmeldung.",
-    text: "Abends, vom Sofa aus. Die Anmeldung landet im Marketing CRM, die Bestätigung geht sofort raus. Im Büro klingelt nichts.",
+    text: "Abends, vom Sofa aus. Die Anmeldung landet im Marketing CRM. Die Bestätigung geht sofort raus. Im Büro klingelt nichts.",
     device: {
       kind: "crm-card",
       head: "Marketing CRM · Dienstag, 21:40",
@@ -426,7 +426,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "04 · FREITAG",
     title: "Der Kurs füllt sich.",
-    text: "Jeder Angemeldete hat die Erinnerung bekommen. Sie sehen, wer kommt, wer noch offen ist und woher jeder Einzelne kam.",
+    text: "Jeder Angemeldete bekommt seine Erinnerung. Sie sehen, wer kommt, wer noch offen ist und über welchen Weg die Anmeldung kam.",
     device: {
       kind: "crm-list",
       head: "Marketing CRM · Freitag",
@@ -444,7 +444,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "05 · SONNTAG, 18:00",
     title: "Der Bericht.",
-    text: "Eine Seite für den Vorstand: Anmeldungen, Kosten je Anmeldung, Budgetstand und was wir nächste Woche ändern. Jede Woche.",
+    text: "Eine Seite für den Vorstand: Anmeldungen, Kosten pro Anmeldung, Budgetstand und was wir nächste Woche ändern. Jede Woche.",
     device: {
       kind: "report",
       head: "E-Mail · Sonntag, 18:00 · Ihr Wochenbericht",
@@ -548,9 +548,9 @@ export const wachstumVertrieb: PageContent = {
     {
       id: "hero",
       eyebrow: "Wachstum & Vertrieb",
-      headline: "Neue Golfer finden Ihren Club. Bevor sie den Nachbarclub finden.",
+      headline: "Neue Golfer finden Ihren Club. Bevor sie woanders suchen.",
       text: [
-        "Anzeigen bei Instagram, Facebook und Google. Eine Seite je Angebot. Und danach die richtige Nachricht zur richtigen Zeit – automatisch. So werden aus Interessenten Anmeldungen und aus Anmeldungen Mitglieder. Für Schnuppergolf, Platzreife, Mitgliedschaft, Greenfee und Firmen-Events.",
+        "Anzeigen bei Instagram, Facebook und Google. Jedes Angebot bekommt eine eigene Seite. Danach folgen automatisch die passenden Nachrichten zur passenden Zeit. So werden aus Interessenten Anmeldungen und aus Anmeldungen Mitglieder. Für Schnuppergolf, Platzreife, Mitgliedschaft, Greenfee und Firmen-Events.",
       ],
     },
     {
@@ -572,9 +572,9 @@ export const wachstumVertrieb: PageContent = {
     {
       id: "kampagne",
       eyebrow: "Was das Clubbüro davon merkt",
-      headline: "Eine Kampagne, eine Woche. Aus Sicht Ihres Clubs.",
+      headline: "Eine Kampagne. Eine Woche. Aus Sicht Ihres Clubs.",
       text: [
-        "Was Sie tun und was von allein läuft – am Beispiel einer Schnuppergolf-Kampagne. Scrollen Sie mit.",
+        "Was Sie tun und was von alleine läuft. Am Beispiel einer Schnuppergolf-Kampagne. Scrollen Sie mit.",
       ],
     },
     {

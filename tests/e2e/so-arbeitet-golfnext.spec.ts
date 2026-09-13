@@ -13,7 +13,7 @@ import { expect, test } from "@playwright/test";
  * - kein Modulstatus („Im Einsatz"/„Pilot"/„In Entwicklung"), keine erfundenen Zahlen.
  */
 
-const H1 = "Nach der Anmeldung hört Ihr Club nicht auf zu reden.";
+const H1 = "Eine Anmeldung. Und dann geht es weiter.";
 
 /** Reiter-Beschriftung → Betreff der ersten Nachricht der jeweiligen Strecke. */
 const STRECKEN: { tab: string; betreff: string }[] = [

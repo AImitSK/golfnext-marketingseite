@@ -472,9 +472,9 @@ export const soArbeitetGolfnext: PageContent = {
     {
       id: "hero",
       eyebrow: "So arbeitet GolfNext",
-      headline: "Nach der Anmeldung hört Ihr Club nicht auf zu reden.",
+      headline: "Eine Anmeldung. Und dann geht es weiter.",
       text: [
-        "Bei den meisten Clubs passiert nach der Anmeldung nichts mehr – bis zum Termin, und danach gar nichts. GolfNext schickt vier Nachrichten: die Bestätigung, die Vorbereitung, das Danke und das nächste Angebot. Geschrieben für Ihren Club, verschickt in seinem Namen, ohne dass jemand im Büro etwas tippt.",
+        "Bei vielen Clubs endet die digitale Kommunikation nach der Anmeldung. GolfNext schickt mindestens vier Nachrichten: die Bestätigung, die Vorbereitung, ein Dankeschön und das nächste Angebot. Wie viele folgen, entscheidet Ihr Club. Geschrieben für Ihren Club. Verschickt in seinem Namen. Automatisch.",
       ],
     },
     {

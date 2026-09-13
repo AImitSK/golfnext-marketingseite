@@ -111,8 +111,7 @@ export const praxis: PageContent = {
       "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
   },

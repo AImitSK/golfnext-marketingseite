@@ -6,7 +6,7 @@ import { LIVE } from "../../config/site-structure";
  *
  * Es gibt keinen Bereich, in dem ein Interessent selbstständig etwas ausprobiert, und
  * es wird keinen geben. Wo bisher zwei Aktionen standen, bleibt genau eine – das
- * Online-Erstgespräch im grünen Button, mit der zweiten Zeile darunter. Geprüft wird
+ * Erstgespräch im grünen Button, ohne zweite Zeile. Geprüft wird
  * hier dreierlei: die sechs Hero-Blöcke tragen genau eine Aktion, keine Seite verweist
  * noch auf eine Demo, und die Kontaktseite zeigt zwei Wege statt drei.
  *
@@ -14,8 +14,7 @@ import { LIVE } from "../../config/site-structure";
  */
 
 /** Der freigegebene Wortlaut – er steht so schon im Header und in `FooterClose`. */
-const CTA_LABEL = "Online-Erstgespräch vereinbaren";
-const CTA_ZWEITE_ZEILE = "30 Minuten persönlich per Zoom oder Teams";
+const CTA_LABEL = "Erstgespräch anfragen";
 
 /** Die sechs Seiten, deren Hero bis Briefing 0031 zwei Aktionen trug. */
 const HERO_ROUTEN = [
@@ -59,7 +58,6 @@ test.describe("Hero: genau eine Aktion, und die führt zum Erstgespräch", () =>
 
       const cta = aktionen.first();
       await expect(cta).toContainText(CTA_LABEL);
-      await expect(cta).toContainText(CTA_ZWEITE_ZEILE);
     });
   }
 });

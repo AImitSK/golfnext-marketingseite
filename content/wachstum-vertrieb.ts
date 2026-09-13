@@ -76,8 +76,7 @@ export interface HeroData {
 
 export const wachstumHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: [
@@ -604,8 +603,7 @@ export const wachstumVertrieb: PageContent = {
       "In 30 Minuten schauen wir gemeinsam auf Ihre Zielgruppen, Ihre Angebote und die größte ungenutzte Chance. Sie bekommen eine ehrliche Einschätzung, welcher Weg zuerst den größten Hebel hat – keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Persönliche Zeile: der Mock zeigt Fred als Ansprechpartner (Name + Rolle) im

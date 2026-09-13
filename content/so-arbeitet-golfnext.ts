@@ -51,8 +51,7 @@ export interface HeroData {
 
 export const soArbeitetHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: [
@@ -508,8 +507,7 @@ export const soArbeitetGolfnext: PageContent = {
       "In 30 Minuten gehen wir Ihre wichtigsten Zielgruppen durch und schauen, wo heute nach der Anmeldung nichts mehr passiert. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Persönlicher Abschluss mit Porträt-Platzhalter, wortgleich aus 3.3b `.f-person`.

@@ -57,8 +57,7 @@ export interface HeroData {
 
 export const startseiteHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: ["Ihre Domain, Ihre Daten", "Keine Knebelverträge", "Ein Mensch am Telefon"],
@@ -519,8 +518,7 @@ export const startseite: PageContent = {
       "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Wortgleich aus Mock 3.1b `.f-person`: Name (fett) + Rolle, mit Porträt-Platzhalter.

@@ -116,8 +116,7 @@ export interface VergleichData {
 export const paketeHero: HeroData = {
   ctaPrimary: { label: "Pakete ansehen", target: "intern", href: "#pakete" },
   ctaSecondary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   stack: [
@@ -403,8 +402,7 @@ export const pakete: PageContent = {
       "Im Online-Erstgespräch schauen wir uns Ihre Ziele und Ihre vorhandenen Systeme an. Sie erhalten eine ehrliche Einschätzung, welche Ausbaustufe zu Ihrer Situation passt.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
   },

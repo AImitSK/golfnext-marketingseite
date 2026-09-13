@@ -242,7 +242,7 @@ export const LIVE = ROUTES.filter((r) => r.status === "live");
 export const isLinkable = (path: string) => ROUTES.find((r) => r.path === path)?.status === "live";
 
 export const CTA = {
-  erstgespraech: { label: "Online-Erstgespräch vereinbaren", hint: "30 Minuten persönlich per Zoom oder Teams" },
+  erstgespraech: { label: "Erstgespräch anfragen" },
 } as const;
 
 export const KONTAKT = {

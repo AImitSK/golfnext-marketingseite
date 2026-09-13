@@ -153,8 +153,7 @@ export interface WissenData {
 
 export const ueberGolfnextHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   quote: "Wir machen digital. Damit mehr Zeit für das bleibt, was keinen Bildschirm braucht.",
@@ -357,8 +356,7 @@ export const ueberGolfnext: PageContent = {
     headline: "Was müsste bei Ihnen endlich mal einfacher gehen?",
     text: ["Erzählen Sie es Fred Hoffmann. Vielleicht beginnt genau dort das nächste Kapitel für Ihren Club."],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     persoenlicheZeile: "Fred Hoffmann, Gründer von GolfNext, seit mehr als 30 Jahren im Golfmarkt",

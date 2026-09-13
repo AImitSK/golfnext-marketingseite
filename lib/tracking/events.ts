@@ -25,7 +25,7 @@ import { getMarketingConsent } from "@/lib/consent/state";
 
 /** Parameter je Ereignis. Namen in snake_case wie im Tracking-Plan. */
 type EventMap = {
-  /** Klick auf „Online-Erstgespräch vereinbaren" (Header, Sektionen, Footer). */
+  /** Klick auf „Erstgespräch anfragen" (Header, Sektionen, Footer). */
   cta_erstgespraech_click: { position: string; page: string };
   /** Formular erfolgreich gesendet (Server-Antwort ok). Hauptconversion. */
   contact_submitted: { form: "kontakt"; interesse?: string };

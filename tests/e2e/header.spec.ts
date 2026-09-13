@@ -126,7 +126,7 @@ test.describe("Header · CTA-Hover (hbtn)", () => {
 
     const cta = page
       .locator("header")
-      .getByRole("link", { name: /Online-Erstgespräch vereinbaren/ });
+      .getByRole("link", { name: /Erstgespräch anfragen/ });
     await expect(cta).toBeVisible();
 
     await cta.hover();

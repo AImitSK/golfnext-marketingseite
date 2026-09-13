@@ -84,8 +84,7 @@ export interface HeroData {
 
 export const clubprozesseHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: [
@@ -515,8 +514,7 @@ export const clubprozesse: PageContent = {
       "In 30 Minuten gehen wir Ihren Cluballtag durch – Telefon, Platz, Gäste, Turniere, Mannschaften – und schauen, welche Vorgänge GolfNext Ihnen zuerst abnehmen kann. Ehrlich, auch wenn die Antwort „noch nicht“ heißt.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Persönliche Zeile: der Mock zeigt Fred als Ansprechpartner (Name + Rolle) im

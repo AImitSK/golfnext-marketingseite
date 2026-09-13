@@ -108,7 +108,7 @@ export const praxis: PageContent = {
     eyebrow: "GolfNext persönlich",
     headline: "Lieber direkt über Ihren Club sprechen?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Ziele und Ihre größten Hebel. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
       label: "Erstgespräch anfragen",

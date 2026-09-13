@@ -504,7 +504,7 @@ export const soArbeitetGolfnext: PageContent = {
     eyebrow: "Die passende Strecke für Ihren Club",
     headline: "Welche Zielgruppe soll bei Ihnen als Erstes begleitet werden?",
     text: [
-      "In 30 Minuten gehen wir Ihre wichtigsten Zielgruppen durch und schauen, wo heute nach der Anmeldung nichts mehr passiert. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam gehen wir Ihre wichtigsten Zielgruppen durch und schauen, wo heute nach der Anmeldung nichts mehr passiert. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
       label: "Erstgespräch anfragen",

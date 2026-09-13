@@ -600,7 +600,7 @@ export const wachstumVertrieb: PageContent = {
     eyebrow: "Wachstum für Ihren Club",
     headline: "Wo soll Ihr Club als Nächstes wachsen?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Zielgruppen, Ihre Angebote und die größte ungenutzte Chance. Sie bekommen eine ehrliche Einschätzung, welcher Weg zuerst den größten Hebel hat – keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Zielgruppen, Ihre Angebote und die größte ungenutzte Chance. Sie bekommen eine ehrliche Einschätzung, welcher Weg zuerst den größten Hebel hat – keine Verkaufsshow.",
     ],
     cta: {
       label: "Erstgespräch anfragen",

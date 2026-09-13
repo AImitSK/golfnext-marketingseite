@@ -511,7 +511,7 @@ export const clubprozesse: PageContent = {
     eyebrow: "Entlastung für Ihr Clubbüro",
     headline: "Wo verliert Ihr Clubbüro heute die meiste Zeit?",
     text: [
-      "In 30 Minuten gehen wir Ihren Cluballtag durch – Telefon, Platz, Gäste, Turniere, Mannschaften – und schauen, welche Vorgänge GolfNext Ihnen zuerst abnehmen kann. Ehrlich, auch wenn die Antwort „noch nicht“ heißt.",
+      "Gemeinsam gehen wir Ihren Cluballtag durch – Telefon, Platz, Gäste, Turniere, Mannschaften – und schauen, welche Vorgänge GolfNext Ihnen zuerst abnehmen kann. Ehrlich, auch wenn die Antwort „noch nicht“ heißt.",
     ],
     cta: {
       label: "Erstgespräch anfragen",

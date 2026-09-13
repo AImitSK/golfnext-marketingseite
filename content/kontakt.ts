@@ -218,7 +218,7 @@ export const kontakt: PageContent = {
       id: "formular",
       headline: "Ihre Nachricht an GolfNext",
       text: [
-        "Je konkreter, desto besser die Antwort. Pflichtfelder sind Name, „Ich bin", E-Mail und Ihre Nachricht – alles andere hilft uns nur, gleich das Richtige zu sagen.",
+        "Je konkreter, desto besser die Antwort. Pflichtfelder sind Name, „Ich bin“, E-Mail und Ihre Nachricht – alles andere hilft uns nur, gleich das Richtige zu sagen.",
       ],
     },
     {

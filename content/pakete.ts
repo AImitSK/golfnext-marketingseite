@@ -156,7 +156,7 @@ export const paketeBasis: BasisData = {
     ],
   },
   socklist: [
-    "Individuelle Clubwebsite im GolfNext-Design",
+    "Individuelle Clubwebsite im GolfNext Design",
     "Responsive Darstellung für Desktop, Tablet und Smartphone",
     "Website- und Angebotstexte",
     "Technischer Plattformbetrieb",

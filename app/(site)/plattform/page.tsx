@@ -106,7 +106,7 @@ export default function PlattformPage() {
         layout="wide"
       />
 
-      <Footer footerClose={plattform.footerClose} />
+      <Footer footerClose={plattform.footerClose} zeigeModulLandkarte />
     </main>
   );
 }

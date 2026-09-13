@@ -19,8 +19,8 @@ import {
 /**
  * Clubprozesse `/clubprozesse` – Neufassung v01, gebaut aus Mock
  * `3.5b-clubprozesse-neufassung.html` (Briefing 0018). Fünf Abschnitte: Hero mit
- * Clubwebsite + Sonntags-Log, „Drei Dinge" (Bento: Concierge/Platzstatus/Gastfee),
- * „Turnier-News" (Bericht-Strecke PDF → Angaben → drei Kanäle), „Captains App"
+ * Clubwebsite + Sonntags-Log, „Drei Dinge" (Bento: KI Chatbot/Platzstatus/Greenfee),
+ * „Turnier News" (Bericht-Strecke PDF → Angaben → drei Kanäle), „Captains App"
  * (Spieltag → Mannschaftsseite) und „Was bleibt" (Digital ↔ Persönlich), gefolgt vom
  * persönlichen Abschluss (`FooterClose`, oberer Teil des geteilten `Footer`). Alle
  * Texte kommen wortgleich aus `content/clubprozesse.ts`. Genau eine `<h1>` (im Hero).

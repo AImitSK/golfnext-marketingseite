@@ -75,15 +75,15 @@ export const MODULE = [
   { slug: "reach", name: "Reach", gruppe: "wachstum", status: "im-einsatz" },
   { slug: "search", name: "Search", gruppe: "wachstum", status: "im-einsatz" },
   { slug: "landingpages", name: "Landingpages", gruppe: "wachstum", status: "im-einsatz" },
-  { slug: "marketing-crm", name: "Marketing-CRM", gruppe: "wachstum", status: "pilot" },
+  { slug: "marketing-crm", name: "Marketing CRM", gruppe: "wachstum", status: "pilot" },
   { slug: "lifecycle", name: "Lifecycle", gruppe: "wachstum", status: "im-einsatz" },
   { slug: "content", name: "Content", gruppe: "wachstum", status: "im-einsatz" },
   // Entlastung nach innen
-  { slug: "concierge", name: "Concierge", gruppe: "clubprozesse", status: "pilot" },
+  { slug: "concierge", name: "KI Chatbot", gruppe: "clubprozesse", status: "pilot" },
   { slug: "platzstatus", name: "Platzstatus", gruppe: "clubprozesse", status: "im-einsatz" },
-  { slug: "gastfee", name: "Gastfee", gruppe: "clubprozesse", status: "pilot" },
+  { slug: "gastfee", name: "Greenfee", gruppe: "clubprozesse", status: "pilot" },
   { slug: "firmen-events", name: "Firmen-Events", gruppe: "clubprozesse", status: "in-entwicklung" },
-  { slug: "turnier-news", name: "Turnier-News", gruppe: "clubprozesse", status: "pilot" },
+  { slug: "turnier-news", name: "Turnier News", gruppe: "clubprozesse", status: "pilot" },
   { slug: "captains-app", name: "Captains App", gruppe: "clubprozesse", status: "in-entwicklung" },
 ] as const;
 
@@ -98,7 +98,7 @@ export const ROUTES: Route[] = [
     // freigegebenen Hero- und Vorspann-Texten, wortgleich übernommen.
     title: "GolfNext | Mehr Golfer auf dem Platz. Weniger Arbeit im Clubbüro.",
     description:
-      "Die Plattform für Golfclubs: Website, Kampagnen, Marketing-CRM und die Werkzeuge fürs Clubbüro – als ein System statt vieler Einzellösungen.",
+      "Die Plattform für Golfclubs: Website, Kampagnen, Marketing CRM und die Werkzeuge fürs Clubbüro – als ein System statt vieler Einzellösungen.",
   },
   {
     path: "/plattform",
@@ -148,7 +148,7 @@ export const ROUTES: Route[] = [
     // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
     title: "Clubprozesse | Mehr Clubleben, weniger Arbeit im Clubbüro",
     description:
-      "Greenfee-Anfragen, Platzstatus, Gastfee, Turnierbericht, Mannschaftsergebnis: fünf Dinge, die heute Zeit kosten – und künftig von selbst laufen.",
+      "Greenfee-Anfragen, Platzstatus, Greenfee-Zahlung, Turnierbericht, Mannschaftsergebnis: fünf Dinge, die heute Zeit kosten – und künftig von selbst laufen.",
   },
   {
     // Seit 07.09.2026 Unterpunkt von „Über GolfNext" statt Hauptpunkt (Briefing 0023).
@@ -157,8 +157,8 @@ export const ROUTES: Route[] = [
     path: "/praxis",
     // Menü-Label „Ratgeber", Adresse `/praxis` (Entscheidung Stefan, 07.09.2026).
     // Beides ist gewollt und kein Versehen: die URL war schon entschieden, im Menü
-    // liest sich „Ratgeber" besser. Der Seiteninhalt selbst spricht weiter von
-    // „Praxis" (Freds freigegebener Wortlaut in Mock 3.9a) – nicht angleichen.
+    // liest sich „Ratgeber" besser. Der Seiteninhalt ist per Master-Briefing
+    // ebenfalls auf „Ratgeber" umgestellt (frühere „nicht angleichen"-Regel überholt).
     label: "Ratgeber",
     // Seit Briefing 0027 gebaut (Masterplan 3.4): `/praxis`, `/praxis/thema/<slug>`
     // und `/praxis/<slug>` kommen aus Sanity. **Live seit 08.09.2026** (Entscheidung
@@ -176,9 +176,9 @@ export const ROUTES: Route[] = [
     // Vorschlag aus dem freigegebenen Hero von Mock 3.9a (Briefing 0027, Aufgabe 7),
     // wortgleich übernommen und für die Beschreibung ohne neue Formulierung auf
     // ≤ 160 Zeichen gekürzt. Ob Fred eigene Angaben nachliefert, ist Frage 3.
-    title: "Praxis. Was in Golfclubs wirklich funktioniert.",
+    title: "Ratgeber. Was Golfclubs heute wissen müssen.",
     description:
-      "Berichte aus Pilotclubs, Erfahrungen aus dreißig Jahren auf dem Platz und ehrliche Antworten auf die Fragen, die im Clubbüro und im Vorstand gestellt werden.",
+      "Fachartikel aus dem golfmanager, Erfahrungen aus der Arbeit mit Clubs und klare Antworten zu KI, Digitalisierung, Online Marketing und Cluballtag.",
   },
   {
     path: "/pakete",
@@ -242,7 +242,7 @@ export const LIVE = ROUTES.filter((r) => r.status === "live");
 export const isLinkable = (path: string) => ROUTES.find((r) => r.path === path)?.status === "live";
 
 export const CTA = {
-  erstgespraech: { label: "Online-Erstgespräch vereinbaren", hint: "30 Minuten persönlich per Zoom oder Teams" },
+  erstgespraech: { label: "Erstgespräch anfragen" },
 } as const;
 
 export const KONTAKT = {

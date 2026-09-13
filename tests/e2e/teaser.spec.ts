@@ -13,18 +13,18 @@ import { OHNE_ARTIKEL_URL } from "../../playwright.config";
  * der Testbestand muss also schon beim Bauen wirken – deshalb `pnpm build:e2e`.
  */
 
-const PRAXIS_EYEBROW = "Praxis";
+const PRAXIS_EYEBROW = "Ratgeber";
 const PRAXIS_H2 = "Was in Golfclubs wirklich funktioniert.";
 const PRAXIS_LINK = "Alle Beiträge";
 
 const WISSEN_EYEBROW = "Wissen";
-const WISSEN_H2 = "Was wir über Golfclubs gelernt haben, schreiben wir auf.";
+const WISSEN_H2 = "Was wir über Golfclubs lernen, schreiben wir auf.";
 const WISSEN_LINK = "Alle Artikel";
 
 /** Die drei Teaser, die mit Briefing 0029 ersatzlos aus dem Repo verschwunden sind. */
 const ERFUNDENE_TEASER = [
   "Warum Ihr Schnupperkurs im Netz nicht gefunden wird",
-  "Rehburg-Loccum: Ein Concierge zieht ins Clubbüro",
+  "Rehburg-Loccum: Ein KI Chatbot zieht ins Clubbüro",
   "Wem gehören die Daten Ihres Clubs?",
   // Und die vier Platzhalterkarten des Wissen-Sliders samt ihrer „Quelle".
   "Titel folgt:",

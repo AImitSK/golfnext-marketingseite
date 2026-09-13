@@ -1,7 +1,6 @@
 import { MeldungsSeite } from "@/components/site/PlatzhalterSeite";
 import { Header } from "@/components/site/Header";
 import { Button } from "@/components/ui/Button";
-import { CTA } from "@/config/site-structure";
 import type { Cta } from "@/content/types";
 import { uiMessages } from "@/lib/ui/messages";
 
@@ -36,7 +35,6 @@ export default function NotFound() {
   // CTA-Ziel nie hart kodiert: Label aus site-structure, URL über resolveCta.
   const cta: Cta = {
     label: actionContact,
-    hint: CTA.erstgespraech.hint,
     target: "erstgespraech",
   };
 

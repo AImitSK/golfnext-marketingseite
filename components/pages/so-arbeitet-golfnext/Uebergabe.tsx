@@ -4,7 +4,7 @@ import styles from "./Uebergabe.module.css";
 
 /**
  * 3 · „Die letzte Nachricht schreibt kein System." (portiert aus 3.3b .hand/.hcard/
- * .harrow/.handnote). Links der Kontakt im Marketing-CRM mit seinem Verlauf, rechts die
+ * .harrow/.handnote). Links der Kontakt im Marketing CRM mit seinem Verlauf, rechts die
  * daraus entstandene Aufgabe für das Clubteam, dazwischen ein Pfeil.
  *
  * Beide Karten sind SCHEMATISCHE ILLUSTRATIONEN (`aria-hidden`, Beschreibung über

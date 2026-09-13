@@ -9,8 +9,8 @@ import type { Cta, PageContent } from "./types";
  * Regeln (CLAUDE.md / 0018): Texte wortgleich (Zeichensetzung, „…"-Anführungen,
  * en-Dash „–", Ziffernabstand „06:40 Uhr" / „65 €" / „24 °C"). Keine erfundenen
  * Zahlen/Versprechen/Funktionen. Die Beispiel-Oberflächen (Clubwebsite mit
- * Platzstatus + News, Sonntags-Log, Concierge-Chat, Platzstatus-Toggle,
- * Gastfee-Zahlung, Bericht-Strecke, Captains-App-Demo) sind ILLUSTRATIV 1:1 aus
+ * Platzstatus + News, Sonntags-Log, KI Chatbot-Chat, Platzstatus-Toggle,
+ * Greenfee-Zahlung, Bericht-Strecke, Captains-App-Demo) sind ILLUSTRATIV 1:1 aus
  * dem Mock – schematische Darstellungen des Systems, keine Zusagen und keine echten
  * Screenshots. Beispielwerte (Namen, Uhrzeiten, „65 €", „5 : 3", „38 Pkt.",
  * Ortsnamen) sind Beispieloberfläche, keine Zusage.
@@ -84,8 +84,7 @@ export interface HeroData {
 
 export const clubprozesseHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: [
@@ -108,8 +107,8 @@ export const clubprozesseHero: HeroData = {
       pstatTime: "Stand: heute 06:40 Uhr",
       newsLabel: "Aktuell im Club",
       news: [
-        { title: "Monatsbecher September: Sieg für Petra Lange", meta: "Turnier-News · Samstag, 17:50 Uhr" },
-        { title: "Herren AK 50 gewinnen 5:3 in Sittensen", meta: "Mannschaften · Samstag, 18:30 Uhr" },
+        { title: "Monatsbecher September: Sieg für Petra Lange", meta: "Turnier News · Samstag, 17:50 Uhr" },
+        { title: "Herren AK 50 gewinnen 5:3 in Wiesenblick", meta: "Mannschaften · Samstag, 18:30 Uhr" },
         { title: "Greenfee-Sonntag: Platz für Gäste geöffnet", meta: "Club · Sonntag, 06:40 Uhr" },
       ],
     },
@@ -118,9 +117,9 @@ export const clubprozesseHero: HeroData = {
       title: "Heute ohne das Büro erledigt",
       events: [
         { time: "06:40", text: "Platz auf „bespielbar“", source: "Greenkeeper · Platzstatus" },
-        { time: "08:15", text: "Gastfee bezahlt und bestätigt", source: "T. Schulz · Gastfee" },
-        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", source: "Concierge · beantwortet" },
-        { time: "17:50", text: "Turnierbericht veröffentlicht", source: "Turnier-News · 3 Kanäle" },
+        { time: "08:15", text: "Greenfee bezahlt und bestätigt", source: "T. Schulz · Greenfee" },
+        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", source: "KI Chatbot · beantwortet" },
+        { time: "17:50", text: "Turnierbericht veröffentlicht", source: "Turnier News · 3 Kanäle" },
         { time: "18:30", text: "Spieltag Herren AK 50 online", source: "Captain · Captains App" },
       ],
       sum: "5 Vorgänge · 0 Anrufe im Büro",
@@ -130,7 +129,7 @@ export const clubprozesseHero: HeroData = {
 
 /* ────────────────────────── 2 · Drei Dinge (Bento) ────────────────────────── */
 
-/** Eine Chatblase im Concierge-Visual (Frage/Antwort). */
+/** Eine Chatblase im KI Chatbot-Visual (Frage/Antwort). */
 export interface ChatBubble {
   role: "q" | "a";
   text: string;
@@ -176,10 +175,10 @@ export interface DingBox {
 export const clubprozesseDinge: DingBox[] = [
   {
     no: "/ 01",
-    title: "Fragen beantwortet der Concierge.",
-    text: "Öffnungszeiten, Greenfee, Platzreife, Gastspiel, Mitgliedschaft: Die häufigsten Fragen bekommen sofort eine Antwort und den passenden nächsten Schritt – auch sonntags um 21 Uhr. Was persönlich ist, geht ans Clubteam.",
+    title: "Fragen beantwortet der KI Chatbot.",
+    text: "Öffnungszeiten, Greenfee, Platzreife, Mitgliedschaft: Die häufigsten Fragen bekommen sofort eine Antwort und den passenden nächsten Schritt. Auch sonntags um 22:38 Uhr. Was persönlich ist, geht ans Club Team.",
     modPrefix: "Modul",
-    modName: "Concierge",
+    modName: "KI Chatbot",
     viz: {
       kind: "concierge",
       time: "Sonntag, 21:14 Uhr",
@@ -187,7 +186,7 @@ export const clubprozesseDinge: DingBox[] = [
         { role: "q", text: "Kann ich morgen als Gast spielen, und was kostet das?" },
         {
           role: "a",
-          text: "Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Die Gastfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?",
+          text: "Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Das Greenfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?",
         },
       ],
       confirm: "Beantwortet, ohne dass jemand im Büro war.",
@@ -213,13 +212,13 @@ export const clubprozesseDinge: DingBox[] = [
   },
   {
     no: "/ 03",
-    title: "Die Gastfee bezahlt der Gast selbst.",
-    text: "Gäste sehen, ob und wann sie spielen können, bezahlen online und bekommen sofort die Bestätigung – unabhängig davon, ob das Büro besetzt ist. Im Büro bleibt nichts liegen, was abgetippt werden müsste.",
+    title: "Das Greenfee bezahlt der Gast selbst.",
+    text: "Gäste sehen, ob und wann sie spielen können, bezahlen online und bekommen sofort die Bestätigung. Unabhängig davon, ob das Büro besetzt ist. Im Büro bleibt nichts liegen, was abgetippt werden müsste.",
     modPrefix: "Modul",
-    modName: "Gastfee",
+    modName: "Greenfee",
     viz: {
       kind: "gastfee",
-      payLabel: "Gastfee · Golfclub Musterhausen",
+      payLabel: "Greenfee · Golfclub Musterhausen",
       rows: [
         { left: "Montag, 09:30 Uhr · 18 Loch", right: "65 €" },
         { left: "Tom Schulz · HCP 18,4", right: "DGV-Ausweis geprüft" },
@@ -231,7 +230,7 @@ export const clubprozesseDinge: DingBox[] = [
   },
 ];
 
-/* ────────────────────────── 3 · Turnier-News (Bericht-Strecke) ────────────────────────── */
+/* ────────────────────────── 3 · Turnier News (Bericht-Strecke) ────────────────────────── */
 
 /** Eine erkannte Ergebniszeile im PDF-Eingang. */
 export interface ResultRow {
@@ -329,7 +328,7 @@ export const clubprozesseTurnierNews: TurnierNewsData = {
     },
   ],
   trackline:
-    "Vor der Veröffentlichung sieht der Club jeden Text in der Vorschau und kann ihn ändern. Was nicht eindeutig erkannt wurde, ist markiert. Nichts geht ohne Freigabe raus.",
+    "Vor der Veröffentlichung sieht der Club den Text in der Vorschau und kann ihn ändern. Was nicht eindeutig erkannt wurde, ist markiert. Nichts geht ohne Freigabe raus.",
 };
 
 /* ────────────────────────── 4 · Captains App (Spieltag → Website) ────────────────────────── */
@@ -379,7 +378,7 @@ export const clubprozesseCaptainsApp: CaptainsAppData = {
     head: "Captain · Herren AK 50",
     title: "Spieltag 3 · Auswärts",
     fields: [
-      { label: "Gegner", value: "GC Sittensen" },
+      { label: "Gegner", value: "GC Wiesenblick" },
       { label: "Ergebnis", value: "5 : 3 Sieg" },
       { label: "", value: "", img: true },
       { label: "„Starker Tag von Michael Weber …“", value: "Bericht" },
@@ -392,16 +391,16 @@ export const clubprozesseCaptainsApp: CaptainsAppData = {
     title: "Herren AK 50",
     season: "Saison 2026 · 3 von 5 Spieltagen",
     post: {
-      title: "Spieltag 3 · Auswärts beim GC Sittensen",
+      title: "Spieltag 3 · Auswärts beim GC Wiesenblick",
       score: "5 : 3",
       text: "Starker Tag von Michael Weber, der sein Einzel auf der 17 entschied. Damit bleibt die Mannschaft ungeschlagen.",
       by: "Captain Thomas Brandt · Samstag, 18:30 Uhr",
     },
     rows: [
-      { title: "Spieltag 3 · Sittensen", tag: "neu" },
+      { title: "Spieltag 3 · Wiesenblick", tag: "neu" },
       { title: "Spieltag 2 · Heim", value: "4 : 4" },
-      { title: "Spieltag 1 · Bremerhaven", value: "6 : 2" },
-      { title: "Spieltag 4 · Heim", value: "12. Oktober" },
+      { title: "Spieltag 1 · Grüne Wiese", value: "6 : 2" },
+      { title: "Spieltag 4 · Sonnenhöhe", value: "12. Oktober" },
     ],
   },
   capnote:
@@ -435,10 +434,10 @@ export const clubprozesseWasBleibt: WasBleibtData = {
   allein: {
     label: "Läuft von allein",
     rows: [
-      { text: "Häufige Fragen, rund um die Uhr beantwortet", mod: "Concierge" },
+      { text: "Häufige Fragen, rund um die Uhr beantwortet", mod: "KI Chatbot" },
       { text: "Platzinformationen, dort erfasst, wo sie entstehen", mod: "Platzstatus" },
-      { text: "Gastfee: Information, Zahlung, Bestätigung", mod: "Gastfee" },
-      { text: "Turnierergebnisse, aus der Liste zum Bericht auf drei Kanälen", mod: "Turnier-News" },
+      { text: "Greenfee: Information, Zahlung, Bestätigung", mod: "Greenfee" },
+      { text: "Turnierergebnisse, aus der Liste zum Bericht auf drei Kanälen", mod: "Turnier News" },
       { text: "Mannschaftsberichte, direkt vom Spieltag", mod: "Captains App" },
       { text: "Eventanfragen von Firmen, strukturiert statt als lose E-Mail", mod: "Firmen-Events" },
     ],
@@ -467,7 +466,7 @@ export const clubprozesse: PageContent = {
       eyebrow: "Clubprozesse",
       headline: "Mehr Clubleben. Weniger Arbeit im Clubbüro.",
       text: [
-        "Die Frage nach dem Greenfee. Der Platzstatus vom Greenkeeper. Die Gastfee. Der Turnierbericht nach der Siegerehrung. Das Ergebnis der Mannschaft. Fünf Dinge, die heute jemanden im Büro binden – mit GolfNext laufen sie dort, wo sie entstehen, und landen von allein auf der Website.",
+        "Die Frage nach dem Greenfee. Der Platzstatus vom Greenkeeper. Die Greenfee-Zahlung. Der Turnierbericht nach der Siegerehrung. Das Ergebnis der Mannschaft. Fünf Dinge, die heute jemanden im Büro binden – mit GolfNext laufen sie dort, wo sie entstehen, und landen von allein auf der Website.",
       ],
     },
     {
@@ -480,18 +479,18 @@ export const clubprozesse: PageContent = {
     },
     {
       id: "turnier-news",
-      eyebrow: "Turnier-News",
-      headline: "Der letzte Putt fällt. Noch am selben Abend ist der Bericht online.",
+      eyebrow: "Turnier News",
+      headline: "Die Siegerehrung läuft. Ihr Bericht ist schon fertig.",
       text: [
-        "Drei Turniere in der Woche, und nach jeder Siegerehrung dieselbe Arbeit: Ergebnisse abtippen, Text schreiben, Bilder verkleinern, Website, Facebook, Instagram. Mit GolfNext wird daraus ein Vorgang, den jeder im Club in ein paar Minuten erledigt.",
+        "Drei Turniere in der Woche, nach jeder Siegerehrung dieselbe Arbeit: Ergebnisse abtippen, Text schreiben, Bilder verkleinern, Website, Facebook, Instagram. Mit GolfNext wird daraus ein Vorgang, den jeder im Club in ein paar Minuten erledigt.",
       ],
     },
     {
       id: "captains-app",
       eyebrow: "Captains App",
-      headline: "Jede Mannschaft sichtbar. Ohne Umweg über das Clubbüro.",
+      headline: "Jede Mannschaft sichtbar. Ohne Umwege übers Clubbüro.",
       text: [
-        "Zehn Mannschaften, fünf Spieltage – und im Büro fehlt die Zeit, jeden zu dokumentieren. Also erscheint fast nichts. Mit der Captains App trägt der Captain Aufstellung, Ergebnis, Bild und zwei Sätze direkt vom Spieltag ein. Die Mannschaftsseite auf der Website ist aktuell, bevor der Bus zurück ist.",
+        "Zehn Mannschaften, fünf Spieltage. Im Büro fehlt die Zeit, jedes Team zu dokumentieren. Also erscheint fast nichts. Jeder Captain bekommt seinen eigenen Zugang zu einer von GolfNext entwickelten App. Zu Beginn der Saison legt er dort den Kader seiner Mannschaft an. Ergebnisse, Bilder und Informationen trägt er direkt vom Auswärts-Spieltag mit seinem Smartphone ein. Die Mannschaftsseite wird aktualisiert, bevor die Spieler wieder im Club sind.",
       ],
     },
     {
@@ -512,11 +511,10 @@ export const clubprozesse: PageContent = {
     eyebrow: "Entlastung für Ihr Clubbüro",
     headline: "Wo verliert Ihr Clubbüro heute die meiste Zeit?",
     text: [
-      "In 30 Minuten gehen wir Ihren Cluballtag durch – Telefon, Platz, Gäste, Turniere, Mannschaften – und schauen, welche Vorgänge GolfNext Ihnen zuerst abnehmen kann. Ehrlich, auch wenn die Antwort „noch nicht“ heißt.",
+      "Gemeinsam gehen wir Ihren Cluballtag durch – Telefon, Platz, Gäste, Turniere, Mannschaften – und schauen, welche Vorgänge GolfNext Ihnen zuerst abnehmen kann. Ehrlich, auch wenn die Antwort „noch nicht“ heißt.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Persönliche Zeile: der Mock zeigt Fred als Ansprechpartner (Name + Rolle) im

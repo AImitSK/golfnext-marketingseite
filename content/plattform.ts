@@ -8,7 +8,7 @@ import type { Cta, PageContent } from "./types";
  *
  * Regeln (CLAUDE.md / 0016): Texte wortgleich (Zeichensetzung, „…"-Anführungen,
  * en-Dash „–", Ziffernabstand „39 €" / „68 %"). Keine erfundenen Zahlen/Versprechen.
- * Die Beispiel-Oberflächen (Browser-Demo, CRM-Liste, Concierge-Chat, Geräterahmen der
+ * Die Beispiel-Oberflächen (Browser-Demo, CRM-Liste, KI Chatbot-Chat, Geräterahmen der
  * Scroll-Geschichte) sind ILLUSTRATIV 1:1 aus dem Mock – schematische Darstellungen des
  * Systems, keine Zusagen und keine echten Screenshots. Die einzige echte Kennzahl ist
  * „68 % der Fragen außerhalb der Bürozeiten" (Pilot Golfclub Rehburg-Loccum), wortgleich
@@ -65,8 +65,7 @@ export interface HeroData {
 
 export const plattformHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: [
@@ -98,7 +97,7 @@ export const plattformHero: HeroData = {
 
 /* ────────────────────────── 2 · Bento: Drei Dinge, die sich ändern ────────────────────────── */
 
-/** Eine Zeile der illustrativen Marketing-CRM-Liste (Box 01). */
+/** Eine Zeile der illustrativen Marketing CRM-Liste (Box 01). */
 export interface CrmRow {
   /** Initialen im Avatar. */
   av: string;
@@ -109,7 +108,7 @@ export interface CrmRow {
   statusVariant?: "b";
 }
 
-/** Eine Chat-Blase des Concierge-Beispiels (Box 02). */
+/** Eine Chat-Blase des KI Chatbot-Beispiels (Box 02). */
 export interface ChatBubble {
   from: "q" | "a";
   text: string;
@@ -159,7 +158,7 @@ export const plattformBento: BentoBox[] = [
   {
     no: "/ 02",
     title: "Weniger Telefon im Clubbüro.",
-    text: "Öffnungszeiten, Greenfee, Platzreife, Gastspiel – die häufigsten Fragen beantwortet der Concierge. Auch sonntags um 21 Uhr.",
+    text: "Öffnungszeiten, Greenfee, Platzreife, Gastspiel – die häufigsten Fragen beantwortet der KI Chatbot. Auch sonntags um 21 Uhr.",
     viz: {
       kind: "chat",
       time: "Sonntag, 21:14 Uhr",
@@ -214,7 +213,7 @@ export const plattformRollen: RolleCard[] = [
     name: "Vorstand",
     question: "„Rechnet sich das?“",
     text: "Mehr Mitglieder, nachvollziehbare Zahlen je Kampagne, überschaubare Kosten ohne Vertragsfalle. Ein Ansprechpartner, der die Branche kennt.",
-    mods: ["Reach", "Marketing-CRM", "Analytics"],
+    mods: ["Reach", "Marketing CRM", "Analytics"],
   },
   {
     dir: "out",
@@ -222,15 +221,15 @@ export const plattformRollen: RolleCard[] = [
     name: "Clubmanager",
     question: "„Ich will ein System, nicht fünf Werkzeuge.“",
     text: "Ein Login für Website, Kampagnen, Kontakte und Kommunikation. Jeder Interessent hat eine Geschichte, die alle im Büro sehen.",
-    mods: ["Marketing-CRM", "Lifecycle", "Landingpages"],
+    mods: ["Marketing CRM", "Lifecycle", "Landingpages"],
   },
   {
     dir: "in",
     label: "Sekretariat · Clubbüro",
     name: "Sekretariat",
     question: "„Endlich Zeit für Menschen.“",
-    text: "Der Concierge nimmt die Routinefragen, die Gastfee läuft digital, der Platzstatus kommt vom Platz. Was bleibt, ist die Arbeit, für die man Sie braucht.",
-    mods: ["Concierge", "Gastfee", "Platzstatus"],
+    text: "Der KI Chatbot nimmt die Routinefragen, die Greenfee läuft digital, der Platzstatus kommt vom Platz. Was bleibt, ist die Arbeit, für die man Sie braucht.",
+    mods: ["KI Chatbot", "Greenfee", "Platzstatus"],
   },
   {
     dir: "in",
@@ -254,7 +253,7 @@ export const plattformRollen: RolleCard[] = [
     name: "Captain",
     question: "„Unser Spieltag soll sichtbar sein.“",
     text: "Ergebnis per App eintragen, Bericht steht auf der Website und in den sozialen Kanälen – ohne dass jemand im Büro tippt.",
-    mods: ["Captains App", "Turnier-News"],
+    mods: ["Captains App", "Turnier News"],
   },
 ];
 
@@ -328,7 +327,7 @@ export const plattformStory: StoryStep[] = [
   {
     sn: "02 · SONNTAG, 20:16",
     title: "Die Anmeldung",
-    text: "Drei Felder, fertig. Die Anmeldung landet im Marketing-CRM – mit Name, Termin und Herkunft der Anzeige.",
+    text: "Drei Felder, fertig. Die Anmeldung landet im Marketing CRM – mit Name, Termin und Herkunft der Anzeige.",
     device: {
       kind: "form",
       head: "Landingpage · golfclub-musterhausen.de/schnuppergolf",
@@ -336,7 +335,7 @@ export const plattformStory: StoryStep[] = [
       sub: "Zwei Stunden auf der Range und dem Kurzplatz. Schläger und Bälle stellen wir.",
       fields: ["Anna Berger", "anna.berger@…", "0171 …"],
       button: "Anmelden",
-      tag: "landet im Marketing-CRM",
+      tag: "landet im Marketing CRM",
     },
   },
   {
@@ -371,7 +370,7 @@ export const plattformStory: StoryStep[] = [
     text: "Anmeldung zur Platzreife. Das Clubbüro hat bis hierher nichts getippt – und sieht trotzdem alles.",
     device: {
       kind: "crm",
-      head: "Marketing-CRM",
+      head: "Marketing CRM",
       av: "AB",
       name: "Anna Berger",
       source: "Quelle: Instagram · Schnuppergolf-Kampagne",
@@ -415,7 +414,7 @@ export const plattformGrenze: GrenzeData = {
       "Sichtbarkeit und Anzeigen",
       "Anfragen und Anmeldungen",
       "Kommunikation mit Interessenten und Gästen",
-      "Concierge, Platzstatus, Gastfee, Turnier-News",
+      "KI Chatbot, Platzstatus, Greenfee, Turnier News",
     ],
   },
   clubverwaltung: {
@@ -476,7 +475,7 @@ export const plattform: PageContent = {
       eyebrow: "Die GolfNext-Plattform",
       headline: "Ihre Website ist ein Schaufenster. Wir machen ein System daraus.",
       text: [
-        "Ein System, das neue Golfer zu Ihrem Club führt, aus Interessenten Mitglieder macht – und dem Clubbüro die Routine abnimmt. Website, Kampagnen, Marketing-CRM und die digitalen Helfer für den Cluballtag arbeiten bei GolfNext zusammen, nicht nebeneinander.",
+        "Ein System, das neue Golfer zu Ihrem Club führt, aus Interessenten Mitglieder macht – und dem Clubbüro die Routine abnimmt. Website, Kampagnen, Marketing CRM und die digitalen Helfer für den Cluballtag arbeiten bei GolfNext zusammen, nicht nebeneinander.",
       ],
     },
     {
@@ -521,11 +520,10 @@ export const plattform: PageContent = {
     eyebrow: "GolfNext persönlich kennenlernen",
     headline: "Was könnte GolfNext in Ihrem Club verändern?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Persönliche Zeile: der Mock zeigt Fred als Ansprechpartner (Name + Rolle) im

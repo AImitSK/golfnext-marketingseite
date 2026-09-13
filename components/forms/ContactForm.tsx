@@ -291,17 +291,27 @@ export function ContactForm({
         </Field>
       </div>
 
-      {/* „Ich bin …" steht im Mock in einem abgesetzten Kasten samt Hilfetext. */}
+      {/* „Ich bin" steht im Mock in einem abgesetzten Kasten samt Hilfetext.
+          Pflichtfeld (Master-Briefing): erscheint als „Ich bin *". */}
       <Field
         id="rolle"
         label={felder.rolle.label}
+        required
         className={`${styles.fld} ${styles.role}`}
-        message={felder.rolle.hint}
-        messageVariant="h"
+        state={stateOf("rolle")}
+        {...messageOf("rolle", felder.rolle.hint)}
       >
-        <Select name="rolle" defaultValue={values.rolle} disabled={loading} className={styles.inp}>
-          {/* Neutrale Vorauswahl: ohne sie meldet jede Anfrage die erste Rolle,
-              auch wenn niemand sie gewählt hat (Entscheidung Stefan, 07.09.2026). */}
+        <Select
+          name="rolle"
+          required
+          defaultValue={values.rolle}
+          disabled={loading}
+          className={styles.inp}
+          onBlur={handleBlur("rolle")}
+          onChange={handleInput("rolle")}
+        >
+          {/* Neutrale, ungültige Vorauswahl: erzwingt eine echte Auswahl, ohne bei
+              Nichtauswahl einen erfundenen Wert zu melden (löst die 07.09-Sorge). */}
           <option value="">{KONTAKT_AUSWAHL_LEER}</option>
           {KONTAKT_ROLLEN.map((rolle) => (
             <option key={rolle} value={rolle}>

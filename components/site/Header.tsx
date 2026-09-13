@@ -25,10 +25,10 @@ import styles from "./Header.module.css";
 export function Header({ fallback = false }: { fallback?: boolean } = {}) {
   const items = getNavModel();
 
-  // CTA-Ziel nie hart kodiert: Label/Hint aus site-structure, URL über resolveCta.
+  // CTA-Ziel nie hart kodiert: Label aus site-structure, URL über resolveCta.
+  // Keine Zusatzzeile mehr (Master-Briefing) – daher kein `hint`.
   const cta: Cta = {
     label: CTA.erstgespraech.label,
-    hint: CTA.erstgespraech.hint,
     target: "erstgespraech",
   };
 

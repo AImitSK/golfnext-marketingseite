@@ -37,13 +37,15 @@ pnpm sanity:deploy  # Schema deployen (nach Schema-Änderungen)
 **Inhalt**
 - Alle Websiteinhalte einer Seite liegen in `content/<seite>.ts` (Muster: `content/ueber-golfnext.ts`), Komponenten importieren sie. Keine freien Inhaltstexte im JSX.
 - Freigegebene Texte aus den Briefings **wortgleich** übernehmen. Keine Marketingfloskeln ergänzen, keine Sätze glätten. Bewusste Satzfragmente bleiben.
+- Verbindliche Textquelle ist das **Master-Briefing** `docs/GolfNext_Website_Briefing_Stefan_Claude_MASTER.docx` (Teil 4 „Verbindliche spätere Änderungen" hat Vorrang vor älteren Briefings/Mocks). Ausnahmen (Entscheidung Stefan): offensichtliche Tippfehler und Genus werden korrigiert; das Sockel-Preismodell bleibt (die Preise im Briefing sind veraltet).
 - Keine erfundenen Zahlen: keine Klickzahlen, Reichweiten, Conversion-Werte, Einsparungen, Umsatzversprechen, Kundenzahlen. Beispielrechnungen sind als solche zu kennzeichnen.
 - Nur als „Websiteinhalt" gekennzeichnete Briefing-Teile werden veröffentlicht. Umsetzungshinweise und Platzhalterbeschreibungen nicht.
 - Fehlende Bilder (Screenshots, Porträts, Partnerlogos) werden als **beschriftete Platzhalter** gebaut (`<Shot />`-Baustein), niemals durch Stock, KI-Bilder oder erfundene Oberflächen ersetzt.
 
-**Benennungen (verbindlich)**
-- „Turnier-News" (nie „Club News"). „Firmen-Events" (nie nur „Events"). Innerhalb der Clubprozesse „Gastfee" (nicht „Greenfee"); als Zielgruppen-/Kampagnenthema bleibt „Greenfee".
-- Wortmarke „GolfNext" ohne „Consulting". Module: Reach, Search, Landingpages, Marketing-CRM, Lifecycle, Content, Concierge, Platzstatus, Gastfee, Firmen-Events, Turnier-News, Captains App.
+**Benennungen (verbindlich – Master-Briefing, ersetzt frühere Schreibweisen)**
+- „Turnier News" (ohne Bindestrich), „KI Chatbot" (nicht „Concierge"), „Greenfee" (nicht „Gastfee" – Zielgruppe und Modul vereinheitlicht; grammatisch „das Greenfee"), „Marketing CRM" (ohne Bindestrich), „GolfNext Design" (ohne Bindestrich). „Firmen-Events" und „Go-live" behalten den Bindestrich.
+- Wortmarke „GolfNext" ohne „Consulting". Module: Reach, Search, Landingpages, Marketing CRM, Lifecycle, Content, KI Chatbot, Platzstatus, Greenfee, Firmen-Events, Turnier News, Captains App.
+- CTA global „Erstgespräch anfragen" (keine Zusatzzeile mit 30 Minuten/Zoom/Teams); Paketseite-Hero „Pakete ansehen". Der Footer-Block „Plattform auf einen Blick" erscheint nur auf der Plattformseite. Im Kontaktformular ist „Ich bin" Pflichtfeld („Ich bin *").
 
 **Preise (Fassung 2, gültig – siehe `docs/design-system/mocks/3.7-pakete.html` und `docs/02-preislogik.md`)**
 - Sockel „Ihre Clubwebsite": 6.800 € einmalig / 238 € monatlich, einzeln buchbar.

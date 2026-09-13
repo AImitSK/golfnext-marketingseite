@@ -5,7 +5,7 @@ import styles from "./Bento.module.css";
 
 /**
  * 2 · Bento „Drei Dinge, die sich ändern" (portiert aus 3.2c .bento/.bx).
- * Drei Boxen mit je einer Mikroanimation (CRM-Zeilen laufen ein, Concierge-Chat
+ * Drei Boxen mit je einer Mikroanimation (CRM-Zeilen laufen ein, KI Chatbot-Chat
  * erscheint Blase für Blase, fünf Werkzeuge fahren zu „GolfNext" zusammen).
  * Die Box-Inhalte sind illustrativ; die einzige echte Kennzahl („68 %") steht als
  * Pilot-Hinweis in Box 02.

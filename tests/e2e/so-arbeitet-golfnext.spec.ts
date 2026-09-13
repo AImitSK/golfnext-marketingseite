@@ -13,7 +13,7 @@ import { expect, test } from "@playwright/test";
  * - kein Modulstatus („Im Einsatz"/„Pilot"/„In Entwicklung"), keine erfundenen Zahlen.
  */
 
-const H1 = "Nach der Anmeldung hört Ihr Club nicht auf zu reden.";
+const H1 = "Eine Anmeldung. Und dann geht es weiter.";
 
 /** Reiter-Beschriftung → Betreff der ersten Nachricht der jeweiligen Strecke. */
 const STRECKEN: { tab: string; betreff: string }[] = [
@@ -56,7 +56,7 @@ test.describe("/plattform/so-arbeitet-golfnext · Struktur und Overflow", () => 
     await expect(main.getByText("Pilot", { exact: true })).toHaveCount(0);
   });
 
-  test("Benennungen wie im Mock: Greenfee als Zielgruppe, Gastfee als Zahlung", async ({
+  test("Benennungen wie im Mock: Greenfee als Zielgruppe, Greenfee als Zahlung", async ({
     page,
   }) => {
     await page.goto("/plattform/so-arbeitet-golfnext");
@@ -64,10 +64,10 @@ test.describe("/plattform/so-arbeitet-golfnext · Struktur und Overflow", () => 
     // Zielgruppen-Reiter heißt „Greenfee & Gäste".
     await expect(page.getByText("Greenfee & Gäste", { exact: true })).toBeVisible();
 
-    // In der Greenfee-Strecke heißt die Zahlung „Gastfee" (Modulbegriff).
+    // In der Greenfee-Strecke heißt die Zahlung „Greenfee" (Modulbegriff).
     await page.getByText("Greenfee & Gäste", { exact: true }).click();
     await expect(
-      page.getByText("Gastfee bezahlt, Startzeit reserviert.", { exact: false }),
+      page.getByText("Greenfee bezahlt, Startzeit reserviert.", { exact: false }),
     ).toBeVisible();
   });
 });

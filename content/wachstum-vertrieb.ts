@@ -76,8 +76,7 @@ export interface HeroData {
 
 export const wachstumHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: [
@@ -187,7 +186,7 @@ export const wachstumMomente: MomentBox[] = [
     title: "Wer da war, soll wiederkommen.",
     text: "Nach dem Schnupperkurs, nach dem Gastspiel, nach dem Gespräch: Die nächste Nachricht kommt von allein – mit dem Angebot, das jetzt passt. Das Clubbüro sieht, wer wo steht.",
     modPrefix: "Module",
-    modName: "Marketing-CRM · Lifecycle",
+    modName: "Marketing CRM · Lifecycle",
     viz: {
       kind: "after",
       events: [
@@ -242,18 +241,18 @@ export const wachstumWege: WegCard[] = [
     title: "Mitglieder gewinnen & Clubwechsel",
     text: "Wer mit seinem Club unzufrieden ist, sucht leise – bei Google. Eine Seite, die Beiträge, Spielrecht und Probemitgliedschaft klar erklärt. Und ein Termin für das Gespräch: mit Ihnen, nicht mit einem Formular.",
     goal: "Ein Gespräch mit dem Clubmanager.",
-    mods: ["Search", "Landingpages", "Marketing-CRM"],
+    mods: ["Search", "Landingpages", "Marketing CRM"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
   {
     miniUrl: "golfclub-musterhausen.de/greenfee",
     miniTitle: "Greenfee & Gastspiel",
-    miniButton: "Gastfee bezahlen",
+    miniButton: "Greenfee bezahlen",
     tag: "Gäste",
     title: "Greenfee & Gäste",
-    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, die Gastfee wird online bezahlt. Gefunden, gebucht, gespielt.",
-    goal: "Gastspiel angefragt oder Gastfee bezahlt.",
-    mods: ["Search", "Platzstatus", "Gastfee"],
+    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, das Greenfee wird online bezahlt. Gefunden, gebucht, gespielt.",
+    goal: "Gastspiel angefragt oder Greenfee bezahlt.",
+    mods: ["Search", "Platzstatus", "Greenfee"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
   {
@@ -264,7 +263,7 @@ export const wachstumWege: WegCard[] = [
     title: "Firmenkunden gewinnen",
     text: "Aus Ihrem Platz, Ihrer Gastronomie und Ihrem Pro wird ein Angebot mit Ablauf, Preis und Anfrageformular. Google-Anzeigen für Unternehmen im Umkreis. Firmen-Events, die sich verkaufen lassen.",
     goal: "Eine Anfrage mit Termin und Teilnehmerzahl.",
-    mods: ["Search", "Firmen-Events", "Marketing-CRM"],
+    mods: ["Search", "Firmen-Events", "Marketing CRM"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
 ];
@@ -357,7 +356,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "01 · MONTAG, 09:10",
     title: "Sie geben frei.",
-    text: "Wir legen Ihnen die fertige Kampagne vor: Motive, Texte, Zielgebiet, Budget. Ein Klick von Ihnen – vorher passiert nichts.",
+    text: "Wir legen Ihnen die fertige Kampagne vor: Motive, Texte, Zielgebiet und Budget. Ein Klick von Ihnen. Vorher läuft nichts.",
     device: {
       kind: "freigabe",
       head: "GolfNext · Kampagne zur Freigabe",
@@ -380,7 +379,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "02 · MONTAG, 09:12",
     title: "Die Anzeigen laufen.",
-    text: "Bei Instagram und Facebook für Menschen, die noch nicht suchen. Bei Google für die, die es gerade tun. 30 Kilometer um den Club.",
+    text: "Bei Instagram und Facebook erreichen wir Menschen, die noch nicht gezielt suchen. Bei Google erreichen wir Menschen, die gerade bewusst suchen. Im Umkreis von 30 Kilometern rund um Ihren Club.",
     device: {
       kind: "ads",
       head: "Anzeigen · live",
@@ -407,10 +406,10 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "03 · DIENSTAG, 21:40",
     title: "Die erste Anmeldung.",
-    text: "Abends, vom Sofa aus. Die Anmeldung landet im Marketing-CRM, die Bestätigung geht sofort raus. Im Büro klingelt nichts.",
+    text: "Abends, vom Sofa aus. Die Anmeldung landet im Marketing CRM. Die Bestätigung geht sofort raus. Im Büro klingelt nichts.",
     device: {
       kind: "crm-card",
-      head: "Marketing-CRM · Dienstag, 21:40",
+      head: "Marketing CRM · Dienstag, 21:40",
       headline: "Die erste Anmeldung.",
       body: "Anna hat die Anzeige abends gesehen, die Seite gelesen und sich angemeldet. Das Büro bekommt eine Notiz – keinen Anruf.",
       av: "AB",
@@ -427,10 +426,10 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "04 · FREITAG",
     title: "Der Kurs füllt sich.",
-    text: "Jeder Angemeldete hat die Erinnerung bekommen. Sie sehen, wer kommt, wer noch offen ist und woher jeder Einzelne kam.",
+    text: "Jeder Angemeldete bekommt seine Erinnerung. Sie sehen, wer kommt, wer noch offen ist und über welchen Weg die Anmeldung kam.",
     device: {
       kind: "crm-list",
-      head: "Marketing-CRM · Freitag",
+      head: "Marketing CRM · Freitag",
       capTitle: "Schnuppergolf · Samstag 10 Uhr",
       capNote: "noch 2 Plätze",
       rows: [
@@ -445,7 +444,7 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "05 · SONNTAG, 18:00",
     title: "Der Bericht.",
-    text: "Eine Seite für den Vorstand: Anmeldungen, Kosten je Anmeldung, Budgetstand und was wir nächste Woche ändern. Jede Woche.",
+    text: "Eine Seite für den Vorstand: Anmeldungen, Kosten pro Anmeldung, Budgetstand und was wir nächste Woche ändern. Jede Woche.",
     device: {
       kind: "report",
       head: "E-Mail · Sonntag, 18:00 · Ihr Wochenbericht",
@@ -533,7 +532,7 @@ export const wachstumFundament: FundamentData = {
   ],
   link: { label: "Ihre Clubwebsite ist Teil jedes Pakets", path: "/pakete" },
   cards: [
-    { url: "…/greenfee", title: "Greenfee & Gastspiel", button: "Gastfee bezahlen" },
+    { url: "…/greenfee", title: "Greenfee & Gastspiel", button: "Greenfee bezahlen" },
     { url: "golfclub-musterhausen.de/schnuppergolf", title: "Schnuppergolf am Samstag", button: "Platz sichern" },
     { url: "…/mitglied-werden", title: "Mitglied werden", button: "Gespräch vereinbaren" },
   ],
@@ -549,9 +548,9 @@ export const wachstumVertrieb: PageContent = {
     {
       id: "hero",
       eyebrow: "Wachstum & Vertrieb",
-      headline: "Neue Golfer finden Ihren Club. Bevor sie den Nachbarclub finden.",
+      headline: "Neue Golfer finden Ihren Club. Bevor sie woanders suchen.",
       text: [
-        "Anzeigen bei Instagram, Facebook und Google. Eine Seite je Angebot. Und danach die richtige Nachricht zur richtigen Zeit – automatisch. So werden aus Interessenten Anmeldungen und aus Anmeldungen Mitglieder. Für Schnuppergolf, Platzreife, Mitgliedschaft, Greenfee und Firmen-Events.",
+        "Anzeigen bei Instagram, Facebook und Google. Jedes Angebot bekommt eine eigene Seite. Danach folgen automatisch die passenden Nachrichten zur passenden Zeit. So werden aus Interessenten Anmeldungen und aus Anmeldungen Mitglieder. Für Schnuppergolf, Platzreife, Mitgliedschaft, Greenfee und Firmen-Events.",
       ],
     },
     {
@@ -573,9 +572,9 @@ export const wachstumVertrieb: PageContent = {
     {
       id: "kampagne",
       eyebrow: "Was das Clubbüro davon merkt",
-      headline: "Eine Kampagne, eine Woche. Aus Sicht Ihres Clubs.",
+      headline: "Eine Kampagne. Eine Woche. Aus Sicht Ihres Clubs.",
       text: [
-        "Was Sie tun und was von allein läuft – am Beispiel einer Schnuppergolf-Kampagne. Scrollen Sie mit.",
+        "Was Sie tun und was von alleine läuft. Am Beispiel einer Schnuppergolf-Kampagne. Scrollen Sie mit.",
       ],
     },
     {
@@ -601,11 +600,10 @@ export const wachstumVertrieb: PageContent = {
     eyebrow: "Wachstum für Ihren Club",
     headline: "Wo soll Ihr Club als Nächstes wachsen?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Zielgruppen, Ihre Angebote und die größte ungenutzte Chance. Sie bekommen eine ehrliche Einschätzung, welcher Weg zuerst den größten Hebel hat – keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Zielgruppen, Ihre Angebote und die größte ungenutzte Chance. Sie bekommen eine ehrliche Einschätzung, welcher Weg zuerst den größten Hebel hat – keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Persönliche Zeile: der Mock zeigt Fred als Ansprechpartner (Name + Rolle) im

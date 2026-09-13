@@ -14,9 +14,9 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
 /**
  * 1 · Hero (portiert aus 3.1b .hero/.demo/.browser/.site/.pstat/.fl/.tgl). Links:
  * Eyebrow, die einzige `<h1>` der Seite, Lead, grüner CTA (Erstgespräch, zweite
- * Zeile „30 Minuten persönlich per Zoom oder Teams") und Trust-Zeile. Rechts: eine
+ * Trust-Zeile darunter. Rechts: eine
  * illustrative Clubwebsite (Bleed) mit drei schwebenden Karten – Anmeldung Anna,
- * Concierge-Chat und Platzstatus-Toggle vom Greenkeeper. Kein echter Screenshot.
+ * KI Chatbot-Chat und Platzstatus-Toggle vom Greenkeeper. Kein echter Screenshot.
  *
  * Mikro-Animation (Motion-Infra, „einmal/dezent"): Der ENDZUSTAND (alle Karten
  * sichtbar, Toggle an, Platzstatus offen = „Platz bespielbar") steht im Server-HTML →

@@ -52,10 +52,11 @@ export const contactSchema = z.object({
     .trim()
     .min(2, "nachname" satisfies FieldMessageKey)
     .max(MAX.name, "tooLong" satisfies FieldMessageKey),
-  // Auswahlfelder sind optional (Briefing 0025) und tragen eine neutrale
-  // Vorauswahl (leerer Wert = keine Angabe, Entscheidung Stefan 07.09.2026).
+  // „Ich bin" ist Pflicht (Master-Briefing): Die neutrale Vorauswahl (leerer Wert)
+  // ist damit ungültig und erzwingt eine echte Auswahl – ein nicht gewählter Wert
+  // wird nie als Angabe gemeldet. „thema" bleibt optional mit neutraler Vorauswahl.
   // Ein NICHT leerer, unbekannter Wert wäre manipuliert und wird abgewiesen.
-  rolle: z.literal("").or(z.enum(KONTAKT_ROLLEN)).optional(),
+  rolle: z.enum(KONTAKT_ROLLEN, { error: "rolle" satisfies FieldMessageKey }),
   club: optionalText(MAX.club),
   thema: z.literal("").or(z.enum(KONTAKT_THEMEN)).optional(),
   email: z
@@ -125,6 +126,7 @@ export function toFieldErrors(error: z.ZodError): FieldErrors {
 
 const MESSAGE_KEYS = new Set<string>([
   "required",
+  "rolle",
   "email",
   "emailOk",
   "optional",

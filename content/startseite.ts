@@ -49,7 +49,7 @@ export interface HeroData {
   };
   /** Karte 1: Anmeldung Anna Berger. */
   anmeldung: { av: string; name: string; sub: string; status: string };
-  /** Karte 2: Concierge-Chat. */
+  /** Karte 2: KI Chatbot-Chat. */
   concierge: { title: string; frage: string; antwort: string };
   /** Karte 3: Platzstatus-Toggle vom Greenkeeper. */
   toggle: { title: string; sub: string };
@@ -57,12 +57,11 @@ export interface HeroData {
 
 export const startseiteHero: HeroData = {
   ctaPrimary: {
-    label: "Online-Erstgespräch vereinbaren",
-    hint: "30 Minuten persönlich per Zoom oder Teams",
+    label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
   trust: ["Ihre Domain, Ihre Daten", "Keine Knebelverträge", "Ein Mensch am Telefon"],
-  ariaLabel: "Beispiel einer Clubwebsite mit Anmeldung, Concierge-Chat und Platzstatus",
+  ariaLabel: "Beispiel einer Clubwebsite mit Anmeldung, KI Chatbot-Chat und Platzstatus",
   demo: {
     url: "golfclub-musterhausen.de",
     brand: "GC Musterhausen",
@@ -83,7 +82,7 @@ export const startseiteHero: HeroData = {
     status: "angemeldet",
   },
   concierge: {
-    title: "Concierge · Sonntag, 21:14 Uhr",
+    title: "KI Chatbot · Sonntag, 21:14 Uhr",
     frage: "Kann ich morgen als Gast spielen?",
     antwort:
       "Ja, gern. Montag ab 8 Uhr, Greenfee 18 Loch 65 €. Soll ich Ihnen den Zahlungslink schicken?",
@@ -176,23 +175,23 @@ export const startseiteTeile: TeilBox[] = [
           statusVariant: "b",
         },
         { av: "FM", name: "Familie Meier", sub: "Mitgliedschaft · Gespräch vereinbart", status: "Termin" },
-        { av: "TS", name: "Tom Schulz", sub: "Greenfee · Gastfee bezahlt", status: "bezahlt" },
+        { av: "TS", name: "Tom Schulz", sub: "Greenfee · online bezahlt", status: "bezahlt" },
       ],
     },
   },
   {
     no: "/ 03",
     title: "Das Büro macht weniger Routine.",
-    text: "Fragen beantwortet der Concierge, der Platzstatus kommt vom Greenkeeper, die Gastfee bezahlt der Gast, der Turnierbericht schreibt sich aus der Ergebnisliste. Was bleibt, ist die Arbeit, für die man Menschen braucht.",
+    text: "Fragen beantwortet der KI Chatbot, der Platzstatus kommt vom Greenkeeper, die Greenfee bezahlt der Gast, der Turnierbericht schreibt sich aus der Ergebnisliste. Was bleibt, ist die Arbeit, für die man Menschen braucht.",
     link: { label: "Clubprozesse", path: "/clubprozesse" },
     viz: {
       kind: "log",
       head: "Sonntag · ohne das Büro erledigt",
       events: [
         { time: "06:40", text: "Platz auf „bespielbar“", sub: "Greenkeeper · Platzstatus" },
-        { time: "08:15", text: "Gastfee bezahlt und bestätigt", sub: "Gast · Gastfee" },
-        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", sub: "Concierge · beantwortet" },
-        { time: "17:50", text: "Turnierbericht veröffentlicht", sub: "Turnier-News · 3 Kanäle" },
+        { time: "08:15", text: "Greenfee bezahlt und bestätigt", sub: "Gast · Greenfee" },
+        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", sub: "KI Chatbot · beantwortet" },
+        { time: "17:50", text: "Turnierbericht veröffentlicht", sub: "Turnier News · 3 Kanäle" },
       ],
       sum: "4 Vorgänge · 0 Anrufe im Büro",
     },
@@ -209,7 +208,7 @@ export const startseiteRollen: RolleCard[] = [
     name: "Vorstand",
     question: "„Rechnet sich das?“",
     text: "Mehr Mitglieder, nachvollziehbare Zahlen je Kampagne, überschaubare Kosten ohne Vertragsfalle. Ein Ansprechpartner, der die Branche kennt.",
-    mods: ["Reach", "Marketing-CRM", "Pakete"],
+    mods: ["Reach", "Marketing CRM", "Pakete"],
   },
   {
     dir: "out",
@@ -217,15 +216,15 @@ export const startseiteRollen: RolleCard[] = [
     name: "Clubmanager",
     question: "„Ich will ein System, nicht fünf Werkzeuge.“",
     text: "Ein Login für Website, Kampagnen, Kontakte und Kommunikation. Jeder Interessent hat eine Geschichte, die alle im Büro sehen.",
-    mods: ["Marketing-CRM", "Lifecycle", "Landingpages"],
+    mods: ["Marketing CRM", "Lifecycle", "Landingpages"],
   },
   {
     dir: "in",
     label: "Sekretariat · Clubbüro",
     name: "Sekretariat",
     question: "„Endlich Zeit für Menschen.“",
-    text: "Der Concierge nimmt die Routinefragen, die Gastfee läuft digital, der Platzstatus kommt vom Platz. Was bleibt, ist die Arbeit, für die man Sie braucht.",
-    mods: ["Concierge", "Gastfee", "Platzstatus"],
+    text: "Der KI Chatbot nimmt die Routinefragen, die Greenfee läuft digital, der Platzstatus kommt vom Platz. Was bleibt, ist die Arbeit, für die man Sie braucht.",
+    mods: ["KI Chatbot", "Greenfee", "Platzstatus"],
   },
   {
     dir: "in",
@@ -249,7 +248,7 @@ export const startseiteRollen: RolleCard[] = [
     name: "Captain",
     question: "„Unser Spieltag soll sichtbar sein.“",
     text: "Ergebnis per App eintragen, Bericht steht auf der Website und in den sozialen Kanälen – ohne dass jemand im Büro tippt.",
-    mods: ["Captains App", "Turnier-News"],
+    mods: ["Captains App", "Turnier News"],
   },
 ];
 
@@ -303,7 +302,7 @@ export const startseiteWeg: WegData = {
       n: "02",
       zeit: "Sonntag, 20:16",
       title: "Die Anmeldung",
-      text: "Drei Felder, fertig. Landet im Marketing-CRM – mit Herkunft der Anzeige.",
+      text: "Drei Felder, fertig. Landet im Marketing CRM – mit Herkunft der Anzeige.",
       device: {
         head: "Landingpage",
         title: "Samstag, 10 Uhr – noch 4 Plätze",
@@ -329,7 +328,7 @@ export const startseiteWeg: WegData = {
       title: "Der nächste Schritt",
       text: "Nach dem Kurs kam das Angebot zur Platzreife. Anna hat sich angemeldet.",
       device: {
-        head: "Marketing-CRM",
+        head: "Marketing CRM",
         title: "Anna Berger",
         body: ["Schnuppergolf · teilgenommen", "Platzreife · angemeldet"],
         tag: "Das Büro hat nichts getippt",
@@ -377,13 +376,13 @@ export const startseitePakete: PaketeData = {
     {
       role: "Marketing und Nachfrage",
       name: "Wachstum",
-      text: "Anzeigen, Landingpages, Marketing-CRM und automatische Nachrichten: Aus Sichtbarkeit werden Anmeldungen, die begleitet werden.",
-      mods: ["Reach", "Search", "Landingpages", "Marketing-CRM", "Lifecycle", "Content"],
+      text: "Anzeigen, Landingpages, Marketing CRM und automatische Nachrichten: Aus Sichtbarkeit werden Anmeldungen, die begleitet werden.",
+      mods: ["Reach", "Search", "Landingpages", "Marketing CRM", "Lifecycle", "Content"],
     },
     {
       role: "Digitale Clubzentrale",
       name: "Komplett",
-      text: "Alles aus Wachstum plus Concierge, Platzstatus, Gastfee, Turnier-News, Firmen-Events und Captains App. Wachstum nach außen, Entlastung nach innen.",
+      text: "Alles aus Wachstum plus KI Chatbot, Platzstatus, Greenfee, Turnier News, Firmen-Events und Captains App. Wachstum nach außen, Entlastung nach innen.",
       mods: ["Wachstum", "+ alle Clubprozesse"],
     },
   ],
@@ -508,7 +507,7 @@ export const startseite: PageContent = {
     },
     {
       id: "praxis",
-      eyebrow: "Praxis",
+      eyebrow: "Ratgeber",
       headline: "Was in Golfclubs wirklich funktioniert.",
     },
   ],
@@ -516,11 +515,10 @@ export const startseite: PageContent = {
     eyebrow: "GolfNext persönlich kennenlernen",
     headline: "Was könnte GolfNext in Ihrem Club verändern?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Ziele und die größten Hebel für Ihren Club. Dabei klären wir, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
     // Wortgleich aus Mock 3.1b `.f-person`: Name (fett) + Rolle, mit Porträt-Platzhalter.

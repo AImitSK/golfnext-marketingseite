@@ -5,7 +5,7 @@ import type { TurnierNewsData } from "@/content/clubprozesse";
 import styles from "./TurnierNews.module.css";
 
 /**
- * Bericht-Strecke der Turnier-News (portiert aus 3.5b .track). Ergebnisliste (PDF) →
+ * Bericht-Strecke der Turnier News (portiert aus 3.5b .track). Ergebnisliste (PDF) →
  * drei Angaben + Tonalität → drei Ausgaben (Website · Facebook · Instagram, laufen
  * rechts gestaffelt aus). Der ENDZUSTAND (Verbindungslinien voll, alle Ausgaben
  * sichtbar) steht im Server-HTML → ohne JS / bei reduzierter Bewegung sofort lesbar.

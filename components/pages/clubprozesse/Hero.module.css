@@ -3,7 +3,7 @@
    --gn-* umgestellt, literale Tints kommentiert. Große Flächen: --gn-radius-lg (12);
    Bedienelemente 4 px.
 
-   Bewegung (Briefing 0015): Der Platz springt auf "offen", die Turnier-News laufen
+   Bewegung (Briefing 0015): Der Platz springt auf "offen", die Turnier News laufen
    ein, die Firmen-Events schieben sich herein, zum Schluss die Summenzeile - als
    **CSS-Animation ab dem ersten gemalten Frame**, nicht über einen JS-Klassenwechsel.
 
@@ -301,7 +301,7 @@
 .nitem:nth-child(3) {
   animation-delay: 1s;
 }
-/* Turnier-News laufen von unten ein. */
+/* Turnier News laufen von unten ein. */
 @keyframes nachrichtEinlaufen {
   from {
     opacity: 0;

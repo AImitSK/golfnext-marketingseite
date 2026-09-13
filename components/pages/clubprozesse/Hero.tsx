@@ -13,7 +13,7 @@ import styles from "./Hero.module.css";
  * horizontaler Scroll). Illustrative Oberfläche, kein echter Screenshot.
  *
  * Mikro-Animation (Briefing 0015): Der Sonntag „läuft ab" – der Platzstatus öffnet
- * sich (Farbe, Punkt und Text wechseln), die Turnier-News laufen ein, die Log-Zeilen
+ * sich (Farbe, Punkt und Text wechseln), die Turnier News laufen ein, die Log-Zeilen
  * schieben sich herein, am Ende erscheint die Zusammenfassung.
  *
  * Sie liegt vollständig im Modul-CSS und läuft ab dem ersten gemalten Frame. Der Hero

@@ -65,7 +65,7 @@ export const praxisLabels: PraxisLabels = {
   inhalt: "Inhalt",
   weiterlesen: "Weiterlesen",
   passtDazu: "Passt dazu",
-  brotkrumeStart: "Praxis",
+  brotkrumeStart: "Ratgeber",
   linkedin: "LinkedIn",
   lesezeitSuffix: "Min. Lesezeit",
 };
@@ -96,10 +96,10 @@ export const praxis: PageContent = {
   sections: [
     {
       id: "hero",
-      eyebrow: "Praxis",
-      headline: "Praxis. Was in Golfclubs wirklich funktioniert.",
+      eyebrow: "Ratgeber",
+      headline: "Was Golfclubs heute wissen müssen.",
       text: [
-        "Berichte aus Pilotclubs, Erfahrungen aus dreißig Jahren auf dem Platz und ehrliche Antworten auf die Fragen, die im Clubbüro und im Vorstand gestellt werden. Zum Mitnehmen – auch ohne GolfNext.",
+        "Fachartikel aus dem golfmanager, Erfahrungen aus unserer Arbeit mit Clubs und klare Antworten auf Fragen zu KI, Digitalisierung, Online Marketing und Cluballtag. Verständlich erklärt und direkt auf die Themen bezogen, die Golfclubs wirklich beschäftigen.",
       ],
     },
   ],
@@ -108,11 +108,10 @@ export const praxis: PageContent = {
     eyebrow: "GolfNext persönlich",
     headline: "Lieber direkt über Ihren Club sprechen?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Ziele und Ihre größten Hebel. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
-      label: "Online-Erstgespräch vereinbaren",
-      hint: "30 Minuten persönlich per Zoom oder Teams",
+      label: "Erstgespräch anfragen",
       target: "erstgespraech",
     },
   },

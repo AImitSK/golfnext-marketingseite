@@ -38,7 +38,19 @@ function BarEntry({ path, label }: { path: string; label: string }) {
   return isLinkable(path) ? <a href={path}>{label}</a> : <span>{label}</span>;
 }
 
-export function Footer({ footerClose }: { footerClose?: FooterCloseType }) {
+export function Footer({
+  footerClose,
+  zeigeModulLandkarte = false,
+}: {
+  footerClose?: FooterCloseType;
+  /**
+   * Zeigt die Modul-Landkarte „Plattform auf einen Blick" (Zone 2). Laut
+   * Master-Briefing erscheint dieser Block NUR auf der Plattformseite; alle
+   * anderen Seiten lassen ihn weg. Die Vorschau `/_bausteine` setzt ihn zum
+   * Testen ebenfalls.
+   */
+  zeigeModulLandkarte?: boolean;
+}) {
   const telHref = `tel:${KONTAKT.telefon.replace(/\s+/g, "")}`;
 
   return (
@@ -47,7 +59,9 @@ export function Footer({ footerClose }: { footerClose?: FooterCloseType }) {
           (Platzhalter, 404, Fehlerseite) steht kein Verkaufsblock (Briefing 0022). */}
       {footerClose ? <FooterClose footerClose={footerClose} /> : null}
 
-      {/* Zone 2 · Modul-Landkarte aus MODULE */}
+      {/* Zone 2 · Modul-Landkarte aus MODULE – nur auf der Plattformseite
+          (Master-Briefing: „Plattform auf einen Blick" nur dort). */}
+      {zeigeModulLandkarte ? (
       <section className={styles.map} aria-label="Module im Überblick">
         <div className={styles.mapInner}>
           <div className={styles.mh}>
@@ -75,6 +89,7 @@ export function Footer({ footerClose }: { footerClose?: FooterCloseType }) {
           </div>
         </div>
       </section>
+      ) : null}
 
       {/* Zone 3 · Persönlicher Kontakt aus KONTAKT */}
       <section className={styles.contact} aria-label="Kontakt">

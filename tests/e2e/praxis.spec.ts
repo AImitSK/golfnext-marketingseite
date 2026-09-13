@@ -31,7 +31,7 @@ test.describe("Praxis – Aufbau", () => {
 
     const h1 = page.locator("h1");
     await expect(h1).toHaveCount(1);
-    await expect(h1).toHaveText("Praxis. Was in Golfclubs wirklich funktioniert.");
+    await expect(h1).toHaveText("Was Golfclubs heute wissen müssen.");
     await expect(page.getByText("Zum Mitnehmen – auch ohne GolfNext.")).toBeVisible();
   });
 
@@ -440,7 +440,7 @@ test.describe("Praxis ohne JavaScript", () => {
 
   test("alle drei Routen sind vollständig lesbar", async ({ page }) => {
     await page.goto(LISTE);
-    await expect(page.locator("h1")).toHaveText("Praxis. Was in Golfclubs wirklich funktioniert.");
+    await expect(page.locator("h1")).toHaveText("Was Golfclubs heute wissen müssen.");
     await expect(page.getByRole("heading", { name: "Beispielartikel 1" })).toBeVisible();
 
     await page.goto(RUBRIK_MIT);

@@ -40,6 +40,8 @@ export const formMessages = {
     // Ergänzt mit 0025 (Feldliste aus Mock 3.10).
     vorname: "Bitte geben Sie Ihren Vornamen an.",
     nachname: "Bitte geben Sie Ihren Nachnamen an.",
+    // „Ich bin" ist Pflicht (Master-Briefing).
+    rolle: "Bitte wählen Sie aus, was auf Sie zutrifft.",
     message: "Bitte schreiben Sie uns kurz, worum es geht.",
     /** Zu lange Eingabe in einem der kurzen Textfelder (Name, Club). */
     tooLong: "Diese Angabe ist zu lang – bitte kürzen Sie sie.",

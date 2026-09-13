@@ -48,7 +48,7 @@ test.describe("/pakete · Struktur und Overflow", () => {
     const table = page.getByRole("table");
     await expect(table).toHaveCount(1);
     await expect(table.getByRole("columnheader", { name: "Komplett" })).toBeVisible();
-    await expect(table.getByRole("rowheader", { name: "Gastfee" })).toBeVisible();
+    await expect(table.getByRole("rowheader", { name: "Greenfee" })).toBeVisible();
   });
 
   test('Vergleich enthält alle Zeilen und sichtbare „Enthalten"-Punkte (Regressionsschutz)', async ({

@@ -652,6 +652,7 @@ export default function BausteinePage() {
           ...ueberGolfnext.footerClose!,
           secondary: { label: "Beispiel: sekundäre Aktion", target: "kontakt" },
         }}
+        zeigeModulLandkarte
       />
     </>
   );

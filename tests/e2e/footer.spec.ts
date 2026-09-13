@@ -41,6 +41,22 @@ test.describe("Footer · keine toten Links (Briefing 0022)", () => {
   });
 });
 
+test.describe("Footer · Modulkarte nur auf der Plattformseite (Master-Briefing)", () => {
+  test("/plattform zeigt „Plattform auf einen Blick“", async ({ page }) => {
+    await page.goto("/plattform");
+    await expect(
+      page.locator("footer").getByRole("region", { name: "Module im Überblick" }),
+    ).toBeVisible();
+  });
+
+  test("Startseite zeigt die Modulkarte nicht", async ({ page }) => {
+    await page.goto("/");
+    await expect(
+      page.locator("footer").getByRole("region", { name: "Module im Überblick" }),
+    ).toHaveCount(0);
+  });
+});
+
 test.describe("Footer · volle Breite (Briefing 0014)", () => {
   test("Inhalt ist nicht mehr auf 1140 px begrenzt", async ({ page }) => {
     await page.goto("/_bausteine");

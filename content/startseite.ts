@@ -515,7 +515,7 @@ export const startseite: PageContent = {
     eyebrow: "GolfNext persönlich kennenlernen",
     headline: "Was könnte GolfNext in Ihrem Club verändern?",
     text: [
-      "In 30 Minuten schauen wir gemeinsam auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Ziele und die größten Hebel für Ihren Club. Dabei klären wir, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
       label: "Erstgespräch anfragen",

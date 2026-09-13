@@ -121,8 +121,6 @@ export interface ClubLogo {
 export interface ProjekteData {
   /** Clubs mit freigegebenem Logo. Keine Platzhalter-Kacheln mehr. */
   logos: ClubLogo[];
-  /** Text-Link „…Praxis“ (Ziel /praxis, bis live → #). */
-  praxisLink: string;
 }
 
 /* ────────────────────────── 6 · Wissen (Artikel-Slider) ────────────────────────── */
@@ -165,7 +163,7 @@ export const ueberGolfnextHero: HeroData = {
     },
     {
       name: "Stefan Kühne",
-      role: "Online-Marketing und Entwicklung",
+      role: "Gründer · Online-Marketing und Entwicklung",
       credit: "Technologie",
     },
   ],
@@ -220,7 +218,7 @@ export const ueberGolfnextMenschen: MenschenData = {
       facts: ["PGA Golfprofessional", "30 Jahre Golfmarkt", "Autor im golfmanager"],
     },
     {
-      rolle: "Technologie · Online-Marketing",
+      rolle: "Gründer · Online-Marketing und Entwicklung",
       name: "Stefan Kühne",
       text: "Verbindet langjährige Erfahrung im Online-Marketing mit technischer Entwicklung. Baut die Plattform, auf der GolfNext läuft – und die Kampagnen, die darüber laufen.",
       facts: ["Online-Marketing", "Softwareentwicklung", "KI-gestützte Entwicklung"],
@@ -284,7 +282,6 @@ export const ueberGolfnextProjekte: ProjekteData = {
       rasterHoehe: 68,
     },
   ],
-  praxisLink: "Was diese Clubs mit GolfNext machen – Praxis",
 };
 
 export const ueberGolfnextWissen: WissenData = {
@@ -304,7 +301,7 @@ export const ueberGolfnext: PageContent = {
       eyebrow: "Über GolfNext",
       headline: "Wir hängen am Golf. Nicht am Gestern.",
       text: [
-        "Mehr Menschen auf den Platz bringen. Mehr Zeit fürs Clubleben schaffen. Dafür entwickeln wir die GolfNext-Plattform: Websites, die Lust auf Golf machen, Marketing, das Menschen erreicht, und digitale Helfer, die dem Clubbüro Arbeit abnehmen.",
+        "Mehr Menschen auf den Platz bringen. Mehr Zeit fürs Clubleben schaffen. Dafür entwickeln wir die GolfNext Plattform: Websites, die Lust auf Golf machen, Marketing, das Menschen erreicht, und digitale Helfer, die dem Clubbüro Arbeit abnehmen.",
       ],
     },
     {
@@ -332,17 +329,17 @@ export const ueberGolfnext: PageContent = {
     {
       id: "projekte",
       eyebrow: "Gemeinsame Projekte",
-      headline: "Diese Clubs haben mitgeschrieben.",
+      headline: "Diese Clubs arbeiten mit GolfNext.",
       text: [
-        "An unserer Geschichte und an der Idee hinter GolfNext. Für sie haben wir Websites gestaltet, Kampagnen umgesetzt und Teams geschult – und mit einigen entwickeln wir die Plattform heute im Pilot weiter.",
+        "GolfNext ist aus vielen Gesprächen und echten Aufgaben im Cluballtag entstanden. Heute entwickeln wir daraus Lösungen, die im Cluballtag wirklich weiterhelfen. Aus echten Clubaufgaben wird GolfNext.",
       ],
     },
     {
       id: "wissen",
       eyebrow: "Wissen",
-      headline: "Was wir über Golfclubs gelernt haben, schreiben wir auf.",
+      headline: "Was wir über Golfclubs lernen, schreiben wir auf.",
       text: [
-        "Fachartikel aus dem golfmanager und Beiträge aus der Arbeit mit Clubs – zum Mitnehmen, auch ohne GolfNext.",
+        "Fachartikel aus dem golfmanager, Erfahrungen aus unserer Arbeit mit Clubs und klare Antworten auf Fragen zu KI, Digitalisierung, Online Marketing und Cluballtag. Damit jeder Golfclub bessere Entscheidungen treffen kann.",
       ],
     },
     {
@@ -352,9 +349,9 @@ export const ueberGolfnext: PageContent = {
     },
   ],
   footerClose: {
-    eyebrow: "GolfNext persönlich",
-    headline: "Was müsste bei Ihnen endlich mal einfacher gehen?",
-    text: ["Erzählen Sie es Fred Hoffmann. Vielleicht beginnt genau dort das nächste Kapitel für Ihren Club."],
+    eyebrow: "GolfNext persönlich kennenlernen",
+    headline: "Was könnte GolfNext in Ihrem Club verändern?",
+    text: ["Gemeinsam schauen wir auf Ihre Ziele und die größten Hebel für Ihren Club. Dabei klären wir, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow."],
     cta: {
       label: "Erstgespräch anfragen",
       target: "erstgespraech",

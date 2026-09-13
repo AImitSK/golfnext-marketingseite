@@ -93,7 +93,7 @@ test.describe("Header · Struktur und Daten", () => {
     await expect(nav.locator('a[href="/kontakt"]').first()).toHaveAttribute("href", "/kontakt");
 
     // Die Modulseiten sind entfallen; ihre Namen stehen nur noch im Footer.
-    for (const modul of ["Reach", "Gastfee", "Captains App"]) {
+    for (const modul of ["Reach", "Greenfee", "Captains App"]) {
       await expect(nav.locator(`a:text-is("${modul}")`)).toHaveCount(0);
     }
   });

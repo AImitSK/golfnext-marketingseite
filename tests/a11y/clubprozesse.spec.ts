@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
  *
  * Ausgeschlossen werden die als `aria-hidden="true"` markierten SCHEMATISCHEN
  * ILLUSTRATIONEN (Clubwebsite + Sonntags-Log im Hero, die Mikro-Visualisierungen der
- * „Drei Dinge", die Bericht-Strecke der „Turnier-News" und die Captains-App-Demo).
+ * „Drei Dinge", die Bericht-Strecke der „Turnier News" und die Captains-App-Demo).
  * Sie sind bewusste Darstellungen des Systems – wie Screenshots/Grafiken – nicht Teil
  * des Barrierefreiheits-Baums; ihre Beispieltexte ahmen echte Produktoberflächen nach
  * (gedämpfte Sekundärtexte) und erfüllen den Text-Kontrast daher nicht. Die

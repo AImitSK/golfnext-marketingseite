@@ -143,7 +143,7 @@
   background: #e9f2f7; /* zarter Blau-Tint für „in Sequenz", Mock-Wert */
 }
 
-/* ---- 02 · Concierge antwortet Blase für Blase ---- */
+/* ---- 02 · KI Chatbot antwortet Blase für Blase ---- */
 .chat {
   display: flex;
   flex-direction: column;

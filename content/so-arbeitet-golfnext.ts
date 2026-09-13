@@ -7,7 +7,7 @@ import type { Cta, PageContent } from "./types";
  *
  * WICHTIG: Die alte `3.3-so-arbeitet-golfnext.html` und das dazugehörige Fred-Briefing
  * `docs/design-system/briefings/3.3-so-arbeitet-golfnext-briefing.md` (Customer Journey,
- * Phasenkette „Unbekannt → Besucher → …", Marketing-CRM-Board) sind mit der Neufassung
+ * Phasenkette „Unbekannt → Besucher → …", Marketing CRM-Board) sind mit der Neufassung
  * ARCHIV. Sie sind KEINE Textquelle mehr und werden hier nicht eingemischt.
  *
  * Regeln (CLAUDE.md / 0024): Texte wortgleich (Zeichensetzung, en-Dash „–", Mittelpunkt
@@ -19,7 +19,8 @@ import type { Cta, PageContent } from "./types";
  * und /plattform).
  *
  * Benennungen (bewusst nicht vereinheitlicht, so steht es im Mock): „Greenfee & Gäste"
- * und „Greenfee-Gast" als ZIELGRUPPE, „Gastfee" als Modul und Zahlung.
+ * und „Greenfee-Gast" als Zielgruppe; „Greenfee" ist zugleich Modul und Zahlung
+ * (früher „Gastfee", laut Master-Briefing vereinheitlicht).
  *
  * Modulstatus wird NICHT angezeigt (Entscheidung 06.09., Briefing 0014).
  */
@@ -273,7 +274,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: tom.schulz@…",
           gesendet: "Do 21:03",
           betreff: "Ihre Startzeit am Samstag, 9:30 Uhr",
-          text: "Gastfee bezahlt, Startzeit reserviert. Anfahrt, Parkplatz und wo Sie sich melden – alles in dieser Mail.",
+          text: "Greenfee bezahlt, Startzeit reserviert. Anfahrt, Parkplatz und wo Sie sich melden – alles in dieser Mail.",
           cta: "Zur Anfahrt",
         },
         {
@@ -373,7 +374,7 @@ export interface VerlaufZeile {
 export interface UebergabeData {
   /** Barrierefreies Label der schematischen Übergabe (Inhalt selbst ist aria-hidden). */
   ariaLabel: string;
-  /** Linke Karte: der Kontakt im Marketing-CRM. */
+  /** Linke Karte: der Kontakt im Marketing CRM. */
   kontakt: {
     kopf: string;
     /** Initialen im Avatar. */
@@ -396,9 +397,9 @@ export interface UebergabeData {
 
 export const soArbeitetUebergabe: UebergabeData = {
   ariaLabel:
-    "Schematische Darstellung: aus dem Kontaktverlauf im Marketing-CRM wird eine Aufgabe für das Clubteam.",
+    "Schematische Darstellung: aus dem Kontaktverlauf im Marketing CRM wird eine Aufgabe für das Clubteam.",
   kontakt: {
-    kopf: "Marketing-CRM · Anna Berger",
+    kopf: "Marketing CRM · Anna Berger",
     av: "AB",
     name: "Anna Berger",
     herkunft: "Über Instagram · Schnuppergolf · seit vier Wochen im Kontakt",

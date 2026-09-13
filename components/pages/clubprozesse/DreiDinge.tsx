@@ -5,8 +5,8 @@ import styles from "./DreiDinge.module.css";
 
 /**
  * 2 · Drei Dinge (Bento) – portiert aus 3.5b .bento/.bx. Drei Boxen mit je einem
- * Mikroablauf: (01) Concierge-Chat, (02) Platzstatus-Toggle → Website, (03)
- * Gastfee-Zahlung. Die Box-Inhalte sind illustrativ (aria-hidden); die verbindlichen
+ * Mikroablauf: (01) KI Chatbot-Chat, (02) Platzstatus-Toggle → Website, (03)
+ * Greenfee-Zahlung. Die Box-Inhalte sind illustrativ (aria-hidden); die verbindlichen
  * Aussagen stehen im sichtbaren Box-Text daneben. Nutzt die geteilte Sektions-Schale
  * der Neufassung (`PlattformSection`, geteilte Tokens Wrap 1180/H2 48). Modulstatus
  * wird bewusst NICHT dargestellt (Briefing 0018); die Modul-Labels bleiben als Namen.

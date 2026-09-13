@@ -23,7 +23,7 @@ import { expect, test } from "@playwright/test";
 /** Je Seite ein Element aus der Choreografie, gesucht über den Klassen-Stamm. */
 const HEROES = [
   { pfad: "/wachstum-vertrieb", teil: "crmrow", was: "die Anmeldungen laufen ein" },
-  { pfad: "/clubprozesse", teil: "nitem", was: "die Turnier-News laufen ein" },
+  { pfad: "/clubprozesse", teil: "nitem", was: "die Turnier News laufen ein" },
   { pfad: "/pakete", teil: "srow", was: "die Ausbaustufen staffeln sich herein" },
   { pfad: "/pakete", teil: "spine", was: "das Rückgrat baut sich auf" },
 ];

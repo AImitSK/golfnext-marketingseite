@@ -130,12 +130,12 @@ export const paketeHero: HeroData = {
     {
       name: "+ Wachstum",
       role: "Neue Kontakte",
-      tags: ["Reach", "Search", "Landingpages", "Marketing-CRM", "Lifecycle", "Analytics"],
+      tags: ["Reach", "Search", "Landingpages", "Marketing CRM", "Lifecycle", "Analytics"],
     },
     {
       name: "+ Komplett",
       role: "Auch der Cluballtag",
-      tags: ["Concierge", "Platzstatus", "Gastfee", "Captains App", "Turnier-News"],
+      tags: ["KI Chatbot", "Platzstatus", "Greenfee", "Captains App", "Turnier News"],
     },
     {
       name: "+ Individuell",
@@ -212,7 +212,7 @@ export const paketePakete: PaketeData = {
         "Reach · Werbung über Social und Google",
         "Search",
         "Landingpages",
-        "Marketing-CRM",
+        "Marketing CRM",
         "Lifecycle und automatisierte E-Mail-Sequenzen",
         "Blog- und Ratgeberartikel",
         "Analytics",
@@ -236,11 +236,11 @@ export const paketePakete: PaketeData = {
       summaryLead: "Alles aus Wachstum",
       summaryCount: "7 weitere anzeigen",
       items: [
-        "Concierge",
+        "KI Chatbot",
         "Platzstatus",
-        "Gastfee",
+        "Greenfee",
         "Captains App",
-        "Turnier-News",
+        "Turnier News",
         "Jahres-Kampagnen-Planung",
         "Vier Kampagnen-Slots",
       ],
@@ -300,7 +300,7 @@ export const paketeVergleich: VergleichData = {
         { label: "Reach · Werbung über Social und Google", cells: [NO, YES, YES, YES] },
         { label: "Search", cells: [NO, YES, YES, YES] },
         { label: "Landingpages", cells: [NO, YES, YES, YES] },
-        { label: "Marketing-CRM", cells: [NO, YES, YES, YES] },
+        { label: "Marketing CRM", cells: [NO, YES, YES, YES] },
         { label: "Lifecycle und E-Mail-Sequenzen", cells: [NO, YES, YES, YES] },
         { label: "Blog- und Ratgeberartikel", cells: [NO, YES, YES, YES] },
         { label: "Analytics", cells: [NO, YES, YES, YES] },
@@ -312,11 +312,11 @@ export const paketeVergleich: VergleichData = {
     {
       title: "Cluballtag",
       rows: [
-        { label: "Concierge", cells: [NO, NO, YES, YES] },
+        { label: "KI Chatbot", cells: [NO, NO, YES, YES] },
         { label: "Platzstatus", cells: [NO, NO, YES, YES] },
-        { label: "Gastfee", cells: [NO, NO, YES, YES] },
+        { label: "Greenfee", cells: [NO, NO, YES, YES] },
         { label: "Captains App", cells: [NO, NO, YES, YES] },
-        { label: "Turnier-News", cells: [NO, NO, YES, YES] },
+        { label: "Turnier News", cells: [NO, NO, YES, YES] },
       ],
     },
     {

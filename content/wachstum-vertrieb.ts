@@ -187,7 +187,7 @@ export const wachstumMomente: MomentBox[] = [
     title: "Wer da war, soll wiederkommen.",
     text: "Nach dem Schnupperkurs, nach dem Gastspiel, nach dem Gespräch: Die nächste Nachricht kommt von allein – mit dem Angebot, das jetzt passt. Das Clubbüro sieht, wer wo steht.",
     modPrefix: "Module",
-    modName: "Marketing-CRM · Lifecycle",
+    modName: "Marketing CRM · Lifecycle",
     viz: {
       kind: "after",
       events: [
@@ -242,18 +242,18 @@ export const wachstumWege: WegCard[] = [
     title: "Mitglieder gewinnen & Clubwechsel",
     text: "Wer mit seinem Club unzufrieden ist, sucht leise – bei Google. Eine Seite, die Beiträge, Spielrecht und Probemitgliedschaft klar erklärt. Und ein Termin für das Gespräch: mit Ihnen, nicht mit einem Formular.",
     goal: "Ein Gespräch mit dem Clubmanager.",
-    mods: ["Search", "Landingpages", "Marketing-CRM"],
+    mods: ["Search", "Landingpages", "Marketing CRM"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
   {
     miniUrl: "golfclub-musterhausen.de/greenfee",
     miniTitle: "Greenfee & Gastspiel",
-    miniButton: "Gastfee bezahlen",
+    miniButton: "Greenfee bezahlen",
     tag: "Gäste",
     title: "Greenfee & Gäste",
-    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, die Gastfee wird online bezahlt. Gefunden, gebucht, gespielt.",
-    goal: "Gastspiel angefragt oder Gastfee bezahlt.",
-    mods: ["Search", "Platzstatus", "Gastfee"],
+    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, die Greenfee wird online bezahlt. Gefunden, gebucht, gespielt.",
+    goal: "Gastspiel angefragt oder Greenfee bezahlt.",
+    mods: ["Search", "Platzstatus", "Greenfee"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
   {
@@ -264,7 +264,7 @@ export const wachstumWege: WegCard[] = [
     title: "Firmenkunden gewinnen",
     text: "Aus Ihrem Platz, Ihrer Gastronomie und Ihrem Pro wird ein Angebot mit Ablauf, Preis und Anfrageformular. Google-Anzeigen für Unternehmen im Umkreis. Firmen-Events, die sich verkaufen lassen.",
     goal: "Eine Anfrage mit Termin und Teilnehmerzahl.",
-    mods: ["Search", "Firmen-Events", "Marketing-CRM"],
+    mods: ["Search", "Firmen-Events", "Marketing CRM"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
 ];
@@ -407,10 +407,10 @@ export const wachstumKampagne: KampagneStep[] = [
   {
     sn: "03 · DIENSTAG, 21:40",
     title: "Die erste Anmeldung.",
-    text: "Abends, vom Sofa aus. Die Anmeldung landet im Marketing-CRM, die Bestätigung geht sofort raus. Im Büro klingelt nichts.",
+    text: "Abends, vom Sofa aus. Die Anmeldung landet im Marketing CRM, die Bestätigung geht sofort raus. Im Büro klingelt nichts.",
     device: {
       kind: "crm-card",
-      head: "Marketing-CRM · Dienstag, 21:40",
+      head: "Marketing CRM · Dienstag, 21:40",
       headline: "Die erste Anmeldung.",
       body: "Anna hat die Anzeige abends gesehen, die Seite gelesen und sich angemeldet. Das Büro bekommt eine Notiz – keinen Anruf.",
       av: "AB",
@@ -430,7 +430,7 @@ export const wachstumKampagne: KampagneStep[] = [
     text: "Jeder Angemeldete hat die Erinnerung bekommen. Sie sehen, wer kommt, wer noch offen ist und woher jeder Einzelne kam.",
     device: {
       kind: "crm-list",
-      head: "Marketing-CRM · Freitag",
+      head: "Marketing CRM · Freitag",
       capTitle: "Schnuppergolf · Samstag 10 Uhr",
       capNote: "noch 2 Plätze",
       rows: [
@@ -533,7 +533,7 @@ export const wachstumFundament: FundamentData = {
   ],
   link: { label: "Ihre Clubwebsite ist Teil jedes Pakets", path: "/pakete" },
   cards: [
-    { url: "…/greenfee", title: "Greenfee & Gastspiel", button: "Gastfee bezahlen" },
+    { url: "…/greenfee", title: "Greenfee & Gastspiel", button: "Greenfee bezahlen" },
     { url: "golfclub-musterhausen.de/schnuppergolf", title: "Schnuppergolf am Samstag", button: "Platz sichern" },
     { url: "…/mitglied-werden", title: "Mitglied werden", button: "Gespräch vereinbaren" },
   ],

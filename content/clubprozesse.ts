@@ -9,8 +9,8 @@ import type { Cta, PageContent } from "./types";
  * Regeln (CLAUDE.md / 0018): Texte wortgleich (Zeichensetzung, „…"-Anführungen,
  * en-Dash „–", Ziffernabstand „06:40 Uhr" / „65 €" / „24 °C"). Keine erfundenen
  * Zahlen/Versprechen/Funktionen. Die Beispiel-Oberflächen (Clubwebsite mit
- * Platzstatus + News, Sonntags-Log, Concierge-Chat, Platzstatus-Toggle,
- * Gastfee-Zahlung, Bericht-Strecke, Captains-App-Demo) sind ILLUSTRATIV 1:1 aus
+ * Platzstatus + News, Sonntags-Log, KI Chatbot-Chat, Platzstatus-Toggle,
+ * Greenfee-Zahlung, Bericht-Strecke, Captains-App-Demo) sind ILLUSTRATIV 1:1 aus
  * dem Mock – schematische Darstellungen des Systems, keine Zusagen und keine echten
  * Screenshots. Beispielwerte (Namen, Uhrzeiten, „65 €", „5 : 3", „38 Pkt.",
  * Ortsnamen) sind Beispieloberfläche, keine Zusage.
@@ -108,7 +108,7 @@ export const clubprozesseHero: HeroData = {
       pstatTime: "Stand: heute 06:40 Uhr",
       newsLabel: "Aktuell im Club",
       news: [
-        { title: "Monatsbecher September: Sieg für Petra Lange", meta: "Turnier-News · Samstag, 17:50 Uhr" },
+        { title: "Monatsbecher September: Sieg für Petra Lange", meta: "Turnier News · Samstag, 17:50 Uhr" },
         { title: "Herren AK 50 gewinnen 5:3 in Sittensen", meta: "Mannschaften · Samstag, 18:30 Uhr" },
         { title: "Greenfee-Sonntag: Platz für Gäste geöffnet", meta: "Club · Sonntag, 06:40 Uhr" },
       ],
@@ -118,9 +118,9 @@ export const clubprozesseHero: HeroData = {
       title: "Heute ohne das Büro erledigt",
       events: [
         { time: "06:40", text: "Platz auf „bespielbar“", source: "Greenkeeper · Platzstatus" },
-        { time: "08:15", text: "Gastfee bezahlt und bestätigt", source: "T. Schulz · Gastfee" },
-        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", source: "Concierge · beantwortet" },
-        { time: "17:50", text: "Turnierbericht veröffentlicht", source: "Turnier-News · 3 Kanäle" },
+        { time: "08:15", text: "Greenfee bezahlt und bestätigt", source: "T. Schulz · Greenfee" },
+        { time: "09:02", text: "„Kann ich heute als Gast spielen?“", source: "KI Chatbot · beantwortet" },
+        { time: "17:50", text: "Turnierbericht veröffentlicht", source: "Turnier News · 3 Kanäle" },
         { time: "18:30", text: "Spieltag Herren AK 50 online", source: "Captain · Captains App" },
       ],
       sum: "5 Vorgänge · 0 Anrufe im Büro",
@@ -130,7 +130,7 @@ export const clubprozesseHero: HeroData = {
 
 /* ────────────────────────── 2 · Drei Dinge (Bento) ────────────────────────── */
 
-/** Eine Chatblase im Concierge-Visual (Frage/Antwort). */
+/** Eine Chatblase im KI Chatbot-Visual (Frage/Antwort). */
 export interface ChatBubble {
   role: "q" | "a";
   text: string;
@@ -176,10 +176,10 @@ export interface DingBox {
 export const clubprozesseDinge: DingBox[] = [
   {
     no: "/ 01",
-    title: "Fragen beantwortet der Concierge.",
+    title: "Fragen beantwortet der KI Chatbot.",
     text: "Öffnungszeiten, Greenfee, Platzreife, Gastspiel, Mitgliedschaft: Die häufigsten Fragen bekommen sofort eine Antwort und den passenden nächsten Schritt – auch sonntags um 21 Uhr. Was persönlich ist, geht ans Clubteam.",
     modPrefix: "Modul",
-    modName: "Concierge",
+    modName: "KI Chatbot",
     viz: {
       kind: "concierge",
       time: "Sonntag, 21:14 Uhr",
@@ -187,7 +187,7 @@ export const clubprozesseDinge: DingBox[] = [
         { role: "q", text: "Kann ich morgen als Gast spielen, und was kostet das?" },
         {
           role: "a",
-          text: "Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Die Gastfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?",
+          text: "Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Die Greenfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?",
         },
       ],
       confirm: "Beantwortet, ohne dass jemand im Büro war.",
@@ -213,13 +213,13 @@ export const clubprozesseDinge: DingBox[] = [
   },
   {
     no: "/ 03",
-    title: "Die Gastfee bezahlt der Gast selbst.",
+    title: "Die Greenfee bezahlt der Gast selbst.",
     text: "Gäste sehen, ob und wann sie spielen können, bezahlen online und bekommen sofort die Bestätigung – unabhängig davon, ob das Büro besetzt ist. Im Büro bleibt nichts liegen, was abgetippt werden müsste.",
     modPrefix: "Modul",
-    modName: "Gastfee",
+    modName: "Greenfee",
     viz: {
       kind: "gastfee",
-      payLabel: "Gastfee · Golfclub Musterhausen",
+      payLabel: "Greenfee · Golfclub Musterhausen",
       rows: [
         { left: "Montag, 09:30 Uhr · 18 Loch", right: "65 €" },
         { left: "Tom Schulz · HCP 18,4", right: "DGV-Ausweis geprüft" },
@@ -231,7 +231,7 @@ export const clubprozesseDinge: DingBox[] = [
   },
 ];
 
-/* ────────────────────────── 3 · Turnier-News (Bericht-Strecke) ────────────────────────── */
+/* ────────────────────────── 3 · Turnier News (Bericht-Strecke) ────────────────────────── */
 
 /** Eine erkannte Ergebniszeile im PDF-Eingang. */
 export interface ResultRow {
@@ -435,10 +435,10 @@ export const clubprozesseWasBleibt: WasBleibtData = {
   allein: {
     label: "Läuft von allein",
     rows: [
-      { text: "Häufige Fragen, rund um die Uhr beantwortet", mod: "Concierge" },
+      { text: "Häufige Fragen, rund um die Uhr beantwortet", mod: "KI Chatbot" },
       { text: "Platzinformationen, dort erfasst, wo sie entstehen", mod: "Platzstatus" },
-      { text: "Gastfee: Information, Zahlung, Bestätigung", mod: "Gastfee" },
-      { text: "Turnierergebnisse, aus der Liste zum Bericht auf drei Kanälen", mod: "Turnier-News" },
+      { text: "Greenfee: Information, Zahlung, Bestätigung", mod: "Greenfee" },
+      { text: "Turnierergebnisse, aus der Liste zum Bericht auf drei Kanälen", mod: "Turnier News" },
       { text: "Mannschaftsberichte, direkt vom Spieltag", mod: "Captains App" },
       { text: "Eventanfragen von Firmen, strukturiert statt als lose E-Mail", mod: "Firmen-Events" },
     ],
@@ -467,7 +467,7 @@ export const clubprozesse: PageContent = {
       eyebrow: "Clubprozesse",
       headline: "Mehr Clubleben. Weniger Arbeit im Clubbüro.",
       text: [
-        "Die Frage nach dem Greenfee. Der Platzstatus vom Greenkeeper. Die Gastfee. Der Turnierbericht nach der Siegerehrung. Das Ergebnis der Mannschaft. Fünf Dinge, die heute jemanden im Büro binden – mit GolfNext laufen sie dort, wo sie entstehen, und landen von allein auf der Website.",
+        "Die Frage nach dem Greenfee. Der Platzstatus vom Greenkeeper. Die Greenfee-Zahlung. Der Turnierbericht nach der Siegerehrung. Das Ergebnis der Mannschaft. Fünf Dinge, die heute jemanden im Büro binden – mit GolfNext laufen sie dort, wo sie entstehen, und landen von allein auf der Website.",
       ],
     },
     {
@@ -480,7 +480,7 @@ export const clubprozesse: PageContent = {
     },
     {
       id: "turnier-news",
-      eyebrow: "Turnier-News",
+      eyebrow: "Turnier News",
       headline: "Der letzte Putt fällt. Noch am selben Abend ist der Bericht online.",
       text: [
         "Drei Turniere in der Woche, und nach jeder Siegerehrung dieselbe Arbeit: Ergebnisse abtippen, Text schreiben, Bilder verkleinern, Website, Facebook, Instagram. Mit GolfNext wird daraus ein Vorgang, den jeder im Club in ein paar Minuten erledigt.",

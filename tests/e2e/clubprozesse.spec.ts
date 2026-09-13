@@ -4,12 +4,12 @@ import { expect, test } from "@playwright/test";
  * /clubprozesse (Baustein 0018, Schritt 2.6), gebaut aus Mock
  * 3.5b-clubprozesse-neufassung.html. Prüft die harten Akzeptanzkriterien:
  * - genau eine H1 (im Hero), kein horizontaler Seiten-Overflow (auch das Bleed-Visual
- *   im Hero und die aus dem Raster laufende Turnier-News-Bericht-Strecke erzeugen keinen
+ *   im Hero und die aus dem Raster laufende Turnier News-Bericht-Strecke erzeugen keinen
  *   Overflow), keine Konsolenfehler – über alle Breakpoints (390/768/1024/1180/1440);
  * - OHNE JavaScript ist alles lesbar: die verbindlichen Texte (Überschriften, Leads,
  *   Box-Titel, Track-Line, Captains-Note, „Was bleibt"-Listen) stehen im Server-HTML,
  *   und die Beispieloberflächen zeigen ihren Endzustand (Platz bespielbar, alle
- *   Log-/News-Zeilen, alle drei Turnier-News-Ausgaben, der Mannschaftsbeitrag);
+ *   Log-/News-Zeilen, alle drei Turnier News-Ausgaben, der Mannschaftsbeitrag);
  * - bei reduzierter Bewegung stehen die Animationen sofort im Endzustand;
  * - der Modulstatus wird NICHT dargestellt (keine „Pilot"/„Im Einsatz"/„In
  *   Entwicklung"-Badges, nicht die Zeile „Stand je Modul wie im Footer"), die
@@ -35,7 +35,7 @@ test.describe("/clubprozesse · Struktur und Overflow", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
     await expect(page.getByRole("heading", { level: 1, name: H1 })).toBeVisible();
 
-    // Kein horizontaler Overflow – Hero-Demo (width > 100%) und die Turnier-News-
+    // Kein horizontaler Overflow – Hero-Demo (width > 100%) und die Turnier News-
     // Bericht-Strecke (läuft rechts aus dem Raster) werden vom overflow:hidden ihrer
     // Abschnitte gekappt.
     const hasOverflow = await page.evaluate(
@@ -66,8 +66,8 @@ test.describe("/clubprozesse ohne JavaScript", () => {
     await page.goto("/clubprozesse");
 
     // Die Box-Titel (verbindlicher Text) sind echte Überschriften und lesbar.
-    await expect(page.getByRole("heading", { level: 3, name: "Fragen beantwortet der Concierge." })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: "Die Gastfee bezahlt der Gast selbst." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: "Fragen beantwortet der KI Chatbot." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: "Die Greenfee bezahlt der Gast selbst." })).toBeVisible();
 
     // Track-Line und Captains-Note stehen im Server-HTML.
     await expect(page.getByText("Nichts geht ohne Freigabe raus.")).toBeVisible();
@@ -100,7 +100,7 @@ test.describe("/clubprozesse · reduzierte Bewegung", () => {
     const sum = page.getByText(LOG_SUM, { exact: true });
     expect(Number(await sum.evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
 
-    // Turnier-News: die letzte Ausgabe (Instagram) ist sofort vollständig sichtbar.
+    // Turnier News: die letzte Ausgabe (Instagram) ist sofort vollständig sichtbar.
     const out = page.getByText("Kurz, bildgeführt, quadratisch.", { exact: true });
     await out.scrollIntoViewIfNeeded();
     const outCard = out.locator("xpath=ancestor::*[contains(@class,'out')][1]");

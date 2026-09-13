@@ -75,15 +75,15 @@ export const MODULE = [
   { slug: "reach", name: "Reach", gruppe: "wachstum", status: "im-einsatz" },
   { slug: "search", name: "Search", gruppe: "wachstum", status: "im-einsatz" },
   { slug: "landingpages", name: "Landingpages", gruppe: "wachstum", status: "im-einsatz" },
-  { slug: "marketing-crm", name: "Marketing-CRM", gruppe: "wachstum", status: "pilot" },
+  { slug: "marketing-crm", name: "Marketing CRM", gruppe: "wachstum", status: "pilot" },
   { slug: "lifecycle", name: "Lifecycle", gruppe: "wachstum", status: "im-einsatz" },
   { slug: "content", name: "Content", gruppe: "wachstum", status: "im-einsatz" },
   // Entlastung nach innen
-  { slug: "concierge", name: "Concierge", gruppe: "clubprozesse", status: "pilot" },
+  { slug: "concierge", name: "KI Chatbot", gruppe: "clubprozesse", status: "pilot" },
   { slug: "platzstatus", name: "Platzstatus", gruppe: "clubprozesse", status: "im-einsatz" },
-  { slug: "gastfee", name: "Gastfee", gruppe: "clubprozesse", status: "pilot" },
+  { slug: "gastfee", name: "Greenfee", gruppe: "clubprozesse", status: "pilot" },
   { slug: "firmen-events", name: "Firmen-Events", gruppe: "clubprozesse", status: "in-entwicklung" },
-  { slug: "turnier-news", name: "Turnier-News", gruppe: "clubprozesse", status: "pilot" },
+  { slug: "turnier-news", name: "Turnier News", gruppe: "clubprozesse", status: "pilot" },
   { slug: "captains-app", name: "Captains App", gruppe: "clubprozesse", status: "in-entwicklung" },
 ] as const;
 
@@ -98,7 +98,7 @@ export const ROUTES: Route[] = [
     // freigegebenen Hero- und Vorspann-Texten, wortgleich übernommen.
     title: "GolfNext | Mehr Golfer auf dem Platz. Weniger Arbeit im Clubbüro.",
     description:
-      "Die Plattform für Golfclubs: Website, Kampagnen, Marketing-CRM und die Werkzeuge fürs Clubbüro – als ein System statt vieler Einzellösungen.",
+      "Die Plattform für Golfclubs: Website, Kampagnen, Marketing CRM und die Werkzeuge fürs Clubbüro – als ein System statt vieler Einzellösungen.",
   },
   {
     path: "/plattform",
@@ -148,7 +148,7 @@ export const ROUTES: Route[] = [
     // Freigegeben von Stefan am 09.09.2026 (Briefing 0034), wortgleich.
     title: "Clubprozesse | Mehr Clubleben, weniger Arbeit im Clubbüro",
     description:
-      "Greenfee-Anfragen, Platzstatus, Gastfee, Turnierbericht, Mannschaftsergebnis: fünf Dinge, die heute Zeit kosten – und künftig von selbst laufen.",
+      "Greenfee-Anfragen, Platzstatus, Greenfee-Zahlung, Turnierbericht, Mannschaftsergebnis: fünf Dinge, die heute Zeit kosten – und künftig von selbst laufen.",
   },
   {
     // Seit 07.09.2026 Unterpunkt von „Über GolfNext" statt Hauptpunkt (Briefing 0023).

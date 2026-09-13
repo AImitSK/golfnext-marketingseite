@@ -1,5 +1,5 @@
-/* Portiert aus 3.5b-clubprozesse-neufassung.html (.bento/.bx/.viz + Concierge-Chat,
-   Platzstatus-Toggle, Gastfee-Zahlung). Farben auf --gn-* umgestellt, literale Tints
+/* Portiert aus 3.5b-clubprozesse-neufassung.html (.bento/.bx/.viz + KI Chatbot-Chat,
+   Platzstatus-Toggle, Greenfee-Zahlung). Farben auf --gn-* umgestellt, literale Tints
    kommentiert. Große Flächen: --gn-radius-lg (12); Bedienelemente 4/8 px.
    Bewegung: Der ENDZUSTAND jeder Box steht im Server-HTML → ohne JS und bei
    prefers-reduced-motion sofort vollständig lesbar. Nur mit JS/ohne Reduced-Motion
@@ -73,7 +73,7 @@
   min-height: 240px;
 }
 
-/* ---- 01 · Concierge (Chat) ---- */
+/* ---- 01 · KI Chatbot (Chat) ---- */
 .chat {
   display: flex;
   flex-direction: column;
@@ -246,7 +246,7 @@
   background: #c9a14a; /* gedämpftes Gold „geschlossen", Mock-Wert */
 }
 
-/* ---- 03 · Gastfee (Zahlung + Bestätigung) ---- */
+/* ---- 03 · Greenfee (Zahlung + Bestätigung) ---- */
 .pay {
   background: #fff;
   border: 1px solid var(--gn-line);

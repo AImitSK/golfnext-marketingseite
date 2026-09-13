@@ -116,6 +116,6 @@ describe("Struktur v2 in site-structure", () => {
 
   it("behält die zwölf Modulnamen als reine Datenliste", () => {
     expect(MODULE).toHaveLength(12);
-    expect(MODULE.map((m) => m.name)).toContain("Turnier-News");
+    expect(MODULE.map((m) => m.name)).toContain("Turnier News");
   });
 });

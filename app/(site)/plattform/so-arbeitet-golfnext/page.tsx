@@ -27,7 +27,7 @@ import {
  * `content/so-arbeitet-golfnext.ts`. Genau eine `<h1>` (im Hero).
  *
  * Textquelle ist AUSSCHLIESSLICH der Mock 3.3b. Die alte `3.3` und Freds Briefing
- * `3.3-so-arbeitet-golfnext-briefing.md` (Customer Journey, Marketing-CRM,
+ * `3.3-so-arbeitet-golfnext-briefing.md` (Customer Journey, Marketing CRM,
  * Phasenkette) sind Archiv und wurden nicht eingemischt.
  *
  * Der Umschalter ist eine native Radiogruppe: alle fünf Strecken stehen im Server-HTML

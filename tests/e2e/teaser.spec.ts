@@ -13,7 +13,7 @@ import { OHNE_ARTIKEL_URL } from "../../playwright.config";
  * der Testbestand muss also schon beim Bauen wirken – deshalb `pnpm build:e2e`.
  */
 
-const PRAXIS_EYEBROW = "Praxis";
+const PRAXIS_EYEBROW = "Ratgeber";
 const PRAXIS_H2 = "Was in Golfclubs wirklich funktioniert.";
 const PRAXIS_LINK = "Alle Beiträge";
 

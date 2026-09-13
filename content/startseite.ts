@@ -507,7 +507,7 @@ export const startseite: PageContent = {
     },
     {
       id: "praxis",
-      eyebrow: "Praxis",
+      eyebrow: "Ratgeber",
       headline: "Was in Golfclubs wirklich funktioniert.",
     },
   ],

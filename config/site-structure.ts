@@ -157,8 +157,8 @@ export const ROUTES: Route[] = [
     path: "/praxis",
     // Menü-Label „Ratgeber", Adresse `/praxis` (Entscheidung Stefan, 07.09.2026).
     // Beides ist gewollt und kein Versehen: die URL war schon entschieden, im Menü
-    // liest sich „Ratgeber" besser. Der Seiteninhalt selbst spricht weiter von
-    // „Praxis" (Freds freigegebener Wortlaut in Mock 3.9a) – nicht angleichen.
+    // liest sich „Ratgeber" besser. Der Seiteninhalt ist per Master-Briefing
+    // ebenfalls auf „Ratgeber" umgestellt (frühere „nicht angleichen"-Regel überholt).
     label: "Ratgeber",
     // Seit Briefing 0027 gebaut (Masterplan 3.4): `/praxis`, `/praxis/thema/<slug>`
     // und `/praxis/<slug>` kommen aus Sanity. **Live seit 08.09.2026** (Entscheidung
@@ -176,9 +176,9 @@ export const ROUTES: Route[] = [
     // Vorschlag aus dem freigegebenen Hero von Mock 3.9a (Briefing 0027, Aufgabe 7),
     // wortgleich übernommen und für die Beschreibung ohne neue Formulierung auf
     // ≤ 160 Zeichen gekürzt. Ob Fred eigene Angaben nachliefert, ist Frage 3.
-    title: "Praxis. Was in Golfclubs wirklich funktioniert.",
+    title: "Ratgeber. Was Golfclubs heute wissen müssen.",
     description:
-      "Berichte aus Pilotclubs, Erfahrungen aus dreißig Jahren auf dem Platz und ehrliche Antworten auf die Fragen, die im Clubbüro und im Vorstand gestellt werden.",
+      "Fachartikel aus dem golfmanager, Erfahrungen aus der Arbeit mit Clubs und klare Antworten zu KI, Digitalisierung, Online Marketing und Cluballtag.",
   },
   {
     path: "/pakete",

@@ -67,7 +67,7 @@ test.describe("/clubprozesse ohne JavaScript", () => {
 
     // Die Box-Titel (verbindlicher Text) sind echte Überschriften und lesbar.
     await expect(page.getByRole("heading", { level: 3, name: "Fragen beantwortet der KI Chatbot." })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: "Die Greenfee bezahlt der Gast selbst." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: "Das Greenfee bezahlt der Gast selbst." })).toBeVisible();
 
     // Track-Line und Captains-Note stehen im Server-HTML.
     await expect(page.getByText("Nichts geht ohne Freigabe raus.")).toBeVisible();

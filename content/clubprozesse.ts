@@ -108,7 +108,7 @@ export const clubprozesseHero: HeroData = {
       newsLabel: "Aktuell im Club",
       news: [
         { title: "Monatsbecher September: Sieg für Petra Lange", meta: "Turnier News · Samstag, 17:50 Uhr" },
-        { title: "Herren AK 50 gewinnen 5:3 in Sittensen", meta: "Mannschaften · Samstag, 18:30 Uhr" },
+        { title: "Herren AK 50 gewinnen 5:3 in Wiesenblick", meta: "Mannschaften · Samstag, 18:30 Uhr" },
         { title: "Greenfee-Sonntag: Platz für Gäste geöffnet", meta: "Club · Sonntag, 06:40 Uhr" },
       ],
     },
@@ -176,7 +176,7 @@ export const clubprozesseDinge: DingBox[] = [
   {
     no: "/ 01",
     title: "Fragen beantwortet der KI Chatbot.",
-    text: "Öffnungszeiten, Greenfee, Platzreife, Gastspiel, Mitgliedschaft: Die häufigsten Fragen bekommen sofort eine Antwort und den passenden nächsten Schritt – auch sonntags um 21 Uhr. Was persönlich ist, geht ans Clubteam.",
+    text: "Öffnungszeiten, Greenfee, Platzreife, Mitgliedschaft: Die häufigsten Fragen bekommen sofort eine Antwort und den passenden nächsten Schritt. Auch sonntags um 22:38 Uhr. Was persönlich ist, geht ans Club Team.",
     modPrefix: "Modul",
     modName: "KI Chatbot",
     viz: {
@@ -186,7 +186,7 @@ export const clubprozesseDinge: DingBox[] = [
         { role: "q", text: "Kann ich morgen als Gast spielen, und was kostet das?" },
         {
           role: "a",
-          text: "Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Die Greenfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?",
+          text: "Ja, gern. Montag ist der Platz ab 8 Uhr für Gäste offen, Greenfee 18 Loch 65 €. Das Greenfee können Sie direkt hier bezahlen – soll ich Ihnen den Link schicken?",
         },
       ],
       confirm: "Beantwortet, ohne dass jemand im Büro war.",
@@ -212,8 +212,8 @@ export const clubprozesseDinge: DingBox[] = [
   },
   {
     no: "/ 03",
-    title: "Die Greenfee bezahlt der Gast selbst.",
-    text: "Gäste sehen, ob und wann sie spielen können, bezahlen online und bekommen sofort die Bestätigung – unabhängig davon, ob das Büro besetzt ist. Im Büro bleibt nichts liegen, was abgetippt werden müsste.",
+    title: "Das Greenfee bezahlt der Gast selbst.",
+    text: "Gäste sehen, ob und wann sie spielen können, bezahlen online und bekommen sofort die Bestätigung. Unabhängig davon, ob das Büro besetzt ist. Im Büro bleibt nichts liegen, was abgetippt werden müsste.",
     modPrefix: "Modul",
     modName: "Greenfee",
     viz: {
@@ -328,7 +328,7 @@ export const clubprozesseTurnierNews: TurnierNewsData = {
     },
   ],
   trackline:
-    "Vor der Veröffentlichung sieht der Club jeden Text in der Vorschau und kann ihn ändern. Was nicht eindeutig erkannt wurde, ist markiert. Nichts geht ohne Freigabe raus.",
+    "Vor der Veröffentlichung sieht der Club den Text in der Vorschau und kann ihn ändern. Was nicht eindeutig erkannt wurde, ist markiert. Nichts geht ohne Freigabe raus.",
 };
 
 /* ────────────────────────── 4 · Captains App (Spieltag → Website) ────────────────────────── */
@@ -378,7 +378,7 @@ export const clubprozesseCaptainsApp: CaptainsAppData = {
     head: "Captain · Herren AK 50",
     title: "Spieltag 3 · Auswärts",
     fields: [
-      { label: "Gegner", value: "GC Sittensen" },
+      { label: "Gegner", value: "GC Wiesenblick" },
       { label: "Ergebnis", value: "5 : 3 Sieg" },
       { label: "", value: "", img: true },
       { label: "„Starker Tag von Michael Weber …“", value: "Bericht" },
@@ -391,16 +391,16 @@ export const clubprozesseCaptainsApp: CaptainsAppData = {
     title: "Herren AK 50",
     season: "Saison 2026 · 3 von 5 Spieltagen",
     post: {
-      title: "Spieltag 3 · Auswärts beim GC Sittensen",
+      title: "Spieltag 3 · Auswärts beim GC Wiesenblick",
       score: "5 : 3",
       text: "Starker Tag von Michael Weber, der sein Einzel auf der 17 entschied. Damit bleibt die Mannschaft ungeschlagen.",
       by: "Captain Thomas Brandt · Samstag, 18:30 Uhr",
     },
     rows: [
-      { title: "Spieltag 3 · Sittensen", tag: "neu" },
+      { title: "Spieltag 3 · Wiesenblick", tag: "neu" },
       { title: "Spieltag 2 · Heim", value: "4 : 4" },
-      { title: "Spieltag 1 · Bremerhaven", value: "6 : 2" },
-      { title: "Spieltag 4 · Heim", value: "12. Oktober" },
+      { title: "Spieltag 1 · Grüne Wiese", value: "6 : 2" },
+      { title: "Spieltag 4 · Sonnenhöhe", value: "12. Oktober" },
     ],
   },
   capnote:
@@ -480,17 +480,17 @@ export const clubprozesse: PageContent = {
     {
       id: "turnier-news",
       eyebrow: "Turnier News",
-      headline: "Der letzte Putt fällt. Noch am selben Abend ist der Bericht online.",
+      headline: "Die Siegerehrung läuft. Ihr Bericht ist schon fertig.",
       text: [
-        "Drei Turniere in der Woche, und nach jeder Siegerehrung dieselbe Arbeit: Ergebnisse abtippen, Text schreiben, Bilder verkleinern, Website, Facebook, Instagram. Mit GolfNext wird daraus ein Vorgang, den jeder im Club in ein paar Minuten erledigt.",
+        "Drei Turniere in der Woche, nach jeder Siegerehrung dieselbe Arbeit: Ergebnisse abtippen, Text schreiben, Bilder verkleinern, Website, Facebook, Instagram. Mit GolfNext wird daraus ein Vorgang, den jeder im Club in ein paar Minuten erledigt.",
       ],
     },
     {
       id: "captains-app",
       eyebrow: "Captains App",
-      headline: "Jede Mannschaft sichtbar. Ohne Umweg über das Clubbüro.",
+      headline: "Jede Mannschaft sichtbar. Ohne Umwege übers Clubbüro.",
       text: [
-        "Zehn Mannschaften, fünf Spieltage – und im Büro fehlt die Zeit, jeden zu dokumentieren. Also erscheint fast nichts. Mit der Captains App trägt der Captain Aufstellung, Ergebnis, Bild und zwei Sätze direkt vom Spieltag ein. Die Mannschaftsseite auf der Website ist aktuell, bevor der Bus zurück ist.",
+        "Zehn Mannschaften, fünf Spieltage. Im Büro fehlt die Zeit, jedes Team zu dokumentieren. Also erscheint fast nichts. Jeder Captain bekommt seinen eigenen Zugang zu einer von GolfNext entwickelten App. Zu Beginn der Saison legt er dort den Kader seiner Mannschaft an. Ergebnisse, Bilder und Informationen trägt er direkt vom Auswärts-Spieltag mit seinem Smartphone ein. Die Mannschaftsseite wird aktualisiert, bevor die Spieler wieder im Club sind.",
       ],
     },
     {

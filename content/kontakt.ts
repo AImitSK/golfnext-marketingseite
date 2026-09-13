@@ -29,7 +29,9 @@ import type { PageContent } from "./types";
  * Schreibweise. Auch die Server-Validierung prüft gegen genau diese Liste.
  *
  * Der Mock führt keine leere Vorauswahl. Bewusste Abweichung (Entscheidung Stefan,
- * 07.09.2026): Beide Auswahlfelder sind optional – ohne neutralen ersten Eintrag
+ * 07.09.2026, „Ich bin" per Master-Briefing zur Pflicht geändert): „Ich bin" ist
+ * Pflicht, „Worum geht es?" bleibt optional; beide tragen eine neutrale Vorauswahl.
+ * Ohne neutralen ersten Eintrag
  * würde jede Anfrage 'Ehrenamtlicher Vorstand eines e.V.' bzw.
  * 'Erstgespräch vereinbaren' melden, auch wenn niemand das gewählt hat. Fred
  * bekäme also eine erfundene Angabe. Der Mock ist ein statisches Bild und kennt
@@ -113,7 +115,7 @@ export const kontaktFormular: FormularData = {
     vorname: { label: "Vorname", placeholder: "Anna" },
     nachname: { label: "Nachname", placeholder: "Berger" },
     rolle: {
-      label: "Ich bin …",
+      label: "Ich bin",
       hint: "Ein ehrenamtlicher Vorstand hat andere Fragen als ein Sekretariat. Wir stellen uns darauf ein, bevor wir antworten.",
     },
     club: {
@@ -216,7 +218,7 @@ export const kontakt: PageContent = {
       id: "formular",
       headline: "Ihre Nachricht an GolfNext",
       text: [
-        "Je konkreter, desto besser die Antwort. Pflichtfelder sind Name, E-Mail und Ihre Nachricht – alles andere hilft uns nur, gleich das Richtige zu sagen.",
+        "Je konkreter, desto besser die Antwort. Pflichtfelder sind Name, „Ich bin", E-Mail und Ihre Nachricht – alles andere hilft uns nur, gleich das Richtige zu sagen.",
       ],
     },
     {

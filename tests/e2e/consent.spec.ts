@@ -514,6 +514,10 @@ test.describe("Tracking · Fassung wie auf Vercel", () => {
     await page.locator("[name=nachricht]").fill("Bitte um einen Rückruf zur Plattform.");
     // Die Checkbox ist sichtbar versteckt (eigene Optik), deshalb `force`.
     await page.locator("[name=einwilligung]").check({ force: true });
+    // „Ich bin" ist Pflicht (Master-Briefing) – eine echte Rolle wählen.
+    const rolle = page.locator("[name=rolle]");
+    const rolleWert = await rolle.locator("option").nth(1).getAttribute("value");
+    await rolle.selectOption(rolleWert!);
     const thema = page.locator("[name=thema]");
     const gewaehlt = await thema.locator("option").nth(1).getAttribute("value");
     await thema.selectOption(gewaehlt!);

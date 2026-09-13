@@ -59,6 +59,8 @@ async function ausfuellen(
   // Das native Kontrollkästchen ist visuell durch .box ersetzt (UI-Kit); ein Mensch
   // klickt das Label. `force` klickt das Bedienelement selbst – dasselbe Ergebnis.
   await page.locator("[name=einwilligung]").check({ force: true });
+  // „Ich bin" ist Pflicht (Master-Briefing) – eine echte Rolle wählen.
+  await page.locator("[name=rolle]").selectOption({ index: 1 });
 }
 
 /**

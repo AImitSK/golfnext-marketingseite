@@ -159,7 +159,7 @@ export const ueberGolfnextHero: HeroData = {
   people: [
     {
       name: "Fred Hoffmann",
-      role: "Gründer · PGA Golfprofessional",
+      role: "Gründer und PGA Golfprofessional",
       credit: "30 Jahre im Golfmarkt",
     },
     {

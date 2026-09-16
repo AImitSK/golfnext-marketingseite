@@ -4,7 +4,7 @@ import { TeileBox } from "./TeileBox";
 import styles from "./DreiTeile.module.css";
 
 /**
- * 3 · „Drei Teile. Ein System." (portiert aus 3.1b .bento). Drei Boxen – Clubwebsite,
+ * 2 · „Drei Bausteine. Ein System." (portiert aus 3.1b .bento). Drei Boxen – Clubwebsite,
  * Wachstum, Clubprozesse – mit je einem Teaser-Link auf die live-Seite (`/plattform`,
  * `/wachstum-vertrieb`, `/clubprozesse`) und einer illustrativen Mikrovisualisierung.
  * Nutzt die geteilte Sektions-Schale der Neufassung (`PlattformSection`, Tokens

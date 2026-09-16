@@ -40,6 +40,7 @@ export function Pakete({
                   ))}
                 </span>
               ) : null}
+              {card.foot ? <span className={styles.foot}>{card.foot}</span> : null}
               {card.base ? (
                 <span className={styles.plus} aria-hidden="true">
                   +

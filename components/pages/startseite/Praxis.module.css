@@ -40,6 +40,13 @@
 .eyebrow {
   margin-bottom: 18px;
 }
+.lead {
+  margin: 14px 0 0;
+  max-width: 52ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--gn-muted);
+}
 
 .grid {
   display: grid;

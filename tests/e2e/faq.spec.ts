@@ -1,24 +1,26 @@
 import { expect, test, type Page } from "@playwright/test";
 import { clubprozesse } from "../../content/clubprozesse";
-import { plattform } from "../../content/plattform";
 import { ueberGolfnext } from "../../content/ueber-golfnext";
 import { wachstumVertrieb } from "../../content/wachstum-vertrieb";
 import type { PageContent } from "../../content/types";
 
 /**
- * FAQ-Abschnitt auf den vier Seiten neben `/pakete` (Briefing 0030, Nachtrag vom
- * 09.09.2026). Alle fünf benutzen denselben Baustein `components/site/FaqSection.tsx`.
+ * FAQ-Abschnitt auf den Seiten neben `/pakete` (Briefing 0030, Nachtrag vom
+ * 09.09.2026). Sie benutzen denselben Baustein `components/site/FaqSection.tsx`.
  *
- * Zu den Themen `plattform`, `clubprozesse`, `wachstum` und `allgemein` liegt derzeit
- * **keine** Frage im Dataset – und auch nicht im Testbestand (`lib/sanity/fixtures.ts`
- * führt nur `pakete`). Diese Prüfung hält deshalb den Zustand fest, der gewollt ist:
- * **kein Abschnitt, keine Überschrift, keine Leerfläche.** Der Nachweis für
- * Reihenfolge, Server-HTML und Bedienbarkeit ohne JavaScript steht in
- * `tests/e2e/pakete.spec.ts`, wo es Fragen gibt.
+ * Die Plattform-Seite ist seit dem finalen Korrekturbriefing (0035) NICHT mehr dabei:
+ * ihre verbindliche Endstruktur endet mit dem persönlichen Abschluss, der FAQ-Abschnitt
+ * ist dort entfallen.
+ *
+ * Zu den Themen `clubprozesse`, `wachstum` und `allgemein` liegt derzeit **keine**
+ * Frage im Dataset – und auch nicht im Testbestand (`lib/sanity/fixtures.ts` führt nur
+ * `pakete`). Diese Prüfung hält deshalb den Zustand fest, der gewollt ist: **kein
+ * Abschnitt, keine Überschrift, keine Leerfläche.** Der Nachweis für Reihenfolge,
+ * Server-HTML und Bedienbarkeit ohne JavaScript steht in `tests/e2e/pakete.spec.ts`,
+ * wo es Fragen gibt.
  */
 
 const SEITEN: { name: string; inhalt: PageContent }[] = [
-  { name: "/plattform", inhalt: plattform },
   { name: "/clubprozesse", inhalt: clubprozesse },
   { name: "/wachstum-vertrieb", inhalt: wachstumVertrieb },
   { name: "/ueber-golfnext", inhalt: ueberGolfnext },

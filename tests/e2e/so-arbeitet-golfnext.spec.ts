@@ -20,8 +20,8 @@ const STRECKEN: { tab: string; betreff: string }[] = [
   { tab: "Schnuppergolf", betreff: "Ihr Platz am Samstag ist reserviert" },
   { tab: "Platzreife", betreff: "Ihre Platzreife: vier Termine, alle Daten" },
   { tab: "Mitgliedschaft", betreff: "Ihr Termin steht: Donnerstag, 17 Uhr" },
-  { tab: "Greenfee & Gäste", betreff: "Ihre Startzeit am Samstag, 9:30 Uhr" },
-  { tab: "Firmen-Event", betreff: "Ihre Anfrage ist angekommen" },
+  { tab: "Greenfee und Gäste", betreff: "Ihre Startzeit am Samstag, 9:30 Uhr" },
+  { tab: "Firmenveranstaltungen", betreff: "Ihre Anfrage ist angekommen" },
 ];
 
 test.describe("/plattform/so-arbeitet-golfnext · Struktur und Overflow", () => {
@@ -61,11 +61,11 @@ test.describe("/plattform/so-arbeitet-golfnext · Struktur und Overflow", () => 
   }) => {
     await page.goto("/plattform/so-arbeitet-golfnext");
 
-    // Zielgruppen-Reiter heißt „Greenfee & Gäste".
-    await expect(page.getByText("Greenfee & Gäste", { exact: true })).toBeVisible();
+    // Zielgruppen-Reiter heißt „Greenfee und Gäste".
+    await expect(page.getByText("Greenfee und Gäste", { exact: true })).toBeVisible();
 
     // In der Greenfee-Strecke heißt die Zahlung „Greenfee" (Modulbegriff).
-    await page.getByText("Greenfee & Gäste", { exact: true }).click();
+    await page.getByText("Greenfee und Gäste", { exact: true }).click();
     await expect(
       page.getByText("Greenfee bezahlt, Startzeit reserviert.", { exact: false }),
     ).toBeVisible();
@@ -112,7 +112,7 @@ test.describe("/plattform/so-arbeitet-golfnext ohne JavaScript", () => {
 
     // Die Übergabe-Karten und die Regeln stehen ohne JS im Endzustand.
     await expect(
-      page.getByText("Anna Berger anrufen – sie sucht einen Platzreifetermin."),
+      page.getByText("Anna Berger anrufen. Sie sucht einen Platzreifetermin."),
     ).toBeVisible();
     await expect(page.getByText("Kein Newsletter an alle.", { exact: true })).toBeVisible();
   });

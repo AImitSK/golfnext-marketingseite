@@ -1,14 +1,14 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * /plattform (Baustein 0016, Schritt 2.3), gebaut aus Mock 3.2c-plattform-neufassung.html.
- * Prüft die harten Akzeptanzkriterien:
+ * /plattform – Struktur nach dem finalen Korrekturbriefing (0035): Hero, „Was sich
+ * ändert" (Bento), „Plattform auf einen Blick", „Was GolfNext nicht ist", Abschluss.
+ * Rollen-Slider und Scroll-Geschichte sind entfallen. Prüft die harten Akzeptanzkriterien:
  * - genau eine H1 (im Hero), kein horizontaler Seiten-Overflow (auch das Bleed-Visual
- *   im Hero und der Rollen-Slider erzeugen keinen Overflow), keine Konsolenfehler –
- *   über alle Breakpoints (playwright.config.ts: 390/768/1024/1180/1440);
- * - OHNE JavaScript ist alles lesbar: der Rollen-Slider ist nativ horizontal scrollbar
- *   (keine toten Pfeil-Buttons), die Scroll-Geschichte fällt auf die gestapelte Fassung
- *   zurück (jeder Schritt zeigt seinen Geräterahmen inline);
+ *   im Hero erzeugt keinen Overflow), keine Konsolenfehler – über alle Breakpoints
+ *   (playwright.config.ts: 390/768/1024/1180/1440);
+ * - OHNE JavaScript ist alles lesbar (Modul-Übersicht und Abgrenzung stehen im
+ *   Server-HTML);
  * - bei reduzierter Bewegung stehen die Animationen sofort im Endzustand (Hero-Meldung
  *   „Platz bespielbar" bestätigt, Bento-Inhalte vollständig sichtbar).
  */
@@ -39,51 +39,29 @@ test.describe("/plattform · Struktur und Overflow", () => {
 
     expect(consoleErrors, "Konsolenfehler").toEqual([]);
   });
-
-  test("Rollen-Slider hat blätterbare Pfeil-Buttons (mit JS)", async ({ page }) => {
-    await page.goto("/plattform");
-    const zurueck = page.getByRole("button", { name: "Zurück" });
-    const weiter = page.getByRole("button", { name: "Weiter" });
-
-    const width = page.viewportSize()?.width ?? 0;
-    if (width > 620) {
-      // Nach Mount erscheinen die Pfeil-Buttons; „Zurück" ist am Anfang deaktiviert.
-      await expect(zurueck).toBeVisible();
-      await expect(weiter).toBeVisible();
-      await expect(zurueck).toBeDisabled();
-    } else {
-      // Unter 620px ist die Pfeil-Navigation bewusst ausgeblendet (display:none →
-      // nicht im A11y-Baum); gewischt wird nativ.
-      await expect(weiter).toHaveCount(0);
-    }
-  });
 });
 
 test.describe("/plattform ohne JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
-  test("Slider ist nativ scrollbar, keine toten Pfeil-Buttons, Story gestapelt lesbar", async ({
-    page,
-  }) => {
+  test("Modul-Übersicht und Abgrenzung stehen im Server-HTML", async ({ page }) => {
     await page.goto("/plattform");
 
-    // Alle sechs Rollenkarten liegen im DOM und sind lesbar.
-    await expect(page.getByRole("heading", { level: 3, name: "Greenkeeper" })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: "Captain" })).toBeVisible();
-
-    // Der Rail ist nativ horizontal scrollbar (Inhalt breiter als der sichtbare Bereich).
-    const rail = page.getByTestId("rollen-rail");
-    const scrollable = await rail.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
-    expect(scrollable, "Rail nativ scrollbar").toBe(true);
-
-    // Ohne JS keine (toten) Pfeil-Buttons.
-    await expect(page.getByRole("button", { name: "Zurück" })).toHaveCount(0);
-    await expect(page.getByRole("button", { name: "Weiter" })).toHaveCount(0);
-
-    // Scroll-Geschichte: alle fünf Schritt-Texte sind sichtbar (gestapelte Fassung).
-    await expect(page.getByText(/Läuft dort, wo Anfänger abends scrollen/)).toBeVisible();
+    // „Plattform auf einen Blick": Überschrift und die Modulnamen sind ohne JS lesbar.
     await expect(
-      page.getByText(/Anmeldung zur Platzreife\. Das Clubbüro hat bis hierher nichts getippt/),
+      page.getByRole("heading", { name: "Zwölf Module. Zwei Richtungen. Eine Plattform." }),
+    ).toBeVisible();
+    await expect(page.getByRole("region", { name: "Module im Überblick" })).toBeVisible();
+    await expect(page.getByText("Captains App", { exact: true }).first()).toBeVisible();
+
+    // Abgrenzung „Was GolfNext nicht ist": Überschrift, Verbindung und Abschluss lesbar.
+    await expect(
+      page.getByRole("heading", { name: "Ihre Clubverwaltung bleibt, wo sie ist." }),
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        /GolfNext begleitet bis zur Mitgliedschaft\. Ihre Clubsoftware verwaltet den Clubbetrieb\./,
+      ),
     ).toBeVisible();
   });
 });

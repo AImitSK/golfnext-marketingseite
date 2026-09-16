@@ -14,11 +14,11 @@ import { OHNE_ARTIKEL_URL } from "../../playwright.config";
  */
 
 const PRAXIS_EYEBROW = "Ratgeber";
-const PRAXIS_H2 = "Was in Golfclubs wirklich funktioniert.";
-const PRAXIS_LINK = "Alle Beiträge";
+const PRAXIS_H2 = "Wissen, das Golfclubs weiterbringt.";
+const PRAXIS_LINK = "Zum Ratgeber";
 
 const WISSEN_EYEBROW = "Wissen";
-const WISSEN_H2 = "Was wir über Golfclubs lernen, schreiben wir auf.";
+const WISSEN_H2 = "Was Golfclubs heute wissen müssen.";
 const WISSEN_LINK = "Alle Artikel";
 
 /** Die drei Teaser, die mit Briefing 0029 ersatzlos aus dem Repo verschwunden sind. */
@@ -84,7 +84,7 @@ test.describe("Teaser mit Artikeln", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Beispielartikel 1");
   });
 
-  test("/ueber-golfnext: vier echte Artikel im Slider, Rubrik statt Quelle", async ({ page }) => {
+  test("/ueber-golfnext: drei echte Artikel im Slider, Rubrik statt Quelle", async ({ page }) => {
     await page.goto("/ueber-golfnext");
     const abschnitt = wissenAbschnitt(page);
 
@@ -95,15 +95,16 @@ test.describe("Teaser mit Artikeln", () => {
       "/praxis",
     );
 
+    // Genau drei Artikel (Briefing 0035): keine vierte Karte.
     const karten = abschnitt.locator('a[href^="/praxis/"]');
-    await expect(karten).toHaveCount(4);
+    await expect(karten).toHaveCount(3);
 
-    // Die vier neuesten – ohne Filter auf eine Rubrik. Im Testbestand liegen die
-    // neuesten vier alle in Rubrik A; die Rubrik steht auf der Karte an Stelle der
+    // Die drei neuesten – ohne Filter auf eine Rubrik. Im Testbestand liegen die
+    // neuesten drei alle in Rubrik A; die Rubrik steht auf der Karte an Stelle der
     // früheren „Quelle".
     await expect(karten.first().getByText("Rubrik A", { exact: true })).toBeVisible();
     await expect(karten.first().getByText("Beispielartikel 1", { exact: true })).toBeVisible();
-    await expect(abschnitt.getByText("Bild folgt")).toHaveCount(4);
+    await expect(abschnitt.getByText("Bild folgt")).toHaveCount(3);
   });
 
   test("keine erfundenen Artikel mehr auf beiden Seiten", async ({ page }) => {

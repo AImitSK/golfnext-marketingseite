@@ -153,7 +153,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: anna.berger@…",
           gesendet: "Do 09:00",
           betreff: "Was Sie am Samstag erwartet",
-          text: "Bequeme Kleidung und feste Schuhe reichen. Ihr Trainer ist Fred Hoffmann. Bei Regen verschieben wir – Sie bekommen rechtzeitig Bescheid.",
+          text: "Bequeme Kleidung und feste Schuhe reichen. Ihr Trainer ist Fred Hoffmann. Bei Regen verschieben wir. Sie bekommen rechtzeitig Bescheid.",
           hinweis: "Ratgeber: Der erste Golfversuch",
         },
         {
@@ -187,7 +187,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: jens.kraft@…",
           gesendet: "Di 21:40",
           betreff: "Ihre Platzreife: vier Termine, alle Daten",
-          text: "Samstags, jeweils 10 bis 12 Uhr. Was Sie mitbringen, was der Club stellt – und wer Sie unterrichtet.",
+          text: "Samstags, jeweils 10 bis 12 Uhr. Was Sie mitbringen, was der Club stellt und wer Sie unterrichtet.",
           cta: "Termine im Kalender speichern",
         },
         {
@@ -196,7 +196,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: jens.kraft@…",
           gesendet: "Do 09:00",
           betreff: "Was in den vier Terminen passiert",
-          text: "Von den ersten Schlägen bis zur Platzerlaubnis: Ablauf, Regeln, Etikette. Kein Prüfungsstress – wir gehen das gemeinsam durch.",
+          text: "Von den ersten Schlägen bis zur Platzerlaubnis: Ablauf, Regeln, Etikette. Kein Prüfungsstress. Wir gehen das gemeinsam durch.",
           hinweis: "Ratgeber: Platzreife ohne Prüfungsangst",
         },
         {
@@ -204,7 +204,7 @@ export const soArbeitetStrecken: StreckenData = {
           zeit: "Nach dem letzten Termin",
           an: "An: jens.kraft@…",
           gesendet: "Sa 17:30",
-          betreff: "Glückwunsch – Sie dürfen auf den Platz",
+          betreff: "Glückwunsch, Sie dürfen auf den Platz",
           text: "Ihre Platzreife ist eingetragen. So kommen Sie an eine Startzeit, und das sind Ihre Möglichkeiten, bei uns zu spielen.",
           cta: "Startzeit reservieren",
         },
@@ -214,7 +214,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: jens.kraft@…",
           gesendet: "Mi 10:00",
           betreff: "Wie wäre es mit einer Saison bei uns?",
-          text: "Was eine Mitgliedschaft kostet, was Spielrecht und Probemitgliedschaft bedeuten – und wann Sie mit dem Clubmanager sprechen können.",
+          text: "Was eine Mitgliedschaft kostet, was Spielrecht und Probemitgliedschaft bedeuten und wann Sie mit dem Clubmanager sprechen können.",
           cta: "Gespräch vereinbaren",
         },
       ],
@@ -239,7 +239,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: familie.meier@…",
           gesendet: "Mi 09:00",
           betreff: "Damit Sie vorbereitet sind",
-          text: "Beiträge, Spielrecht, Familientarife und die Probemitgliedschaft – in einer Übersicht, damit im Gespräch Zeit für Ihre Fragen bleibt.",
+          text: "Beiträge, Spielrecht, Familientarife und die Probemitgliedschaft. Alles in einer Übersicht, damit im Gespräch Zeit für Ihre Fragen bleibt.",
           hinweis: "Übersicht: Mitgliedschaften im Club",
         },
         {
@@ -248,7 +248,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: familie.meier@…",
           gesendet: "Fr 11:00",
           betreff: "Schön, dass Sie da waren",
-          text: "Hier ist alles noch einmal schriftlich, so wie wir es besprochen haben. Der Aufnahmeantrag liegt bei – ohne Frist, ohne Druck.",
+          text: "Hier ist alles noch einmal schriftlich, so wie wir es besprochen haben. Der Aufnahmeantrag liegt bei, ohne Frist, ohne Druck.",
           cta: "Antrag ansehen",
         },
         {
@@ -264,7 +264,7 @@ export const soArbeitetStrecken: StreckenData = {
     },
     {
       id: "greenfee-gaeste",
-      label: "Greenfee & Gäste",
+      label: "Greenfee und Gäste",
       ariaLabel: "Schematische Darstellung: die vier Nachrichten der Strecke Greenfee und Gäste.",
       mails: [
         {
@@ -273,7 +273,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: tom.schulz@…",
           gesendet: "Do 21:03",
           betreff: "Ihre Startzeit am Samstag, 9:30 Uhr",
-          text: "Greenfee bezahlt, Startzeit reserviert. Anfahrt, Parkplatz und wo Sie sich melden – alles in dieser Mail.",
+          text: "Greenfee bezahlt, Startzeit reserviert. Anfahrt, Parkplatz und wo Sie sich melden. Alles in dieser Mail.",
           cta: "Zur Anfahrt",
         },
         {
@@ -291,7 +291,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: tom.schulz@…",
           gesendet: "Sa 19:00",
           betreff: "Wie war die Runde?",
-          text: "Danke für Ihren Besuch. Wenn etwas nicht gepasst hat, schreiben Sie uns – das liest ein Mensch, kein Formular.",
+          text: "Danke für Ihren Besuch. Wenn etwas nicht gepasst hat, schreiben Sie uns. Das liest ein Mensch, kein Formular.",
           cta: "Kurz Rückmeldung geben",
         },
         {
@@ -300,15 +300,15 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: tom.schulz@…",
           gesendet: "Mi 10:00",
           betreff: "Wieder Lust auf eine Runde?",
-          text: "Aktuelle Greenfee-Zeiten und, falls Sie öfter kommen: was eine Gästekarte oder Zweitmitgliedschaft kostet.",
+          text: "Aktuelle Zeiten fürs Greenfee und, falls Sie öfter kommen: was eine Gästekarte oder Zweitmitgliedschaft kostet.",
           cta: "Startzeit reservieren",
         },
       ],
     },
     {
       id: "firmen-event",
-      label: "Firmen-Event",
-      ariaLabel: "Schematische Darstellung: die vier Nachrichten der Strecke Firmen-Event.",
+      label: "Firmenveranstaltungen",
+      ariaLabel: "Schematische Darstellung: die vier Nachrichten der Strecke Firmenveranstaltungen.",
       mails: [
         {
           nr: "01",
@@ -343,7 +343,7 @@ export const soArbeitetStrecken: StreckenData = {
           an: "An: k.wagner@…",
           gesendet: "Mo 10:00",
           betreff: "Danke für den Tag bei uns",
-          text: "Die Bilder zum Herunterladen – und falls es Ihren Leuten gefallen hat: Für nächstes Jahr halten wir Ihnen einen Termin frei.",
+          text: "Die Bilder zum Herunterladen. Und falls es Ihren Leuten gefallen hat: Für nächstes Jahr halten wir Ihnen einen Termin frei.",
           cta: "Termin 2027 vormerken",
         },
       ],
@@ -357,7 +357,7 @@ export const soArbeitetStrecken: StreckenData = {
     },
   ],
   fussnote:
-    "Beispielstrecken. Texte, Zeitpunkte und Artikel werden für Ihren Club geschrieben und mit Ihnen abgestimmt – Anzahl und Abstände der Nachrichten bestimmen Sie.",
+    "Beispielstrecken. Mindestens vier Nachrichten bilden die Basis. Texte und Zeitpunkte werden für Ihren Club geschrieben und mit Ihnen abgestimmt. Anzahl und Abstände legt Ihr Club fest.",
 };
 
 /* ────────────────────────── 3 · Übergabe an den Menschen ────────────────────────── */
@@ -411,12 +411,12 @@ export const soArbeitetUebergabe: UebergabeData = {
   },
   aufgabe: {
     kopf: "Aufgabe für das Clubteam",
-    job: "Anna Berger anrufen – sie sucht einen Platzreifetermin.",
+    job: "Anna Berger anrufen. Sie sucht einen Platzreifetermin.",
     warum:
       "Zwei Signale an einem Tag. Der Anruf kommt jetzt nicht aus dem Nichts: Sie wissen, woher sie kommt, was sie bekommen hat und wofür sie sich interessiert.",
     aktionen: ["Anrufen", "Verlauf ansehen"],
   },
-  note: "Ab hier läuft nichts mehr automatisch. Das Gespräch führt ein Mensch aus Ihrem Club – nur eben vorbereitet.",
+  note: "Ab hier übernimmt ein Mensch aus Ihrem Club. Gut vorbereitet und mit allem, was bisher passiert ist.",
 };
 
 /* ────────────────────────── 4 · Drei Regeln ────────────────────────── */
@@ -439,7 +439,7 @@ export const soArbeitetRegeln: RegelnData = {
     {
       n: "/ 01",
       title: "Kein Newsletter an alle.",
-      text: "Jede Nachricht geht an genau die Menschen, für die sie geschrieben wurde – ausgelöst von dem, was sie selbst getan haben. Niemand bekommt Post, weil gerade Dienstag ist.",
+      text: "Jede Nachricht geht an genau die Menschen, für die sie geschrieben wurde. Ausgelöst wird sie durch das, was diese Menschen selbst getan haben. Niemand bekommt Post, weil gerade Dienstag ist.",
     },
     {
       n: "/ 02",
@@ -482,7 +482,7 @@ export const soArbeitetGolfnext: PageContent = {
       eyebrow: "Was tatsächlich verschickt wird",
       headline: "Fünf Zielgruppen, fünf eigene Strecken.",
       text: [
-        "Ein Anfänger hat andere Fragen als ein Greenfee-Gast oder ein Unternehmen. Deshalb bekommt jede Zielgruppe ihre eigenen vier Nachrichten – hier zum Nachlesen, so wie Ihre Interessenten sie bekommen.",
+        "Ein Golf-Neuling hat andere Fragen als ein Greenfee-Gast oder ein Unternehmen. Deshalb bekommt jede Zielgruppe ihre eigene Nachrichtenfolge. Mindestens vier Nachrichten bilden die Basis. Wie viele folgen und wann sie verschickt werden, entscheidet Ihr Club.",
       ],
     },
     {
@@ -490,14 +490,14 @@ export const soArbeitetGolfnext: PageContent = {
       eyebrow: "Wenn es persönlich wird",
       headline: "Die letzte Nachricht schreibt kein System.",
       text: [
-        "Automatische Nachrichten bringen einen Menschen bis vor die Tür. Hineingehen lassen ihn Sie. Sobald jemand echtes Interesse zeigt, hört GolfNext auf zu schicken und legt dem Clubteam eine Aufgabe hin – mit allem, was bis dahin passiert ist.",
+        "Automatische Nachrichten bringen einen Interessenten bis vor die Tür. Sobald echtes Interesse entsteht, übernimmt Ihr Clubteam. GolfNext übergibt den Kontakt mit allen wichtigen Informationen. So weiß Ihr Team, wen es anruft und worum es geht.",
       ],
     },
     {
       id: "regeln",
       eyebrow: "Ihre Kontrolle",
       headline: "Drei Regeln für alles, was in Ihrem Namen rausgeht.",
-      text: ["Es sind Ihre Mitglieder, Ihre Gäste und Ihr Ruf. Deshalb behalten Sie die Hand darauf."],
+      text: ["Es sind Ihre Mitglieder, Ihre Gäste und Ihr Ruf. Deshalb bestimmen Sie, was in Ihrem Namen passiert."],
     },
   ],
   footerClose: {

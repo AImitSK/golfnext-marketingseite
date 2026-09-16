@@ -265,10 +265,13 @@
   font-size: 14px;
   color: var(--gn-muted);
 }
+/* Hinweis unter der Animation: laut Briefing 0035 gut lesbar und nicht zu klein –
+   deshalb 15 px, kräftige Textfarbe und ruhige Zeilenhöhe. */
 .seqfoot {
-  margin-top: 14px;
-  font-size: 13.5px;
-  color: var(--gn-muted);
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gn-ink);
   max-width: 78ch;
 }
 

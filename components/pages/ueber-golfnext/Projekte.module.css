@@ -71,6 +71,14 @@
   color: var(--gn-muted);
 }
 
+/* Zusatzzeile unter den Logos (Briefing 0035): „Erfahrung aus der Golfpraxis. …". */
+.zusatz {
+  margin: 26px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gn-muted);
+}
+
 @media (max-width: 900px) {
   .logos {
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -48,6 +48,7 @@ export function Projekte({
           </RiseItem>
         ))}
       </Rise>
+      <p className={styles.zusatz}>{data.zusatz}</p>
     </PlattformSection>
   );
 }

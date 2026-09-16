@@ -6,8 +6,13 @@
   margin-top: 48px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 56px;
+  gap: 40px 56px;
   align-items: center;
+}
+.texts {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 .p {
   font-size: clamp(17px, 1.4vw, 19px);
@@ -18,8 +23,35 @@
 }
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+/* Verbindung zwischen beiden Seiten: Navy-Pille mit Signalgrün-Text
+   (Grün-Regel: Text auf Navy erlaubt). */
+.verbindung {
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  max-width: 11ch;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--gn-signal);
+  background: var(--gn-navy);
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+/* Abschlusszeile unter dem Split, über die volle Breite. */
+.abschluss {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--gn-muted);
+  line-height: 1.6;
+  max-width: 70ch;
 }
 .box {
   border: 1px solid var(--gn-line);
@@ -82,6 +114,10 @@
 @media (max-width: 620px) {
   .split {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .verbindung {
+    max-width: none;
+    justify-self: stretch;
   }
   .box li {
     overflow-wrap: anywhere;

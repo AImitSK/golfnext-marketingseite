@@ -98,14 +98,16 @@ export function Hero({
               </a>
             ) : null}
           </div>
-          <div className={styles.trust}>
-            {data.trust.map((t) => (
-              <span key={t.text}>
-                <i aria-hidden="true" />
-                {t.text}
-              </span>
-            ))}
-          </div>
+          {data.trust.length > 0 ? (
+            <div className={styles.trust}>
+              {data.trust.map((t) => (
+                <span key={t.text}>
+                  <i aria-hidden="true" />
+                  {t.text}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <div className={styles.demo} aria-label={data.ariaLabel} role="img">

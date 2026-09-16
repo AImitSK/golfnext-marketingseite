@@ -1,22 +1,18 @@
-import type { CSSProperties } from "react";
-import { Rise, RiseItem } from "@/components/motion/Rise";
 import { PlattformSection } from "@/components/pages/plattform/PlattformSection";
 import type { ProjekteData } from "@/content/ueber-golfnext";
+import { LogoMarquee } from "./LogoMarquee";
 import styles from "./Projekte.module.css";
 
 /**
- * 5 · „Gemeinsame Projekte“ – geteilte Sektions-Schale (mist) mit dem Club-Raster.
- * Seit 07.09.2026 stehen dort die echten, freigegebenen Clublogos aus
- * `public/clubs` – keine beschrifteten Platzhalter und kein Vermerk mehr.
- * Der frühere Praxis-Link ist laut Master-Briefing entfallen. Die Kacheln blenden
- * gestaffelt auf (Rise); Endzustand im Server-HTML → ohne JS lesbar. Daten aus
- * `content/ueber-golfnext.ts`.
+ * 5 · „Aus unserer Arbeit im Golf“ – geteilte Sektions-Schale (mist) mit dem
+ * Logo-Band. Dort stehen die echten, freigegebenen Club- und Partner-Logos aus
+ * `public/clubs` – keine Platzhalter und kein Vermerk mehr.
  *
- * Die Logos liegen als SVG bzw. PNG in Originalgröße vor und werden bewusst mit
- * `<img>` statt `next/image` ausgeliefert: SVG müsste sonst über
- * `dangerouslyAllowSVG` durch den Bild-Optimierer, und optimieren gibt es an
- * einer 10-KB-Vektordatei nichts. `width`/`height` stehen an jedem Bild, damit
- * der Platz vorab reserviert ist (kein CLS).
+ * Seit 16.09.2026 laufen die Logos als endloser Slider (`LogoMarquee`) statt im
+ * festen Raster – bei 13 Marken die ruhigere „Trusted-by“-Optik. Die Bewegung
+ * ist reines CSS: ohne JS lesbar, `prefers-reduced-motion` zeigt sofort ein
+ * statisches Raster, kein CLS. Der frühere Praxis-Link ist laut Master-Briefing
+ * entfallen. Daten aus `content/ueber-golfnext.ts`.
  */
 export function Projekte({
   eyebrow,
@@ -30,24 +26,8 @@ export function Projekte({
   data: ProjekteData;
 }) {
   return (
-    <PlattformSection variant="mist" eyebrow={eyebrow} headline={headline} lead={lead}>
-      <Rise className={styles.logos}>
-        {data.logos.map((club) => (
-          <RiseItem key={club.datei} className={styles.logo}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- siehe Kopfkommentar: SVG-Logos ohne Optimierer */}
-            <img
-              className={styles.logoBild}
-              style={{ "--gn-logo-h": `${club.rasterHoehe}px` } as CSSProperties}
-              src={club.datei}
-              alt={club.name}
-              width={club.breite}
-              height={club.hoehe}
-              loading="lazy"
-              decoding="async"
-            />
-          </RiseItem>
-        ))}
-      </Rise>
+    <PlattformSection variant="mist" eyebrow={eyebrow} headline={headline} lead={lead} overflowHidden>
+      <LogoMarquee logos={data.logos} />
       <p className={styles.zusatz}>{data.zusatz}</p>
     </PlattformSection>
   );

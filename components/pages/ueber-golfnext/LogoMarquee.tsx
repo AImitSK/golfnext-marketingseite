@@ -17,9 +17,8 @@ import styles from "./LogoMarquee.module.css";
  * zu optimieren. `width`/`height` stehen an jedem Bild → kein CLS.
  */
 function LogoTile({ club }: { club: ClubLogo }) {
-  const klasse = club.dunkel ? `${styles.logo} ${styles.logoDunkel}` : styles.logo;
   return (
-    <li className={klasse}>
+    <li className={styles.logo}>
       {/* eslint-disable-next-line @next/next/no-img-element -- siehe Kopfkommentar: Logos ohne Optimierer */}
       <img
         className={styles.logoBild}

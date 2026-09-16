@@ -5,7 +5,7 @@
 
    Kachel-Optik (weiß, Rahmen, Graustufe → Farbe bei Hover) ist aus
    Projekte.module.css übernommen, damit Slider und altes Raster gleich aussehen.
-   Neu: dunkle Kacheln (`.logoDunkel`) für helle Marken auf Dunkel. */
+   Alle Logos einheitlich auf weißer Kachel in Graustufe. */
 
 .marquee {
   margin-top: 48px;
@@ -74,22 +74,6 @@
     opacity 0.3s;
 }
 .logo:hover .logoBild {
-  filter: none;
-  opacity: 1;
-}
-
-/* Dunkle Kachel für helle Marken auf Dunkel (enjoygolf, Rheingolf). Diese Logos
-   stehen von Anfang an in Farbe – Graustufe würde sie auf Navy unkenntlich
-   machen. */
-.logoDunkel {
-  background: var(--gn-navy);
-  border-color: var(--gn-navy);
-}
-.logoDunkel:hover {
-  /* Signalgrün nur als Linie auf Navy – regelkonform (Grün-Regel). */
-  border-color: var(--gn-signal);
-}
-.logoDunkel .logoBild {
   filter: none;
   opacity: 1;
 }

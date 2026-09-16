@@ -95,6 +95,19 @@
   border-radius: 3px;
   padding: 3px 8px;
 }
+/* Abschlusszeile am Kartenfuß (Basis-Karte: „Ihre Domain, Ihre Inhalte, Ihre
+   Kontakte"). Steht wie `.mods` unten (margin-top:auto) mit Trennlinie. Bewusst auf
+   `.base .foot` eingeschränkt: Signalgrün-Text ist nur auf Navy erlaubt (Grün-Regel) –
+   die Basis-Karte ist navy, andere Karten sind weiß. */
+.base .foot {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--gn-signal);
+}
 .plus {
   position: absolute;
   right: -23px;

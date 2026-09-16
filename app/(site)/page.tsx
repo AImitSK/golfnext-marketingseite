@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { PlattformSection } from "@/components/pages/plattform/PlattformSection";
-import { RollenSlider } from "@/components/pages/plattform/RollenSlider";
 import { DreiTeile } from "@/components/pages/startseite/DreiTeile";
 import { EinWeg } from "@/components/pages/startseite/EinWeg";
 import { Hero } from "@/components/pages/startseite/Hero";
 import { Pakete } from "@/components/pages/startseite/Pakete";
 import { Praxis } from "@/components/pages/startseite/Praxis";
-import { Vertrauensleiste } from "@/components/pages/startseite/Vertrauensleiste";
 import { Zusagen } from "@/components/pages/startseite/Zusagen";
 import { Footer } from "@/components/site/Footer";
 import { routeMetadata } from "@/lib/metadata";
@@ -15,23 +13,21 @@ import {
   startseiteHero,
   startseitePakete,
   startseitePraxis,
-  startseiteRollen,
   startseiteTeile,
-  startseiteVertrauen,
   startseiteWeg,
   startseiteZusagen,
 } from "@/content/startseite";
 
 /**
  * Startseite `/` – Neufassung v01, gebaut aus Mock
- * `docs/design-system/mocks/3.1b-startseite-neufassung.html` (Briefing 0021). Ersetzt
- * die alte Fassung (0013, aus 3.1/3.1a) vollständig. Acht Abschnitte: Hero
- * (Bleed-Demo + drei schwebende Karten), Vertrauensleiste, „Drei Teile" (Bento mit
- * echten Links auf `/plattform`, `/wachstum-vertrieb`, `/clubprozesse`),
- * Rollen-Slider (geteilte Komponente aus /plattform), „Ein Weg" (4-Schritt-
- * Zeitleiste), Pakete (Fassung 2, **ohne Preise/Summen**), „Vier Zusagen" (Navy-Band
- * + Fred-Zitat) und Praxis. Danach der persönliche Abschluss (`FooterClose`) im
- * geteilten `Footer` – ohne Modulstatus.
+ * `docs/design-system/mocks/3.1b-startseite-neufassung.html` (Briefing 0021),
+ * textlich nachgezogen mit dem „Finalen Briefing Startseite" (Korrekturbriefing).
+ * Sechs Abschnitte: Hero (Bleed-Demo + drei schwebende Karten), „Drei Bausteine"
+ * (Bento mit echten Links auf `/plattform`, `/wachstum-vertrieb`, `/clubprozesse`),
+ * „So greift es ineinander" (4-Schritt-Zeitleiste), Pakete (Fassung 2, **ohne
+ * Preise/Summen**), „Vier Zusagen" (Navy-Band + Fred-Zitat) und Ratgeber. Danach der
+ * persönliche Abschluss (`FooterClose`) im geteilten `Footer` – ohne Modulstatus.
+ * Vertrauensleiste und Rollen-Slider sind mit dem Korrekturbriefing ersatzlos entfallen.
  *
  * Alle Texte kommen wortgleich aus `content/startseite.ts`. Genau eine `<h1>` (im
  * Hero). Layout-Tokens der Neufassung (Wrap 1180, Radius 12, Sektion 120, H2 48) sind
@@ -54,7 +50,6 @@ function section(id: string) {
 export default function Home() {
   const hero = section("hero");
   const teile = section("teile");
-  const rollen = section("rollen");
   const weg = section("weg");
   const pakete = section("pakete");
   const zusagen = section("zusagen");
@@ -64,24 +59,12 @@ export default function Home() {
     <main>
       <Hero eyebrow={hero.eyebrow!} headline={hero.headline!} lead={hero.text![0]} data={startseiteHero} />
 
-      <Vertrauensleiste data={startseiteVertrauen} />
-
       <DreiTeile
         eyebrow={teile.eyebrow!}
         headline={teile.headline!}
         lead={teile.text![0]}
         data={startseiteTeile}
       />
-
-      <PlattformSection
-        variant="mist"
-        overflowHidden
-        eyebrow={rollen.eyebrow!}
-        headline={rollen.headline!}
-        lead={rollen.text![0]}
-      >
-        <RollenSlider data={startseiteRollen} />
-      </PlattformSection>
 
       <PlattformSection eyebrow={weg.eyebrow!} headline={weg.headline!} lead={weg.text![0]}>
         <EinWeg data={startseiteWeg} />
@@ -96,7 +79,12 @@ export default function Home() {
 
       <Zusagen eyebrow={zusagen.eyebrow!} headline={zusagen.headline!} data={startseiteZusagen} />
 
-      <Praxis eyebrow={praxis.eyebrow!} headline={praxis.headline!} data={startseitePraxis} />
+      <Praxis
+        eyebrow={praxis.eyebrow!}
+        headline={praxis.headline!}
+        lead={praxis.text![0]}
+        data={startseitePraxis}
+      />
 
       <Footer footerClose={startseite.footerClose} />
     </main>

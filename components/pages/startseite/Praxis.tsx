@@ -47,10 +47,12 @@ const KARTE_HOEHE = 190;
 export async function Praxis({
   eyebrow,
   headline,
+  lead,
   data,
 }: {
   eyebrow: string;
   headline: string;
+  lead: string;
   data: PraxisData;
 }) {
   const artikel = await sanityFetch({
@@ -68,6 +70,7 @@ export async function Praxis({
           <div>
             <Eyebrow className={styles.eyebrow}>{eyebrow}</Eyebrow>
             <h2>{headline}</h2>
+            <p className={styles.lead}>{lead}</p>
           </div>
           <TextLink href={internalHref(data.link.path)}>{data.link.label}</TextLink>
         </div>

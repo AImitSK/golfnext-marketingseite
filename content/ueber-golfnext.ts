@@ -115,13 +115,6 @@ export interface ClubLogo {
    * Logo seinen eigenen Wert statt einer gemeinsamen Deckelung.
    */
   rasterHoehe: number;
-  /**
-   * Kachel mit dunklem Grund. Manche Marken liegen nur als helle Schrift auf
-   * Dunkel vor (z. B. „enjoygolf“, „Rheingolf“); auf weißem Grund würden sie
-   * verschwinden. Solche Kacheln bekommen Navy-Hintergrund und zeigen das Logo
-   * ohne Graustufe in voller Farbe.
-   */
-  dunkel?: boolean;
 }
 
 export interface ProjekteData {
@@ -244,9 +237,10 @@ export const ueberGolfnextMenschen: MenschenData = {
  * Freigegebene Club- und Partner-Logos. Erste Charge Stefan 07.09.2026 (die fünf
  * SVG/PNG), zweite Charge Stefan 16.09.2026 (acht weitere). „Münchner Golf
  * Eschenried“ ist mit der zweiten Charge zurück – jetzt liegt ein Logo vor.
- * Zwei Marken („enjoygolf“, „Rheingolf“) liegen als helle Schrift auf Dunkel vor
- * und tragen deshalb `dunkel: true` (Navy-Kachel). Angezeigt werden alle als
- * endloses Band (`LogoMarquee`).
+ * Alle Logos stehen einheitlich auf weißer Kachel in Graustufe (Entscheidung
+ * Stefan, 16.09.2026 – die frühere Sonderbehandlung „dunkle Kachel“ für
+ * „enjoygolf“/„Rheingolf“ ist entfallen). Angezeigt als endloses Band
+ * (`LogoMarquee`).
  */
 export const ueberGolfnextProjekte: ProjekteData = {
   logos: [
@@ -341,14 +335,12 @@ export const ueberGolfnextProjekte: ProjekteData = {
       hoehe: 600,
       rasterHoehe: 66,
     },
-    // Helle Wortmarke auf Dunkel – Kachel bekommt Navy-Grund (siehe `dunkel`).
     {
       name: "enjoygolf",
       datei: "/clubs/enjoygolf.png",
       breite: 496,
       hoehe: 128,
       rasterHoehe: 36,
-      dunkel: true,
     },
     {
       name: "Rheingolf",
@@ -356,7 +348,6 @@ export const ueberGolfnextProjekte: ProjekteData = {
       breite: 235,
       hoehe: 61,
       rasterHoehe: 30,
-      dunkel: true,
     },
   ],
   zusatz: "Erfahrung aus der Golfpraxis. Für den Cluballtag.",

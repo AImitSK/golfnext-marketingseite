@@ -14,10 +14,10 @@ import styles from "./Wissen.module.css";
  * /praxis, solange live – sonst `#` via internalHref). Eyebrow, Überschrift, Lead und
  * Linktext kommen wortgleich aus `content/ueber-golfnext.ts`.
  *
- * Der Slider zeigt seit Briefing 0029 die **vier neuesten Artikel aus Sanity**, gleich
+ * Der Slider zeigt seit Briefing 0035 die **drei neuesten Artikel aus Sanity**, gleich
  * welcher Rubrik – **kein Filter**. Welche Artikel vorn stehen, entscheidet Fred über
  * das Veröffentlichungsdatum im Studio, nicht der Code (Entscheidung Stefan,
- * 08.09.2026). Gibt es weniger als vier, zeigt der Slider entsprechend weniger Karten.
+ * 08.09.2026). Gibt es weniger als drei, zeigt der Slider entsprechend weniger Karten.
  *
  * **Ohne Artikel entfällt der Abschnitt vollständig** (Briefing 0029, Aufgabe 4) –
  * seit die Karten aus Sanity kommen, bliebe sonst nur eine Überschrift über einer
@@ -40,7 +40,8 @@ export async function Wissen({
 }) {
   const artikel = await sanityFetch({
     query: NEUESTE_POSTS_QUERY,
-    params: { anzahl: 4 },
+    // Genau die drei aktuellsten Artikel (Briefing 0035): keine vierte Karte.
+    params: { anzahl: 3 },
     tags: QUERY_TAGS.NEUESTE_POSTS_QUERY,
   });
 

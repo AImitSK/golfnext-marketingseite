@@ -68,11 +68,9 @@ export const plattformHero: HeroData = {
     label: "Erstgespräch anfragen",
     target: "erstgespraech",
   },
-  trust: [
-    { text: "Entwickelt mit Golfclubs, nicht für sie" },
-    { text: "Ihre Domain, Ihre Daten" },
-    { text: "Ansprechpartner: ein PGA Golfprofessional" },
-  ],
+  // Die drei Trust-Aussagen unter dem CTA sind mit dem finalen Korrekturbriefing
+  // (0035) ersatzlos entfallen.
+  trust: [],
   ariaLabel: "Schematische Darstellung: Der Greenkeeper meldet den Platz als bespielbar, die Club-Website springt auf „Platz bespielbar“.",
   demo: {
     url: "golfclub-musterhausen.de",
@@ -143,8 +141,8 @@ export interface BentoBox {
 export const plattformBento: BentoBox[] = [
   {
     no: "/ 01",
-    title: "Mehr Menschen auf dem Platz.",
-    text: "Anzeigen, Landingpages und Erinnerungen laufen als ein System. Jeder Interessent bekommt die nächste passende Nachricht – und das Clubbüro sieht, wer wo steht.",
+    title: "Mehr Nachfrage für Ihren Club.",
+    text: "Website, Kampagnen, Content und CRM arbeiten zusammen. Interessenten werden gezielt weitergeführt und Ihre Maßnahmen bleiben nachvollziehbar.",
     viz: {
       kind: "crm",
       rows: [
@@ -157,8 +155,8 @@ export const plattformBento: BentoBox[] = [
   },
   {
     no: "/ 02",
-    title: "Weniger Telefon im Clubbüro.",
-    text: "Öffnungszeiten, Greenfee, Platzreife, Gastspiel – die häufigsten Fragen beantwortet der KI Chatbot. Auch sonntags um 21 Uhr.",
+    title: "Mehr Zeit für persönliche Betreuung.",
+    text: "Der KI Chatbot beantwortet viele Routinefragen rund um Öffnungszeiten, Greenfee und Platzreife. Ihr Team gewinnt Zeit für persönliche Betreuung.",
     viz: {
       kind: "chat",
       time: "Sonntag, 21:14 Uhr",
@@ -176,7 +174,7 @@ export const plattformBento: BentoBox[] = [
   {
     no: "/ 03",
     title: "Ein System statt fünf Werkzeuge.",
-    text: "Website, Newsletter-Tool, Excel-Liste, Facebook-Postfach, Formulare – heute nebeneinander. Bei GolfNext ein Login, ein Kontakt, eine Geschichte.",
+    text: "Website, Formulare, Inhalte und Kontakte gehören zusammen. Bei GolfNext entsteht ein gemeinsamer Überblick. Ein Login, ein Kontakt, eine Geschichte.",
     viz: {
       kind: "merge",
       tools: [
@@ -206,58 +204,11 @@ export interface RolleCard {
   mods: string[];
 }
 
-export const plattformRollen: RolleCard[] = [
-  {
-    dir: "out",
-    label: "Vorstand · Präsidium",
-    name: "Vorstand",
-    question: "„Rechnet sich das?“",
-    text: "Mehr Mitglieder, nachvollziehbare Zahlen je Kampagne, überschaubare Kosten ohne Vertragsfalle. Ein Ansprechpartner, der die Branche kennt.",
-    mods: ["Reach", "Marketing CRM", "Analytics"],
-  },
-  {
-    dir: "out",
-    label: "Geschäftsführung · Clubmanager",
-    name: "Clubmanager",
-    question: "„Ich will ein System, nicht fünf Werkzeuge.“",
-    text: "Ein Login für Website, Kampagnen, Kontakte und Kommunikation. Jeder Interessent hat eine Geschichte, die alle im Büro sehen.",
-    mods: ["Marketing CRM", "Lifecycle", "Landingpages"],
-  },
-  {
-    dir: "in",
-    label: "Sekretariat · Clubbüro",
-    name: "Sekretariat",
-    question: "„Endlich Zeit für Menschen.“",
-    text: "Der KI Chatbot nimmt die Routinefragen, die Greenfee läuft digital, der Platzstatus kommt vom Platz. Was bleibt, ist die Arbeit, für die man Sie braucht.",
-    mods: ["KI Chatbot", "Greenfee", "Platzstatus"],
-  },
-  {
-    dir: "in",
-    label: "Greenkeeping",
-    name: "Greenkeeper",
-    question: "„Melden, nicht erklären.“",
-    text: "Ein Schalter auf dem Handy: bespielbar, Wintergrüns, gesperrt. Die Website ist in derselben Sekunde aktuell – ohne Anruf im Büro.",
-    mods: ["Platzstatus"],
-  },
-  {
-    dir: "out",
-    label: "Pro · Golfschule",
-    name: "Golflehrer",
-    question: "„Volle Kurse, ohne Nachtelefonieren.“",
-    text: "Schnuppergolf und Platzreife mit Anmeldung, Erinnerung und dem nächsten Angebot nach dem Kurs – automatisch.",
-    mods: ["Landingpages", "Lifecycle", "Content"],
-  },
-  {
-    dir: "in",
-    label: "Mannschaft · Turnierleitung",
-    name: "Captain",
-    question: "„Unser Spieltag soll sichtbar sein.“",
-    text: "Ergebnis per App eintragen, Bericht steht auf der Website und in den sozialen Kanälen – ohne dass jemand im Büro tippt.",
-    mods: ["Captains App", "Turnier News"],
-  },
-];
+// `plattformRollen` (Rollen-Slider) ist mit dem finalen Korrekturbriefing (0035)
+// von der Plattform-Seite entfernt worden. Das Interface `RolleCard` bleibt für die
+// weiterhin vorhandene Slider-Komponente erhalten.
 
-/* ────────────────────────── 4 · Scroll-Geschichte ────────────────────────── */
+/* ────────────────────────── 4 · Scroll-Geschichte (entfällt, 0035) ────────────────────────── */
 
 /**
  * Ein Schritt der Scroll-Geschichte. `sn/title/text` sind Websiteinhalt (wortgleich).
@@ -310,121 +261,91 @@ export type StoryDevice =
       tag?: string;
     };
 
-export const plattformStory: StoryStep[] = [
-  {
-    sn: "01 · SONNTAG, 20:14",
-    title: "Die Anzeige",
-    text: "Läuft dort, wo Anfänger abends scrollen: Instagram und Facebook, 30 Kilometer um den Club.",
-    device: {
-      kind: "ad",
-      head: "Instagram",
-      adTitle: "Schnuppergolf am Samstag",
-      headline: "Zwei Stunden, alles gestellt. 39 €.",
-      sub: "Golfclub Musterhausen · Gesponsert",
-      button: "Platz sichern",
-    },
-  },
-  {
-    sn: "02 · SONNTAG, 20:16",
-    title: "Die Anmeldung",
-    text: "Drei Felder, fertig. Die Anmeldung landet im Marketing CRM – mit Name, Termin und Herkunft der Anzeige.",
-    device: {
-      kind: "form",
-      head: "Landingpage · golfclub-musterhausen.de/schnuppergolf",
-      headline: "Samstag, 10 Uhr – noch 4 Plätze",
-      sub: "Zwei Stunden auf der Range und dem Kurzplatz. Schläger und Bälle stellen wir.",
-      fields: ["Anna Berger", "anna.berger@…", "0171 …"],
-      button: "Anmelden",
-      tag: "landet im Marketing CRM",
-    },
-  },
-  {
-    sn: "03 · DONNERSTAG",
-    title: "Vor dem Kurs",
-    text: "Zwei Tage vorher: was mitbringen, wo Treffpunkt, was passiert. Kein Anruf im Sekretariat.",
-    device: {
-      kind: "mail",
-      head: "E-Mail · Donnerstag · automatisch",
-      mailHead: "An: anna.berger@… · Betreff: Was Sie am Samstag erwartet",
-      headline: "Bequeme Kleidung reicht. Schläger stellen wir.",
-      body: "Treffpunkt Clubhaus, 9:45 Uhr. Ihr Trainer ist Fred Hoffmann. Bei Regen verschieben wir – Sie bekommen rechtzeitig Bescheid.",
-      tag: "Kein Anruf im Sekretariat",
-    },
-  },
-  {
-    sn: "04 · SAMSTAG, 18:00",
-    title: "Nach dem Kurs",
-    text: "Am selben Abend, mit dem passenden nächsten Angebot: die Platzreife in vier Terminen.",
-    device: {
-      kind: "mail",
-      head: "E-Mail · Samstag, 18:00 · automatisch",
-      mailHead: "An: anna.berger@… · Betreff: Hat es Spaß gemacht?",
-      headline: "So geht es weiter: die Platzreife in vier Terminen.",
-      body: "Nächster Start: Samstag in zwei Wochen, 10 Uhr. Vier Termine, danach dürfen Sie auf den Platz.",
-      button: "Termine ansehen",
-    },
-  },
-  {
-    sn: "05 · VIER WOCHEN SPÄTER",
-    title: "Der nächste Schritt",
-    text: "Anmeldung zur Platzreife. Das Clubbüro hat bis hierher nichts getippt – und sieht trotzdem alles.",
-    device: {
-      kind: "crm",
-      head: "Marketing CRM",
-      av: "AB",
-      name: "Anna Berger",
-      source: "Quelle: Instagram · Schnuppergolf-Kampagne",
-      timeline: [
-        { text: "Schnuppergolf · teilgenommen" },
-        { text: "Erinnerung · geöffnet" },
-        { text: "Platzreife · angemeldet" },
-        { text: "Mitgliedschaft · nächster Schritt", open: true },
-      ],
-      tag: "Das Clubbüro hat nichts getippt",
-    },
-  },
-];
+// `plattformStory` (Scroll-Geschichte „So greift es ineinander") ist mit dem finalen
+// Korrekturbriefing (0035) von der Plattform-Seite entfernt worden; die ausführliche
+// Journey lebt ausschließlich auf `/plattform/so-arbeitet-golfnext`. Interfaces bleiben
+// für die weiterhin vorhandene ScrollStory-Komponente erhalten.
 
-/** Zwei Text-Links am Ende der Scroll-Geschichte (Live-Gate über internalHref). */
+/** Text-Link am Ende der Scroll-Geschichte (Live-Gate über internalHref). */
 export interface StoryLink {
   label: string;
   /** Ziel-Route; erst verlinkt, wenn die Route `live` ist, sonst „#". */
   path: string;
 }
 
-export const plattformStoryLinks: StoryLink[] = [
-  { label: "So arbeitet GolfNext – alle Sequenzen im Detail", path: "/plattform/so-arbeitet-golfnext" },
-  { label: "Wie ein Club so seinen Schnupperkurs gefüllt hat", path: "/praxis" },
-];
-
 /* ────────────────────────── 5 · Klare Grenze ────────────────────────── */
 
 export interface GrenzeData {
-  paragraph: string;
+  paragraphs: string[];
   golfnext: { label: string; items: string[] };
-  clubverwaltung: { label: string; items: string[] };
+  /** Verbindungslabel zwischen den beiden Seiten (Signalgrün-Band). */
+  verbindung: string;
+  clubsoftware: { label: string; items: string[] };
+  /** Abschlusszeile unter dem Split. */
+  abschluss: string;
 }
 
 export const plattformGrenze: GrenzeData = {
-  paragraph:
-    "Mitglieder, Startzeiten, Turniere, Beiträge – das ist Sache Ihrer Clubverwaltungssoftware, und das bleibt so. GolfNext übernimmt alles davor: Sichtbarkeit, Anfragen, Anmeldungen, Kommunikation. Und verbindet sich mit Ihrer Verwaltung dort, wo es Ihnen Arbeit spart – zum Beispiel, wenn aus einem Interessenten ein Mitglied wird.",
+  paragraphs: [
+    "Mitglieder, Startzeiten, Turniere, Beiträge und Abrechnung. Das ist Sache Ihrer Clubsoftware. Und das bleibt so.",
+    "GolfNext übernimmt alles davor: Sichtbarkeit, Content, Landingpages, Marketing CRM, Anfragen, Anmeldungen und Kommunikation. Dazu kommen digitale Helfer für den Cluballtag. Wenn aus einem Interessenten ein Mitglied wird, geht es in Ihrer Verwaltung weiter.",
+  ],
   golfnext: {
     label: "GolfNext",
     items: [
       "Sichtbarkeit und Anzeigen",
-      "Anfragen und Anmeldungen",
-      "Kommunikation mit Interessenten und Gästen",
-      "KI Chatbot, Platzstatus, Greenfee, Turnier News",
+      "Website und Landingpages",
+      "Content und Marketing CRM",
+      "Anfragen und Kommunikation",
+      "KI Chatbot, Platzstatus und Greenfee",
+      "Ausgewählte Clubprozesse",
     ],
   },
-  clubverwaltung: {
-    label: "Ihre Clubverwaltung",
-    items: ["Mitgliederstammdaten", "Startzeiten", "Turnierverwaltung", "Beiträge und Abrechnung"],
+  verbindung: "Aus Interessent wird Mitglied",
+  clubsoftware: {
+    label: "Ihre Clubsoftware",
+    items: ["Mitgliederverwaltung", "Startzeiten", "Turniere", "Beiträge und Abrechnung"],
   },
+  abschluss: "GolfNext begleitet bis zur Mitgliedschaft. Ihre Clubsoftware verwaltet den Clubbetrieb.",
 };
 
-/* ────────────────────────── 6 · Vier Zusagen ────────────────────────── */
+/* ────────────────────────── 6 · Plattform auf einen Blick ────────────────────────── */
 
+/**
+ * Modul-Übersicht „Plattform auf einen Blick". Mit dem finalen Korrekturbriefing (0035)
+ * aus dem Footer in den Hauptinhalt der Plattform-Seite verschoben (direkt nach „Was sich
+ * ändert") und erscheint auf der ganzen Website genau einmal – hier. Der Footer zeigt sie
+ * nicht mehr. Die Modulnamen und ihre Reihenfolge stehen wortgleich im Briefing.
+ */
+export interface ModulGruppe {
+  label: string;
+  /** Signalgrün (Wachstum) oder Sky (Entlastung) – nur Label-Farbe, kein Status. */
+  variant: "out" | "in";
+  module: string[];
+}
+
+export const plattformModulGruppen: ModulGruppe[] = [
+  {
+    label: "Wachstum nach außen",
+    variant: "out",
+    module: ["Reach", "Search", "Landingpages", "Marketing CRM", "Lifecycle", "Content"],
+  },
+  {
+    label: "Entlastung nach innen",
+    variant: "in",
+    module: ["KI Chatbot", "Platzstatus", "Greenfee", "Turnier News", "Firmen-Events", "Captains App"],
+  },
+];
+
+/** Zentrierter Link unter der Modul-Übersicht auf die Detailseite. */
+export const plattformModulLink: StoryLink = {
+  label: "So arbeitet GolfNext",
+  path: "/plattform/so-arbeitet-golfnext",
+};
+
+// Der Bereich „Vier Zusagen" ist mit dem finalen Korrekturbriefing (0035) von der
+// Plattform-Seite entfernt worden. Interfaces `Vow`/`ZusagenData` bleiben für die
+// weiterhin vorhandene Zusagen-Komponente erhalten.
 export interface Vow {
   n: string;
   title: string;
@@ -433,35 +354,8 @@ export interface Vow {
 
 export interface ZusagenData {
   vows: Vow[];
-  /** Schlusszeile; „Freigabe Fred ausstehend" wortgleich aus dem Mock übernommen, nichts ergänzt. */
   line: string;
 }
-
-export const plattformZusagen: ZusagenData = {
-  vows: [
-    {
-      n: "1",
-      title: "Ihre Domain, Ihre Daten, Ihr Zugang.",
-      text: "Website, Inhalte und Kontakte gehören Ihrem Club. Nicht uns.",
-    },
-    {
-      n: "2",
-      title: "Alles mitnehmen.",
-      text: "Wenn Sie gehen, bekommen Sie alle Daten in offenen Formaten. Kein Lock-in durch Technik.",
-    },
-    {
-      n: "3",
-      title: "Faire Laufzeiten.",
-      text: "Keine Knebelverträge. Wer bleibt, bleibt wegen der Qualität.",
-    },
-    {
-      n: "4",
-      title: "Ein Mensch am Telefon.",
-      text: "Ihr Ansprechpartner ist Fred Hoffmann, PGA Golfprofessional. Kein Ticketsystem.",
-    },
-  ],
-  line: "Hosting in Frankfurt, DSGVO-konform, Zugriffsrechte je Rolle. Kündigungsfrist und angebundene Clubverwaltungen: Freigabe Fred ausstehend.",
-};
 
 /* ────────────────────────── Seiten-Content + footerClose ────────────────────────── */
 
@@ -472,10 +366,10 @@ export const plattform: PageContent = {
   sections: [
     {
       id: "hero",
-      eyebrow: "Die GolfNext-Plattform",
+      eyebrow: "Die GolfNext Plattform",
       headline: "Ihre Website ist ein Schaufenster. Wir machen ein System daraus.",
       text: [
-        "Ein System, das neue Golfer zu Ihrem Club führt, aus Interessenten Mitglieder macht – und dem Clubbüro die Routine abnimmt. Website, Kampagnen, Marketing CRM und die digitalen Helfer für den Cluballtag arbeiten bei GolfNext zusammen, nicht nebeneinander.",
+        "Website, Marketing, CRM, Content und ausgewählte Clubprozesse arbeiten bei GolfNext zusammen. Nicht nebeneinander, sondern als verbundenes System. So unterstützt GolfNext Wachstum nach außen und Entlastung nach innen.",
       ],
     },
     {
@@ -483,44 +377,25 @@ export const plattform: PageContent = {
       eyebrow: "Was sich ändert",
       headline: "Drei Dinge, die Ihr Club nach dem Start anders macht.",
       text: [
-        "Vorstände wollen Mitglieder. Das Clubbüro will weniger Telefon. Beides kommt aus denselben Bausteinen.",
+        "Wachstum nach außen. Entlastung nach innen. Beides kommt aus denselben Bausteinen.",
       ],
     },
     {
-      id: "rollen",
-      eyebrow: "Für jede Rolle im Club",
-      headline: "Jeder im Club hat eine andere Frage. GolfNext hat für jede eine Antwort.",
-      text: ["Nach rechts wischen oder mit den Pfeilen blättern."],
-    },
-    {
-      id: "story",
-      eyebrow: "So greift es ineinander",
-      headline: "Ein Klick bei Instagram. Vier Wochen später ein Mitglied.",
-      text: [
-        "Ein Beispiel, wie es tatsächlich läuft – vom Schnuppergolf bis zur Platzreife. Scrollen Sie mit.",
-      ],
+      id: "modulblick",
+      eyebrow: "Plattform auf einen Blick",
+      headline: "Zwölf Module. Zwei Richtungen. Eine Plattform.",
     },
     {
       id: "grenze",
       eyebrow: "Was GolfNext nicht ist",
       headline: "Ihre Clubverwaltung bleibt, wo sie ist.",
     },
-    {
-      id: "zusagen",
-      eyebrow: "Woran Sie uns messen können",
-      headline: "Vier Zusagen, die im Vertrag stehen.",
-    },
-    {
-      id: "faq",
-      eyebrow: "Klarheit vor dem Gespräch",
-      headline: "Häufige Fragen zur Plattform.",
-    },
   ],
   footerClose: {
     eyebrow: "GolfNext persönlich kennenlernen",
     headline: "Was könnte GolfNext in Ihrem Club verändern?",
     text: [
-      "Gemeinsam schauen wir auf Ihre Ziele und Ihre größten Hebel – und darauf, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
+      "Gemeinsam schauen wir auf Ihre Ziele und die größten Hebel für Ihren Club. Dabei klären wir, ob GolfNext zu Ihrem Club passt. Sie bekommen eine ehrliche Einschätzung, keine Verkaufsshow.",
     ],
     cta: {
       label: "Erstgespräch anfragen",

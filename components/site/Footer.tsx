@@ -66,7 +66,7 @@ export function Footer({
         <div className={styles.mapInner}>
           <div className={styles.mh}>
             <b>Plattform auf einen Blick</b>
-            <span>Zwölf Module, zwei Richtungen, ein Vertrag</span>
+            <span>Zwölf Module. Zwei Richtungen. Eine Plattform.</span>
           </div>
           <div className={styles.cols}>
             {GRUPPEN.map((gruppe) => (

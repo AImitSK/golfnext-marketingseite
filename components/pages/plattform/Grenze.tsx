@@ -19,7 +19,13 @@ export function Grenze({
   return (
     <PlattformSection variant="sand" eyebrow={eyebrow} headline={headline}>
       <div className={styles.border5}>
-        <p className={styles.p}>{data.paragraph}</p>
+        <div className={styles.texts}>
+          {data.paragraphs.map((p) => (
+            <p key={p} className={styles.p}>
+              {p}
+            </p>
+          ))}
+        </div>
         <div className={styles.split}>
           <div className={`${styles.box} ${styles.gn}`}>
             <div className={styles.bl}>{data.golfnext.label}</div>
@@ -29,15 +35,17 @@ export function Grenze({
               ))}
             </ul>
           </div>
+          <div className={styles.verbindung}>{data.verbindung}</div>
           <div className={styles.box}>
-            <div className={styles.bl}>{data.clubverwaltung.label}</div>
+            <div className={styles.bl}>{data.clubsoftware.label}</div>
             <ul>
-              {data.clubverwaltung.items.map((i) => (
+              {data.clubsoftware.items.map((i) => (
                 <li key={i}>{i}</li>
               ))}
             </ul>
           </div>
         </div>
+        <p className={styles.abschluss}>{data.abschluss}</p>
       </div>
     </PlattformSection>
   );

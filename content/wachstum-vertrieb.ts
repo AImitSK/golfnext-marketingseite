@@ -153,16 +153,16 @@ export const wachstumMomente: MomentBox[] = [
   {
     no: "/ 01",
     title: "Wer sucht, soll Sie finden.",
-    text: "„Platzreife-Kurs in der Nähe“, „Greenfee Samstag“: Wer so sucht, will jetzt etwas. Google-Anzeigen bringen Ihren Club in genau diesem Moment nach oben – nicht ein Portal.",
+    text: "„Platzreifekurs in der Nähe“, „Greenfee spielen am Samstag“. Wer so sucht, will jetzt etwas sehr Konkretes. Google Anzeigen bringen Ihren Club in genau diesem Moment nach oben, nicht in ein Portal.",
     modPrefix: "Modul",
     modName: "Search",
     viz: {
       kind: "search",
-      query: "Platzreife-Kurs in der Nähe",
+      query: "Platzreifekurs in der Nähe",
       result: {
         labelBadge: "Anzeige",
         domain: "golfclub-musterhausen.de",
-        title: "Platzreife in vier Terminen – Golfclub Musterhausen",
+        title: "Platzreife in vier Terminen · Golfclub Musterhausen",
         desc: "Nächster Start Samstag, 10 Uhr. Schläger stellen wir. Jetzt Platz sichern.",
       },
     },
@@ -170,7 +170,7 @@ export const wachstumMomente: MomentBox[] = [
   {
     no: "/ 02",
     title: "Wer nicht sucht, soll Sie sehen.",
-    text: "Die meisten künftigen Golfer suchen nie nach Golf. Sie scrollen abends durch Instagram. Dort taucht Ihr Schnuppergolf auf – bei Menschen, die 30 Kilometer um Ihren Club wohnen.",
+    text: "Die meisten zukünftigen Golfer suchen nicht bewusst nach Golf. Sie scrollen abends durch Instagram. Dort taucht Ihr Schnuppergolf auf bei Menschen, die im Umkreis von 30 Kilometern rund um Ihren Club wohnen und noch gar nicht wissen, dass sie auf dem Weg zum Golfspieler sind.",
     modPrefix: "Modul",
     modName: "Reach",
     viz: {
@@ -184,7 +184,7 @@ export const wachstumMomente: MomentBox[] = [
   {
     no: "/ 03",
     title: "Wer da war, soll wiederkommen.",
-    text: "Nach dem Schnupperkurs, nach dem Gastspiel, nach dem Gespräch: Die nächste Nachricht kommt von allein – mit dem Angebot, das jetzt passt. Das Clubbüro sieht, wer wo steht.",
+    text: "Nach dem Schnupperkurs, nach einer Greenfee Runde oder nach dem Gespräch. Die nächste Nachricht kommt von allein mit dem Angebot, das jetzt passt. Das Clubbüro sieht, wo jeder Kontakt in seiner Customer Journey steht.",
     modPrefix: "Module",
     modName: "Marketing CRM · Lifecycle",
     viz: {
@@ -228,18 +228,18 @@ export const wachstumWege: WegCard[] = [
     miniButton: "Platz sichern",
     tag: "Einsteiger",
     title: "Schnuppergolf & Platzreife",
-    text: "Anzeigen bei Instagram und Facebook für Menschen, die noch nie einen Schläger in der Hand hatten. Eine Seite, die Termin, Preis und Ablauf erklärt. Nach dem Kurs kommt das Angebot zur Platzreife – von allein.",
+    text: "Anzeigen bei Instagram und Facebook für Menschen, die noch nie einen Schläger in der Hand hatten. Eine Seite, die Termin, Preis und Ablauf erklärt. Nach dem Kurs kommt das Angebot zur Platzreife. Von alleine.",
     goal: "Anmeldung zum Schnuppergolf, danach zur Platzreife.",
     mods: ["Reach", "Landingpages", "Lifecycle"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
   {
     miniUrl: "golfclub-musterhausen.de/mitglied-werden",
-    miniTitle: "Mitglied werden – so geht's",
+    miniTitle: "Mitglied werden, so geht's",
     miniButton: "Gespräch vereinbaren",
     tag: "Mitgliedschaft",
     title: "Mitglieder gewinnen & Clubwechsel",
-    text: "Wer mit seinem Club unzufrieden ist, sucht leise – bei Google. Eine Seite, die Beiträge, Spielrecht und Probemitgliedschaft klar erklärt. Und ein Termin für das Gespräch: mit Ihnen, nicht mit einem Formular.",
+    text: "Wer mit seinem Club unzufrieden ist, sucht leise bei Google. Eine Seite, die Beiträge, Spielrecht und Probemitgliedschaft klar erklärt. Und ein Termin für das Gespräch: mit Ihnen, nicht mit einem Formular.",
     goal: "Ein Gespräch mit dem Clubmanager.",
     mods: ["Search", "Landingpages", "Marketing CRM"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
@@ -250,8 +250,8 @@ export const wachstumWege: WegCard[] = [
     miniButton: "Greenfee bezahlen",
     tag: "Gäste",
     title: "Greenfee & Gäste",
-    text: "Wer am Donnerstag „Greenfee in der Nähe“ sucht, will am Samstag spielen. Google zeigt Ihren Club, die Seite zeigt Platzstatus und Preis, das Greenfee wird online bezahlt. Gefunden, gebucht, gespielt.",
-    goal: "Gastspiel angefragt oder Greenfee bezahlt.",
+    text: "Wer am Donnerstag „Greenfee in der Nähe am Samstag“ sucht, will auch am Samstag spielen. Google zeigt den Club, die Seite zeigt Platzstatus und Preis. Das Greenfee wird online bezahlt. Gefunden, gebucht, gespielt.",
+    goal: "Greenfee angefragt oder Greenfee bezahlt.",
     mods: ["Search", "Platzstatus", "Greenfee"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
   },
@@ -261,7 +261,7 @@ export const wachstumWege: WegCard[] = [
     miniButton: "Angebot anfragen",
     tag: "Unternehmen",
     title: "Firmenkunden gewinnen",
-    text: "Aus Ihrem Platz, Ihrer Gastronomie und Ihrem Pro wird ein Angebot mit Ablauf, Preis und Anfrageformular. Google-Anzeigen für Unternehmen im Umkreis. Firmen-Events, die sich verkaufen lassen.",
+    text: "Aus Ihrem Platz, Ihrer Gastronomie und Ihrem Pro wird ein Angebot mit Ablauf, Preis und Anfrageformular. Google Anzeigen von Unternehmen im Umkreis. Firmen-Events, die sich verkaufen lassen.",
     goal: "Eine Anfrage mit Termin und Teilnehmerzahl.",
     mods: ["Search", "Firmen-Events", "Marketing CRM"],
     cta: { label: "Darüber sprechen", target: "erstgespraech" },
@@ -269,7 +269,7 @@ export const wachstumWege: WegCard[] = [
 ];
 
 export const wachstumWaynote =
-  "Jeder Weg führt in dasselbe Erstgespräch – mit Ihrer Zielgruppe als Thema, damit wir dort anfangen, wo Ihr Club wachsen will.";
+  "Jeder Weg führt in dasselbe Erstgespräch. Ihre Zielgruppe ist das Thema. Wir beginnen dort, wo Ihr Club wachsen will.";
 
 /* ────────────────────────── 4 · Eine Kampagne, eine Woche (Scroll-Geschichte) ────────────────────────── */
 
@@ -469,8 +469,9 @@ export interface KampagneLink {
 }
 
 export const wachstumKampagneLinks: KampagneLink[] = [
+  // Der Praxis-Use-Case-Link ist mit dem finalen Korrekturbriefing (0035) entfernt.
+  // Unter der Timeline steht allein der Detail-Link (dessen Gedankenstrich bleibt gewollt).
   { label: "So arbeitet GolfNext – alle Sequenzen im Detail", path: "/plattform/so-arbeitet-golfnext" },
-  { label: "Wie ein Club so seinen Schnupperkurs gefüllt hat", path: "/praxis" },
 ];
 
 /* ────────────────────────── 5 · Drei Regeln (Werbebudget, Navy-Band) ────────────────────────── */
@@ -492,17 +493,17 @@ export const wachstumRegeln: RegelnData = {
     {
       n: "/ 01",
       title: "Sie bestimmen das Budget.",
-      text: "Wie viel im Monat in Anzeigen geht, legen Sie fest. Erhöhen, senken, pausieren – jederzeit, ohne Diskussion.",
+      text: "Wie viel im Monat in Anzeigen geht, legen Sie fest. Erhöhen, senken, pausieren, jederzeit, ohne Diskussion.",
     },
     {
       n: "/ 02",
       title: "Keine Anzeige ohne Ihre Freigabe.",
-      text: "Jede Kampagne wird Ihnen vorgelegt: Motive, Texte, Zielgebiet, Budget. Erst wenn Sie freigeben, geht sie live. Ohne Freigabe fließt kein Euro.",
+      text: "Jede Kampagne wird Ihnen vorgelegt: Motive, Texte, Zielgebiet und Budget. Erst wenn Sie freigeben, geht sie live. Ohne Freigabe fließt kein Euro.",
     },
     {
       n: "/ 03",
       title: "Jede Kampagne mit Zahlen.",
-      text: "Sie sehen, was die Anzeigen gekostet und was sie gebracht haben – bis zur einzelnen Anmeldung. Jede Woche, auf einer Seite.",
+      text: "Sie sehen, was die Anzeigen gekostet und was sie gebracht haben, bis zur einzelnen Anmeldung. Wöchentlich oder monatlich. So wie Sie es möchten.",
     },
   ],
   link: { label: "Was GolfNext selbst kostet, steht offen auf der Paketseite", path: "/pakete" },
@@ -527,8 +528,8 @@ export interface FundamentData {
 
 export const wachstumFundament: FundamentData = {
   paragraphs: [
-    "Anzeigen bringen Menschen. Ankommen müssen sie bei Ihnen: auf einer Seite unter Ihrer Domain, die genau ein Angebot erklärt und genau eine Handlung anbietet – anmelden, anfragen, bezahlen.",
-    "Diese Seiten baut GolfNext auf Ihrer Clubwebsite. Sie gehören Ihrem Club, genau wie die Kontakte, die darüber entstehen.",
+    "Anzeigen bringen Menschen. Ankommen müssen sie bei Ihnen: auf einer Landingpage unter Ihrer Domain, die genau ein Angebot erklärt und genau eine Handlung anbietet. Anmelden, anfragen oder bezahlen.",
+    "Kein Wechsel auf eine fremde Domain, kein fremdes Portal und kein Bruch in der Customer Journey. Vom Klick auf die Anzeige bis zur Anmeldung bleibt der Weg in der Welt Ihres Clubs. Diese Landingpages baut GolfNext auf Ihrer Clubwebsite. Sie gehören Ihrem Club, genau wie die Kontakte, die darüber entstehen.",
   ],
   link: { label: "Ihre Clubwebsite ist Teil jedes Pakets", path: "/pakete" },
   cards: [
@@ -556,9 +557,9 @@ export const wachstumVertrieb: PageContent = {
     {
       id: "momente",
       eyebrow: "Warum das nicht von allein passiert",
-      headline: "Drei Momente, in denen ein Club neue Golfer gewinnt – oder verliert.",
+      headline: "Drei Momente, in denen ein Golfclub Neugolfer gewinnt – oder verliert.",
       text: [
-        "Wer „Golf lernen“ googelt, landet bei Portalen. Wer abends bei Instagram scrollt, hat noch gar nicht gesucht. Und wer einmal da war, hört meist nie wieder etwas. GolfNext ist in allen drei Momenten da.",
+        "Wer „Golf lernen“ googelt, landet bei Portalen. Wer abends bei Instagram scrollt, hat noch gar nicht bewusst nach Golf gesucht. Und wer einmal bei Ihnen war, hört meist nie wieder etwas von Ihnen. GolfNext ist in allen drei Momenten da.",
       ],
     },
     {
@@ -574,7 +575,7 @@ export const wachstumVertrieb: PageContent = {
       eyebrow: "Was das Clubbüro davon merkt",
       headline: "Eine Kampagne. Eine Woche. Aus Sicht Ihres Clubs.",
       text: [
-        "Was Sie tun und was von alleine läuft. Am Beispiel einer Schnuppergolf-Kampagne. Scrollen Sie mit.",
+        "Was Sie tun und was von alleine läuft. Am Beispiel einer Schnuppergolf Kampagne. Scrollen Sie mit.",
       ],
     },
     {
@@ -582,13 +583,13 @@ export const wachstumVertrieb: PageContent = {
       eyebrow: "Ihr Werbebudget",
       headline: "Drei Regeln, die für jede Kampagne gelten.",
       text: [
-        "Anzeigen kosten Geld. Deshalb gibt es bei GolfNext keine Überraschungen – weder beim Budget noch beim Ergebnis.",
+        "Anzeigen kosten Geld. Deshalb gibt es bei GolfNext keine Überraschungen, weder beim Budget noch bei der Auswertung.",
       ],
     },
     {
       id: "fundament",
       eyebrow: "Das Fundament",
-      headline: "Jede Anzeige führt auf Ihre Website. Nicht auf ein Portal.",
+      headline: "Jede Anzeige führt auf Ihre Website. Nicht auf ein fremdes Portal.",
     },
     {
       id: "faq",

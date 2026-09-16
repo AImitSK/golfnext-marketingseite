@@ -18,11 +18,10 @@ import type { Cta, PageContent } from "./types";
  *   „Zwei Grundsätze …“. Es wird KEIN Ersatz-Grundsatz erfunden. Die beiden Karten
  *   sind konsistent als „/ 01“ und „/ 02“ nummeriert (statt der Mock-Kennungen
  *   /01 und /03), damit „Zwei Grundsätze“ und die Nummerierung zusammenpassen.
- * - Der „Pilotclub“-/Entwicklungspartner-Wortlaut BLEIBT wortgleich (Grundsatz /01
- *   „entsteht in einem Pilotclub“, Abschnitt „Gemeinsame Projekte“ „im Pilot weiter“,
- *   Abschnitt „Wissen“ „aus der Arbeit mit Pilotclubs“). Er beschreibt
- *   Entwicklungspartnerschaften – kein Modul-Status – und steht so bereits live auf
- *   der Startseite.
+ * - Mit dem finalen Korrekturbriefing (0035) ist der frühere „Pilotclub“-Wortlaut in
+ *   Grundsatz /01 entfallen: Der Grundsatz heißt jetzt „Aus dem Cluballtag entwickelt.“
+ *   Der Abschnitt „Aus unserer Arbeit im Golf“ (früher „Gemeinsame Projekte“) behauptet
+ *   ausdrücklich KEINE aktuelle Plattformnutzung der gezeigten Clubs.
  *
  * Bild-Platzhalter (kein Stock/KI): Porträts Fred/Stefan als `Portrait`-Platzhalter
  * („Porträt folgt“), Club-„Logos“ und Artikel-„Bild folgt“ als beschriftete
@@ -121,6 +120,8 @@ export interface ClubLogo {
 export interface ProjekteData {
   /** Clubs mit freigegebenem Logo. Keine Platzhalter-Kacheln mehr. */
   logos: ClubLogo[];
+  /** Zusatzzeile unter den Logos (Briefing 0035). */
+  zusatz: string;
 }
 
 /* ────────────────────────── 6 · Wissen (Artikel-Slider) ────────────────────────── */
@@ -158,12 +159,12 @@ export const ueberGolfnextHero: HeroData = {
   people: [
     {
       name: "Fred Hoffmann",
-      role: "Gründer · PGA Golfprofessional",
+      role: "Gründer und PGA Golfprofessional",
       credit: "30 Jahre im Golfmarkt",
     },
     {
       name: "Stefan Kühne",
-      role: "Gründer · Online-Marketing und Entwicklung",
+      role: "Gründer · Online Marketing und Entwicklung",
       credit: "Technologie",
     },
   ],
@@ -182,14 +183,14 @@ export const ueberGolfnextWeg: WegData = [
     claim: "Klick gemacht. Fragen offen.",
     marke: "GolfNext Consulting",
     titel: "Zusammenhänge erklären, Clubteams schulen.",
-    text: "Online-Marketing ist schnell beauftragt. Es wirklich zu verstehen, braucht mehr: Wie greifen Kanäle, Inhalte und Mitgliedergewinnung ineinander? Wir haben Clubbüros in Social Media, Suchmaschinen, Blogartikeln und später im Einsatz von KI geschult.",
+    text: "Online Marketing ist schnell beauftragt. Es wirklich zu verstehen, braucht mehr: Wie greifen Kanäle, Inhalte und Mitgliedergewinnung ineinander? Wir haben Clubbüros in Social Media, Suchmaschinen, Blogartikeln und später im Einsatz von KI geschult.",
   },
   {
     jahr: "2026",
     claim: "Aus „Man müsste mal“ wird Software",
     marke: "GolfNext",
     titel: "Eine Plattform für Website, Mitgliedergewinnung und Cluballtag.",
-    text: "Seit 2026 nutzen wir KI-gestützte Entwicklung, um eigene Anwendungen wirtschaftlich umzusetzen – zu Budgets, die auch zu kleineren Golfclubs und Golfanlagen passen. Viele Clubprojekte, viele Erkenntnisse, heute eine Plattform.",
+    text: "Seit 2026 nutzen wir Entwicklung mit KI, um eigene Anwendungen wirtschaftlich umzusetzen, zu Budgets, die auch zu kleineren Golfclubs und Golfanlagen passen. Viele Clubprojekte, viele Erkenntnisse, heute eine Plattform.",
     now: true,
   },
 ];
@@ -199,8 +200,8 @@ export const ueberGolfnextWeg: WegData = [
 export const ueberGolfnextGrundsaetze: GrundsaetzeData = [
   {
     nummer: "/ 01",
-    titel: "Mit Clubs entwickelt, nicht für sie.",
-    text: "Jedes Modul entsteht in einem Pilotclub und wird dort im Alltag getestet – vom Sekretariat, vom Greenkeeper, vom Captain. Erst dann bekommen es andere.",
+    titel: "Aus dem Cluballtag entwickelt.",
+    text: "Jedes Modul entsteht aus einer konkreten Aufgabe im Club. Wir prüfen es im echten Alltag, bevor es andere Clubs nutzen. So wird aus einer guten Idee ein Werkzeug, das wirklich Arbeit abnimmt.",
   },
   {
     nummer: "/ 02",
@@ -212,24 +213,24 @@ export const ueberGolfnextGrundsaetze: GrundsaetzeData = [
 export const ueberGolfnextMenschen: MenschenData = {
   personen: [
     {
-      rolle: "Gründer · Ihr Ansprechpartner",
+      rolle: "Gründer und PGA Golfprofessional",
       name: "Fred Hoffmann",
-      text: "PGA Golfprofessional mit mehr als 30 Jahren Berufserfahrung im Golfmarkt. Kennt Vorstand, Sekretariat und Range aus eigenem Alltag – und spricht deshalb nicht wie ein Berater von außen.",
+      text: "PGA Golfprofessional mit mehr als 30 Jahren Berufserfahrung im Golfmarkt. Kennt Vorstand, Sekretariat und Range aus eigenem Alltag und spricht deshalb nicht wie ein Berater von außen.",
       facts: ["PGA Golfprofessional", "30 Jahre Golfmarkt", "Autor im golfmanager"],
     },
     {
-      rolle: "Gründer · Online-Marketing und Entwicklung",
+      rolle: "Gründer · Online Marketing und Entwicklung",
       name: "Stefan Kühne",
-      text: "Verbindet langjährige Erfahrung im Online-Marketing mit technischer Entwicklung. Baut die Plattform, auf der GolfNext läuft – und die Kampagnen, die darüber laufen.",
-      facts: ["Online-Marketing", "Softwareentwicklung", "KI-gestützte Entwicklung"],
+      text: "Verbindet langjährige Erfahrung im Online Marketing mit technischer Entwicklung. Baut die Plattform, auf der GolfNext läuft, und die Kampagnen, die darüber laufen.",
+      facts: ["Online Marketing", "Softwareentwicklung", "Entwicklung mit KI"],
     },
   ],
   partner:
-    "Bei Spezialfragen zu Datenschutz und KI-Regulierung unterstützen uns erfahrene Fachpartner. Technologiepartner von GolfNext ist SK Online Marketing, Bad Oeynhausen.",
+    "Bei Spezialfragen zu Datenschutz und zur Regulierung von KI unterstützen uns erfahrene Fachpartner. Technologiepartner von GolfNext ist SK Online Marketing, Bad Oeynhausen.",
   haltungLead: "Uns begeistert, was Technik möglich macht. Noch mehr begeistert uns,",
   haltungEm: "was Menschen mit der gewonnenen Zeit anfangen.",
   haltungText:
-    "Ein gutes Gespräch lässt sich nicht automatisieren. Die Arbeit davor oft schon. Deshalb bauen wir Software, die dem Clubteam die Wiederholung abnimmt – nicht die Beziehung.",
+    "Ein gutes Gespräch lässt sich nicht automatisieren. Die Arbeit davor oft schon. Deshalb bauen wir Software, die dem Clubteam die Wiederholung abnimmt, nicht die Beziehung.",
 };
 
 /**
@@ -282,6 +283,7 @@ export const ueberGolfnextProjekte: ProjekteData = {
       rasterHoehe: 68,
     },
   ],
+  zusatz: "Erfahrung aus der Golfpraxis. Für den Cluballtag.",
 };
 
 export const ueberGolfnextWissen: WissenData = {
@@ -309,35 +311,35 @@ export const ueberGolfnext: PageContent = {
       eyebrow: "Unser Weg",
       headline: "Wir wollten Websites bauen. Dann haben wir zugehört.",
       text: [
-        "Aus zehn Jahren Arbeit mit Golfclubs wurde erst Beratung, dann Software. Jede Stufe hat die nächste nötig gemacht.",
+        "Aus zehn Jahren Arbeit mit Golfclubs wurde erst Beratung, dann Software. Jeder Schritt hat uns näher an die Frage geführt: Was braucht ein Club wirklich?",
       ],
     },
     {
       id: "grundsaetze",
       eyebrow: "Wie wir arbeiten",
       headline: "Zwei Grundsätze, an denen Sie uns messen können.",
-      text: ["Wir sind ein kleines Team aus dem Golfmarkt, kein Konzern. Das hat Folgen – gute, finden wir."],
+      text: ["Wir sind ein kleines Team aus dem Golfmarkt, kein Konzern. Das hat Folgen. Gute, finden wir."],
     },
     {
       id: "menschen",
       eyebrow: "Die Menschen dahinter",
       headline: "Künstliche Intelligenz. Echte Golfverrückte.",
       text: [
-        "Zwei Leute, die den Golfmarkt seit Jahrzehnten von innen kennen – einer vom Platz, einer vom Bildschirm.",
+        "Zwei Leute, die den Golfmarkt seit Jahrzehnten von innen kennen, einer vom Platz, einer vom Bildschirm.",
       ],
     },
     {
       id: "projekte",
-      eyebrow: "Gemeinsame Projekte",
-      headline: "Diese Clubs arbeiten mit GolfNext.",
+      eyebrow: "Aus unserer Arbeit im Golf",
+      headline: "Mit diesen Clubs haben wir bereits zusammengearbeitet.",
       text: [
-        "GolfNext ist aus vielen Gesprächen und echten Aufgaben im Cluballtag entstanden. Heute entwickeln wir daraus Lösungen, die im Cluballtag wirklich weiterhelfen. Aus echten Clubaufgaben wird GolfNext.",
+        "Die hier gezeigten Clubs und Partner kennen unsere Arbeit aus früheren Projekten in Beratung, Marketing und Kommunikation. Diese Erfahrungen fließen heute in GolfNext ein.",
       ],
     },
     {
       id: "wissen",
       eyebrow: "Wissen",
-      headline: "Was wir über Golfclubs lernen, schreiben wir auf.",
+      headline: "Was Golfclubs heute wissen müssen.",
       text: [
         "Fachartikel aus dem golfmanager, Erfahrungen aus unserer Arbeit mit Clubs und klare Antworten auf Fragen zu KI, Digitalisierung, Online Marketing und Cluballtag. Damit jeder Golfclub bessere Entscheidungen treffen kann.",
       ],

@@ -41,19 +41,22 @@ test.describe("Footer · keine toten Links (Briefing 0022)", () => {
   });
 });
 
-test.describe("Footer · Modulkarte nur auf der Plattformseite (Master-Briefing)", () => {
-  test("/plattform zeigt „Plattform auf einen Blick“", async ({ page }) => {
+test.describe("Modul-Übersicht „Plattform auf einen Blick“ nur auf der Plattformseite", () => {
+  // Mit dem finalen Korrekturbriefing (0035) steht die Modul-Übersicht im HAUPTINHALT
+  // der Plattform-Seite (nicht mehr im Footer) und erscheint websiteweit genau einmal.
+  test("/plattform zeigt „Plattform auf einen Blick“ im Seiteninhalt, nicht im Footer", async ({
+    page,
+  }) => {
     await page.goto("/plattform");
-    await expect(
-      page.locator("footer").getByRole("region", { name: "Module im Überblick" }),
-    ).toBeVisible();
-  });
-
-  test("Startseite zeigt die Modulkarte nicht", async ({ page }) => {
-    await page.goto("/");
+    await expect(page.getByRole("region", { name: "Module im Überblick" })).toHaveCount(1);
     await expect(
       page.locator("footer").getByRole("region", { name: "Module im Überblick" }),
     ).toHaveCount(0);
+  });
+
+  test("Startseite zeigt die Modul-Übersicht nicht", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("region", { name: "Module im Überblick" })).toHaveCount(0);
   });
 });
 

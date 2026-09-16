@@ -82,7 +82,7 @@ test.describe("/ · Struktur und Overflow", () => {
     // Karten sind seit Briefing 0029 echte Artikel aus Sanity und damit Links.
     const praxis = page
       .locator("section")
-      .filter({ has: page.getByRole("heading", { name: "Was in Golfclubs wirklich funktioniert." }) });
+      .filter({ has: page.getByRole("heading", { name: "Wissen, das Golfclubs weiterbringt." }) });
     const card = praxis.locator('a[href^="/praxis/"]').first();
     await card.scrollIntoViewIfNeeded();
     await card.hover();
@@ -98,9 +98,11 @@ test.describe("/ ohne JavaScript", () => {
   test("Seite ist ohne JS vollständig lesbar (Kernabschnitte sichtbar)", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Drei Teile. Ein System." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Drei Bausteine. Ein System." })).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Ein Klick bei Instagram. Vier Wochen später ein Mitglied." }),
+      page.getByRole("heading", {
+        name: "Ein Klick auf Instagram. Vier Wochen später ein neues Mitglied.",
+      }),
     ).toBeVisible();
     await expect(page.getByRole("heading", { name: "Vier Zusagen, die im Vertrag stehen." })).toBeVisible();
     // Fred-Zitat und Paketblock-Link ohne JS sichtbar.

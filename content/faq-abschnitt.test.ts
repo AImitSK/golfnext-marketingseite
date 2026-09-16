@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { clubprozesse } from "./clubprozesse";
 import { pakete } from "./pakete";
-import { plattform } from "./plattform";
 import { ueberGolfnext } from "./ueber-golfnext";
 import { wachstumVertrieb } from "./wachstum-vertrieb";
 import type { PageContent } from "./types";
@@ -13,10 +12,13 @@ import type { PageContent } from "./types";
  * Content-Datei der jeweiligen Seite, nicht ins JSX – nur die Fragen und Antworten
  * kommen aus Sanity. Diese Prüfung hält die von Stefan freigegebenen Überschriften
  * wortgleich fest und schützt davor, dass ein Abschnitt ohne Kopf gebaut wird.
+ *
+ * Die Plattform-Seite ist mit dem finalen Korrekturbriefing (0035) hier ausgenommen:
+ * ihre verbindliche Endstruktur endet mit dem persönlichen Abschluss, der FAQ-Abschnitt
+ * ist dort entfallen.
  */
 const SEITEN: { route: string; inhalt: PageContent; headline: string }[] = [
   { route: "/pakete", inhalt: pakete, headline: "Häufige Fragen zu den Paketen." },
-  { route: "/plattform", inhalt: plattform, headline: "Häufige Fragen zur Plattform." },
   {
     route: "/clubprozesse",
     inhalt: clubprozesse,
@@ -37,7 +39,7 @@ describe("FAQ-Sektionskopf", () => {
     expect(abschnitt!.headline).toBe(headline);
   });
 
-  it("benutzt auf allen fünf Seiten denselben Eyebrow", () => {
+  it("benutzt auf allen geprüften Seiten denselben Eyebrow", () => {
     for (const { route, inhalt } of SEITEN) {
       const abschnitt = inhalt.sections.find((s) => s.id === "faq");
       expect(abschnitt!.eyebrow, `Eyebrow auf ${route}`).toBe("Klarheit vor dem Gespräch");

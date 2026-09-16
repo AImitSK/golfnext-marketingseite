@@ -1,0 +1,87 @@
+/* „Plattform auf einen Blick" im Seiteninhalt (Briefing 0035). Übernimmt den
+   bestehenden visuellen Stil der Footer-Modulkarte (dunkle Navy-Fläche, zwei
+   Richtungen, Modulnamen als Labels). Farben ausschließlich über --gn-*-Tokens.
+   Signalgrün/Sky nur als Label-Text auf Navy (Grün-Regel: Text auf Navy erlaubt). */
+
+.section {
+  padding: var(--gn-section-y-lg) 0;
+}
+.card {
+  max-width: var(--gn-wrap-wide);
+  margin: 0 auto;
+  background: var(--gn-navy-deep);
+  border-radius: var(--gn-radius-lg);
+  padding: 44px clamp(24px, 4vw, 48px) 40px;
+  color: #fff;
+}
+
+.head {
+  margin-bottom: 30px;
+}
+.h2 {
+  margin: 14px 0 0;
+  font-family: var(--gn-font-display);
+  font-size: var(--gn-h2-lg);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+}
+.colLabel {
+  display: block;
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gn-signal); /* Signalgrün-Label auf Navy (Grün-Regel erlaubt) */
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.colIn .colLabel {
+  color: var(--gn-sky);
+}
+
+.mods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+}
+.mod {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gn-on-dark-line);
+  min-width: 0;
+}
+.mod b {
+  font-size: 14.5px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.linkRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    /* Auf schmalen Breiten bündig mit den übrigen Sektionen (Gutter am Rand). */
+    margin: 0 var(--gn-gutter);
+  }
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+}
+@media (max-width: 480px) {
+  .mods {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

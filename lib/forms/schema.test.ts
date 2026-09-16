@@ -33,6 +33,9 @@ describe("contactSchema", () => {
     const result = contactSchema.safeParse({
       vorname: "Anna",
       nachname: "Berger",
+      // „Ich bin" ist seit dem Master-Briefing Pflichtfeld und gehört damit zum
+      // Minimal-Payload (sonst schlägt die Pflichtfeld-Prüfung fehl).
+      rolle: "Clubmanager",
       club: "",
       email: "anna@example.de",
       telefon: "",

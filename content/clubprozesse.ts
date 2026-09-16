@@ -439,7 +439,7 @@ export const clubprozesseWasBleibt: WasBleibtData = {
       { text: "Greenfee: Information, Zahlung, Bestätigung", mod: "Greenfee" },
       { text: "Turnierergebnisse, aus der Liste zum Bericht auf drei Kanälen", mod: "Turnier News" },
       { text: "Mannschaftsberichte, direkt vom Spieltag", mod: "Captains App" },
-      { text: "Eventanfragen von Firmen, strukturiert statt als lose E-Mail", mod: "Firmen-Events" },
+      { text: "Eventanfragen von Firmen, strukturiert statt als lose E Mail", mod: "Firmen-Events" },
     ],
   },
   clubteam: {
@@ -448,7 +448,7 @@ export const clubprozesseWasBleibt: WasBleibtData = {
       "Das persönliche Gespräch mit Interessenten und Mitgliedern",
       "Die Entscheidung, was veröffentlicht wird",
       "Besondere Anliegen, die keine Standardantwort haben",
-      "Mitglieder, Startzeiten, Turniere, Beiträge – in Ihrer Clubverwaltung, wie bisher",
+      "Mitglieder, Startzeiten, Turniere und Beiträge bleiben in Ihrer Clubverwaltung, wie bisher",
     ],
     foot: "Weniger Zeit für Wiederholung. Mehr Zeit für Mitglieder, Gäste und den Club.",
   },
@@ -474,7 +474,7 @@ export const clubprozesse: PageContent = {
       eyebrow: "Jeden Tag, jede Saison",
       headline: "Drei Dinge, die das Clubbüro ab morgen nicht mehr macht.",
       text: [
-        "Nicht die einzelne Aufgabe kostet die Zeit. Es ist die Wiederholung: dieselbe Frage, derselbe Anruf, dieselbe Überweisung – jeden Tag, die ganze Saison. Genau da setzt GolfNext an.",
+        "Nicht die einzelne Aufgabe kostet Zeit, es ist die Wiederholung. Dieselbe Frage, derselbe Anruf, dieselbe Überweisung. Jeden Tag die ganze Saison. Genau da setzt GolfNext an.",
       ],
     },
     {
